@@ -1,7 +1,7 @@
 <script setup>
 const menuitems = [
   {
-    title: "Download Service Deck",
+    title: "Service Deck",
     url: "https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf",
   },
   {
