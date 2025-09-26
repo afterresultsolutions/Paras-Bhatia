@@ -61,33 +61,6 @@
       }
     ]
   },
-  "testimonials": {
-    "title": "What Our Users Are Saying",
-    "description": "Hear from our clients about their experiences working with Nuxt and Netlify.",
-    "items": [
-      {
-        "quote": "AR Solutions has made building our projects so much easier and more enjoyable! Its simple setup and powerful features help us create fast, responsive websites with minimal effort.",
-        "author": {
-          "name": "Rahul H.",
-          "title": "Marketing Specialist at Havstrat",
-        }
-      },
-      {
-        "quote": "The scalability offered by AR Solutions and the flexibility of Nuxt have allowed us to expand our site's functionality without worrying about performance issues. This combination is a powerful solution for any growing business.",
-        "author": {
-          "name": "Shivani L.",
-          "title": "CEO at Crideck",
-        }
-      },
-      {
-        "quote": "Switching to AR Sloutions was a game-changer for our development process. The seamless integration between the two platforms allowed us to deploy faster and with fewer headaches.",
-        "author": {
-          "name": "Krish T.",
-          "title": "Frontend Engineer at Newzin",
-        }
-      }
-    ]
-  },
   "cta": {
     "title": "AR Solutions Ecommerce Plan",
     "description": "Unlock the expertise of 5 experienced professionals for the price of 1! Stop relying on interns—enroll in AR Solutions’ Business Development & Ecommerce Retainer Plan and get hands-on support from a team of experts. Enjoy the flexibility to cancel anytime while benefiting from top-tier guidance to grow your business smarter and faster.",
