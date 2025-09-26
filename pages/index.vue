@@ -10,16 +10,16 @@ definePageMeta({
 <template>
   <Container>
     <Hero
-      :title="page.hero.title"
-      :description="page.hero.description"
+      :title="AR Solutions"
+      :description="Helping You Scale Smarter While Maximizing ROI"
       :image="page.hero.image"
       :imageAlt="page.hero.imageAlt"
       :buttons="page.hero.buttons"
     ></Hero>
-    <Logos :title="page.logos.title" :icons="page.logos.icons"></Logos>
+    <Logos :title="AR Solutions" :icons=""></Logos>
     <Features
-      :title="page.features.title"
-      :description="page.features.description"
+      :title="AR Solutions"
+      :description="Helping You Scale Smarter While Maximizing ROI"
       :items="page.features.items"
     ></Features>
     <Testimonials
