@@ -66,7 +66,7 @@
     "description": "Starting at Just ₹ 4,999 ",
     "buttons": [
       {
-        "label": "Get Started Today",
+        "label": "Learn More",
         "url": "https://api.razorpay.com/v1/l/subscriptions/sub_RMOAodepmUTvOe"
       }
     ]
