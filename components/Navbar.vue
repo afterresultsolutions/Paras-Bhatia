@@ -1,12 +1,12 @@
 <script setup>
 const menuitems = [
   {
-    title: "Sign up",
-    url: "https://app.netlify.com/signup",
+    title: "Download Service Deck",
+    url: "https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf",
   },
   {
-    title: "Log in",
-    url: "https://app.netlify.com/login",
+    title: "Call",
+    url: "tel:+919050983530",
   },
 ];
 </script>
