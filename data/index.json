@@ -64,7 +64,7 @@
     "testimonials": {
     "title": "AR Solutions Ecommerce Plan",
     "description": "Starting at Just ₹ 4,999 ",
-    "buttons": [
+     "buttons": [
       {
         "label": "Learn More",
         "url": "https://api.razorpay.com/v1/l/subscriptions/sub_RMOAodepmUTvOe"
