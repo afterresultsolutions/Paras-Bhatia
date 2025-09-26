@@ -1,7 +1,7 @@
 {
   "hero": {
     "title": "Helping You Scale Smarter While Maximizing ROI",
-    "description": "Elevate your brand with our AI + Human-Powered marketing solutions – drive faster client acquisition, maximize ROI, and scale seamlessly across online and offline channels.",
+    "description": "Unlock the expertise of 5 experienced professionals for the price of 1! Stop relying on interns—enroll in AR Solutions’ Business Development & Ecommerce Retainer Plan and get hands-on support from a team of experts. Enjoy the flexibility to cancel anytime while benefiting from top-tier guidance to grow your business smarter and faster.",
     "image": "images/hero.jpg",
     "imageAlt": "Nuxt logo and title on abstract background",
     "buttons": [
@@ -66,38 +66,35 @@
     "description": "Hear from our clients about their experiences working with Nuxt and Netlify.",
     "items": [
       {
-        "quote": "Nuxt has made building our projects so much easier and more enjoyable! Its simple setup and powerful features help us create fast, responsive websites with minimal effort.",
+        "quote": "AR Solutions has made building our projects so much easier and more enjoyable! Its simple setup and powerful features help us create fast, responsive websites with minimal effort.",
         "author": {
-          "name": "Daniel H.",
-          "title": "Marketing Specialist at Some Company",
-          "avatar": "images/person-1.jpg"
+          "name": "Rohit H.",
+          "title": "Marketing Specialist at Havstrat",
         }
       },
       {
-        "quote": "The scalability offered by Netlify and the flexibility of Nuxt have allowed us to expand our site's functionality without worrying about performance issues. This combination is a powerful solution for any growing business.",
+        "quote": "The scalability offered by AR Solutions and the flexibility of Nuxt have allowed us to expand our site's functionality without worrying about performance issues. This combination is a powerful solution for any growing business.",
         "author": {
-          "name": "Sarah L.",
-          "title": "CEO at Some Company",
-          "avatar": "images/person-2.jpg"
+          "name": "Shivani L.",
+          "title": "CEO at Crideck",
         }
       },
       {
-        "quote": "Switching to Nuxt and Netlify was a game-changer for our development process. The seamless integration between the two platforms allowed us to deploy faster and with fewer headaches.",
+        "quote": "Switching to AR Sloutions was a game-changer for our development process. The seamless integration between the two platforms allowed us to deploy faster and with fewer headaches.",
         "author": {
-          "name": "Mark T.",
-          "title": "Frontend Engineer at Some Company",
-          "avatar": "images/person-3.jpg"
+          "name": "Krish T.",
+          "title": "Frontend Engineer at Newzin",
         }
       }
     ]
   },
   "cta": {
-    "title": "Start Building with Nuxt & Netlify",
-    "description": "Let your next project be smarter, faster, and effortlessly deployable.",
+    "title": "AR Solutions Ecommerce Plan",
+    "description": "Unlock the expertise of 5 experienced professionals for the price of 1! Stop relying on interns—enroll in AR Solutions’ Business Development & Ecommerce Retainer Plan and get hands-on support from a team of experts. Enjoy the flexibility to cancel anytime while benefiting from top-tier guidance to grow your business smarter and faster.",
     "buttons": [
       {
-        "label": "Get Started Today",
-        "url": "https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0"
+        "label": "Start Subscription",
+        "url": "https://api.razorpay.com/v1/l/subscriptions/sub_RMOAodepmUTvOe"
       }
     ]
   }
