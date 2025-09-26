@@ -97,7 +97,7 @@
     "buttons": [
       {
         "label": "Get Started Today",
-        "url": "https://www.netlify.com/"
+        "url": "https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0"
       }
     ]
   }
