@@ -14,21 +14,11 @@
   "logos": {
     "title": "Trusted by the world's best",
     "icons": [
-      {
-        "name": "i-simple-icons-gitlab"
-      },
-      {
-        "name": "i-simple-icons-github"
-      },
-      {
-        "name": "i-simple-icons-openai"
-      },
-      {
-        "name": "i-simple-icons-google"
-      },
-      {
-        "name": "i-simple-icons-netlify"
-      }
+      { "name": "i-simple-icons-gitlab", "title": "GitLab" },
+      { "name": "i-simple-icons-github", "title": "GitHub" },
+      { "name": "i-simple-icons-openai", "title": "OpenAI" },
+      { "name": "i-simple-icons-google", "title": "Google" },
+      { "name": "i-simple-icons-netlify", "title": "Netlify" }
     ]
   },
   "features": {
@@ -49,7 +39,7 @@
       },
       {
         "title": "Branding, Identity & Design",
-        "description": " End-to-end brand development including logo creation, company profile design, pitch decks, marketing collaterals, and visual brand guidelines. We ensure your brand is aligned, recognizable, and ready for scale."
+        "description": "End-to-end brand development including logo creation, company profile design, pitch decks, marketing collaterals, and visual brand guidelines. We ensure your brand is aligned, recognizable, and ready for scale."
       },
       {
         "title": "Startup Growth & Business Development",
@@ -57,12 +47,12 @@
       },
       {
         "title": "Offline Marketing & Local Visibility",
-        "description": " Execution of local marketing campaigns including pamphlet distribution, vehicle branding, outdoor flex boards, and strategic offline placements to support hyperlocal visibility and integrated marketing reach."
+        "description": "Execution of local marketing campaigns including pamphlet distribution, vehicle branding, outdoor flex boards, and strategic offline placements to support hyperlocal visibility and integrated marketing reach."
       }
     ]
   },
   "cta": {
-    "title": "AR Solutions",
+    "title": "AR Solutions Ecommerce Plan",
     "description": "Unlock the expertise of 5 experienced professionals for the price of 1! Stop relying on interns—enroll in AR Solutions’ Business Development & Ecommerce Retainer Plan and get hands-on support from a team of experts. Enjoy the flexibility to cancel anytime while benefiting from top-tier guidance to grow your business smarter and faster.",
     "buttons": [
       {
@@ -71,4 +61,4 @@
       }
     ]
   }
-} 
+}
