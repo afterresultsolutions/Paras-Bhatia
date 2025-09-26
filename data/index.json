@@ -62,14 +62,14 @@
     ]
   },
     "testimonials": {
-    "title": "What Our Users Are Saying",
-    "description": "Hear from our clients about their experiences working with Nuxt and Netlify.",
+    "title": "AR Solutions Ecommerce Plan",
+    "description": "Starting at Just ₹ 4,999 ",
     "items": [
     ]
   },
   "cta": {
-    "title": "Start Building with Nuxt & Netlify",
-    "description": "Let your next project be smarter, faster, and effortlessly deployable.",
+    "title": "Get a Team of Experts for the Price of One",
+    "description": "Get the expertise of 5 pros for the price of 1! Stop hiring interns—grow your business smarter with our flexible Ecommerce & Biz Dev Retainer. Cancel anytime.",
     "buttons": [
       {
         "label": "Get Started Today",
