@@ -1,13 +1,13 @@
 {
   "hero": {
-    "title": "Build Blazing-Fast Websites with Nuxt.js & Netlify",
-    "description": "Craft high-performing, SEO-friendly web experiences with the dynamic power of Nuxt.js and the speed of Netlify's global edge network.",
+    "title": "Helping You Scale Smarter While Maximizing ROI",
+    "description": "Elevate your brand with our AI + Human-Powered marketing solutions – drive faster client acquisition, maximize ROI, and scale seamlessly across online and offline channels.",
     "image": "images/hero.jpg",
     "imageAlt": "Nuxt logo and title on abstract background",
     "buttons": [
       {
         "label": "Get Started Today",
-        "url": "https://www.netlify.com/"
+        "url": "https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0"
       }
     ]
   },
