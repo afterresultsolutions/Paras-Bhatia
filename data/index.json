@@ -65,30 +65,6 @@
     "title": "What Our Users Are Saying",
     "description": "Hear from our clients about their experiences working with Nuxt and Netlify.",
     "items": [
-      {
-        "quote": "Nuxt has made building our projects so much easier and more enjoyable! Its simple setup and powerful features help us create fast, responsive websites with minimal effort.",
-        "author": {
-          "name": "Daniel H.",
-          "title": "Marketing Specialist at Some Company",
-          "avatar": "images/person-1.jpg"
-        }
-      },
-      {
-        "quote": "The scalability offered by Netlify and the flexibility of Nuxt have allowed us to expand our site's functionality without worrying about performance issues. This combination is a powerful solution for any growing business.",
-        "author": {
-          "name": "Sarah L.",
-          "title": "CEO at Some Company",
-          "avatar": "images/person-2.jpg"
-        }
-      },
-      {
-        "quote": "Switching to Nuxt and Netlify was a game-changer for our development process. The seamless integration between the two platforms allowed us to deploy faster and with fewer headaches.",
-        "author": {
-          "name": "Mark T.",
-          "title": "Frontend Engineer at Some Company",
-          "avatar": "images/person-3.jpg"
-        }
-      }
     ]
   },
   "cta": {
