@@ -1,13 +1,13 @@
 {
   "hero": {
-    "title": "Helping You Scale Smarter While Maximizing ROI",
-    "description": "Unlock the expertise of 5 experienced professionals for the price of 1! Stop relying on interns—enroll in AR Solutions’ Business Development & Ecommerce Retainer Plan and get hands-on support from a team of experts. Enjoy the flexibility to cancel anytime while benefiting from top-tier guidance to grow your business smarter and faster.",
+    "title": "Launch Your Online Store Today",
+    "description": "Starting your own branded online store has never been this simple. With just a small project confirmation fee, you secure your place, and we take care of building your complete business-ready store. Think of it as investing once to unlock a platform where you can sell products—be it clothing, shoes, jewellery, or any niche you choose—directly on Google, social media, and worldwide.",
     "image": "images/hero.jpg",
     "imageAlt": "Nuxt logo and title on abstract background",
     "buttons": [
       {
-        "label": "Get Started Today",
-        "url": "https://api.razorpay.com/v1/l/subscriptions/sub_RMOAodepmUTvOe"
+        "label": "Launch My Store",
+        "url": "https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view"
       }
     ]
   },
@@ -32,38 +32,38 @@
     ]
   },
   "features": {
-    "title": "Fueling Growth, Delivering Results",
-    "description": "Your Partner for Real Business Impact - Enabling brands to grow with performance-driven digital marketing and smart business solutions",
+    "title": "You don’t need to worry about the tech side — we handle it all for you",
+    "description": "What You Get With This Setup",
     "items": [
       {
-        "title": "Digital Marketing & Web Development",
-        "description": "Full-stack digital solutions including custom website development (WordPress, Shopify, WooCommerce), SEO, paid ads, performance marketing, and landing page optimization to increase visibility and conversions."
+        "title": "A complete online store setup",
+        "description": "Get a fully functional Shopify store with domain, payment gateway, products, and design — all ready to start selling from day one"
       },
       {
-        "title": "Social Media Strategy & Management",
-        "description": "Strategic planning and hands-on execution for platforms like Instagram, LinkedIn, and Facebook. Includes content creation, visual design, calendar planning, community engagement, and analytics tracking."
+        "title": "1-year free domain (your brand name as a gift from us)",
+        "description": "Claim a free 1-year .shop domain matching your brand name (subject to availability) to start your online journey professionally"
       },
       {
-        "title": "Lead Generation & Business Prospecting",
-        "description": "Data-driven B2B and B2C lead generation campaigns using advanced tools and platforms. We help build CRM systems, set up outreach workflows, and create targeted prospecting campaigns to boost your sales pipeline."
+        "title": "Payment gateway integration so you can accept online payments easily",
+        "description": "Seamless Razorpay integration so you can securely accept online payments from customers with ease"
       },
       {
         "title": "Branding, Identity & Design",
-        "description": " End-to-end brand development including logo creation, company profile design, pitch decks, marketing collaterals, and visual brand guidelines. We ensure your brand is aligned, recognizable, and ready for scale."
+        "description": " Get a clean logo, custom banners, and basic content designed to give your store a professional look from the start"
       },
       {
-        "title": "Startup Growth & Business Development",
-        "description": "Special support for startups and emerging brands through growth consulting, automation workflows, sales funnels, investor decks, go-to-market strategy, and customer acquisition planning."
+        "title": "Training on how to manage your store & add products (free)",
+        "description": "Learn step-by-step how to manage your store and add products yourself with our free training"
       },
       {
-        "title": "Offline Marketing & Local Visibility",
-        "description": " Execution of local marketing campaigns including pamphlet distribution, vehicle branding, outdoor flex boards, and strategic offline placements to support hyperlocal visibility and integrated marketing reach."
+        "title": "Up to 20 products listed & ready to sell",
+        "description": " We’ll list up to 20 of your products with images, descriptions, and pricing so your store is ready to sell immediately"
       }
     ]
   },
     "testimonials": {
-    "title": "AR Solutions Ecommerce Plan",
-    "description": "Starting at Just ₹ 4,999 ",
+    "title": "Project delivered in 25 days",
+    "description": "Your complete online store will be ready and delivered within 25 days, fully set up to launch",
      "buttons": [
       {
         "label": "Learn More",
@@ -76,8 +76,8 @@
     "description": "Get the expertise of 5 pros for the price of 1! Stop hiring interns—grow your business smarter with our flexible Ecommerce & Biz Dev Retainer. Cancel anytime.",
     "buttons": [
       {
-        "label": "Get Started Today",
-        "url": "https://api.razorpay.com/v1/l/subscriptions/sub_RMOAodepmUTvOe"
+        "label": "Learn More",
+        "url": "https://api.whatsapp.com/send/?phone=919050983530&text=Hi%2C%20we%20are%20planning%20to%20outsource%20AR%20solutions%20for%20our%20company%20can%20you%20please%20share%20more%20details&app_absent=0"
       }
     ]
   }
