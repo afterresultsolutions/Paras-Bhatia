@@ -1,7 +1,7 @@
 {
   "hero": {
     "title": "Launch Your Online Store Today",
-    "description": Launching your own branded online store is now easier than ever. Pay a small booking fee of ₹1,599 to secure your slot, and we’ll build your fully ready-to-sell store. Sell anything — clothes, shoes, jewellery, or any niche — across Google, social media, and worldwide, without worrying about the tech",
+    "description": "Launching your own branded online store is now easier than ever. Pay a small booking fee of ₹1,599 to secure your slot, and we’ll build your fully ready-to-sell store. Sell anything — clothes, shoes, jewellery, or any niche — across Google, social media, and worldwide, without worrying about the tech",
     "image": "images/hero.jpg",
     "imageAlt": "Nuxt logo and title on abstract background",
     "buttons": [
