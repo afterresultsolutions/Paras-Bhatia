@@ -12,13 +12,13 @@
     ]
   },
   "logos": {
-    "title": "Trusted by the world's best",
+    "title": "Trusted by the 100+ SME's and Individuals",
     "icons": [
       {
-        "name": "i-simple-icons-gitlab"
+        "name": "i-simple-icons-apple"
       },
       {
-        "name": "i-simple-icons-github"
+        "name": "i-simple-icons-amazon"
       },
       {
         "name": "i-simple-icons-openai"
@@ -27,7 +27,7 @@
         "name": "i-simple-icons-google"
       },
       {
-        "name": "i-simple-icons-netlify"
+        "name": "i-simple-icons-zomato"
       }
     ]
   },
