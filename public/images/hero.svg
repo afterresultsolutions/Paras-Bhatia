@@ -1,0 +1,17 @@
+<svg width="160" height="54" viewBox="0 0 160 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g>
+    <circle cx="27" cy="27" r="18">
+      <animate attributeName="r" values="18;24;18" dur="1.2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.7;0.3;0.7" dur="1.2s" repeatCount="indefinite"/>
+      <animate attributeName="fill" values="#ff0033;#ff7c52;#ff0033" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="27" cy="27" r="10" fill="#ff0033">
+      <animate attributeName="r" values="10;14;10" dur="1.2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.6;1" dur="1.2s" repeatCount="indefinite"/>
+    </circle>
+    <text x="52" y="34" font-family="Arial, Inter, sans-serif" font-size="2em" font-weight="bold" fill="#ff0033" letter-spacing="3">
+      <tspan>LIVE</tspan>
+      <animate attributeName="opacity" values="1;0.5;1" dur="1.4s" repeatCount="indefinite"/>
+    </text>
+  </g>
+</svg>
