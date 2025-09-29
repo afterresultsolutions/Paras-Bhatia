@@ -119,7 +119,7 @@
                 </button>
               </div>
               <div :class="['disclaimer', isDarkMode ? 'text-gray-500' : 'text-gray-400']">
-                AR Solutions AI Zera is currently capable of handling ecommerce queries.
+                AR Solutions AI can make mistakes. Check important info.
               </div>
             </div>
           </div>
