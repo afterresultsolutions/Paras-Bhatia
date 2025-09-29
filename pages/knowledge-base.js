@@ -1,6 +1,4 @@
 // Simple test - knowledge-base.js
-module.exports = {
-  getTestMessage() {
-    return "Hello from knowledge base!";
-  }
-};
+export function getTestMessage() {
+  return "Hello from knowledge base!";
+}
