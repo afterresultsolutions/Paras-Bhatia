@@ -271,12 +271,12 @@ data() {
           bye: "Goodbye! Wishing you a productive day ahead. Feel free to return anytime you need assistance!"
         }
       }
-    };
+    }
   },
   methods: {
-generateResponse(q) {
-  const query = q.toLowerCase().trim();
-  const kb = this.kb;
+    generateResponse(q) {
+      const query = q.toLowerCase().trim();
+      const kb = this.kb;
   
   // Simple greetings
   const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste'];
@@ -484,12 +484,13 @@ generateResponse(q) {
   }
   
   // Default
-  return {
-    text: "Thank you for reaching out! I'd be happy to help you with information about our ecommerce store setup service or other business solutions.\n\nFeel free to ask about:\n• Pricing and packages\n• Features and services\n• Timeline and delivery\n• Marketing support\n• Or anything else!\n\nYou can also chat with our team directly for personalized assistance.",
-    hasButton: false
-  };
-}
-async handleSearch() {
+      return {
+        text: "Thank you for reaching out! I'd be happy to help you with information about our ecommerce store setup service or other business solutions.\n\nFeel free to ask about:\n• Pricing and packages\n• Features and services\n• Timeline and delivery\n• Marketing support\n• Or anything else!\n\nYou can also chat with our team directly for personalized assistance.",
+        hasButton: false
+      };
+    },
+
+    async handleSearch() {
   if (!this.query.trim()) return;
   
   const userQuery = this.query.trim();
