@@ -273,13 +273,21 @@ export default {
       const query = q.toLowerCase();
       const kb = this.kb;
       
-      const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste'];
-      if (greetings.some(g => query === g || query.startsWith(g + ' ') || query.endsWith(' ' + g))) {
-        return {
-          text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}`,
-          hasButton: true
-        };
-      }
+const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste'];
+if (greetings.some(g => query === g || query === g + '!' || query === g + '?')) {
+  return {
+    text: "Hi there! Welcome to AR Solutions! 👋\n\nI can help you with information about launching your online store. Feel free to ask me about:\n\n• Pricing and payment plans\n• What's included in our package\n• Timeline and delivery\n• Technical requirements\n• And more!\n\nWhat would you like to know?",
+    hasButton: false
+  };
+}
+
+// If greeting with more text (like "hi, I need a store"), treat as inquiry
+if (greetings.some(g => query.startsWith(g + ' ') || query.startsWith(g + ','))) {
+  return {
+    text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}`,
+    hasButton: true
+  };
+}
       
       if (kb.keywords.confirmation.some(kw => query.includes(kw))) {
         return {
@@ -467,38 +475,80 @@ async handleSearch() {
       this.scrollToBottom();
     },
 
-    copyMessage(text) {
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(text).then(() => {
-          console.log('Message copied to clipboard');
-        }).catch(err => {
-          console.error('Failed to copy message: ', err);
-        });
-      }
-    },
-
-    likeMessage(index) {
-      console.log('Liked message at index:', index);
-    },
-
-    dislikeMessage(index) {
-      console.log('Disliked message at index:', index);
-    },
-
-    regenerateResponse(index) {
-      console.log('Regenerating response at index:', index);
-    },
-
-    shareMessage(text) {
-      if (navigator.share) {
-        navigator.share({
-          title: 'AR Solutions AI Response',
-          text: text
-        });
-      } else {
-        this.copyMessage(text);
-      }
+copyMessage(text) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      alert('Message copied to clipboard!');
+    }).catch(err => {
+      console.error('Failed to copy message: ', err);
+      alert('Failed to copy message');
+    });
+  } else {
+    // Fallback for older browsers
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      alert('Message copied to clipboard!');
+    } catch (err) {
+      alert('Failed to copy message');
     }
+    document.body.removeChild(textArea);
+  }
+},
+
+likeMessage(index) {
+  alert('Thank you for your feedback! 👍');
+  console.log('Liked message at index:', index);
+},
+
+dislikeMessage(index) {
+  alert('Thank you for your feedback. We will improve! 👎');
+  console.log('Disliked message at index:', index);
+},
+
+regenerateResponse(index) {
+  if (index > 0 && this.messages[index - 1]?.type === 'user') {
+    const userQuery = this.messages[index - 1].text;
+    
+    // Remove the old bot response
+    this.messages.splice(index, 1);
+    
+    // Generate new response
+    setTimeout(() => {
+      const aiResponse = this.generateResponse(userQuery);
+      
+      this.messages.push({
+        type: 'bot',
+        text: aiResponse.text,
+        timestamp: new Date(),
+        hasButton: aiResponse.hasButton,
+        buttonText: 'Launch My Store - ₹1,599',
+        buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
+      });
+      
+      this.scrollToBottom();
+    }, 300);
+  }
+},
+
+shareMessage(text) {
+  if (navigator.share) {
+    navigator.share({
+      title: 'AR Solutions AI Response',
+      text: text
+    }).catch(err => {
+      console.log('Share cancelled or failed:', err);
+    });
+  } else {
+    // Fallback - copy to clipboard
+    this.copyMessage(text);
+  }
+}
   }
 }
 </script>
