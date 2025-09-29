@@ -220,22 +220,51 @@ export default {
       isDarkMode: false,
       chatHistory: [],
       currentChatId: null,
-      spellCheckDictionary: {
-        'teh': 'the',
-        'recieve': 'receive',
-        'occured': 'occurred',
-        'seperate': 'separate',
-        'definately': 'definitely',
-        'goverment': 'government',
-        'accomodate': 'accommodate',
-        'wich': 'which',
-        'thier': 'their',
-        'succesful': 'successful',
-        'begining': 'beginning',
-        'untill': 'until',
-        'occassion': 'occasion',
-        'calender': 'calendar',
-        'existance': 'existence'
+      kb: {
+        keywords: {
+          pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget'],
+          features: ['features', 'include', 'get', 'what', 'benefit', 'offer', 'provide', 'service', 'package', 'comes with'],
+          timeline: ['when', 'how long', 'time', 'duration', 'days', 'delivery', 'fast', 'quick', 'ready', 'complete'],
+          products: ['product', 'sell', 'item', 'clothing', 'shoes', 'jewellery', 'jewelry', 'fashion', 'niche', 'categories'],
+          technical: ['technical', 'tech', 'difficult', 'easy', 'knowledge', 'skill', 'learn', 'manage', 'complicated'],
+          domain: ['domain', 'website name', 'url', 'web address', 'brand name', 'site name'],
+          training: ['training', 'teach', 'learn', 'help', 'support', 'tutorial', 'guide', 'how to'],
+          platform: ['shopify', 'platform', 'ecommerce', 'e-commerce', 'which platform'],
+          payment_gateway: ['payment gateway', 'accept payment', 'online payment', 'transaction', 'pay online'],
+          design: ['design', 'logo', 'banner', 'look', 'appearance', 'branding', 'graphics'],
+          confirmation: ['start', 'begin', 'sign up', 'register', 'book', 'confirm', 'interested', 'want', 'ready'],
+          installment: ['installment', 'instalment', 'emi', 'partial payment', 'split payment'],
+          quickdelivery: ['quick delivery', 'fast delivery', 'urgent', 'asap', 'faster']
+        },
+        responses: {
+          greeting: "Thank you for your interest in AR Solutions! We help entrepreneurs launch professional online stores quickly and affordably. Starting your own branded online store has never been this simple.",
+          
+          fullPackage: "With AR Solutions, you'll get:\n\n✓ Complete Shopify store setup\n✓ 1-year free domain (your brand name as a gift from us)\n✓ Payment gateway integration for easy online payments\n✓ Up to 20 products listed & ready to sell\n✓ Simple logo design, banners & content creation\n✓ FREE training on store management\n✓ Project delivered in 25 days\n✓ Transparent pricing with no hidden charges\n✓ Monthly subscription (paid separately, cancel anytime)\n\nYou'll get a ready-to-use, business-grade online store at the lowest possible cost — designed to help you start selling from day one.",
+          
+          pricing: "The total project cost is ₹7,999/- (including all taxes). To begin, you only need to pay a confirmation milestone of ₹1,599/- to secure your project slot. The remaining balance will be paid in 4 simple instalments during the 25-day project timeline.",
+          
+          quickDelivery: "Want faster delivery? Choose our Quick Delivery Option by paying 70% upfront for a faster, hassle-free setup!",
+          
+          noTech: "You don't need to worry about the tech side — we handle it all for you! No technical knowledge required. We take care of building your complete business-ready store.",
+          
+          timeline: "Your complete store will be delivered in 25 days. Want it faster? Choose our Quick Delivery Option by paying 70% upfront.",
+          
+          domain: "Yes! You get a 1-year free domain with your brand name as a gift from us. It's included in the package.",
+          
+          training: "We provide FREE training on how to manage your store and add products. You'll learn everything you need to run your store successfully.",
+          
+          platform: "We build your store on Shopify, one of the world's most reliable and user-friendly ecommerce platforms. It's trusted by millions of businesses worldwide.",
+          
+          products: "You can sell any type of products — clothing, shoes, jewellery, or any niche you choose. The store can be customized for your specific business. You'll be able to sell directly on Google, social media, and worldwide.",
+          
+          paymentGateway: "Yes! We integrate a payment gateway so you can accept online payments easily from customers. This is included in the setup.",
+          
+          design: "We provide simple logo design, banners, and content creation for your store. Everything is included in the package.",
+          
+          installments: "After paying the confirmation fee of ₹1,599/-, the remaining balance will be paid in 4 simple instalments during the 25-day project timeline. It's flexible and easy.",
+          
+          confirmation: "To get started, you only need to pay ₹1,599/- as a confirmation fee to secure your project slot. Click the button below to begin your journey!"
+        }
       }
     }
   },
