@@ -338,9 +338,7 @@ function formatDate(date) {
                           </svg>
                         </a>
                       </div>
-                      <div v-if="message.type === 'bot'" :class="['help-message', isDarkMode ? 'text-gray-400' : 'text-gray-500']">
-                        Need more help? Click "Chat with Human" button in the top right corner.
-                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -672,17 +670,17 @@ function formatDate(date) {
 }
 
 .empty-title {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 400;
-  margin-bottom: 48px;
+  margin-bottom: 40px;
   text-align: center;
 }
 
 .search-container-center {
   width: 100%;
-  max-width: 768px;
-  margin-top: auto;
-  margin-bottom: 20px;
+  max-width: 600px;
+  position: sticky;
+  bottom: 0;
 }
 
 .search-box {
@@ -692,6 +690,8 @@ function formatDate(date) {
   border-radius: 24px;
   padding: 4px 4px 4px 16px;
   transition: border-color 0.2s;
+  width: 100%;
+  max-width: 100%;
 }
 
 .search-dark {
@@ -715,6 +715,7 @@ function formatDate(date) {
   outline: none;
   padding: 12px 8px;
   font-size: 15px;
+  min-width: 0;
 }
 
 .input-dark {
@@ -775,13 +776,13 @@ function formatDate(date) {
 .messages-container {
   flex: 1;
   overflow-y: auto;
-  padding-bottom: 20px;
+  padding-bottom: 0;
 }
 
 .messages-inner {
   max-width: 768px;
   margin: 0 auto;
-  padding: 24px 20px;
+  padding: 24px 20px 0;
 }
 
 .message-group {
@@ -809,14 +810,7 @@ function formatDate(date) {
 
 .avatar-bot {
   background: transparent;
-  padding: 0;
-}
-
-.custom-logo {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  overflow: hidden;
+  padding: 2px;
 }
 
 .avatar-user {
@@ -824,9 +818,17 @@ function formatDate(date) {
 }
 
 .avatar-icon {
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
   color: white;
+}
+
+.custom-logo {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .message-content-wrapper {
@@ -904,6 +906,7 @@ function formatDate(date) {
   border-top: 1px solid transparent;
   position: sticky;
   bottom: 0;
+  z-index: 100;
 }
 
 .dark-mode .input-area {
@@ -953,28 +956,13 @@ function formatDate(date) {
   background: #6e6e6e;
 }
 
-/* Text colors */
-.text-gray-400 {
-  color: #9ca3af;
+/* Responsive */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 240px;
+  }
 }
 
-.text-gray-500 {
-  color: #6b7280;
-}
-
-.text-gray-600 {
-  color: #4b5563;
-}
-
-.text-white {
-  color: white;
-}
-
-.text-gray-800 {
-  color: #1f2937;
-}
-
-/* Mobile responsive */
 @media (max-width: 768px) {
   .sidebar {
     display: none;
@@ -985,64 +973,178 @@ function formatDate(date) {
   }
 
   .empty-title {
-    font-size: 24px;
-    margin-bottom: 24px;
-  }
-
-  .empty-state {
-    padding: 20px 16px;
-    justify-content: flex-start;
-    padding-top: 60px;
-  }
-
-  .search-container-center {
-    position: fixed;
-    bottom: 20px;
-    left: 16px;
-    right: 16px;
-    max-width: none;
-    width: auto;
-    margin: 0;
-    z-index: 100;
+    font-size: 22px;
+    margin-bottom: 30px;
   }
 
   .messages-inner {
-    padding: 20px 16px 120px 16px;
+    padding: 20px 12px 0;
   }
 
   .input-area {
-    display: none;
+    padding: 12px;
+  }
+
+  .search-container-center {
+    max-width: 100%;
+    padding: 0 12px;
+  }
+
+  .empty-state {
+    padding: 12px;
+    justify-content: flex-start;
+    padding-top: 40px;
+  }
+
+  .message-row {
+    gap: 12px;
+  }
+
+  .avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .avatar-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .message-text {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .empty-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .header-title {
+    margin-left: 44px;
   }
 
   .mobile-menu-btn {
-    background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+    top: 10px;
+    left: 8px;
+    padding: 6px;
+  }
+
+  .chat-header {
+    padding: 8px 10px;
   }
 
   .human-chat-btn {
-    padding: 6px 12px;
+    padding: 6px 10px;
     font-size: 12px;
+    gap: 4px;
+  }
+
+  .brand-name {
+    font-size: 16px;
+  }
+
+  .model-badge {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+  }
+
+  .search-input {
+    font-size: 14px;
+    padding: 10px 6px;
+  }
+
+  .send-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .search-box {
+    padding: 3px 3px 3px 12px;
+  }
+
+  .messages-inner {
+    padding: 16px 8px 0;
+  }
+
+  .input-area {
+    padding: 10px 8px;
+  }
+
+  .search-container-center {
+    padding: 0 8px;
+  }
+
+  .message-row {
+    gap: 8px;
+  }
+
+  .avatar {
+    width: 24px;
+    height: 24px;
+  }
+
+  .avatar-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .message-text {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .launch-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .action-btn {
+    padding: 4px;
+  }
+
+  .icon-xs {
+    width: 14px;
+    height: 14px;
+  }
+
+  .disclaimer {
+    font-size: 11px;
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 360px) {
+  .empty-title {
+    font-size: 18px;
+  }
+
+  .human-chat-btn {
+    padding: 5px 8px;
+    font-size: 11px;
   }
 
   .human-chat-text {
     display: none;
   }
 
-  .messages-wrapper .input-area {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 16px;
-    z-index: 100;
+  .search-input {
+    font-size: 13px;
+    padding: 8px 6px;
   }
 
-  .messages-wrapper .input-area {
-    display: block;
+  .messages-inner {
+    padding: 12px 6px 0;
   }
 
-  .chat-area {
-    position: relative;
+  .input-area {
+    padding: 8px 6px;
+  }
+
+  .search-container-center {
+    padding: 0 6px;
   }
 }
 
@@ -1065,9 +1167,73 @@ function formatDate(date) {
     margin-left: 0;
   }
 
-  .search-container-center {
-    position: static;
-    margin-top: auto;
+  .empty-state {
+    justify-content: center;
+    padding-top: 20px;
+  }
+}
+
+/* Landscape mobile improvements */
+@media (max-width: 768px) and (orientation: landscape) {
+  .empty-state {
+    padding-top: 20px;
+  }
+
+  .empty-title {
+    font-size: 20px;
     margin-bottom: 20px;
   }
 }
+
+/* Touch improvements */
+@media (hover: none) and (pointer: coarse) {
+  .search-box {
+    padding: 6px 6px 6px 16px;
+  }
+
+  .search-input {
+    padding: 14px 8px;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  .send-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .action-btn {
+    padding: 8px;
+    min-height: 36px;
+    min-width: 36px;
+  }
+
+  .human-chat-btn {
+    padding: 10px 14px;
+    min-height: 40px;
+  }
+
+  .mobile-menu-btn {
+    padding: 10px;
+    min-height: 40px;
+    min-width: 40px;
+  }
+}
+
+.text-gray-400 {
+  color: #9ca3af;
+}
+
+.text-gray-500 {
+  color: #6b7280;
+}
+
+.text-gray-600 {
+  color: #4b5563;
+}
+
+.text-white {
+  color: white;
+}
+
+}
+</style>
