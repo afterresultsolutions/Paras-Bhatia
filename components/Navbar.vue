@@ -9,7 +9,7 @@ const menuitems = [
 <template>
   <Container>
     <header class="flex flex-row flex-wrap items-center justify-between my-4 gap-x-6 gap-y-4">
-      <div class="flex items-left justify-between">
+      <div class="flex items-center justify-between">
         <a href="/" class="text-2xl font-bold text--50">
           <span class="text--500">&#10070;</span> AR Solutions
         </a>
