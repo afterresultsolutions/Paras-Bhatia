@@ -85,8 +85,8 @@
         <!-- Header -->
         <div :class="['chat-header', isDarkMode ? 'header-dark' : 'header-light']">
           <div class="header-title">
-            <span class="brand-name">ChatGPT</span>
-            <span class="model-badge">4</span>
+            <span class="brand-name">AR Solutions</span>
+            <span class="model-badge">AI</span>
           </div>
           <a href="https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0" target="_blank" class="human-chat-btn">
             <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -100,7 +100,7 @@
         <div class="chat-area">
           <!-- Empty state -->
           <div v-if="messages.length === 0" class="empty-state">
-            <h1 :class="['empty-title', isDarkMode ? 'text-white' : 'text-gray-800']">What can I help with?</h1>
+            <h1 :class="['empty-title', isDarkMode ? 'text-white' : 'text-gray-800']">Hey there! How can I help you today?</h1>
             
             <div class="search-container-center">
               <div :class="['search-box', isDarkMode ? 'search-dark' : 'search-light']">
@@ -108,7 +108,7 @@
                   v-model="query"
                   @keyup.enter="handleSearch"
                   type="text"
-                  placeholder="Message ChatGPT"
+                  placeholder="Ask anything"
                   :class="['search-input', isDarkMode ? 'input-dark' : 'input-light']"
                 />
                 <button @click="handleSearch" :class="['send-btn', query.trim() ? 'send-btn-active' : '']">
@@ -118,7 +118,7 @@
                 </button>
               </div>
               <div :class="['disclaimer', isDarkMode ? 'text-gray-500' : 'text-gray-400']">
-                ChatGPT can make mistakes. Check important info.
+                AR Solutions AI can make mistakes. Check important info.
               </div>
             </div>
           </div>
@@ -129,31 +129,17 @@
               <div class="messages-inner">
                 <div v-for="(message, index) in messages" :key="index" class="message-group">
                   <div :class="['message-row', message.type === 'user' ? 'message-user' : 'message-bot']">
-                    <div class="message-avatar">
-                      <div v-if="message.type === 'bot'" class="avatar avatar-bot">
+                    <div v-if="message.type === 'bot'" class="message-avatar">
+                      <div class="avatar avatar-bot">
                         <svg viewBox="0 0 200 200" class="avatar-icon">
                           <defs>
                             <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                              <stop offset="0%" style="stop-color:#FFB347"/>
-                              <stop offset="25%" style="stop-color:#FF6B9D"/>
-                              <stop offset="50%" style="stop-color:#C147E9"/>
-                              <stop offset="75%" style="stop-color:#4285F4"/>
-                              <stop offset="100%" style="stop-color:#00CED1"/>
-                            </linearGradient>
-                            <linearGradient id="grad2" x1="0%" y1="100%" x2="100%" y2="0%">
-                              <stop offset="0%" style="stop-color:#1E3A8A"/>
-                              <stop offset="50%" style="stop-color:#7C3AED"/>
-                              <stop offset="100%" style="stop-color:#EC4899"/>
+                              <stop offset="0%" style="stop-color:#00d084"/>
+                              <stop offset="100%" style="stop-color:#00a86b"/>
                             </linearGradient>
                           </defs>
-                          <path d="M50 20 Q30 20 20 40 Q20 60 30 70 L30 120 Q30 140 50 140 L90 140 Q110 140 120 130 Q130 120 130 100 L130 70 Q140 60 140 40 Q140 20 120 20 Z" fill="url(#grad1)"/>
-                          <path d="M80 180 Q60 180 50 160 Q50 140 60 130 L60 80 Q60 60 80 60 L120 60 Q140 60 150 70 Q160 80 160 100 L160 130 Q170 140 170 160 Q170 180 150 180 Z" fill="url(#grad2)"/>
-                          <circle cx="100" cy="100" r="30" fill="white"/>
-                        </svg>
-                      </div>
-                      <div v-else class="avatar avatar-user">
-                        <svg class="avatar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                          <circle cx="100" cy="100" r="80" fill="url(#grad1)"/>
+                          <text x="100" y="115" text-anchor="middle" fill="white" font-size="60" font-weight="bold">AR</text>
                         </svg>
                       </div>
                     </div>
@@ -165,24 +151,29 @@
                         </a>
                       </div>
                       <div v-if="message.type === 'bot'" class="message-actions">
-                        <button class="action-btn" title="Good response">
-                          <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
-                          </svg>
-                        </button>
-                        <button class="action-btn" title="Bad response">
-                          <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"></path>
-                          </svg>
-                        </button>
-                        <button class="action-btn" title="Copy">
+                        <button @click="copyMessage(message.text)" class="action-btn" title="Copy">
                           <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                           </svg>
                         </button>
-                        <button class="action-btn" title="Regenerate">
+                        <button @click="likeMessage(index)" class="action-btn" title="Good response">
+                          <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
+                          </svg>
+                        </button>
+                        <button @click="dislikeMessage(index)" class="action-btn" title="Bad response">
+                          <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"></path>
+                          </svg>
+                        </button>
+                        <button @click="regenerateResponse(index)" class="action-btn" title="Regenerate">
                           <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                          </svg>
+                        </button>
+                        <button @click="shareMessage(message.text)" class="action-btn" title="Share">
+                          <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
                           </svg>
                         </button>
                         <a href="https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0" target="_blank" class="action-btn" title="WhatsApp">
@@ -195,6 +186,13 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                           </svg>
                         </a>
+                      </div>
+                    </div>
+                    <div v-if="message.type === 'user'" class="message-avatar">
+                      <div class="avatar avatar-user">
+                        <svg class="avatar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
                       </div>
                     </div>
                   </div>
@@ -210,7 +208,7 @@
                     v-model="query"
                     @keyup.enter="handleSearch"
                     type="text"
-                    placeholder="Message ChatGPT"
+                    placeholder="Message AR Solutions AI"
                     :class="['search-input', isDarkMode ? 'input-dark' : 'input-light']"
                   />
                   <button @click="handleSearch" :class="['send-btn', query.trim() ? 'send-btn-active' : '']">
@@ -220,7 +218,7 @@
                   </button>
                 </div>
                 <div :class="['disclaimer', isDarkMode ? 'text-gray-500' : 'text-gray-400']">
-                  ChatGPT can make mistakes. Check important info.
+                  AR Solutions AI can make mistakes. Check important info.
                 </div>
               </div>
             </div>
@@ -357,6 +355,37 @@ function loadChat(chat) {
   currentChatId.value = chat.id;
   showMenu.value = false;
   scrollToBottom();
+}
+
+function copyMessage(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    console.log('Message copied to clipboard');
+  }).catch(err => {
+    console.error('Failed to copy message: ', err);
+  });
+}
+
+function likeMessage(index) {
+  console.log('Liked message at index:', index);
+}
+
+function dislikeMessage(index) {
+  console.log('Disliked message at index:', index);
+}
+
+function regenerateResponse(index) {
+  console.log('Regenerating response at index:', index);
+}
+
+function shareMessage(text) {
+  if (navigator.share) {
+    navigator.share({
+      title: 'AR Solutions AI Response',
+      text: text
+    });
+  } else {
+    copyMessage(text);
+  }
 }
 
 function formatDate(date) {
@@ -617,7 +646,7 @@ function formatDate(date) {
   height: 20px;
   font-size: 11px;
   font-weight: 600;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #00d084 0%, #00a86b 100%);
   color: white;
   border-radius: 4px;
 }
@@ -660,12 +689,13 @@ function formatDate(date) {
   align-items: center;
   justify-content: center;
   padding: 20px;
+  min-height: calc(100vh - 200px);
 }
 
 .empty-title {
   font-size: 28px;
   font-weight: 400;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
   text-align: center;
 }
 
@@ -751,8 +781,9 @@ function formatDate(date) {
 
 .disclaimer {
   text-align: center;
-  margin-top: 12px;
+  margin-top: 20px;
   font-size: 12px;
+  padding-bottom: 40px;
 }
 
 .messages-wrapper {
@@ -781,6 +812,14 @@ function formatDate(date) {
 .message-row {
   display: flex;
   gap: 16px;
+}
+
+.message-user {
+  flex-direction: row-reverse;
+}
+
+.message-bot {
+  flex-direction: row;
 }
 
 .message-avatar {
@@ -817,8 +856,34 @@ function formatDate(date) {
   min-width: 0;
 }
 
+.message-user .message-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.message-bot .message-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .message-content {
   margin-bottom: 8px;
+  max-width: 70%;
+}
+
+.message-user .message-content {
+  background-color: #2f2f2f;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 18px;
+  border-bottom-right-radius: 4px;
+}
+
+.light-mode .message-user .message-content {
+  background-color: #f0f0f0;
+  color: #2f2f2f;
 }
 
 .message-text {
@@ -826,6 +891,7 @@ function formatDate(date) {
   line-height: 1.6;
   white-space: pre-wrap;
   word-wrap: break-word;
+  margin: 0;
 }
 
 .launch-btn {
@@ -851,6 +917,12 @@ function formatDate(date) {
   display: flex;
   gap: 4px;
   margin-top: 8px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.message-group:hover .message-actions {
+  opacity: 1;
 }
 
 .action-btn {
@@ -985,6 +1057,10 @@ function formatDate(date) {
   .message-text {
     font-size: 14px;
   }
+
+  .disclaimer {
+    padding-bottom: 20px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1085,6 +1161,7 @@ function formatDate(date) {
   .disclaimer {
     font-size: 11px;
     margin-top: 8px;
+    padding-bottom: 15px;
   }
 }
 
@@ -1187,6 +1264,10 @@ function formatDate(date) {
     min-height: 40px;
     min-width: 40px;
   }
+
+  .message-actions {
+    opacity: 1;
+  }
 }
 
 .text-gray-400 {
@@ -1208,4 +1289,3 @@ function formatDate(date) {
 .text-gray-800 {
   color: #1f2937;
 }
-</style>
