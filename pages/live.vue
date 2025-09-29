@@ -230,16 +230,16 @@
 <script>
 export default {
   name: 'ChatbotPage',
-data() {
-  return {
-    query: "",
-    showMenu: false,
-    messages: [],
-    isDarkMode: false,
-    chatHistory: [],
-    currentChatId: null,
-    searchQuery: "", // Add this
-    kb: {
+  data() {
+    return {
+      query: "",
+      showMenu: false,
+      messages: [],
+      isDarkMode: false,
+      chatHistory: [],
+      currentChatId: null,
+      searchQuery: "",
+      kb: {
         keywords: {
           pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget'],
           features: ['features', 'include', 'get', 'what', 'benefit', 'offer', 'provide', 'service', 'package', 'comes with'],
@@ -290,267 +290,255 @@ data() {
           bye: "Goodbye! Wishing you a productive day ahead. Feel free to return anytime you need assistance!"
         }
       }
+    };
+  },
+  computed: {
+    filteredChatHistory() {
+      if (!this.searchQuery.trim()) {
+        return this.chatHistory;
+      }
+      const query = this.searchQuery.toLowerCase();
+      return this.chatHistory.filter(chat => 
+        chat.title.toLowerCase().includes(query) ||
+        chat.messages.some(msg => msg.text.toLowerCase().includes(query))
+      );
+    }
+  },
+  mounted() {
+    if (process.client) {
+      const savedTheme = localStorage.getItem('ar-theme');
+      if (savedTheme) {
+        this.isDarkMode = savedTheme === 'dark';
+      }
+      
+      const savedHistory = localStorage.getItem('ar-chat-history');
+      if (savedHistory) {
+        try {
+          this.chatHistory = JSON.parse(savedHistory);
+        } catch (e) {
+          console.error('Failed to load chat history:', e);
+        }
+      }
+      
+      const savedMessages = localStorage.getItem('ar-current-messages');
+      const savedChatId = localStorage.getItem('ar-current-chat-id');
+      if (savedMessages && savedChatId) {
+        try {
+          this.messages = JSON.parse(savedMessages);
+          this.currentChatId = savedChatId;
+        } catch (e) {
+          console.error('Failed to load current chat:', e);
+        }
+      }
     }
   },
   methods: {
     generateResponse(q) {
       const query = q.toLowerCase().trim();
       const kb = this.kb;
-  
-  // Simple greetings
-  const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste'];
-  if (greetings.some(g => query === g || query === g + '!' || query === g + '?')) {
-    return {
-      text: "Hi there! Welcome to AR Solutions! 👋\n\nI can help you with information about launching your online store. Feel free to ask me about:\n\n• Pricing and payment plans\n• What's included in our package\n• Timeline and delivery\n• Technical requirements\n• Marketing and sales support\n• And more!\n\nWhat would you like to know?",
-      hasButton: false
-    };
-  }
-  
-  // How are you
-  if (kb.keywords.howareyou.some(kw => query.includes(kw))) {
-    return {
-      text: kb.responses.howareyou,
-      hasButton: false
-    };
-  }
-  
-  // Who are you
-  if (kb.keywords.whoareyou.some(kw => query.includes(kw))) {
-    return {
-      text: kb.responses.whoareyou,
-      hasButton: false
-    };
-  }
-  
-  // Thank you
-  if (kb.keywords.thankyou.some(kw => query.includes(kw))) {
-    return {
-      text: kb.responses.thankyou,
-      hasButton: false
-    };
-  }
-  
-  // Goodbye
-  if (kb.keywords.bye.some(kw => query.includes(kw))) {
-    return {
-      text: kb.responses.bye,
-      hasButton: false
-    };
-  }
-  
-  // Services brochure
-  if (kb.keywords.services.some(kw => query.includes(kw))) {
-    return {
-      text: kb.responses.services,
-      hasButton: true,
-      buttonText: 'Download Services Brochure',
-      buttonLink: 'https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf',
-      isDownload: true
-    };
-  }
-  
-  // Marketing
-  if (kb.keywords.marketing.some(kw => query.includes(kw))) {
-    return {
-      text: kb.responses.marketing,
-      hasButton: true
-    };
-  }
-  
-  // Sales
-  if (kb.keywords.sales.some(kw => query.includes(kw))) {
-    return {
-      text: kb.responses.sales,
-      hasButton: true
-    };
-  }
-  
-  // Scaling
-  if (kb.keywords.scaling.some(kw => query.includes(kw))) {
-    return {
-      text: kb.responses.scaling,
-      hasButton: true
-    };
-  }
-  
-  // Contact
-  if (kb.keywords.contact.some(kw => query.includes(kw))) {
-    return {
-      text: kb.responses.contact,
-      hasButton: false
-    };
-  }
-  
-  // Greeting with context
-  if (greetings.some(g => query.startsWith(g + ' ') || query.startsWith(g + ','))) {
-    return {
-      text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}`,
-      hasButton: true
-    };
-  }
-  
-  // Confirmation
-  if (kb.keywords.confirmation.some(kw => query.includes(kw))) {
-    return {
-      text: kb.responses.confirmation,
-      hasButton: true
-    };
-  }
-  
-  // Pricing
-  if (kb.keywords.pricing.some(kw => query.includes(kw))) {
-    return {
-      text: `${kb.responses.pricing}\n\n${kb.responses.quickDelivery}\n\n${kb.responses.confirmation}`,
-      hasButton: true
-    };
-  }
-  
-  // Installments
-  if (kb.keywords.installment.some(kw => query.includes(kw))) {
-    return {
-      text: `${kb.responses.installments}\n\n${kb.responses.pricing}`,
-      hasButton: true
-    };
-  }
-  
-  // Quick delivery
-  if (kb.keywords.quickdelivery.some(kw => query.includes(kw))) {
-    return {
-      text: `${kb.responses.quickDelivery}\n\n${kb.responses.timeline}`,
-      hasButton: true
-    };
-  }
-  
-  // Features
-  if (kb.keywords.features.some(kw => query.includes(kw))) {
-    return {
-      text: `${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
-      hasButton: true
-    };
-  }
-  
-  // Timeline
-  if (kb.keywords.timeline.some(kw => query.includes(kw))) {
-    return {
-      text: `${kb.responses.timeline}\n\n${kb.responses.confirmation}`,
-      hasButton: true
-    };
-  }
-  
-  // Technical
-  if (kb.keywords.technical.some(kw => query.includes(kw))) {
-    return {
-      text: `${kb.responses.noTech}\n\n${kb.responses.fullPackage}`,
-      hasButton: true
-    };
-  }
-  
-  // Products
-  if (kb.keywords.products.some(kw => query.includes(kw))) {
-    return {
-      text: `${kb.responses.products}\n\n${kb.responses.pricing}`,
-      hasButton: true
-    };
-  }
-  
-  // Domain
-  if (kb.keywords.domain.some(kw => query.includes(kw))) {
-    return {
-      text: `${kb.responses.domain}\n\n${kb.responses.confirmation}`,
-      hasButton: true
-    };
-  }
-  
-  // Training
-  if (kb.keywords.training.some(kw => query.includes(kw))) {
-    return {
-      text: `${kb.responses.training}\n\n${kb.responses.confirmation}`,
-      hasButton: true
-    };
-  }
-  
-  // Platform
-  if (kb.keywords.platform.some(kw => query.includes(kw))) {
-    return {
-      text: `${kb.responses.platform}\n\n${kb.responses.fullPackage}`,
-      hasButton: true
-    };
-  }
-  
-  // Payment gateway
-  if (kb.keywords.payment_gateway.some(kw => query.includes(kw))) {
-    return {
-      text: `${kb.responses.paymentGateway}\n\n${kb.responses.confirmation}`,
-      hasButton: true
-    };
-  }
-  
-  // Design
-  if (kb.keywords.design.some(kw => query.includes(kw))) {
-    return {
-      text: `${kb.responses.design}\n\n${kb.responses.confirmation}`,
-      hasButton: true
-    };
-  }
-  
-  // Ecommerce general
-  const ecommerceKeywords = ['ecommerce', 'e-commerce', 'online store', 'store', 'shop', 'website', 'sell online', 'business'];
-  if (ecommerceKeywords.some(kw => query.includes(kw))) {
-    return {
-      text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
-      hasButton: true
-    };
-  }
-  
-  // Default
+      
+      const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste'];
+      if (greetings.some(g => query === g || query === g + '!' || query === g + '?')) {
+        return {
+          text: "Hi there! Welcome to AR Solutions! 👋\n\nI can help you with information about launching your online store. Feel free to ask me about:\n\n• Pricing and payment plans\n• What's included in our package\n• Timeline and delivery\n• Technical requirements\n• Marketing and sales support\n• And more!\n\nWhat would you like to know?",
+          hasButton: false
+        };
+      }
+      
+      if (kb.keywords.howareyou.some(kw => query.includes(kw))) {
+        return { text: kb.responses.howareyou, hasButton: false };
+      }
+      
+      if (kb.keywords.whoareyou.some(kw => query.includes(kw))) {
+        return { text: kb.responses.whoareyou, hasButton: false };
+      }
+      
+      if (kb.keywords.thankyou.some(kw => query.includes(kw))) {
+        return { text: kb.responses.thankyou, hasButton: false };
+      }
+      
+      if (kb.keywords.bye.some(kw => query.includes(kw))) {
+        return { text: kb.responses.bye, hasButton: false };
+      }
+      
+      if (kb.keywords.services.some(kw => query.includes(kw))) {
+        return {
+          text: kb.responses.services,
+          hasButton: true,
+          buttonText: 'Download Services Brochure',
+          buttonLink: 'https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf'
+        };
+      }
+      
+      if (kb.keywords.marketing.some(kw => query.includes(kw))) {
+        return { text: kb.responses.marketing, hasButton: true };
+      }
+      
+      if (kb.keywords.sales.some(kw => query.includes(kw))) {
+        return { text: kb.responses.sales, hasButton: true };
+      }
+      
+      if (kb.keywords.scaling.some(kw => query.includes(kw))) {
+        return { text: kb.responses.scaling, hasButton: true };
+      }
+      
+      if (kb.keywords.contact.some(kw => query.includes(kw))) {
+        return { text: kb.responses.contact, hasButton: false };
+      }
+      
+      if (greetings.some(g => query.startsWith(g + ' ') || query.startsWith(g + ','))) {
+        return {
+          text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.confirmation.some(kw => query.includes(kw))) {
+        return { text: kb.responses.confirmation, hasButton: true };
+      }
+      
+      if (kb.keywords.pricing.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.pricing}\n\n${kb.responses.quickDelivery}\n\n${kb.responses.confirmation}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.installment.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.installments}\n\n${kb.responses.pricing}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.quickdelivery.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.quickDelivery}\n\n${kb.responses.timeline}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.features.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.timeline.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.timeline}\n\n${kb.responses.confirmation}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.technical.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.noTech}\n\n${kb.responses.fullPackage}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.products.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.products}\n\n${kb.responses.pricing}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.domain.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.domain}\n\n${kb.responses.confirmation}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.training.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.training}\n\n${kb.responses.confirmation}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.platform.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.platform}\n\n${kb.responses.fullPackage}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.payment_gateway.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.paymentGateway}\n\n${kb.responses.confirmation}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.design.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.design}\n\n${kb.responses.confirmation}`,
+          hasButton: true
+        };
+      }
+      
+      const ecommerceKeywords = ['ecommerce', 'e-commerce', 'online store', 'store', 'shop', 'website', 'sell online', 'business'];
+      if (ecommerceKeywords.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
+          hasButton: true
+        };
+      }
+      
       return {
         text: "Thank you for reaching out! I'd be happy to help you with information about our ecommerce store setup service or other business solutions.\n\nFeel free to ask about:\n• Pricing and packages\n• Features and services\n• Timeline and delivery\n• Marketing support\n• Or anything else!\n\nYou can also chat with our team directly for personalized assistance.",
         hasButton: false
       };
     },
 
-async handleSearch() {
-  if (!this.query.trim()) return;
-  
-  const userQuery = this.query.trim();
-  
-  if (!this.currentChatId) {
-    this.currentChatId = Date.now().toString();
-  }
-  
-  this.messages.push({
-    type: 'user',
-    text: userQuery,
-    timestamp: new Date()
-  });
-  
-  this.query = "";
-  
-  // Save current chat
-  localStorage.setItem('ar-current-messages', JSON.stringify(this.messages));
-  localStorage.setItem('ar-current-chat-id', this.currentChatId);
-  
-  await this.$nextTick();
-  this.scrollToBottom();
-  
-  setTimeout(() => {
-    const aiResponse = this.generateResponse(userQuery);
-    
-    this.messages.push({
-      type: 'bot',
-      text: aiResponse.text,
-      timestamp: new Date(),
-      hasButton: aiResponse.hasButton,
-      buttonText: 'Launch My Store - ₹1,599',
-      buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
-    });
-    
-    // Save updated messages
-    localStorage.setItem('ar-current-messages', JSON.stringify(this.messages));
-    
-    this.scrollToBottom();
-  }, 500);
-},
+    async handleSearch() {
+      if (!this.query.trim()) return;
+      
+      const userQuery = this.query.trim();
+      
+      if (!this.currentChatId) {
+        this.currentChatId = Date.now().toString();
+      }
+      
+      this.messages.push({
+        type: 'user',
+        text: userQuery,
+        timestamp: new Date()
+      });
+      
+      this.query = "";
+      
+      if (process.client) {
+        localStorage.setItem('ar-current-messages', JSON.stringify(this.messages));
+        localStorage.setItem('ar-current-chat-id', this.currentChatId);
+      }
+      
+      await this.$nextTick();
+      this.scrollToBottom();
+      
+      setTimeout(() => {
+        const aiResponse = this.generateResponse(userQuery);
+        
+        this.messages.push({
+          type: 'bot',
+          text: aiResponse.text,
+          timestamp: new Date(),
+          hasButton: aiResponse.hasButton,
+          buttonText: aiResponse.buttonText || 'Launch My Store - ₹1,599',
+          buttonLink: aiResponse.buttonLink || 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
+        });
+        
+        if (process.client) {
+          localStorage.setItem('ar-current-messages', JSON.stringify(this.messages));
+        }
+        
+        this.scrollToBottom();
+      }, 500);
+    },
 
     scrollToBottom() {
       this.$nextTick(() => {
@@ -560,32 +548,36 @@ async handleSearch() {
       });
     },
 
-toggleTheme() {
-  this.isDarkMode = !this.isDarkMode;
-  localStorage.setItem('ar-theme', this.isDarkMode ? 'dark' : 'light');
-},
+    toggleTheme() {
+      this.isDarkMode = !this.isDarkMode;
+      if (process.client) {
+        localStorage.setItem('ar-theme', this.isDarkMode ? 'dark' : 'light');
+      }
+    },
 
-startNewChat() {
-  if (this.messages.length > 0) {
-    this.chatHistory.unshift({
-      id: this.currentChatId || Date.now().toString(),
-      title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
-      messages: [...this.messages],
-      date: new Date()
-    });
-    
-    // Save chat history
-    localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
-  }
-  
-  this.messages = [];
-  this.query = "";
-  this.currentChatId = null;
-  
-  // Clear current chat from storage
-  localStorage.removeItem('ar-current-messages');
-  localStorage.removeItem('ar-current-chat-id');
-},
+    startNewChat() {
+      if (this.messages.length > 0) {
+        this.chatHistory.unshift({
+          id: this.currentChatId || Date.now().toString(),
+          title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
+          messages: [...this.messages],
+          date: new Date()
+        });
+        
+        if (process.client) {
+          localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+        }
+      }
+      
+      this.messages = [];
+      this.query = "";
+      this.currentChatId = null;
+      
+      if (process.client) {
+        localStorage.removeItem('ar-current-messages');
+        localStorage.removeItem('ar-current-chat-id');
+      }
+    },
 
     loadChat(chat) {
       if (this.messages.length > 0 && this.currentChatId !== chat.id) {
@@ -605,82 +597,60 @@ startNewChat() {
       this.scrollToBottom();
     },
 
-copyMessage(text) {
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(() => {
-      alert('Message copied to clipboard!');
-    }).catch(err => {
-      console.error('Failed to copy message: ', err);
-      alert('Failed to copy message');
-    });
-  } else {
-    // Fallback for older browsers
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    textArea.style.position = 'fixed';
-    textArea.style.left = '-999999px';
-    document.body.appendChild(textArea);
-    textArea.select();
-    try {
-      document.execCommand('copy');
-      alert('Message copied to clipboard!');
-    } catch (err) {
-      alert('Failed to copy message');
+    copyMessage(text) {
+      if (process.client && navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+          alert('Message copied to clipboard!');
+        }).catch(() => {
+          alert('Failed to copy message');
+        });
+      }
+    },
+
+    likeMessage(index) {
+      alert('Thank you for your feedback! 👍');
+    },
+
+    dislikeMessage(index) {
+      alert('Thank you for your feedback. We will improve! 👎');
+    },
+
+    regenerateResponse(index) {
+      if (index > 0 && this.messages[index - 1]?.type === 'user') {
+        const userQuery = this.messages[index - 1].text;
+        this.messages.splice(index, 1);
+        
+        setTimeout(() => {
+          const aiResponse = this.generateResponse(userQuery);
+          
+          this.messages.push({
+            type: 'bot',
+            text: aiResponse.text,
+            timestamp: new Date(),
+            hasButton: aiResponse.hasButton,
+            buttonText: 'Launch My Store - ₹1,599',
+            buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
+          });
+          
+          this.scrollToBottom();
+        }, 300);
+      }
+    },
+
+    shareMessage(text) {
+      if (process.client && navigator.share) {
+        navigator.share({
+          title: 'AR Solutions AI Response',
+          text: text
+        }).catch(() => {
+          this.copyMessage(text);
+        });
+      } else {
+        this.copyMessage(text);
+      }
     }
-    document.body.removeChild(textArea);
   }
-},
-
-likeMessage(index) {
-  alert('Thank you for your feedback! 👍');
-  console.log('Liked message at index:', index);
-},
-
-dislikeMessage(index) {
-  alert('Thank you for your feedback. We will improve! 👎');
-  console.log('Disliked message at index:', index);
-},
-
-regenerateResponse(index) {
-  if (index > 0 && this.messages[index - 1]?.type === 'user') {
-    const userQuery = this.messages[index - 1].text;
-    
-    // Remove the old bot response
-    this.messages.splice(index, 1);
-    
-    // Generate new response
-    setTimeout(() => {
-      const aiResponse = this.generateResponse(userQuery);
-      
-      this.messages.push({
-        type: 'bot',
-        text: aiResponse.text,
-        timestamp: new Date(),
-        hasButton: aiResponse.hasButton,
-        buttonText: 'Launch My Store - ₹1,599',
-        buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
-      });
-      
-      this.scrollToBottom();
-    }, 300);
-  }
-},
-
-shareMessage(text) {
-  if (navigator.share) {
-    navigator.share({
-      title: 'AR Solutions AI Response',
-      text: text
-    }).catch(err => {
-      console.log('Share cancelled or failed:', err);
-    });
-  } else {
-    // Fallback - copy to clipboard
-    this.copyMessage(text);
-  }
-}
-  }
-}
+};
 </script>
 
 <style scoped>
