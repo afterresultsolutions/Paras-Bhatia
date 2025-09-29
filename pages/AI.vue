@@ -60,7 +60,7 @@ function handleSearch() {
     if (isEcommerceQuery) {
       messages.value.push({
         type: 'bot',
-        text: 'Hi, thank you so much for sharing your requirement! We surely help you with ecommerce store end to end. We are professional team of ecommerce experts. You will make and live store in just 25 days. Start today!',
+        text: 'Hi there! Thank you for sharing your requirement. We provide complete eCommerce store solutions, from setup to launch, with your store ready in just 25 days. For more details, including services, pricing, and process, please click on Launch My Store.',
         timestamp: new Date(),
         hasButton: true,
         buttonText: 'Launch My Store',
