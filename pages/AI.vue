@@ -23,17 +23,18 @@
         </div>
         
         <div :class="['sidebar-footer', isDarkMode ? 'footer-dark' : 'footer-light']">
+          <a href="https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0" target="_blank" class="human-chat-btn footer-human-btn">
+            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+            <span class="human-chat-text">Chat with Human</span>
+          </a>
           <button @click="toggleTheme" :class="['footer-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
             <svg v-if="isDarkMode" class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
             </svg>
             <svg v-else class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-            </svg>
-          </button>
-          <button :class="['footer-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
-            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
             </svg>
           </button>
         </div>
@@ -88,12 +89,6 @@
             <span class="brand-name">AR Solutions</span>
             <span class="model-badge">AI</span>
           </div>
-          <a href="https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0" target="_blank" class="human-chat-btn">
-            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-            </svg>
-            <span class="human-chat-text">Chat with Human</span>
-          </a>
         </div>
 
         <!-- Chat area -->
@@ -129,20 +124,6 @@
               <div class="messages-inner">
                 <div v-for="(message, index) in messages" :key="index" class="message-group">
                   <div :class="['message-row', message.type === 'user' ? 'message-user' : 'message-bot']">
-                    <div v-if="message.type === 'bot'" class="message-avatar">
-                      <div class="avatar avatar-bot">
-                        <svg viewBox="0 0 200 200" class="avatar-icon">
-                          <defs>
-                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                              <stop offset="0%" style="stop-color:#00d084"/>
-                              <stop offset="100%" style="stop-color:#00a86b"/>
-                            </linearGradient>
-                          </defs>
-                          <circle cx="100" cy="100" r="80" fill="url(#grad1)"/>
-                          <text x="100" y="115" text-anchor="middle" fill="white" font-size="60" font-weight="bold">AR</text>
-                        </svg>
-                      </div>
-                    </div>
                     <div class="message-content-wrapper">
                       <div class="message-content">
                         <p class="message-text">{{ message.text }}</p>
@@ -188,9 +169,8 @@
                         </a>
                       </div>
                     </div>
-                    <div v-if="message.type === 'user'" class="message-avatar">
-                      <div class="avatar avatar-user">
-                        <svg class="avatar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  </div>
+                </div>currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                         </svg>
                       </div>
@@ -237,7 +217,7 @@ export default {
       query: "",
       showMenu: false,
       messages: [],
-      isDarkMode: true,
+      isDarkMode: false,
       chatHistory: [],
       currentChatId: null,
       spellCheckDictionary: {
@@ -558,6 +538,29 @@ export default {
   cursor: pointer;
   transition: background-color 0.2s;
   background: none;
+  max-width: 60px;
+}
+
+.footer-human-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  flex: 1;
+  max-width: none;
+}
+
+.footer-human-btn:hover {
+  opacity: 0.9;
 }
 
 .mobile-sidebar {
@@ -912,12 +915,8 @@ export default {
   display: flex;
   gap: 4px;
   margin-top: 8px;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-.message-group:hover .message-actions {
   opacity: 1;
+  transition: opacity 0.2s;
 }
 
 .action-btn {
