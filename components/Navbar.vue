@@ -1,6 +1,4 @@
 <script setup>
-const menuitems = [
-];
 </script>
 <template>
   <Container>
