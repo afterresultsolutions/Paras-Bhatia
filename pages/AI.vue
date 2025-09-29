@@ -51,7 +51,7 @@ function handleSearch() {
   });
   
   const queryLower = correctedQuery.toLowerCase();
-  const ecommerceKeywords = ['ecommerce', 'e-commerce', 'online store', 'shopify', 'online selling', 'online shop', 'webstore', 'web store'];
+  const ecommerceKeywords = ['ecommerce', 'e-commerce', 'online store', 'shopify', 'online selling', 'online shop', 'webstore', 'web store', 'online business', 'sell online', 'store', 'shop'];
   const isEcommerceQuery = ecommerceKeywords.some(keyword => queryLower.includes(keyword));
   
   query.value = "";
