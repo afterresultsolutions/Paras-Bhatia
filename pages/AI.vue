@@ -60,7 +60,7 @@ function handleSearch() {
     if (isEcommerceQuery) {
       messages.value.push({
         type: 'bot',
-        text: 'Hi there! Thank you for sharing your requirement. We specialize in providing complete end-to-end eCommerce solutions and can help you set up a fully professional online store from scratch. Our team of experts ensures everything is handled smoothly, so your store is ready to go live within just 25 days. Let’s get started today!',
+        text: 'Hi, thank you so much for sharing your requirement! We surely help you with ecommerce store end to end. We are professional team of ecommerce experts. You will make and live store in just 25 days. Start today!',
         timestamp: new Date(),
         hasButton: true,
         buttonText: 'Launch My Store',
@@ -117,7 +117,7 @@ function formatDate(date) {
 </script>
 
 <template>
-  <div :class="['min-h-screen flex transition-colors duration-300', isDarkMode ? 'bg-[#212121] text-white' : 'bg-white text-gray-800']">
+  <div :class="['chat-container h-screen flex transition-colors duration-300', isDarkMode ? 'bg-[#212121] text-white' : 'bg-white text-gray-800']">
     <!-- Sidebar for Desktop -->
     <div :class="['hidden md:flex w-64 flex-col border-r transition-colors duration-300', isDarkMode ? 'bg-[#171717] border-gray-700' : 'bg-gray-50 border-gray-200']">
       <div class="p-3">
@@ -197,7 +197,7 @@ function formatDate(date) {
     </button>
 
     <!-- Main content -->
-    <div class="flex-1 flex flex-col">
+    <div class="flex-1 flex flex-col relative">
       <!-- Header -->
       <div :class="['flex items-center justify-between px-4 md:px-6 py-2.5 border-b transition-colors duration-300', isDarkMode ? 'border-gray-700' : 'border-gray-200']">
         <div class="flex items-center gap-2 ml-12 md:ml-0">
@@ -216,8 +216,8 @@ function formatDate(date) {
       </div>
 
       <!-- Chat area -->
-      <div class="flex-1 overflow-y-auto px-3 md:px-4 pb-32">
-        <div v-if="messages.length === 0" class="flex flex-col items-center justify-center min-h-full">
+      <div class="flex-1 overflow-y-auto px-3 md:px-4" style="padding-bottom: 150px;">
+        <div v-if="messages.length === 0" class="flex flex-col items-center justify-center h-full">
           <div class="w-full max-w-2xl px-4">
             <h1 class="text-xl md:text-2xl font-normal text-center mb-8 md:mb-12">
               Ready when you are.
@@ -246,7 +246,7 @@ function formatDate(date) {
       </div>
 
       <!-- Input area -->
-      <div :class="['fixed bottom-0 left-0 md:left-64 right-0 pb-4 md:pb-6 pt-8 md:pt-12 transition-colors duration-300', isDarkMode ? 'bg-gradient-to-t from-[#212121] via-[#212121] to-transparent' : 'bg-gradient-to-t from-white via-white to-transparent']">
+      <div :class="['absolute bottom-0 left-0 right-0 pb-4 md:pb-6 pt-8 md:pt-12 transition-colors duration-300', isDarkMode ? 'bg-gradient-to-t from-[#212121] via-[#212121] to-transparent' : 'bg-gradient-to-t from-white via-white to-transparent']">
         <div class="max-w-2xl mx-auto px-3 md:px-4">
           <div class="relative">
             <div :class="['flex items-center rounded-full md:rounded-3xl shadow-lg border focus-within:border-gray-400 transition', isDarkMode ? 'bg-[#2A2A2A] border-gray-600' : 'bg-white border-gray-300']">
@@ -288,6 +288,11 @@ function formatDate(date) {
 </template>
 
 <style scoped>
+.chat-container {
+  position: relative;
+  isolation: isolate;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -303,11 +308,5 @@ function formatDate(date) {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #777;
-}
-
-@media (max-width: 768px) {
-  .fixed.bottom-0 {
-    left: 0;
-  }
 }
 </style>
