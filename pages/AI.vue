@@ -1,1239 +1,1626 @@
-<script setup>
-import { ref, nextTick } from "vue";
-
-const query = ref("");
-const showMenu = ref(false);
-const messages = ref([]);
-const isDarkMode = ref(true);
-const chatHistory = ref([]);
-const currentChatId = ref(null);
-const messagesContainer = ref(null);
-
-const spellCheckDictionary = {
-  'teh': 'the',
-  'recieve': 'receive',
-  'occured': 'occurred',
-  'seperate': 'separate',
-  'definately': 'definitely',
-  'goverment': 'government',
-  'accomodate': 'accommodate',
-  'wich': 'which',
-  'thier': 'their',
-  'succesful': 'successful',
-  'begining': 'beginning',
-  'untill': 'until',
-  'occassion': 'occasion',
-  'calender': 'calendar',
-  'existance': 'existence'
-};
-
-function autoCorrectText(text) {
-  let correctedText = text;
-  Object.keys(spellCheckDictionary).forEach(mistake => {
-    const regex = new RegExp(`\\b${mistake}\\b`, 'gi');
-    correctedText = correctedText.replace(regex, spellCheckDictionary[mistake]);
-  });
-  return correctedText;
-}
-
-async function handleSearch() {
-  if (!query.value.trim()) return;
-  
-  const correctedQuery = autoCorrectText(query.value);
-  
-  if (!currentChatId.value) {
-    currentChatId.value = Date.now();
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AfterResult Quotation Estimator</title>
+<style>
+  body {
+    font-family: "Inter", Arial, sans-serif;
+    background: #000;
+    color: #ddd;
+    margin: 0;
+    padding: 20px;
   }
-  
-  messages.value.push({
-    type: 'user',
-    text: correctedQuery,
-    timestamp: new Date()
-  });
-  
-  const queryLower = correctedQuery.toLowerCase();
-  const ecommerceKeywords = ['ecommerce', 'e-commerce', 'online store', 'shopify', 'online selling', 'online shop', 'webstore', 'web store', 'online business', 'sell online', 'store', 'shop'];
-  const isEcommerceQuery = ecommerceKeywords.some(keyword => queryLower.includes(keyword));
-  
-  query.value = "";
-  
-  await nextTick();
-  scrollToBottom();
-  
-  setTimeout(() => {
-    if (isEcommerceQuery) {
-      messages.value.push({
-        type: 'bot',
-        text: 'Hi, thank you so much for sharing your requirement! We surely help you with ecommerce store end to end. We are professional team of ecommerce experts. You will make and live store in just 25 days. Start today!',
-        timestamp: new Date(),
-        hasButton: true,
-        buttonText: 'Launch My Store',
-        buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
-      });
-    } else {
-      messages.value.push({
-        type: 'bot',
-        text: 'Oops! We will be soon live for you. 🚀',
-        timestamp: new Date()
-      });
-    }
-    scrollToBottom();
-  }, 500);
-}
-
-function scrollToBottom() {
-  nextTick(() => {
-    if (messagesContainer.value) {
-      messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight;
-    }
-  });
-}
-
-function toggleTheme() {
-  isDarkMode.value = !isDarkMode.value;
-}
-
-function startNewChat() {
-  if (messages.value.length > 0) {
-    chatHistory.value.unshift({
-      id: currentChatId.value || Date.now(),
-      title: messages.value[0].text.substring(0, 30) + (messages.value[0].text.length > 30 ? '...' : ''),
-      messages: [...messages.value],
-      date: new Date()
-    });
+  #calculatorContainer {
+    max-width: 900px;
+    width: 100%;
+    margin: 20px auto;
+    padding: 15px;
+    background: #181818;
+    border-radius: 18px;
+    border: 2px solid #f39c12;
+    box-shadow: 0 0 40px #f39c12;
+    box-sizing: border-box;
   }
-  
-  messages.value = [];
-  query.value = "";
-  currentChatId.value = null;
-}
-
-function loadChat(chat) {
-  if (messages.value.length > 0 && currentChatId.value !== chat.id) {
-    const existingIndex = chatHistory.value.findIndex(c => c.id === currentChatId.value);
-    if (existingIndex === -1) {
-      chatHistory.value.unshift({
-        id: currentChatId.value,
-        title: messages.value[0].text.substring(0, 30) + (messages.value[0].text.length > 30 ? '...' : ''),
-        messages: [...messages.value],
-        date: new Date()
-      });
-    }
+  h2, h3 {
+    color: #f39c12;
+    font-weight: 400;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 15px;
   }
-  messages.value = [...chat.messages];
-  currentChatId.value = chat.id;
-  showMenu.value = false;
-  scrollToBottom();
-}
-
-function formatDate(date) {
-  const now = new Date();
-  const diff = now - new Date(date);
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  
-  if (days === 0) return 'Today';
-  if (days === 1) return 'Yesterday';
-  if (days < 7) return `${days} days ago`;
-  return new Date(date).toLocaleDateString();
-}
-</script>
-
-<template>
-  <div :class="['chat-wrapper', isDarkMode ? 'dark-mode' : 'light-mode']">
-    <div class="chat-container">
-      <!-- Sidebar for Desktop -->
-      <div :class="['sidebar', isDarkMode ? 'sidebar-dark' : 'sidebar-light']">
-        <div class="sidebar-header">
-          <button @click="startNewChat" :class="['new-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
-            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-            </svg>
-            <span>New chat</span>
-          </button>
-        </div>
-        
-        <div class="sidebar-content">
-          <div v-if="chatHistory.length > 0" :class="['history-label', isDarkMode ? 'text-gray-500' : 'text-gray-600']">Recent</div>
-          <div v-for="chat in chatHistory" :key="chat.id" @click="loadChat(chat)" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
-            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-            </svg>
-            <span class="history-title">{{ chat.title }}</span>
-          </div>
-        </div>
-        
-        <div :class="['sidebar-footer', isDarkMode ? 'footer-dark' : 'footer-light']">
-          <button @click="toggleTheme" :class="['footer-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
-            <svg v-if="isDarkMode" class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-            </svg>
-            <svg v-else class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-            </svg>
-          </button>
-          <button :class="['footer-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
-            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- Mobile Sidebar -->
-      <div v-if="showMenu" @click="showMenu = false" class="mobile-overlay"></div>
-      <div :class="['mobile-sidebar', showMenu ? 'mobile-sidebar-open' : '', isDarkMode ? 'sidebar-dark' : 'sidebar-light']">
-        <div class="sidebar-header">
-          <button @click="showMenu = false; startNewChat()" :class="['new-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
-            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-            </svg>
-            <span>New chat</span>
-          </button>
-        </div>
-        
-        <div class="sidebar-content">
-          <div v-if="chatHistory.length > 0" :class="['history-label', isDarkMode ? 'text-gray-500' : 'text-gray-600']">Recent</div>
-          <div v-for="chat in chatHistory" :key="chat.id" @click="loadChat(chat)" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
-            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-            </svg>
-            <span class="history-title">{{ chat.title }}</span>
-          </div>
-        </div>
-        
-        <div :class="['sidebar-footer', isDarkMode ? 'footer-dark' : 'footer-light']">
-          <button @click="toggleTheme" :class="['footer-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
-            <svg v-if="isDarkMode" class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-            </svg>
-            <svg v-else class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- Mobile menu toggle -->
-      <button @click="showMenu = !showMenu" :class="['mobile-menu-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
-        <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
-      </button>
-
-      <!-- Main content -->
-      <div class="main-content">
-        <!-- Header -->
-        <div :class="['chat-header', isDarkMode ? 'header-dark' : 'header-light']">
-          <div class="header-title">
-            <span class="brand-name">ChatGPT</span>
-            <span class="model-badge">4</span>
-          </div>
-          <a href="https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0" target="_blank" class="human-chat-btn">
-            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-            </svg>
-            <span class="human-chat-text">Chat with Human</span>
-          </a>
-        </div>
-
-        <!-- Chat area -->
-        <div class="chat-area">
-          <!-- Empty state -->
-          <div v-if="messages.length === 0" class="empty-state">
-            <h1 :class="['empty-title', isDarkMode ? 'text-white' : 'text-gray-800']">What can I help with?</h1>
-            
-            <div class="search-container-center">
-              <div :class="['search-box', isDarkMode ? 'search-dark' : 'search-light']">
-                <input
-                  v-model="query"
-                  @keyup.enter="handleSearch"
-                  type="text"
-                  placeholder="Message ChatGPT"
-                  :class="['search-input', isDarkMode ? 'input-dark' : 'input-light']"
-                />
-                <button @click="handleSearch" :class="['send-btn', query.trim() ? 'send-btn-active' : '']">
-                  <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-                  </svg>
-                </button>
-              </div>
-              <div :class="['disclaimer', isDarkMode ? 'text-gray-500' : 'text-gray-400']">
-                ChatGPT can make mistakes. Check important info.
-              </div>
-            </div>
-          </div>
-
-          <!-- Chat messages -->
-          <div v-else class="messages-wrapper">
-            <div ref="messagesContainer" class="messages-container">
-              <div class="messages-inner">
-                <div v-for="(message, index) in messages" :key="index" class="message-group">
-                  <div :class="['message-row', message.type === 'user' ? 'message-user' : 'message-bot']">
-                    <div class="message-avatar">
-                      <div v-if="message.type === 'bot'" :class="['avatar', 'avatar-bot']">
-                        <div class="custom-logo">
-                          <svg viewBox="0 0 200 200" class="avatar-icon">
-                            <defs>
-                              <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#FFB347"/>
-                                <stop offset="25%" style="stop-color:#FF6B9D"/>
-                                <stop offset="50%" style="stop-color:#C147E9"/>
-                                <stop offset="75%" style="stop-color:#4285F4"/>
-                                <stop offset="100%" style="stop-color:#00CED1"/>
-                              </linearGradient>
-                              <linearGradient id="grad2" x1="0%" y1="100%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:#1E3A8A"/>
-                                <stop offset="50%" style="stop-color:#7C3AED"/>
-                                <stop offset="100%" style="stop-color:#EC4899"/>
-                              </linearGradient>
-                            </defs>
-                            <path d="M50 20 Q30 20 20 40 Q20 60 30 70 L30 120 Q30 140 50 140 L90 140 Q110 140 120 130 Q130 120 130 100 L130 70 Q140 60 140 40 Q140 20 120 20 Z" fill="url(#grad1)"/>
-                            <path d="M80 180 Q60 180 50 160 Q50 140 60 130 L60 80 Q60 60 80 60 L120 60 Q140 60 150 70 Q160 80 160 100 L160 130 Q170 140 170 160 Q170 180 150 180 Z" fill="url(#grad2)"/>
-                            <circle cx="100" cy="100" r="30" fill="white"/>
-                          </svg>
-                        </div>
-                      </div>
-                      <div v-else :class="['avatar', 'avatar-user']">
-                        <svg class="avatar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                        </svg>
-                      </div>
-                    </div>
-                    <div class="message-content-wrapper">
-                      <div class="message-content">
-                        <p class="message-text">{{ message.text }}</p>
-                        <a v-if="message.hasButton" :href="message.buttonLink" target="_blank" class="launch-btn">
-                          {{ message.buttonText }}
-                        </a>
-                      </div>
-                      <div v-if="message.type === 'bot'" class="message-actions">
-                        <button class="action-btn" title="Good response">
-                          <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
-                          </svg>
-                        </button>
-                        <button class="action-btn" title="Bad response">
-                          <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"></path>
-                          </svg>
-                        </button>
-                        <button class="action-btn" title="Copy">
-                          <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                          </svg>
-                        </button>
-                        <button class="action-btn" title="Regenerate">
-                          <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-                          </svg>
-                        </button>
-                        <a href="https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0" target="_blank" class="action-btn" title="WhatsApp">
-                          <svg class="icon-xs" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path>
-                          </svg>
-                        </a>
-                        <a href="tel:+919050983530" class="action-btn" title="Call">
-                          <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                          </svg>
-                        </a>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Bottom input -->
-            <div class="input-area">
-              <div class="input-container">
-                <div :class="['search-box', isDarkMode ? 'search-dark' : 'search-light']">
-                  <input
-                    v-model="query"
-                    @keyup.enter="handleSearch"
-                    type="text"
-                    placeholder="Message ChatGPT"
-                    :class="['search-input', isDarkMode ? 'input-dark' : 'input-light']"
-                  />
-                  <button @click="handleSearch" :class="['send-btn', query.trim() ? 'send-btn-active' : '']">
-                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-                    </svg>
-                  </button>
-                </div>
-                <div :class="['disclaimer', isDarkMode ? 'text-gray-500' : 'text-gray-400']">
-                  ChatGPT can make mistakes. Check important info.
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
-<style scoped>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-.chat-wrapper {
-  width: 100%;
-  min-height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  transition: background-color 0.2s, color 0.2s;
-}
-
-.dark-mode {
-  background-color: #212121;
-  color: #ececec;
-}
-
-.light-mode {
-  background-color: #ffffff;
-  color: #2f2f2f;
-}
-
-.chat-container {
-  display: flex;
-  height: 100vh;
-  position: relative;
-}
-
-/* Sidebar */
-.sidebar {
-  width: 260px;
-  display: flex;
-  flex-direction: column;
-  border-right: 1px solid;
-  transition: background-color 0.2s;
-}
-
-.sidebar-dark {
-  background-color: #171717;
-  border-color: #363636;
-}
-
-.sidebar-light {
-  background-color: #f9f9f9;
-  border-color: #e5e5e5;
-}
-
-.sidebar-header {
-  padding: 12px 8px;
-  border-bottom: 1px solid;
-}
-
-.sidebar-dark .sidebar-header {
-  border-color: #363636;
-}
-
-.sidebar-light .sidebar-header {
-  border-color: #e5e5e5;
-}
-
-.new-chat-btn {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 12px;
-  font-size: 14px;
-  border: 1px solid;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  background: none;
-}
-
-.btn-dark {
-  color: #ececec;
-  border-color: #4d4d4d;
-}
-
-.btn-dark:hover {
-  background-color: #2f2f2f;
-}
-
-.btn-light {
-  color: #2f2f2f;
-  border-color: #d1d1d1;
-}
-
-.btn-light:hover {
-  background-color: #f0f0f0;
-}
-
-.sidebar-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 8px;
-}
-
-.history-label {
-  font-size: 11px;
-  font-weight: 500;
-  padding: 8px 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.history-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  font-size: 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  margin-bottom: 4px;
-}
-
-.history-item-dark:hover {
-  background-color: #2f2f2f;
-}
-
-.history-item-light:hover {
-  background-color: #ececec;
-}
-
-.history-title {
-  flex: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.sidebar-footer {
-  padding: 12px 8px;
-  border-top: 1px solid;
-  display: flex;
-  gap: 8px;
-}
-
-.footer-dark {
-  border-color: #363636;
-}
-
-.footer-light {
-  border-color: #e5e5e5;
-}
-
-.footer-btn {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px;
-  font-size: 14px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  background: none;
-}
-
-/* Mobile sidebar */
-.mobile-sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 260px;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  transform: translateX(-100%);
-  transition: transform 0.3s;
-}
-
-.mobile-sidebar-open {
-  transform: translateX(0);
-}
-
-.mobile-overlay {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-}
-
-.mobile-menu-btn {
-  position: fixed;
-  top: 14px;
-  left: 12px;
-  z-index: 998;
-  padding: 8px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-/* Main content */
-.main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.chat-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
-  border-bottom: 1px solid;
-}
-
-.header-dark {
-  background-color: #212121;
-  border-color: #363636;
-}
-
-.header-light {
-  background-color: #ffffff;
-  border-color: #e5e5e5;
-}
-
-.header-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: 40px;
-}
-
-.brand-name {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.model-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  font-size: 11px;
-  font-weight: 600;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border-radius: 4px;
-}
-
-.human-chat-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 20px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.human-chat-btn:hover {
-  opacity: 0.9;
-}
-
-.human-chat-text {
-  display: none;
-}
-
-/* Chat area */
-.chat-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.empty-state {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  min-height: 0;
-}
-
-.empty-title {
-  font-size: 28px;
-  font-weight: 400;
-  margin-bottom: 40px;
-  text-align: center;
-}
-
-.search-container-center {
-  width: 100%;
-  max-width: 600px;
-  position: sticky;
-  bottom: 0;
-}
-
-.search-box {
-  display: flex;
-  align-items: center;
-  border: 1px solid;
-  border-radius: 24px;
-  padding: 4px 4px 4px 16px;
-  transition: border-color 0.2s;
-  width: 100%;
-  max-width: 100%;
-}
-
-.search-dark {
-  background-color: #2f2f2f;
-  border-color: #4d4d4d;
-}
-
-.search-light {
-  background-color: #f4f4f4;
-  border-color: #d1d1d1;
-}
-
-.search-box:focus-within {
-  border-color: #6e6e6e;
-}
-
-.search-input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  outline: none;
-  padding: 12px 8px;
-  font-size: 15px;
-  min-width: 0;
-}
-
-.input-dark {
-  color: #ececec;
-}
-
-.input-dark::placeholder {
-  color: #8e8e8e;
-}
-
-.input-light {
-  color: #2f2f2f;
-}
-
-.input-light::placeholder {
-  color: #8e8e8e;
-}
-
-.send-btn {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 50%;
-  background-color: #676767;
-  color: white;
-  cursor: not-allowed;
-  transition: background-color 0.2s;
-  flex-shrink: 0;
-}
-
-.send-btn-active {
-  background-color: #ececec;
-  color: #2f2f2f;
-  cursor: pointer;
-}
-
-.send-btn-active:hover {
-  background-color: #d9d9d9;
-}
-
-.disclaimer {
-  text-align: center;
-  margin-top: 12px;
-  font-size: 12px;
-}
-
-/* Messages */
-.messages-wrapper {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.messages-container {
-  flex: 1;
-  overflow-y: auto;
-  padding-bottom: 0;
-}
-
-.messages-inner {
-  max-width: 768px;
-  margin: 0 auto;
-  padding: 24px 20px 0;
-}
-
-.message-group {
-  margin-bottom: 24px;
-}
-
-.message-row {
-  display: flex;
-  gap: 16px;
-}
-
-.message-avatar {
-  flex-shrink: 0;
-}
-
-.avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.avatar-bot {
-  background: transparent;
-  padding: 2px;
-}
-
-.avatar-user {
-  background-color: #5436da;
-}
-
-.avatar-icon {
-  width: 28px;
-  height: 28px;
-  color: white;
-}
-
-.custom-logo {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.message-content-wrapper {
-  flex: 1;
-  min-width: 0;
-}
-
-.message-content {
-  margin-bottom: 8px;
-}
-
-.message-text {
-  font-size: 15px;
-  line-height: 1.6;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-
-.launch-btn {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 500;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 20px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.launch-btn:hover {
-  opacity: 0.9;
-}
-
-.message-actions {
-  display: flex;
-  gap: 4px;
-  margin-top: 8px;
-}
-
-.action-btn {
-  padding: 6px;
-  border: none;
-  background: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  color: inherit;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.dark-mode .action-btn:hover {
-  background-color: #2f2f2f;
-}
-
-.light-mode .action-btn:hover {
-  background-color: #f0f0f0;
-}
-
-.help-message {
-  font-size: 13px;
-  margin-top: 12px;
-  line-height: 1.5;
-}
-
-/* Input area */
-.input-area {
-  padding: 20px;
-  border-top: 1px solid transparent;
-  position: sticky;
-  bottom: 0;
-  z-index: 100;
-}
-
-.dark-mode .input-area {
-  background: linear-gradient(to top, #212121 0%, #212121 85%, transparent 100%);
-}
-
-.light-mode .input-area {
-  background: linear-gradient(to top, #ffffff 0%, #ffffff 85%, transparent 100%);
-}
-
-.input-container {
-  max-width: 768px;
-  margin: 0 auto;
-}
-
-/* Icons */
-.icon-xs {
-  width: 16px;
-  height: 16px;
-}
-
-.icon-sm {
-  width: 20px;
-  height: 20px;
-}
-
-.icon-md {
-  width: 24px;
-  height: 24px;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #4d4d4d;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #6e6e6e;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-  .sidebar {
-    width: 240px;
+  label {
+    display: block;
+    font-size: 13px;
+    color: #ccc;
+    margin-bottom: 5px;
+    font-weight: 300;
   }
-}
-
-@media (max-width: 768px) {
-  .sidebar {
-    display: none;
+  select,
+  input[type="number"],
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"] {
+    width: 100%;
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 2px solid #f39c12;
+    background: #111;
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 14px;
+    outline: none;
+    transition: border-color 0.3s;
+    text-align: left;
   }
-
-  .header-title {
-    margin-left: 48px;
+  select:hover,
+  select:focus,
+  input:hover,
+  input:focus {
+    border-color: #e67e22;
   }
-
-  .empty-title {
-    font-size: 22px;
-    margin-bottom: 30px;
-  }
-
-  .messages-inner {
-    padding: 20px 12px 0;
-  }
-
-  .input-area {
-    padding: 12px;
-  }
-
-  .search-container-center {
-    max-width: 100%;
-    padding: 0 12px;
-  }
-
-  .empty-state {
-    padding: 12px;
-    justify-content: flex-start;
-    padding-top: 40px;
-  }
-
-  .message-row {
+  .button-row {
+    display: flex;
     gap: 12px;
-  }
-
-  .avatar {
-    width: 28px;
-    height: 28px;
-  }
-
-  .avatar-icon {
-    width: 24px;
-    height: 24px;
-  }
-
-  .message-text {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 480px) {
-  .empty-title {
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
-
-  .header-title {
-    margin-left: 44px;
-  }
-
-  .mobile-menu-btn {
-    top: 10px;
-    left: 8px;
-    padding: 6px;
-  }
-
-  .chat-header {
-    padding: 8px 10px;
-  }
-
-  .human-chat-btn {
-    padding: 6px 10px;
-    font-size: 12px;
-    gap: 4px;
-  }
-
-  .brand-name {
-    font-size: 16px;
-  }
-
-  .model-badge {
-    width: 18px;
-    height: 18px;
-    font-size: 10px;
-  }
-
-  .search-input {
-    font-size: 14px;
-    padding: 10px 6px;
-  }
-
-  .send-btn {
-    width: 28px;
-    height: 28px;
-  }
-
-  .search-box {
-    padding: 3px 3px 3px 12px;
-  }
-
-  .messages-inner {
-    padding: 16px 8px 0;
-  }
-
-  .input-area {
-    padding: 10px 8px;
-  }
-
-  .search-container-center {
-    padding: 0 8px;
-  }
-
-  .message-row {
-    gap: 8px;
-  }
-
-  .avatar {
-    width: 24px;
-    height: 24px;
-  }
-
-  .avatar-icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  .message-text {
-    font-size: 13px;
-    line-height: 1.5;
-  }
-
-  .launch-btn {
-    padding: 8px 16px;
-    font-size: 13px;
-  }
-
-  .action-btn {
-    padding: 4px;
-  }
-
-  .icon-xs {
-    width: 14px;
-    height: 14px;
-  }
-
-  .disclaimer {
-    font-size: 11px;
+    margin-bottom: 12px;
     margin-top: 8px;
+    flex-wrap: wrap;
   }
-}
-
-@media (max-width: 360px) {
-  .empty-title {
-    font-size: 18px;
+  button {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(90deg, #f39c12 0%, #e74c3c 100%);
+    color: white;
+    font-weight: 600;
+    font-size: 0.80rem;
+    cursor: pointer;
+    margin-bottom: 0;
+    transition: background 0.3s;
+    min-width: 120px;
   }
-
-  .human-chat-btn {
-    padding: 5px 8px;
+  button.whatsapp {
+    background: linear-gradient(90deg, #25d366 0%, #128c7e 100%);
+  }
+  button:hover {
+    background: linear-gradient(90deg, #e67e22 0%, #c0392b 100%);
+  }
+  button.whatsapp:hover {
+    background: linear-gradient(90deg, #128c7e 0%, #25d366 100%);
+  }
+  .hidden {
+    display: none !important;
+  }
+  #estimatedPriceRange {
+    color: #f39c12;
+    font-weight: 600;
+    font-size: 0.8rem;
+    min-height: 24px;
+    margin-bottom: 8px;
+    white-space: pre-line;
+    text-align: center;
+  }
+  #averagePriceRange {
+    color: #aaa;
+    font-weight: 400;
+    font-size: 0.7rem;
+    margin-bottom: 16px;
+    text-align: center;
+    font-style: italic;
+  }
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    justify-content: center;
+  }
+  .slider-row label {
+    margin: 0 0 0 0;
+    font-size: 0.9em;
+    color: #bbb;
+    font-weight: 400;
+  }
+  input[type="range"] {
+    width: 240px;
+    accent-color: #f39c12;
+    height: 3px;
+    background: linear-gradient(90deg, #f39c12 0%, #e74c3c 100%);
+    border-radius: 2px;
+    outline: none;
+    margin: 0;
+    -webkit-appearance: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #f39c12;
+    box-shadow: 0 2px 8px #0002;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  input[type="range"]:focus::-webkit-slider-thumb {
+    background: #f39c12;
+    border-color: #e67e22;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 10px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #f39c12;
+    box-shadow: 0 2px 8px #0002;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  input[type="range"]:focus::-moz-range-thumb {
+    background: #f39c12;
+    border-color: #e67e22;
+  }
+  input[type="range"]::-ms-thumb {
+    width: 10px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #f39c12;
+    box-shadow: 0 2px 8px #0002;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .centered-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    font-size: 0.85em;
+    margin-bottom: 6px;
+  }
+  #quotePreviewSection {
+    background: #fff;
+    color: #222;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 20px #f39c12;
+    margin-top: 25px;
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 13px;
+    max-width: 500px;
+    position: relative;
+    overflow-x: auto;
+  }
+  #quotePreviewContent {
+    max-width: 100%;
+    margin: auto;
+    text-align: left;
+    word-wrap: break-word;
+    position: relative;
+    z-index: 2;
+  }
+  .watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg);
+    font-size: 5vw;
+    color: rgba(243, 156, 18, 0.09);
+    user-select: none;
+    pointer-events: none;
+    font-weight: 900;
+    letter-spacing: 10px;
+    white-space: nowrap;
+    z-index: 1;
+  }
+  .quotation-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 2px solid #f39c12;
+    padding-bottom: 6px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+  }
+  .quotation-header img {
+    height: 50px;
+    width: auto;
+    border-radius: 8px;
+    background: #fff;
+    padding: 4px;
+    flex-shrink: 0;
+  }
+  .quotation-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 8px;
     font-size: 11px;
   }
-
-  .human-chat-text {
-    display: none;
+  .quotation-section-title {
+    color: #f39c12;
+    font-size: 14px;
+    margin-top: 15px;
+    margin-bottom: 6px;
+    font-weight: 600;
   }
-
-  .search-input {
+  .quotation-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
     font-size: 13px;
-    padding: 8px 6px;
   }
-
-  .messages-inner {
-    padding: 12px 6px 0;
+  .quotation-table th,
+  .quotation-table td {
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 400;
   }
-
-  .input-area {
-    padding: 8px 6px;
+  .quotation-table th {
+    background: #f39c12;
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
   }
-
-  .search-container-center {
-    padding: 0 6px;
+  .quotation-table td {
+    text-align: center;
   }
-}
-
-@media (min-width: 640px) {
-  .human-chat-text {
-    display: inline;
+  .quotation-table td.left {
+    text-align: left;
   }
-}
-
-@media (min-width: 769px) {
-  .mobile-menu-btn {
-    display: none;
-  }
-
-  .mobile-sidebar {
-    display: none;
-  }
-
-  .header-title {
-    margin-left: 0;
-  }
-
-  .empty-state {
-    justify-content: center;
-    padding-top: 20px;
-  }
-}
-
-/* Landscape mobile improvements */
-@media (max-width: 768px) and (orientation: landscape) {
-  .empty-state {
-    padding-top: 20px;
-  }
-
-  .empty-title {
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
-}
-
-/* Touch improvements */
-@media (hover: none) and (pointer: coarse) {
-  .search-box {
-    padding: 6px 6px 6px 16px;
-  }
-
-  .search-input {
-    padding: 14px 8px;
-    font-size: 16px; /* Prevents zoom on iOS */
-  }
-
-  .send-btn {
-    width: 36px;
-    height: 36px;
-  }
-
-  .action-btn {
-    padding: 8px;
-    min-height: 36px;
-    min-width: 36px;
-  }
-
-  .human-chat-btn {
-    padding: 10px 14px;
-    min-height: 40px;
-  }
-
-  .mobile-menu-btn {
+  .quotation-terms {
+    font-size: 11px;
+    color: #444;
+    background: #f7f7f7;
     padding: 10px;
-    min-height: 40px;
-    min-width: 40px;
+    border-radius: 6px;
+    max-height: 120px;
+    overflow-y: auto;
   }
-}
-
-.text-gray-400 {
-  color: #9ca3af;
-}
-
-.text-gray-500 {
-  color: #6b7280;
-}
-
-.text-gray-600 {
-  color: #4b5563;
-}
-
-.text-white {
-  color: white;
-}
-
-}
+  .quotation-sign {
+    margin-top: 16px;
+    font-size: 12px;
+  }
+  .qr-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .qr-section img {
+    width: 70px;
+    height: 70px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 2px;
+  }
+  .qr-section .website-link {
+    font-size: 13px;
+    color: #1d6fa5;
+    font-weight: 600;
+    text-decoration: underline;
+    word-break: break-word;
+  }
+  /* Popup form styles */
+  #popupFormOverlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  #popupFormOverlay.show {
+    display: flex;
+  }
+  #popupForm {
+    background: #222;
+    padding: 20px 25px;
+    border-radius: 15px;
+    max-width: 400px;
+    width: 90%;
+    box-sizing: border-box;
+    box-shadow: 0 0 15px #f39c12;
+  }
+  #popupForm h3 {
+    color: #f39c12;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-weight: 400;
+    text-align: center;
+  }
+  #popupForm label {
+    color: #ccc;
+    font-size: 13px;
+    margin-bottom: 4px;
+    display: block;
+  }
+  #popupForm input {
+    width: 100%;
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 2px solid #f39c12;
+    background: #111;
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 14px;
+    outline: none;
+    transition: border-color 0.3s;
+    text-align: left;
+  }
+  #popupForm input:focus {
+    border-color: #e67e22;
+  }
+  #popupForm .button-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  #popupForm button {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(90deg, #f39c12 0%, #e74c3c 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  #popupForm button:hover {
+    background: linear-gradient(90deg, #e67e22 0%, #c0392b 100%);
+  }
+  /* Add New Service button */
+  .add-service-btn {
+    background: transparent !important;
+    color: #888 !important;
+    border: none !important;
+    font-size: 12px !important;
+    margin: -10px 0 12px 0 !important;
+    padding: 5px 0 !important;
+    width: auto !important;
+    box-shadow: none !important;
+    text-align: left;
+    display: block;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .add-service-btn:hover {
+    color: #f39c12 !important;
+    text-decoration: underline;
+  }
+  .remove-service-btn {
+    background: transparent !important;
+    color: #e74c3c !important;
+    border: none !important;
+    font-size: 18px !important;
+    padding: 0 2px !important;
+    margin-left: 5px !important;
+    cursor: pointer;
+    vertical-align: middle;
+    line-height: 1;
+    display: inline-block;
+    transition: color 0.2s;
+  }
+  .remove-service-btn:hover {
+    color: #c0392b !important;
+  }
+  .small-note, .small-btn, .small-label {
+    font-size: 11px !important;
+    color: #aaa !important;
+  }
+  .small-btn {
+    padding: 3px 8px !important;
+    border-radius: 16px !important;
+    min-width: 70px !important;
+    margin: 4px 0 0 0 !important;
+    font-size: 12px !important;
+  }
+  .call-now-card {
+    background: #fff;
+    color: #c0392b;
+    border-radius: 10px;
+    padding: 12px 14px 10px 14px;
+    box-shadow: 0 0 10px #e74c3c33;
+    margin-top: 18px;
+    font-size: 13px;
+    position: relative;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  .call-now-card .close-call-card {
+    position: absolute;
+    top: 7px;
+    right: 12px;
+    color: #e74c3c;
+    font-size: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    padding: 0;
+    line-height: 1;
+  }
+  .call-now-card .call-btn {
+    background: transparent;
+    color: #c0392b;
+    border: 1px solid #e74c3c;
+    border-radius: 16px;
+    padding: 4px 16px;
+    font-size: 13px;
+    margin-top: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 600;
+    transition: background 0.2s, color 0.2s;
+  }
+  .call-now-card .call-btn:hover {
+    background: #e74c3c;
+    color: #fff;
+  }
+  .other-platform-popup {
+    background: #fff;
+    color: #222;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 0 10px #e74c3c33;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 99999;
+    min-width: 260px;
+    max-width: 90vw;
+    text-align: center;
+  }
+  .other-platform-popup input {
+    width: 90%;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  .other-platform-popup .close-other-popup {
+    position: absolute;
+    top: 7px;
+    right: 12px;
+    color: #e74c3c;
+    font-size: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    padding: 0;
+    line-height: 1;
+  }
+  /* Responsive */
+  @media (max-width: 600px) {
+    #calculatorContainer {
+      padding: 3vw 1vw;
+      font-size: 13px;
+    }
+    .quotation-table th, .quotation-table td {
+      font-size: 12px;
+      padding: 4px 6px;
+    }
+    .quotation-header img {
+      height: 36px;
+    }
+    #quotePreviewSection {
+      font-size: 12px;
+      padding: 10px;
+    }
+    .call-now-card, .other-platform-popup {
+      font-size: 12px;
+      padding: 10px;
+    }
+    .slider-row label, label, .small-label {
+      font-size: 11px !important;
+    }
+  }
 </style>
+
+
+<div id="calculatorContainer" role="main" aria-label="Quotation Estimator">
+  <h2>AfterResult Quotation Estimator</h2>
+  <div id="multiServiceList"></div>
+  <div id="serviceFormSection"></div>
+  <div id="estimatedPriceRange" aria-live="polite"></div>
+  <div id="averagePriceRange" aria-live="polite"></div>
+  <div class="button-row" id="mainBtnRow">
+    <button id="previewQuotationBtn" type="button">Preview Quotation</button>
+    <button id="whatsappQuotationBtn" type="button" class="whatsapp">Request Quotation via WhatsApp</button>
+  </div>
+  <div id="quotePreviewSection" class="hidden" aria-live="polite" aria-label="Quotation Preview">
+    <div class="watermark">AfterResult</div>
+    <div id="quotePreviewContent"></div>
+    <button id="downloadQuoteBtn" type="button" style="margin-top: 10px; background: #222; color: #f39c12; border: none; padding: 8px 14px; border-radius: 20px; font-size: 12px; cursor: pointer; width: 100%;">Download Quotation as PDF</button>
+    <button id="closePreviewBtn" type="button" style="margin-top: 10px; background: #222; color: #f39c12; border: none; padding: 8px 14px; border-radius: 20px; font-size: 12px; cursor: pointer; width: 100%;">Cancel / Back</button>
+  </div>
+  <div id="callNowCardContainer"></div>
+</div>
+<div id="popupFormOverlay" role="dialog" aria-modal="true" aria-labelledby="popupFormTitle" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 9999;">
+  <form id="popupForm" novalidate="" style="background: #222; padding: 20px 25px; border-radius: 15px; max-width: 400px; width: 90%; box-sizing: border-box; box-shadow: 0 0 15px #f39c12;">
+    <h3 id="popupFormTitle" style="color:#f39c12; margin-top:0; margin-bottom:15px; font-weight:400; text-align:center;">Please Enter Your Details</h3>
+    <label for="userName">Name *</label>
+    <input type="text" id="userName" name="userName" required="" autocomplete="name">
+    <label for="userPhone">Phone Number *</label>
+    <input type="tel" id="userPhone" name="userPhone" pattern="^\+?\d{7,15}$" placeholder="+919999999999" required="" autocomplete="tel">
+    <label for="userEmail">Email *</label>
+    <input type="email" id="userEmail" name="userEmail" required="" autocomplete="email">
+    <label for="userCompany">Company Name</label>
+    <input type="text" id="userCompany" name="userCompany" autocomplete="organization">
+    <div class="button-row" style="margin-top: 10px;">
+      <button type="submit" id="popupSubmitBtn">Submit</button>
+      <button type="button" id="popupCancelBtn" style="background:#555;">Cancel</button>
+    </div>
+  </form>
+</div>
+
+<div id="otherPlatformPopup" class="other-platform-popup hidden">
+  <button class="close-other-popup" type="button" aria-label="Close">×</button>
+  <div id="otherPlatformPopupContent"></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<script>
+(() => {
+  // --- DATA & CONFIG ---
+  const COMPANY = {
+    name: "AfterResult",
+    address: "1438, Sector 2, 25th D Cross, HSR Layout, BDA Layout, HSR Layout, Bengaluru 560102",
+    email: "contact@afterresult.com",
+    phone: "+91 9599169901",
+    logo: "https://www.afterresult.com/web/image/website/1/logo/AfterResult?unique=db83986",
+    executive: "Suraj Pratap Singh",
+    designation: "Business Development Executive",
+    website: "https://afterresult.com",
+    qr: "https://afterresult.com/web/image/website/1/logo/AfterResult?unique=db83986"
+  };
+
+  // Service definitions
+  const SERVICE_CATEGORIES = [
+    "Lifestyle", "Education", "Furniture", "Home Decor", "E-commerce", "Service-Based Business", "Other"
+  ];
+
+  const PROJECT_COMPLEXITY_LEVELS = [
+    { val: "Basic", label: "Basic" },
+    { val: "Moderate", label: "Moderate" },
+    { val: "Advanced", label: "Advanced" }
+  ];
+
+  const SERVICE_DESCRIPTIONS = {
+    "Logo Design": "Custom logo design tailored to your industry and brand identity.",
+    "Basic Website": "A simple, responsive website suitable for small businesses or portfolios.",
+    "Advanced Website": "A feature-rich, dynamic website for complex requirements.",
+    "Social Media Management": "Management of your brand's social media presence across selected platforms.",
+    "SEO Services": "Search Engine Optimization to improve your website's visibility and ranking.",
+    "App Development": "Custom mobile application development for Android/iOS.",
+    "Content Writing": "Professional content creation for websites, blogs, and social media.",
+    "eCommerce Store": "Setup and customization of your online store on leading platforms.",
+    "Marketplace Management": "End-to-end management of your products on online marketplaces.",
+    "Digital Marketing": "Comprehensive digital marketing strategies for your business.",
+    "Branding Services": "Brand strategy, identity, and collateral design services.",
+    "Instagram Followers": "Boost your Instagram presence with real followers.",
+    "Meta and Google Ads": "Setup and management of Meta (Facebook/Instagram) and Google Ad campaigns.",
+    "3D or Product Design": "3D modeling and product design for your business needs.",
+    "Other": "Custom service as per your requirements."
+  };
+
+  // Service pricing and options
+  const SERVICES = [
+    {
+      key: "Logo Design",
+      label: "Logo Design",
+      price: 4000,
+      min: 4000,
+      max: 4000,
+      avg: 4000,
+      desc: SERVICE_DESCRIPTIONS["Logo Design"],
+      options: {
+        industry: true,
+        complexity: true,
+        category: true
+      }
+    },
+    {
+      key: "Basic Website",
+      label: "Basic Website",
+      min: 15000,
+      max: 25000,
+      avg: 20000,
+      desc: SERVICE_DESCRIPTIONS["Basic Website"],
+      options: {
+        duration: true,
+        complexity: true,
+        category: true
+      }
+    },
+    {
+      key: "Advanced Website",
+      label: "Advanced Website",
+      min: 30000,
+      max: 65000,
+      avg: 47500,
+      desc: SERVICE_DESCRIPTIONS["Advanced Website"],
+      options: {
+        duration: true,
+        complexity: true,
+        category: true
+      }
+    },
+    {
+      key: "Social Media Management",
+      label: "Social Media Management",
+      min: 7999,
+      max: 11999,
+      avg: 9999,
+      desc: SERVICE_DESCRIPTIONS["Social Media Management"],
+      options: {
+        platforms: true,
+        duration: true,
+        category: true
+      }
+    },
+    {
+      key: "SEO Services",
+      label: "SEO Services",
+      min: 5000,
+      max: 14000,
+      avg: 9500,
+      desc: SERVICE_DESCRIPTIONS["SEO Services"],
+      options: {
+        seoType: true,
+        category: true
+      }
+    },
+    {
+      key: "App Development",
+      label: "App Development",
+      min: 35000,
+      max: 120000,
+      avg: 77500,
+      desc: SERVICE_DESCRIPTIONS["App Development"],
+      options: {
+        duration: true,
+        complexity: true,
+        category: true
+      }
+    },
+    {
+      key: "Content Writing",
+      label: "Content Writing",
+      min: 2000,
+      max: 12000,
+      avg: 7000,
+      desc: SERVICE_DESCRIPTIONS["Content Writing"],
+      options: {
+        category: true
+      }
+    },
+    {
+      key: "eCommerce Store",
+      label: "eCommerce Store",
+      min: 33250,
+      max: 49800,
+      avg: 41500,
+      desc: SERVICE_DESCRIPTIONS["eCommerce Store"],
+      options: {
+        ecommerceType: true,
+        complexity: true,
+        category: true
+      }
+    },
+    {
+      key: "Marketplace Management",
+      label: "Marketplace Management",
+      min: 8000,
+      max: 18000,
+      avg: 13000,
+      desc: SERVICE_DESCRIPTIONS["Marketplace Management"],
+      options: {
+        productCount: true,
+        marketplacePlatforms: true,
+        category: true
+      }
+    },
+    {
+      key: "Digital Marketing",
+      label: "Digital Marketing",
+      min: 12000,
+      max: 30000,
+      avg: 21000,
+      desc: SERVICE_DESCRIPTIONS["Digital Marketing"],
+      options: {
+        duration: true,
+        complexity: true,
+        category: true
+      }
+    },
+    {
+      key: "Branding Services",
+      label: "Branding Services",
+      min: 10000,
+      max: 30000,
+      avg: 20000,
+      desc: SERVICE_DESCRIPTIONS["Branding Services"],
+      options: {
+        brandingMedium: true,
+        category: true
+      }
+    },
+    {
+      key: "Instagram Followers",
+      label: "Instagram Followers",
+      min: 500,
+      max: 5000,
+      avg: 2750,
+      desc: SERVICE_DESCRIPTIONS["Instagram Followers"],
+      options: {
+        followers: true
+      }
+    },
+    {
+      key: "Meta and Google Ads",
+      label: "Meta Ads and Google Ads",
+      min: 2000,
+      max: 35000,
+      avg: 17500,
+      desc: SERVICE_DESCRIPTIONS["Meta and Google Ads"],
+      options: {
+        adsType: true,
+        campaignObjective: true,
+        marketingBudget: true
+      }
+    },
+    {
+      key: "3D or Product Design",
+      label: "3D or Product Design",
+      min: 6000,
+      max: 60000,
+      avg: 33000,
+      desc: SERVICE_DESCRIPTIONS["3D or Product Design"],
+      options: {
+        productName: true,
+        productCategory: true,
+        productCount: true,
+        category: true
+      }
+    },
+    {
+      key: "Other",
+      label: "Other (Request Quote)",
+      min: 0,
+      max: 0,
+      avg: 0,
+      desc: SERVICE_DESCRIPTIONS["Other"],
+      options: {}
+    }
+  ];
+
+  // --- STATE ---
+  let multiServiceArr = [
+    // Each: { id, serviceKey, fields }
+  ];
+  let serviceCounter = 1;
+  let currentServiceId = null; // id of the service being edited
+  let userDetails = null;
+  let lastPreviewedServiceIds = [];
+  let otherPlatformPopupState = null; // {type, callback}
+  let callNowCardVisible = false;
+
+  // --- INIT ---
+  // Load user details from localStorage
+  if (window.localStorage) {
+    try {
+      userDetails = JSON.parse(localStorage.getItem("ar_user_details") || "null");
+    } catch (e) { userDetails = null; }
+  }
+
+  // --- DOM ---
+  const $serviceFormSection = document.getElementById("serviceFormSection");
+  const $multiServiceList = document.getElementById("multiServiceList");
+  const $estimatedPriceRange = document.getElementById("estimatedPriceRange");
+  const $averagePriceRange = document.getElementById("averagePriceRange");
+  const $previewQuotationBtn = document.getElementById("previewQuotationBtn");
+  const $whatsappQuotationBtn = document.getElementById("whatsappQuotationBtn");
+  const $quotePreviewSection = document.getElementById("quotePreviewSection");
+  const $quotePreviewContent = document.getElementById("quotePreviewContent");
+  const $downloadQuoteBtn = document.getElementById("downloadQuoteBtn");
+  const $closePreviewBtn = document.getElementById("closePreviewBtn");
+  const $popupFormOverlay = document.getElementById("popupFormOverlay");
+  const $popupForm = document.getElementById("popupForm");
+  const $popupCancelBtn = document.getElementById("popupCancelBtn");
+  const $callNowCardContainer = document.getElementById("callNowCardContainer");
+  const $otherPlatformPopup = document.getElementById("otherPlatformPopup");
+  const $otherPlatformPopupContent = document.getElementById("otherPlatformPopupContent");
+
+  function getServiceByKey(key) {
+    return SERVICES.find(s => s.key === key || s.label === key);
+  }
+
+  // --- RENDERING ---
+
+  function renderMultiServiceList() {
+    let html = '';
+    if (multiServiceArr.length > 0) {
+      html += '<div style="margin-bottom:8px;">';
+      multiServiceArr.forEach((svc, idx) => {
+        const service = getServiceByKey(svc.serviceKey);
+        html += `<span class="small-label" style="display:inline-block; margin-right:8px; margin-bottom:3px; background:#222; border-radius:12px; padding:3px 9px; border:1px solid #f39c12; color:#f39c12; font-weight:500; cursor:pointer;" data-id="${svc.id}" onclick="window.arEditService('${svc.id}')">${service.label || svc.serviceKey}</span>`;
+        html += `<button class="remove-service-btn" title="Remove" aria-label="Remove service" onclick="window.arRemoveService('${svc.id}')" type="button" tabindex="0">&times;</button>`;
+      });
+      html += '</div>';
+    }
+    $multiServiceList.innerHTML = html;
+  }
+
+  function renderServiceForm(serviceId = null) {
+    // If serviceId is null, add new; else edit existing
+    let svcObj = null;
+    if (serviceId) {
+      svcObj = multiServiceArr.find(s => s.id === serviceId);
+      currentServiceId = serviceId;
+    } else {
+      svcObj = { id: "svc" + serviceCounter++, serviceKey: "", fields: {} };
+      currentServiceId = svcObj.id;
+    }
+
+    let selectedKey = svcObj.serviceKey;
+    let html = '';
+    // Service selector
+    html += `<label for="serviceSelectMain" class="small-label">Select a Service</label>`;
+    html += `<select id="serviceSelectMain" aria-label="Select a service" style="margin-bottom:8px;">`;
+    html += `<option value="" disabled ${!selectedKey ? "selected" : ""}>-- Choose a service --</option>`;
+    SERVICES.forEach(svc => {
+      html += `<option value="${svc.key}" ${svc.key === selectedKey ? "selected" : ""}>${svc.label}</option>`;
+    });
+    html += `</select>`;
+    html += `<button class="add-service-btn" id="addServiceBtn" type="button" tabindex="0">+ Add Another Service</button>`;
+
+    // If service selected, show options
+    if (selectedKey) {
+      const service = getServiceByKey(selectedKey);
+      // Description
+      html += `<div class="small-note" style="margin-bottom:7px; color:#f39c12;">${service.desc || ""}</div>`;
+      // Industry field (for logo, etc)
+      if (service.options.industry) {
+        html += `<label for="industryField" class="small-label">Industry</label>`;
+        html += `<input type="text" id="industryField" value="${svcObj.fields.industry || ""}" maxlength="40" placeholder="e.g. Education, Tech, etc.">`;
+      }
+      // Category dropdown
+      if (service.options.category) {
+        html += `<label class="small-label" for="categorySelect">Category</label>`;
+        html += `<select id="categorySelect" style="margin-bottom:8px;">`;
+        html += `<option value="" disabled ${!svcObj.fields.category ? "selected" : ""}>-- Choose category --</option>`;
+        SERVICE_CATEGORIES.forEach(cat => {
+          html += `<option value="${cat}" ${svcObj.fields.category === cat ? "selected" : ""}>${cat}</option>`;
+        });
+        html += `</select>`;
+        if (svcObj.fields.category === "Other") {
+          html += `<input type="text" id="customCategoryInput" class="small-label" value="${svcObj.fields.customCategory || ""}" maxlength="40" placeholder="Custom category">`;
+        }
+      }
+      // Complexity dropdown
+      if (service.options.complexity) {
+        html += `<label for="complexitySelect" class="small-label">Project Complexity</label>`;
+        html += `<select id="complexitySelect" style="margin-bottom:8px;">`;
+        html += `<option value="" disabled ${!svcObj.fields.complexity ? "selected" : ""}>-- Choose complexity --</option>`;
+        PROJECT_COMPLEXITY_LEVELS.forEach(lvl => {
+          html += `<option value="${lvl.val}" ${svcObj.fields.complexity === lvl.val ? "selected" : ""}>${lvl.label}</option>`;
+        });
+        html += `</select>`;
+      }
+      // Duration slider
+      if (service.options.duration) {
+        let val = svcObj.fields.duration || 1;
+        html += `<div class="slider-row" id="durationSliderWrapper">
+          <label for="durationSlider" class="small-label" style="margin-bottom:2px;">Duration:</label>
+          <span style="font-size:0.85em;color:#aaa;">1</span>
+          <input type="range" id="durationSlider" min="1" max="36" value="${val}">
+          <span id="durationSliderValue" style="font-size:0.9em;color:#f39c12;font-weight:600;">${val}</span>
+          <span style="font-size:0.85em;color:#aaa;">36 months</span>
+        </div>`;
+      }
+      // Social Media Management platforms
+      if (service.options.platforms) {
+        html += `<label class="small-label">Select Platforms</label>`;
+        html += `<div class="centered-checkboxes" id="smmPlatformsWrapper">`;
+        ["Instagram","Facebook","LinkedIn","Other"].forEach(platform => {
+          let checked = Array.isArray(svcObj.fields.platforms) && svcObj.fields.platforms.includes(platform) ? "checked" : "";
+          html += `<label><input type="checkbox" class="smmPlatform" value="${platform}" ${checked}> ${platform}</label>`;
+        });
+        html += `</div>`;
+        // If Other selected, show popup to enter platform name
+        if (Array.isArray(svcObj.fields.platforms) && svcObj.fields.platforms.includes("Other") && svcObj.fields.otherPlatform) {
+          html += `<div class="small-note" style="color:#e74c3c;">Other platform: ${svcObj.fields.otherPlatform}</div>`;
+        }
+      }
+      // SEO Services type
+      if (service.options.seoType) {
+        html += `<label class="small-label">SEO Options</label>`;
+        html += `<div class="centered-checkboxes" id="seoTypeWrapper">`;
+        ["On-page SEO","Off-page SEO","Both"].forEach(opt => {
+          let checked = Array.isArray(svcObj.fields.seoType) && svcObj.fields.seoType.includes(opt) ? "checked" : "";
+          let disabled = (opt === "Off-page SEO" && !(svcObj.fields.seoType||[]).includes("On-page SEO")) ? "disabled" : "";
+          html += `<label><input type="checkbox" class="seoType" value="${opt}" ${checked} ${disabled}> ${opt}</label>`;
+        });
+        html += `</div>`;
+      }
+      // E-commerce Store type
+      if (service.options.ecommerceType) {
+        html += `<label class="small-label">Store Platform</label>`;
+        html += `<select id="ecommerceTypeSelect" style="margin-bottom:8px;">`;
+        ["Shopify","WooCommerce","Odoo","Other"].forEach(opt => {
+          html += `<option value="${opt}" ${svcObj.fields.ecommerceType===opt?"selected":""}>${opt}</option>`;
+        });
+        html += `</select>`;
+        if (svcObj.fields.ecommerceType === "Other") {
+          html += `<div class="small-note" style="color:#e74c3c;">Please request this service via WhatsApp.</div>`;
+        }
+      }
+      // Marketplace Management platforms
+      if (service.options.marketplacePlatforms) {
+        html += `<label class="small-label">Select Marketplace Platforms</label>`;
+        html += `<div class="centered-checkboxes" id="marketplacePlatformsWrapper">`;
+        ["Amazon","Flipkart","Other"].forEach(opt => {
+          let checked = Array.isArray(svcObj.fields.marketplacePlatforms) && svcObj.fields.marketplacePlatforms.includes(opt) ? "checked" : "";
+          html += `<label><input type="checkbox" class="marketplacePlatform" value="${opt}" ${checked}> ${opt}</label>`;
+        });
+        html += `</div>`;
+        if (Array.isArray(svcObj.fields.marketplacePlatforms) && svcObj.fields.marketplacePlatforms.includes("Other") && svcObj.fields.otherMarketplace) {
+          html += `<div class="small-note" style="color:#e74c3c;">Other platform: ${svcObj.fields.otherMarketplace}</div>`;
+        }
+      }
+      // Product count
+      if (service.options.productCount) {
+        let val = svcObj.fields.productCount || 1;
+        html += `<label class="small-label" for="productCount">Number of Products</label>`;
+        html += `<input type="number" id="productCount" min="1" max="10000" value="${val}">`;
+      }
+      // Branding Medium
+      if (service.options.brandingMedium) {
+        html += `<label class="small-label" for="brandingMediumSelect">Branding Medium</label>`;
+        html += `<select id="brandingMediumSelect" style="margin-bottom:8px;">`;
+        ["Online","Offline","Both"].forEach(opt => {
+          html += `<option value="${opt}" ${svcObj.fields.brandingMedium===opt?"selected":""}>${opt}</option>`;
+        });
+        html += `</select>`;
+      }
+      // Instagram Followers
+      if (service.options.followers) {
+        let val = svcObj.fields.followers || 50;
+        html += `<label class="small-label" for="followersCount">Instagram Followers (multiples of 50)</label>`;
+        html += `<input type="number" id="followersCount" min="50" step="50" value="${val}">`;
+      }
+      // Meta and Google Ads
+      if (service.options.adsType) {
+        html += `<label class="small-label">Select Ads Platform</label>`;
+        html += `<div class="centered-checkboxes" id="adsTypeWrapper">`;
+        ["Meta Ads","Google Ads","Both"].forEach(opt => {
+          let checked = Array.isArray(svcObj.fields.adsType) && svcObj.fields.adsType.includes(opt) ? "checked" : "";
+          html += `<label><input type="checkbox" class="adsType" value="${opt}" ${checked}> ${opt}</label>`;
+        });
+        html += `</div>`;
+      }
+      if (service.options.campaignObjective) {
+        html += `<label class="small-label">Campaign Objective</label>`;
+        html += `<select id="campaignObjectiveSelect" style="margin-bottom:8px;">`;
+        ["Sales","Leads","Traffic","Engagement","Awareness"].forEach(opt => {
+          html += `<option value="${opt}" ${svcObj.fields.campaignObjective===opt?"selected":""}>${opt}</option>`;
+        });
+        html += `</select>`;
+      }
+      if (service.options.marketingBudget) {
+        let val = svcObj.fields.marketingBudget || "";
+        html += `<label class="small-label" for="marketingBudgetInput">Marketing Budget (₹)</label>`;
+        html += `<input type="number" id="marketingBudgetInput" min="1000" placeholder="Enter amount" value="${val}">`;
+      }
+      // 3D or Product Design
+      if (service.options.productName) {
+        html += `<label class="small-label" for="productNameInput">Product Name</label>`;
+        html += `<input type="text" id="productNameInput" maxlength="40" value="${svcObj.fields.productName||""}">`;
+      }
+      if (service.options.productCategory) {
+        html += `<label class="small-label" for="productCategoryInput">Product Category</label>`;
+        html += `<input type="text" id="productCategoryInput" maxlength="40" value="${svcObj.fields.productCategory||""}">`;
+      }
+    }
+    $serviceFormSection.innerHTML = html;
+
+    // Add listeners for all fields
+    document.getElementById("serviceSelectMain").onchange = e => {
+      svcObj.serviceKey = e.target.value;
+      svcObj.fields = {};
+      renderServiceForm(currentServiceId);
+      renderPriceRange();
+      hideCallNowCard();
+    };
+    if (document.getElementById("addServiceBtn")) {
+      document.getElementById("addServiceBtn").onclick = () => {
+        saveCurrentFormFields();
+        addNewService();
+      };
+    }
+    if (selectedKey) {
+      // Save fields on change
+      if (document.getElementById("industryField")) {
+        document.getElementById("industryField").oninput = e => {
+          svcObj.fields.industry = e.target.value;
+        };
+      }
+      if (document.getElementById("categorySelect")) {
+        document.getElementById("categorySelect").onchange = e => {
+          svcObj.fields.category = e.target.value;
+          if (e.target.value !== "Other") delete svcObj.fields.customCategory;
+          renderServiceForm(currentServiceId);
+        };
+      }
+      if (document.getElementById("customCategoryInput")) {
+        document.getElementById("customCategoryInput").oninput = e => {
+          svcObj.fields.customCategory = e.target.value;
+        };
+      }
+      if (document.getElementById("complexitySelect")) {
+        document.getElementById("complexitySelect").onchange = e => {
+          svcObj.fields.complexity = e.target.value;
+        };
+      }
+      if (document.getElementById("durationSlider")) {
+        let slider = document.getElementById("durationSlider");
+        let sliderVal = document.getElementById("durationSliderValue");
+        slider.oninput = e => {
+          sliderVal.textContent = e.target.value;
+          svcObj.fields.duration = parseInt(e.target.value);
+          renderPriceRange();
+        };
+      }
+      if (document.getElementById("smmPlatformsWrapper")) {
+        document.querySelectorAll(".smmPlatform").forEach(cb => {
+          cb.onchange = e => {
+            let arr = Array.from(document.querySelectorAll(".smmPlatform:checked")).map(x=>x.value);
+            svcObj.fields.platforms = arr;
+            // If Other checked, show popup
+            if (arr.includes("Other")) {
+              showOtherPlatformPopup("smm", val => {
+                svcObj.fields.otherPlatform = val;
+                renderServiceForm(currentServiceId);
+              }, svcObj.fields.otherPlatform||"");
+            } else {
+              delete svcObj.fields.otherPlatform;
+            }
+            renderServiceForm(currentServiceId);
+            renderPriceRange();
+          };
+        });
+      }
+      if (document.getElementById("seoTypeWrapper")) {
+        document.querySelectorAll(".seoType").forEach(cb => {
+          cb.onchange = e => {
+            let arr = Array.from(document.querySelectorAll(".seoType:checked")).map(x=>x.value);
+            svcObj.fields.seoType = arr;
+            renderServiceForm(currentServiceId);
+            renderPriceRange();
+          };
+        });
+      }
+      if (document.getElementById("ecommerceTypeSelect")) {
+        document.getElementById("ecommerceTypeSelect").onchange = e => {
+          svcObj.fields.ecommerceType = e.target.value;
+          renderServiceForm(currentServiceId);
+          renderPriceRange();
+        };
+      }
+      if (document.getElementById("marketplacePlatformsWrapper")) {
+        document.querySelectorAll(".marketplacePlatform").forEach(cb => {
+          cb.onchange = e => {
+            let arr = Array.from(document.querySelectorAll(".marketplacePlatform:checked")).map(x=>x.value);
+            svcObj.fields.marketplacePlatforms = arr;
+            if (arr.includes("Other")) {
+              showOtherPlatformPopup("marketplace", val => {
+                svcObj.fields.otherMarketplace = val;
+                renderServiceForm(currentServiceId);
+              }, svcObj.fields.otherMarketplace||"");
+            } else {
+              delete svcObj.fields.otherMarketplace;
+            }
+            renderServiceForm(currentServiceId);
+            renderPriceRange();
+          };
+        });
+      }
+      if (document.getElementById("productCount")) {
+        document.getElementById("productCount").oninput = e => {
+          svcObj.fields.productCount = parseInt(e.target.value);
+          renderPriceRange();
+        };
+      }
+      if (document.getElementById("brandingMediumSelect")) {
+        document.getElementById("brandingMediumSelect").onchange = e => {
+          svcObj.fields.brandingMedium = e.target.value;
+        };
+      }
+      if (document.getElementById("followersCount")) {
+        document.getElementById("followersCount").oninput = e => {
+          svcObj.fields.followers = parseInt(e.target.value);
+          renderPriceRange();
+        };
+      }
+      if (document.getElementById("adsTypeWrapper")) {
+        document.querySelectorAll(".adsType").forEach(cb => {
+          cb.onchange = e => {
+            let arr = Array.from(document.querySelectorAll(".adsType:checked")).map(x=>x.value);
+            svcObj.fields.adsType = arr;
+            renderPriceRange();
+          };
+        });
+      }
+      if (document.getElementById("campaignObjectiveSelect")) {
+        document.getElementById("campaignObjectiveSelect").onchange = e => {
+          svcObj.fields.campaignObjective = e.target.value;
+        };
+      }
+      if (document.getElementById("marketingBudgetInput")) {
+        document.getElementById("marketingBudgetInput").oninput = e => {
+          svcObj.fields.marketingBudget = parseInt(e.target.value);
+          renderPriceRange();
+        };
+      }
+      if (document.getElementById("productNameInput")) {
+        document.getElementById("productNameInput").oninput = e => {
+          svcObj.fields.productName = e.target.value;
+        };
+      }
+      if (document.getElementById("productCategoryInput")) {
+        document.getElementById("productCategoryInput").oninput = e => {
+          svcObj.fields.productCategory = e.target.value;
+        };
+      }
+    }
+    // Save to state
+    let idx = multiServiceArr.findIndex(s => s.id === svcObj.id);
+    if (idx === -1) multiServiceArr.push(svcObj);
+    else multiServiceArr[idx] = svcObj;
+    renderMultiServiceList();
+    renderPriceRange();
+    hideCallNowCard();
+    // If "Other" service, show call now card
+    if (selectedKey === "Other" || (selectedKey === "eCommerce Store" && svcObj.fields.ecommerceType === "Other")) {
+      showCallNowCard();
+    }
+  }
+
+  function saveCurrentFormFields() {
+    // Save all fields of current form to multiServiceArr
+    // (already done in event handlers)
+  }
+
+  function addNewService() {
+    // Save current, then add new blank
+    renderServiceForm(null);
+  }
+
+  window.arEditService = function(id) {
+    renderServiceForm(id);
+  };
+  window.arRemoveService = function(id) {
+    if (multiServiceArr.length <= 1) {
+      // Always keep at least one service
+      multiServiceArr = [];
+      renderServiceForm(null);
+    } else {
+      let idx = multiServiceArr.findIndex(s => s.id === id);
+      if (idx > -1) multiServiceArr.splice(idx, 1);
+      renderMultiServiceList();
+      renderServiceForm(multiServiceArr.length > 0 ? multiServiceArr[0].id : null);
+    }
+    renderPriceRange();
+    hideCallNowCard();
+  };
+
+  // --- Price Range Display ---
+  function renderPriceRange() {
+    // For all services, show price range
+    let totalMin = 0, totalMax = 0, totalAvg = 0, n = 0;
+    let priceSummary = "";
+    let hasOther = false;
+    for (let svc of multiServiceArr) {
+      let service = getServiceByKey(svc.serviceKey);
+      if (!service) continue;
+      if (svc.serviceKey === "Other" || (svc.serviceKey === "eCommerce Store" && svc.fields.ecommerceType === "Other")) {
+        hasOther = true;
+        continue;
+      }
+      let {min, max, avg} = getServicePrice(svc);
+      totalMin += min;
+      totalMax += max;
+      totalAvg += avg;
+      n++;
+      priceSummary += `${service.label}: ₹${min.toLocaleString()} - ₹${max.toLocaleString()} (avg ₹${avg.toLocaleString()})\n`;
+    }
+    if (hasOther) priceSummary += "Other: Please request quote via WhatsApp.\n";
+    $estimatedPriceRange.innerHTML = priceSummary ? priceSummary.replace(/\n/g,"<br>") : "";
+    $averagePriceRange.innerHTML = n ? `Average total: ₹${Math.round(totalAvg).toLocaleString()}` : "";
+  }
+
+  // --- Service Price Calculation ---
+  function getServicePrice(svcObj) {
+    let service = getServiceByKey(svcObj.serviceKey);
+    if (!service) return {min:0,max:0,avg:0};
+    let min = service.min, max = service.max, avg = service.avg;
+    // Custom logic per service
+    if (service.key === "Logo Design") {
+      min = max = avg = 4000;
+    }
+    if (service.key === "Social Media Management") {
+      // Each platform
+      let platforms = svcObj.fields.platforms || [];
+      let platSum = 0;
+      platforms.forEach(p => {
+        if (p === "Instagram") platSum += 8999;
+        else if (p === "Facebook") platSum += 7999;
+        else if (p === "LinkedIn") platSum += 11999;
+        else platSum += 0;
+      });
+      let duration = svcObj.fields.duration || 1;
+      min = max = avg = platSum * duration;
+    }
+    if (service.key === "SEO Services") {
+      let types = svcObj.fields.seoType || [];
+      if (types.includes("Both")) min = max = avg = 14000;
+      else if (types.includes("On-page SEO") && types.includes("Off-page SEO")) min = max = avg = 14000;
+      else if (types.includes("On-page SEO")) min = max = avg = 9000;
+      else if (types.includes("Off-page SEO")) min = max = avg = 5000;
+      else min = max = avg = 0;
+    }
+    if (service.key === "eCommerce Store") {
+      let type = svcObj.fields.ecommerceType;
+      if (type === "Shopify") min = max = avg = 33250;
+      else if (type === "WooCommerce") min = max = avg = 49800;
+      else if (type === "Odoo") min = max = avg = 41600;
+      else if (type === "Other") min = max = avg = 0;
+    }
+    if (service.key === "Marketplace Management") {
+      let platforms = svcObj.fields.marketplacePlatforms || [];
+      let nPlatforms = platforms.length || 1;
+      let nProducts = svcObj.fields.productCount || 1;
+      min = max = avg = 8000 * nPlatforms + 100 * nProducts;
+    }
+    if (service.key === "Instagram Followers") {
+      let n = svcObj.fields.followers || 50;
+      min = max = avg = Math.round(n * 10);
+    }
+    if (service.key === "Meta and Google Ads") {
+      let budget = svcObj.fields.marketingBudget || 0;
+      if (budget <= 25000) min = max = avg = Math.round(budget * 0.2);
+      else min = max = avg = Math.round(budget * 0.35);
+    }
+    if (service.key === "3D or Product Design") {
+      let n = svcObj.fields.productCount || 1;
+      min = max = avg = n * 6000;
+    }
+    // Duration multiplier
+    if (service.options.duration && service.key !== "Social Media Management") {
+      let months = svcObj.fields.duration || 1;
+      min *= months; max *= months; avg *= months;
+    }
+    // Bulk discount if total > 25,000
+    // (handled in preview)
+    return {min,max,avg};
+  }
+
+  // --- Call Now Card ---
+  function showCallNowCard() {
+    if (callNowCardVisible) return;
+    $callNowCardContainer.innerHTML = `
+      <div class="call-now-card" id="callNowCard">
+        <button class="close-call-card" type="button" aria-label="Close" onclick="window.arCloseCallNowCard()">&times;</button>
+        <div>Please request this service via WhatsApp using the button below.</div>
+        <a class="call-btn" href="tel:+919991283530" target="_blank" rel="noopener">Call Now</a>
+      </div>
+    `;
+    callNowCardVisible = true;
+    // Hide quotation preview button
+    $previewQuotationBtn.style.display = "none";
+  }
+  function hideCallNowCard() {
+    $callNowCardContainer.innerHTML = "";
+    callNowCardVisible = false;
+    $previewQuotationBtn.style.display = "";
+  }
+  window.arCloseCallNowCard = function() {
+    hideCallNowCard();
+  };
+
+  // --- Other Platform Popup ---
+  function showOtherPlatformPopup(type, cb, initialVal) {
+    $otherPlatformPopupContent.innerHTML = `
+      <div>
+        <label class="small-label" for="otherPlatformInput">Enter Platform Name</label>
+        <input type="text" id="otherPlatformInput" maxlength="30" value="${initialVal||""}">
+        <button class="small-btn" id="otherPlatformSubmitBtn" type="button">Submit</button>
+      </div>
+    `;
+    $otherPlatformPopup.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+    document.getElementById("otherPlatformSubmitBtn").onclick = () => {
+      let val = document.getElementById("otherPlatformInput").value.trim();
+      if (val) {
+        cb(val);
+        $otherPlatformPopup.classList.add("hidden");
+        document.body.style.overflow = "";
+      }
+    };
+    document.querySelector("#otherPlatformPopup .close-other-popup").onclick = () => {
+      $otherPlatformPopup.classList.add("hidden");
+      document.body.style.overflow = "";
+    };
+  }
+
+  // --- Quotation Preview ---
+  function showQuotationPreview() {
+    // Save user details if not present
+    if (!userDetails) {
+      showUserDetailsPopup(() => showQuotationPreview());
+      return;
+    }
+    // Hide if "Other" service
+    let hasOther = multiServiceArr.some(svc => svc.serviceKey === "Other" || (svc.serviceKey === "eCommerce Store" && svc.fields.ecommerceType === "Other"));
+    if (hasOther) return;
+    // Prepare preview
+    $quotePreviewSection.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+    // Build table
+    let total = 0, avgTotal = 0, discount = 0;
+    let rows = '';
+    for (let svc of multiServiceArr) {
+      let service = getServiceByKey(svc.serviceKey);
+      if (!service) continue;
+      let {min, max, avg} = getServicePrice(svc);
+      avgTotal += avg;
+      let desc = service.desc || "";
+      // Details (platforms, duration, etc)
+      let details = '';
+      if (service.options.platforms && Array.isArray(svc.fields.platforms)) {
+        details += "Platforms: " + svc.fields.platforms.join(", ");
+        if (svc.fields.otherPlatform) details += ` (${svc.fields.otherPlatform})`;
+      }
+      if (service.options.duration && svc.fields.duration) {
+        details += (details?", ":"") + `Duration: ${svc.fields.duration} month(s)`;
+      }
+      if (service.options.productCount && svc.fields.productCount) {
+        details += (details?", ":"") + `Products: ${svc.fields.productCount}`;
+      }
+      if (service.options.seoType && Array.isArray(svc.fields.seoType)) {
+        details += (details?", ":"") + `SEO: ${svc.fields.seoType.join(", ")}`;
+      }
+      if (service.options.ecommerceType && svc.fields.ecommerceType) {
+        details += (details?", ":"") + `Platform: ${svc.fields.ecommerceType}`;
+      }
+      if (service.options.marketplacePlatforms && Array.isArray(svc.fields.marketplacePlatforms)) {
+        details += (details?", ":"") + `Marketplaces: ${svc.fields.marketplacePlatforms.join(", ")}`;
+        if (svc.fields.otherMarketplace) details += ` (${svc.fields.otherMarketplace})`;
+      }
+      if (service.options.brandingMedium && svc.fields.brandingMedium) {
+        details += (details?", ":"") + `Medium: ${svc.fields.brandingMedium}`;
+      }
+      if (service.options.followers && svc.fields.followers) {
+        details += (details?", ":"") + `Followers: ${svc.fields.followers}`;
+      }
+      if (service.options.adsType && Array.isArray(svc.fields.adsType)) {
+        details += (details?", ":"") + `Ads: ${svc.fields.adsType.join(", ")}`;
+      }
+      if (service.options.campaignObjective && svc.fields.campaignObjective) {
+        details += (details?", ":"") + `Objective: ${svc.fields.campaignObjective}`;
+      }
+      if (service.options.marketingBudget && svc.fields.marketingBudget) {
+        details += (details?", ":"") + `Budget: ₹${svc.fields.marketingBudget}`;
+      }
+      if (service.options.productName && svc.fields.productName) {
+        details += (details?", ":"") + `Product: ${svc.fields.productName}`;
+      }
+      if (service.options.productCategory && svc.fields.productCategory) {
+        details += (details?", ":"") + `Category: ${svc.fields.productCategory}`;
+      }
+      if (service.options.industry && svc.fields.industry) {
+        details += (details?", ":"") + `Industry: ${svc.fields.industry}`;
+      }
+      if (service.options.complexity && svc.fields.complexity) {
+        details += (details?", ":"") + `Complexity: ${svc.fields.complexity}`;
+      }
+      if (service.options.category && svc.fields.category) {
+        let cat = svc.fields.category;
+        if (cat === "Other" && svc.fields.customCategory) cat += ` (${svc.fields.customCategory})`;
+        details += (details?", ":"") + `Category: ${cat}`;
+      }
+      rows += `<tr>
+        <td class="left">${service.label}</td>
+        <td class="left">${desc}</td>
+        <td class="left">${details}</td>
+        <td>₹${min.toLocaleString()}</td>
+        <td>₹${max.toLocaleString()}</td>
+        <td>₹${avg.toLocaleString()}</td>
+      </tr>`;
+      total += min;
+    }
+    // Bulk discount
+    if (avgTotal > 25000) {
+      discount = Math.round(avgTotal * 0.08); // 8% discount
+      avgTotal -= discount;
+    }
+    // Build preview
+    $quotePreviewContent.innerHTML = `
+      <div class="quotation-header">
+        <img src="${COMPANY.logo}" alt="AfterResult Logo">
+        <div>
+          <div style="font-weight:700; font-size:1.1em;">${COMPANY.name}</div>
+          <div style="font-size:11px;">${COMPANY.address}</div>
+        </div>
+      </div>
+      <div class="quotation-meta">
+        <div><b>Date:</b> ${new Date().toLocaleDateString()}</div>
+        <div><b>To:</b> ${userDetails.name} (${userDetails.email}, ${userDetails.phone})</div>
+      </div>
+      <div class="quotation-section-title">Quotation Details</div>
+      <table class="quotation-table">
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Description</th>
+            <th>Details</th>
+            <th>Min Price</th>
+            <th>Max Price</th>
+            <th>Average</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows}
+        </tbody>
+      </table>
+      <div class="quotation-section-title">Summary</div>
+      <div>
+        <b>Total (average):</b> ₹${avgTotal.toLocaleString()}<br>
+        ${discount ? `<span style="color:#e74c3c;">Bulk Discount Applied: -₹${discount.toLocaleString()}</span><br>` : ""}
+        <span style="font-size:12px;color:#888;">Actual prices may vary slightly. Final invoice shared by the company will reflect the correct price.</span>
+      </div>
+      <div class="quotation-sign">
+        <br>Regards,<br>
+        <b>${COMPANY.executive}</b><br>
+        ${COMPANY.designation}<br>
+        <a href="mailto:${COMPANY.email}" style="color:#1d6fa5;">${COMPANY.email}</a><br>
+        <a href="tel:${COMPANY.phone.replace(/\s/g,'')}" style="color:#1d6fa5;">${COMPANY.phone}</a>
+      </div>
+      <div class="qr-section">
+        <img src="${COMPANY.qr}" alt="QR">
+        <a href="${COMPANY.website}" target="_blank" class="website-link">${COMPANY.website}</a>
+      </div>
+    `;
+    lastPreviewedServiceIds = multiServiceArr.map(s=>s.id);
+  }
+
+  function hideQuotationPreview() {
+    $quotePreviewSection.classList.add("hidden");
+    document.body.style.overflow = "";
+  }
+
+  // --- User Details Popup ---
+  function showUserDetailsPopup(cb) {
+    $popupFormOverlay.classList.add("show");
+    if (userDetails) {
+      $popupForm.userName.value = userDetails.name;
+      $popupForm.userPhone.value = userDetails.phone;
+      $popupForm.userEmail.value = userDetails.email;
+      $popupForm.userCompany.value = userDetails.company||"";
+    } else {
+      $popupForm.userName.value = "";
+      $popupForm.userPhone.value = "";
+      $popupForm.userEmail.value = "";
+      $popupForm.userCompany.value = "";
+    }
+    $popupForm.onsubmit = e => {
+      e.preventDefault();
+      let name = $popupForm.userName.value.trim();
+      let phone = $popupForm.userPhone.value.trim();
+      let email = $popupForm.userEmail.value.trim();
+      let company = $popupForm.userCompany.value.trim();
+      if (!name || !phone || !email) return;
+      userDetails = { name, phone, email, company };
+      if (window.localStorage) localStorage.setItem("ar_user_details", JSON.stringify(userDetails));
+      $popupFormOverlay.classList.remove("show");
+      if (typeof cb === "function") cb();
+    };
+    $popupCancelBtn.onclick = () => {
+      $popupFormOverlay.classList.remove("show");
+    };
+  }
+
+  // --- WhatsApp Quotation ---
+  function sendQuotationViaWhatsApp() {
+    // If "Other" service, open WhatsApp with message
+    let hasOther = multiServiceArr.some(svc => svc.serviceKey === "Other" || (svc.serviceKey === "eCommerce Store" && svc.fields.ecommerceType === "Other"));
+    let msg = "";
+    if (!userDetails) {
+      showUserDetailsPopup(() => sendQuotationViaWhatsApp());
+      return;
+    }
+    msg += `Name: ${userDetails.name}\nEmail: ${userDetails.email}\nPhone: ${userDetails.phone}\nCompany: ${userDetails.company||""}\n\n`;
+    msg += "Quotation Request:\n";
+    multiServiceArr.forEach(svc => {
+      let service = getServiceByKey(svc.serviceKey);
+      if (!service) return;
+      msg += `Service: ${service.label}\n`;
+      msg += `Description: ${service.desc}\n`;
+      Object.keys(svc.fields).forEach(fld => {
+        msg += `${fld}: ${svc.fields[fld]}\n`;
+      });
+      msg += "\n";
+    });
+    if (hasOther) {
+      msg += "Requesting quotation for a custom service.\n";
+    }
+    let url = "https://wa.me/919599169901?text=" + encodeURIComponent(msg);
+    window.open(url,"_blank");
+  }
+
+  // --- Download Quotation as PDF ---
+  $downloadQuoteBtn.onclick = async function() {
+    $downloadQuoteBtn.disabled = true;
+    $downloadQuoteBtn.textContent = "Generating PDF...";
+    let node = $quotePreviewSection;
+    html2canvas(node, {scale:2, backgroundColor:"#fff"}).then(canvas => {
+      let imgData = canvas.toDataURL("image/png");
+      let pdf = new window.jspdf.jsPDF("p","mm","a4");
+      let pageWidth = pdf.internal.pageSize.getWidth();
+      let pageHeight = pdf.internal.pageSize.getHeight();
+      let imgProps = pdf.getImageProperties(imgData);
+      let pdfWidth = pageWidth - 20;
+      let pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      pdf.addImage(imgData, "PNG", 10, 10, pdfWidth, pdfHeight);
+      pdf.save("AfterResult-Quotation.pdf");
+      $downloadQuoteBtn.disabled = false;
+      $downloadQuoteBtn.textContent = "Download Quotation as PDF";
+    });
+  };
+
+  // --- Event Listeners ---
+  $previewQuotationBtn.onclick = function() {
+    saveCurrentFormFields();
+    showQuotationPreview();
+  };
+  $closePreviewBtn.onclick = function() {
+    hideQuotationPreview();
+  };
+  $whatsappQuotationBtn.onclick = function() {
+    saveCurrentFormFields();
+    sendQuotationViaWhatsApp();
+  };
+
+  // --- Auto-Hide Quotation Preview ---
+  document.addEventListener("click", function(e) {
+    if (!$quotePreviewSection.classList.contains("hidden")) {
+      // If user clicks outside preview or selects another service
+      if (!e.target.closest("#quotePreviewSection") && !e.target.closest("#previewQuotationBtn")) {
+        hideQuotationPreview();
+      }
+    }
+  });
+
+  // --- INIT UI ---
+  if (multiServiceArr.length === 0) {
+    multiServiceArr.push({id:"svc1",serviceKey:"",fields:{}});
+  }
+  renderServiceForm(multiServiceArr[0].id);
+
+})();
+</script>
