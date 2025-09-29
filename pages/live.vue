@@ -289,13 +289,9 @@ export default {
       
       this.messages.push({
         type: 'user',
-        text: correctedQuery,
+        text: userQuery,
         timestamp: new Date()
       });
-      
-      const queryLower = correctedQuery.toLowerCase();
-      const ecommerceKeywords = ['ecommerce', 'e-commerce', 'online store', 'shopify', 'online selling', 'online shop', 'webstore', 'web store', 'online business', 'sell online', 'store', 'shop'];
-      const isEcommerceQuery = ecommerceKeywords.some(keyword => queryLower.includes(keyword));
       
       this.query = "";
       
@@ -303,22 +299,17 @@ export default {
       this.scrollToBottom();
       
       setTimeout(() => {
-        if (isEcommerceQuery) {
-          this.messages.push({
-            type: 'bot',
-            text: 'Hi, thank you so much for sharing your requirement! We surely help you with ecommerce store end to end. We are professional team of ecommerce experts. You will make and live store in just 25 days. Start today!',
-            timestamp: new Date(),
-            hasButton: true,
-            buttonText: 'Launch My Store',
-            buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
-          });
-        } else {
-          this.messages.push({
-            type: 'bot',
-            text: 'Oops! We will be soon live for you. 🚀',
-            timestamp: new Date()
-          });
-        }
+        const aiResponse = this.generateResponse(userQuery);
+        
+        this.messages.push({
+          type: 'bot',
+          text: aiResponse.text,
+          timestamp: new Date(),
+          hasButton: aiResponse.hasButton,
+          buttonText: 'Launch My Store - ₹1,599',
+          buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
+        });
+        
         this.scrollToBottom();
       }, 500);
     },
