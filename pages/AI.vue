@@ -60,7 +60,7 @@ function handleSearch() {
     if (isEcommerceQuery) {
       messages.value.push({
         type: 'bot',
-        text: 'Hi there! Thank you for sharing your requirement. We provide complete eCommerce store solutions, from setup to launch, with your store ready in just 25 days. For more details, including services, pricing, and process, please click on Launch My Store.',
+        text: 'Hi, thank you so much for sharing your requirement! We surely help you with ecommerce store end to end. We are professional team of ecommerce experts. You will make and live store in just 25 days. Start today!',
         timestamp: new Date(),
         hasButton: true,
         buttonText: 'Launch My Store',
@@ -197,7 +197,7 @@ function formatDate(date) {
     </button>
 
     <!-- Main content -->
-    <div class="flex-1 flex flex-col relative">
+    <div class="flex-1 flex flex-col">
       <!-- Header -->
       <div :class="['flex items-center justify-between px-4 md:px-6 py-2.5 border-b transition-colors duration-300', isDarkMode ? 'border-gray-700' : 'border-gray-200']">
         <div class="flex items-center gap-2 ml-12 md:ml-0">
@@ -215,71 +215,109 @@ function formatDate(date) {
         </a>
       </div>
 
-      <!-- Chat area -->
-      <div class="flex-1 overflow-y-auto px-3 md:px-4" style="padding-bottom: 150px;">
-        <div v-if="messages.length === 0" class="flex flex-col items-center justify-center h-full">
-          <div class="w-full max-w-2xl px-4">
-            <h1 class="text-xl md:text-2xl font-normal text-center mb-8 md:mb-12">
+      <!-- Main chat content -->
+      <div class="flex-1 relative overflow-hidden">
+        <!-- Empty state with centered search -->
+        <div v-if="messages.length === 0" class="h-full flex flex-col items-center justify-center px-4">
+          <div class="w-full max-w-3xl flex flex-col items-center">
+            <h1 class="text-2xl md:text-3xl font-normal text-center mb-12">
               Ready when you are.
             </h1>
+            
+            <div class="w-full max-w-2xl">
+              <div :class="['flex items-center rounded-full shadow-lg border focus-within:border-gray-400 transition', isDarkMode ? 'bg-[#2A2A2A] border-gray-600' : 'bg-white border-gray-300']">
+                <button :class="['pl-4 pr-2 py-3 transition', isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700']">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                  </svg>
+                </button>
+                
+                <input
+                  v-model="query"
+                  @keyup.enter="handleSearch"
+                  type="text"
+                  placeholder="Ask anything"
+                  :class="['flex-1 bg-transparent outline-none py-3 px-2 text-sm', isDarkMode ? 'text-white placeholder-gray-400' : 'text-gray-900 placeholder-gray-500']"
+                />
+                
+                <button :class="['px-3 py-3 transition', isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700']">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+                  </svg>
+                </button>
+                
+                <button :class="['pr-4 pl-2 py-3 transition', isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700']">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                  </svg>
+                </button>
+              </div>
+              
+              <div :class="['text-center mt-3 text-xs', isDarkMode ? 'text-gray-500' : 'text-gray-400']">
+                AR Solutions can make mistakes. Check important info.
+              </div>
+            </div>
           </div>
         </div>
-        
-        <div v-else class="max-w-2xl mx-auto py-6 md:py-8 space-y-4">
-          <div v-for="(message, index) in messages" :key="index" :class="['flex gap-2 md:gap-3', message.type === 'user' ? 'justify-end' : 'justify-start']">
-            <div v-if="message.type === 'bot'" :class="['w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center flex-shrink-0', isDarkMode ? 'bg-purple-600' : 'bg-purple-500']">
-              <span class="text-white text-xs font-semibold">AR</span>
-            </div>
-            <div :class="['max-w-[75%] md:max-w-[80%] rounded-2xl px-3 py-2 md:px-4 md:py-2.5', message.type === 'user' ? (isDarkMode ? 'bg-[#2A2A2A]' : 'bg-gray-100') : (isDarkMode ? 'bg-[#2A2A2A]' : 'bg-gray-50')]">
-              <p class="text-xs md:text-sm leading-relaxed">{{ message.text }}</p>
-              <a v-if="message.hasButton" :href="message.buttonLink" target="_blank" :class="['inline-block mt-3 px-4 py-2 text-xs font-medium rounded-full transition-all hover:scale-105', isDarkMode ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white' : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-md']">
-                {{ message.buttonText }}
-              </a>
-            </div>
-            <div v-if="message.type === 'user'" :class="['w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center flex-shrink-0', isDarkMode ? 'bg-blue-600' : 'bg-blue-500']">
-              <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Input area -->
-      <div :class="['absolute bottom-0 left-0 right-0 pb-4 md:pb-6 pt-8 md:pt-12 transition-colors duration-300', isDarkMode ? 'bg-gradient-to-t from-[#212121] via-[#212121] to-transparent' : 'bg-gradient-to-t from-white via-white to-transparent']">
-        <div class="max-w-2xl mx-auto px-3 md:px-4">
-          <div class="relative">
-            <div :class="['flex items-center rounded-full md:rounded-3xl shadow-lg border focus-within:border-gray-400 transition', isDarkMode ? 'bg-[#2A2A2A] border-gray-600' : 'bg-white border-gray-300']">
-              <button :class="['pl-3 md:pl-4 pr-1 md:pr-2 py-2.5 md:py-3 transition', isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700']">
-                <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                </svg>
-              </button>
-              
-              <input
-                v-model="query"
-                @keyup.enter="handleSearch"
-                type="text"
-                placeholder="Ask anything"
-                :class="['flex-1 bg-transparent outline-none py-2.5 md:py-3 px-2 text-xs md:text-sm', isDarkMode ? 'text-white placeholder-gray-400' : 'text-gray-900 placeholder-gray-500']"
-              />
-              
-              <button :class="['px-2 md:px-3 py-2.5 md:py-3 transition', isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700']">
-                <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
-                </svg>
-              </button>
-              
-              <button :class="['pr-3 md:pr-4 pl-1 md:pl-2 py-2.5 md:py-3 transition', isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700']">
-                <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
-                </svg>
-              </button>
+        <!-- Chat messages view -->
+        <div v-else class="h-full flex flex-col">
+          <div class="flex-1 overflow-y-auto px-4 pb-40">
+            <div class="max-w-3xl mx-auto py-6 space-y-6">
+              <div v-for="(message, index) in messages" :key="index" :class="['flex gap-3', message.type === 'user' ? 'justify-end' : 'justify-start']">
+                <div v-if="message.type === 'bot'" :class="['w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0', isDarkMode ? 'bg-purple-600' : 'bg-purple-500']">
+                  <span class="text-white text-xs font-semibold">AR</span>
+                </div>
+                <div :class="['max-w-[80%] rounded-2xl px-4 py-3', message.type === 'user' ? (isDarkMode ? 'bg-[#2A2A2A]' : 'bg-gray-100') : (isDarkMode ? 'bg-[#2A2A2A]' : 'bg-gray-50')]">
+                  <p class="text-sm leading-relaxed">{{ message.text }}</p>
+                  <a v-if="message.hasButton" :href="message.buttonLink" target="_blank" :class="['inline-block mt-3 px-4 py-2 text-xs font-medium rounded-full transition-all hover:scale-105', isDarkMode ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white' : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-md']">
+                    {{ message.buttonText }}
+                  </a>
+                </div>
+                <div v-if="message.type === 'user'" :class="['w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0', isDarkMode ? 'bg-blue-600' : 'bg-blue-500']">
+                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                  </svg>
+                </div>
+              </div>
             </div>
           </div>
-          
-          <div :class="['text-center mt-2 md:mt-3 text-xs', isDarkMode ? 'text-gray-500' : 'text-gray-400']">
-            AR Solutions can make mistakes. Check important info.
+
+          <!-- Bottom fixed input -->
+          <div :class="['absolute bottom-0 left-0 right-0 pb-6 pt-8 transition-colors duration-300', isDarkMode ? 'bg-gradient-to-t from-[#212121] via-[#212121] to-transparent' : 'bg-gradient-to-t from-white via-white to-transparent']">
+            <div class="max-w-3xl mx-auto px-4">
+              <div :class="['flex items-center rounded-full shadow-lg border focus-within:border-gray-400 transition', isDarkMode ? 'bg-[#2A2A2A] border-gray-600' : 'bg-white border-gray-300']">
+                <button :class="['pl-4 pr-2 py-3 transition', isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700']">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                  </svg>
+                </button>
+                
+                <input
+                  v-model="query"
+                  @keyup.enter="handleSearch"
+                  type="text"
+                  placeholder="Ask anything"
+                  :class="['flex-1 bg-transparent outline-none py-3 px-2 text-sm', isDarkMode ? 'text-white placeholder-gray-400' : 'text-gray-900 placeholder-gray-500']"
+                />
+                
+                <button :class="['px-3 py-3 transition', isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700']">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+                  </svg>
+                </button>
+                
+                <button :class="['pr-4 pl-2 py-3 transition', isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700']">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                  </svg>
+                </button>
+              </div>
+              
+              <div :class="['text-center mt-3 text-xs', isDarkMode ? 'text-gray-500' : 'text-gray-400']">
+                AR Solutions can make mistakes. Check important info.
+              </div>
+            </div>
           </div>
         </div>
       </div>
