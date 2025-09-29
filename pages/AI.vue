@@ -119,7 +119,7 @@
                 </button>
               </div>
               <div :class="['disclaimer', isDarkMode ? 'text-gray-500' : 'text-gray-400']">
-                AR Solutions AI can make mistakes. Check important info.
+                “AR Solutions AI, in its pre-build phase, is currently handling only ecommerce queries”.
               </div>
             </div>
           </div>
