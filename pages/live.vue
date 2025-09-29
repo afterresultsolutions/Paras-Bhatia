@@ -1519,41 +1519,54 @@ export default {
   .header-title {
     margin-left: 48px;
   }
+  .chat-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
   .empty-title {
-    font-size: 22px;
-    margin-bottom: 30px;
+    font-size: 24px;
+    margin-bottom: 40px;
+    font-weight: 500;
   }
   .messages-inner {
-    padding: 20px 12px 0;
+    padding: 16px 16px 0;
   }
   .input-area {
-    padding: 12px;
+    padding: 16px;
   }
   .search-container-center {
     max-width: 100%;
-    padding: 0 12px;
+    padding: 0;
   }
   .empty-state {
-    padding: 12px;
-    justify-content: flex-start;
-    padding-top: 40px;
+    padding: 16px;
+    justify-content: center;
+    min-height: calc(100vh - 140px);
   }
   .message-row {
     gap: 12px;
   }
   .avatar {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
   }
   .avatar-icon {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
   }
   .message-text {
-    font-size: 14px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .message-content {
+    max-width: 85%;
   }
   .disclaimer {
-    padding-bottom: 20px;
+    padding-bottom: 0;
+    margin-top: 12px;
   }
 }
 
