@@ -220,7 +220,8 @@ export default {
       isDarkMode: false,
       chatHistory: [],
       currentChatId: null,
-kb: {
+      
+const kb = {
   keywords: {
     pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget'],
     features: ['features', 'include', 'get', 'what', 'benefit', 'offer', 'provide', 'service', 'package', 'comes with'],
@@ -235,7 +236,6 @@ kb: {
     confirmation: ['start', 'begin', 'sign up', 'register', 'book', 'confirm', 'interested', 'want', 'ready'],
     installment: ['installment', 'instalment', 'emi', 'partial payment', 'split payment'],
     quickdelivery: ['quick delivery', 'fast delivery', 'urgent', 'asap', 'faster'],
-    // NEW KEYWORDS
     marketing: ['marketing', 'advertisement', 'promote', 'advertising', 'campaign', 'ads', 'digital marketing'],
     sales: ['sales', 'selling', 'revenue', 'grow business', 'increase sales', 'boost sales'],
     scaling: ['scale', 'scaling', 'growth', 'expand', 'expansion'],
@@ -275,7 +275,6 @@ kb: {
     
     confirmation: "To get started, you only need to pay ₹1,599/- as a confirmation fee to secure your project slot. Click the button below to begin your journey!",
     
-    // NEW RESPONSES
     marketing: "We provide end-to-end marketing support including digital strategy, paid ads, social media, SEO, and performance tracking. Would you like to know more about how we can help your business grow?",
     
     sales: "We help businesses scale sales through structured campaigns, lead nurturing, and data-driven strategies. Our ecommerce solutions are designed to maximize your revenue from day one!",
@@ -294,9 +293,7 @@ kb: {
     
     bye: "Goodbye! Wishing you a productive day ahead. Feel free to return anytime you need assistance!"
   }
-}
-    }
-  },
+};
   methods: {
 generateResponse(q) {
   const query = q.toLowerCase().trim();
