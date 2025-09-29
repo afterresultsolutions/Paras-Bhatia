@@ -1,936 +1,1249 @@
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AfterResult Quotation Estimator</title>
-<style>
-  body {
-    font-family: "Inter", Arial, sans-serif;
-    background: #000;
-    color: #ddd;
-    margin: 0;
-    padding: 20px;
-  }
-  #calculatorContainer {
-    max-width: 800px;
-    width: 100%;
-    margin: 20px auto;
-    padding: 15px;
-    background: #181818;
-    border-radius: 18px;
-    border: 2px solid #f39c12;
-    box-shadow: 0 0 40px #f39c12;
-    box-sizing: border-box;
-  }
-  h2 {
-    color: #f39c12;
-    font-weight: 400;
-    font-size: 1.5rem;
-    text-align: center;
-    margin-bottom: 15px;
-  }
-  label {
-    display: block;
-    font-size: 13px;
-    color: #ccc;
-    margin-bottom: 5px;
-    font-weight: 300;
-  }
-  select,
-  input[type="number"],
-  input[type="text"],
-  input[type="email"],
-  input[type="tel"] {
-    width: 100%;
-    padding: 8px 14px;
-    border-radius: 20px;
-    border: 2px solid #f39c12;
-    background: #111;
-    color: #fff;
-    font-size: 14px;
-    margin-bottom: 14px;
-    outline: none;
-    transition: border-color 0.3s;
-    text-align: left;
-  }
-  select:hover,
-  select:focus,
-  input:hover,
-  input:focus {
-    border-color: #e67e22;
-  }
-  .button-row {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 12px;
-    margin-top: 8px;
-    flex-wrap: wrap;
-  }
-  button {
-    flex: 1;
-    padding: 10px 0;
-    border: none;
-    border-radius: 25px;
-    background: linear-gradient(90deg, #f39c12 0%, #e74c3c 100%);
-    color: white;
-    font-weight: 700;
-    font-size: 0.90rem;
-    cursor: pointer;
-    margin-bottom: 0;
-    transition: background 0.3s;
-    min-width: 120px;
-  }
-  button.whatsapp {
-    background: linear-gradient(90deg, #25d366 0%, #128c7e 100%);
-  }
-  button:hover {
-    background: linear-gradient(90deg, #e67e22 0%, #c0392b 100%);
-  }
-  button.whatsapp:hover {
-    background: linear-gradient(90deg, #128c7e 0%, #25d366 100%);
-  }
-  .hidden {
-    display: none !important;
-  }
-  #estimatedPriceRange {
-    color: #f39c12;
-    font-weight: 600;
-    font-size: 1rem;
-    min-height: 24px;
-    margin-bottom: 8px;
-    white-space: pre-line;
-    text-align: center;
-  }
-  #averagePriceRange {
-    color: #aaa;
-    font-weight: 400;
-    font-size: 0.9rem;
-    margin-bottom: 16px;
-    text-align: center;
-    font-style: italic;
-  }
-  .slider-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 14px;
-    justify-content: center;
-  }
-  .slider-row label {
-    margin: 0 0 0 0;
-    font-size: 0.9em;
-    color: #bbb;
-    font-weight: 400;
-  }
-  input[type="range"] {
-    width: 140px;
-    accent-color: #f39c12;
-    height: 3px;
-    background: linear-gradient(90deg, #f39c12 0%, #e74c3c 100%);
-    border-radius: 2px;
-    outline: none;
-    margin: 0;
-    -webkit-appearance: none;
-  }
-  input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #fff;
-    border: 2px solid #f39c12;
-    box-shadow: 0 2px 8px #0002;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  input[type="range"]:focus::-webkit-slider-thumb {
-    background: #f39c12;
-    border-color: #e67e22;
-  }
-  input[type="range"]::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #fff;
-    border: 2px solid #f39c12;
-    box-shadow: 0 2px 8px #0002;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  input[type="range"]:focus::-moz-range-thumb {
-    background: #f39c12;
-    border-color: #e67e22;
-  }
-  input[type="range"]::-ms-thumb {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #fff;
-    border: 2px solid #f39c12;
-    box-shadow: 0 2px 8px #0002;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .centered-checkboxes {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    font-size: 0.85em;
-    margin-bottom: 6px;
-  }
-  #quotePreviewSection {
-    background: #fff;
-    color: #222;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 0 20px #f39c12;
-    margin-top: 25px;
-    font-family: "Inter", Arial, sans-serif;
-    font-size: 13px;
-    max-width: 500px;
-    position: relative;
-    overflow-x: auto;
-  }
-  #quotePreviewContent {
-    max-width: 100%;
-    margin: auto;
-    text-align: left;
-    word-wrap: break-word;
-    position: relative;
-    z-index: 2;
-  }
-  .watermark {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-30deg);
-    font-size: 5vw;
-    color: rgba(243, 156, 18, 0.09);
-    user-select: none;
-    pointer-events: none;
-    font-weight: 900;
-    letter-spacing: 10px;
-    white-space: nowrap;
-    z-index: 1;
-  }
-  .quotation-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    border-bottom: 2px solid #f39c12;
-    padding-bottom: 6px;
-    margin-bottom: 15px;
-    flex-wrap: wrap;
-  }
-  .quotation-header img {
-    height: 50px;
-    width: auto;
-    border-radius: 8px;
-    background: #fff;
-    padding: 4px;
-    flex-shrink: 0;
-  }
-  .quotation-meta {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    font-size: 11px;
-  }
-  .quotation-section-title {
-    color: #f39c12;
-    font-size: 14px;
-    margin-top: 15px;
-    margin-bottom: 6px;
-    font-weight: 600;
-  }
-  .quotation-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 12px;
-    font-size: 13px;
-  }
-  .quotation-table th,
-  .quotation-table td {
-    border: 1px solid #ccc;
-    padding: 6px 10px;
-    text-align: left;
-    font-size: 13px;
-    font-weight: 400;
-  }
-  .quotation-table th {
-    background: #f39c12;
-    color: #fff;
-    font-weight: 600;
-    text-align: center;
-  }
-  .quotation-table td {
-    text-align: center;
-  }
-  .quotation-table td.left {
-    text-align: left;
-  }
-  .quotation-terms {
-    font-size: 11px;
-    color: #444;
-    background: #f7f7f7;
-    padding: 10px;
-    border-radius: 6px;
-    max-height: 120px;
-    overflow-y: auto;
-  }
-  .quotation-sign {
-    margin-top: 16px;
-    font-size: 12px;
-  }
-  .qr-section {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-top: 16px;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
-  }
-  .qr-section img {
-    width: 70px;
-    height: 70px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    background: #fff;
-    padding: 2px;
-  }
-  .qr-section .website-link {
-    font-size: 13px;
-    color: #1d6fa5;
-    font-weight: 600;
-    text-decoration: underline;
-    word-break: break-word;
-  }
-  /* Popup form styles */
-  #popupFormOverlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.85);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-  }
-  #popupFormOverlay.show {
-    display: flex;
-  }
-  #popupForm {
-    background: #222;
-    padding: 20px 25px;
-    border-radius: 15px;
-    max-width: 400px;
-    width: 90%;
-    box-sizing: border-box;
-    box-shadow: 0 0 15px #f39c12;
-  }
-  #popupForm h3 {
-    color: #f39c12;
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-weight: 400;
-    text-align: center;
-  }
-  #popupForm label {
-    color: #ccc;
-    font-size: 13px;
-    margin-bottom: 4px;
-    display: block;
-  }
-  #popupForm input {
-    width: 100%;
-    padding: 8px 14px;
-    border-radius: 20px;
-    border: 2px solid #f39c12;
-    background: #111;
-    color: #fff;
-    font-size: 14px;
-    margin-bottom: 14px;
-    outline: none;
-    transition: border-color 0.3s;
-    text-align: left;
-  }
-  #popupForm input:focus {
-    border-color: #e67e22;
-  }
-  #popupForm .button-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-  }
-  #popupForm button {
-    flex: 1;
-    padding: 10px 0;
-    border: none;
-    border-radius: 25px;
-    background: linear-gradient(90deg, #f39c12 0%, #e74c3c 100%);
-    color: white;
-    font-weight: 700;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  #popupForm button:hover {
-    background: linear-gradient(90deg, #e67e22 0%, #c0392b 100%);
-  }
-</style>
-
-
-  <div id="calculatorContainer" role="main" aria-label="Quotation Estimator">
-    <h2>AfterResult Quotation Estimator</h2>
-    <label for="serviceSelect">Select a Service</label>
-    <select id="serviceSelect" aria-label="Select a service">
-      <option value="" disabled="" selected="">-- Choose a service --</option>
-      <option value="Logo Design">Logo Design</option>
-      <option value="Basic Website">Basic Website</option>
-      <option value="Advanced Website">Advanced Website</option>
-      <option value="Social Media Management">Social Media Management</option>
-      <option value="SEO Services">SEO Services</option>
-      <option value="App Development">App Development</option>
-      <option value="Content Writing">Content Writing</option>
-      <option value="eCommerce Store">eCommerce Store</option>
-      <option value="Marketplace Management">Marketplace Management</option>
-      <option value="Digital Marketing">Digital Marketing</option>
-      <option value="Branding Services">Branding Services</option>
-      <option value="Instagram Followers">Instagram Followers</option>
-      <option value="Meta and Google Ads">Meta Ads and Google Ads</option>
-      <option value="Other">Other (Request Quote)</option>
-    </select>
-
-    <div id="complexityWrapper" class="hidden">
-      <label for="complexitySelect">Select Project Complexity</label>
-      <select id="complexitySelect" aria-label="Select project complexity">
-        <option value="" disabled="" selected="">-- Choose complexity --</option>
-        <option value="small">Small</option>
-        <option value="medium">Medium</option>
-        <option value="large">Large</option>
-      </select>
-    </div>
-
-    <div id="durationSliderWrapper" class="hidden slider-row" aria-label="Select project duration">
-      <label for="durationSlider" style="margin-bottom: 2px">Duration:</label>
-      <span style="font-size: 0.85em; color: #aaa">1</span>
-      <input type="range" id="durationSlider" min="1" max="36" value="1" aria-valuemin="1" aria-valuemax="36" aria-valuenow="1" aria-label="Duration in months">
-      <span id="durationSliderValue" style="font-size: 0.9em; color: #f39c12; font-weight: 600">1</span>
-      <span style="font-size: 0.85em; color: #aaa">36 months</span>
-    </div>
-
-    <div id="budgetWrapper" class="hidden">
-      <label for="budgetInput">Enter Your Marketing Budget (₹)</label>
-      <input type="number" id="budgetInput" min="1000" placeholder="Enter amount">
-    </div>
-
-    <div id="productCountWrapper" class="hidden">
-      <label for="productCount">Number of Products</label>
-      <input type="number" id="productCount" min="1" max="10000" value="10">
-    </div>
-
-    <div id="marketplaceWrapper" class="hidden">
-      <label for="marketplaceSelect">Marketplace</label>
-      <select id="marketplaceSelect" aria-label="Select marketplace">
-        <option value="" disabled="" selected="">-- Choose marketplace --</option>
-        <option value="Amazon">Amazon</option>
-        <option value="Flipkart">Flipkart</option>
-        <option value="Other">Other</option>
-      </select>
-    </div>
-
-    <div id="smmPlatformsWrapper" class="hidden checkboxGroup" aria-label="Select social media platforms">
-      <label>Select Platforms</label><br>
-      <label><input type="checkbox" class="smmPlatform" value="Instagram"> Instagram</label>
-      <label><input type="checkbox" class="smmPlatform" value="Facebook"> Facebook</label>
-      <label><input type="checkbox" class="smmPlatform" value="LinkedIn"> LinkedIn</label>
-      <label><input type="checkbox" class="smmPlatform" value="Twitter"> Twitter</label>
-      <label><input type="checkbox" class="smmPlatform" value="YouTube"> YouTube</label>
-    </div>
-
-    <div id="brandingMediumWrapper" class="hidden">
-      <label for="brandingMediumSelect">Select Branding Medium</label>
-      <select id="brandingMediumSelect" aria-label="Select branding medium">
-        <option value="" disabled="" selected="">-- Choose medium --</option>
-        <option value="online">Online</option>
-        <option value="offline">Offline</option>
-        <option value="both">Both Online &amp; Offline</option>
-      </select>
-    </div>
-
-    <div id="followersWrapper" class="hidden">
-      <label for="followersCount">Instagram Followers (multiples of 50)</label>
-      <input type="number" id="followersCount" min="50" step="50" value="50">
-    </div>
-
-    <div id="estimatedPriceRange" aria-live="polite"></div>
-    <div id="averagePriceRange" aria-live="polite"></div>
-
-    <div class="button-row">
-      <button id="previewQuotationBtn" type="button">Preview Quotation</button>
-      <button id="whatsappQuotationBtn" type="button" class="whatsapp">Request Quotation via WhatsApp</button>
-    </div>
-
-    <div id="quotePreviewSection" class="hidden" aria-live="polite" aria-label="Quotation Preview">
-      <div class="watermark">AfterResult</div>
-      <div id="quotePreviewContent"></div>
-      <button id="downloadQuoteBtn" type="button" style="margin-top: 10px; background: #222; color: #f39c12; border: none; padding: 8px 14px; border-radius: 20px; font-size: 12px; cursor: pointer; width: 100%;">Download Quotation as PDF</button>
-      <button id="closePreviewBtn" type="button" style="margin-top: 10px; background: #222; color: #f39c12; border: none; padding: 8px 14px; border-radius: 20px; font-size: 12px; cursor: pointer; width: 100%;">Cancel / Back</button>
-    </div>
-  </div>
-
-  
-  <div id="popupFormOverlay" role="dialog" aria-modal="true" aria-labelledby="popupFormTitle" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 9999;">
-    <form id="popupForm" novalidate="" style="background: #222; padding: 20px 25px; border-radius: 15px; max-width: 400px; width: 90%; box-sizing: border-box; box-shadow: 0 0 15px #f39c12;">
-      <h3 id="popupFormTitle" style="color:#f39c12; margin-top:0; margin-bottom:15px; font-weight:400; text-align:center;">Please Enter Your Details</h3>
-      <label for="userName">Name *</label>
-      <input type="text" id="userName" name="userName" required="" autocomplete="name">
-      <label for="userPhone">Phone Number *</label>
-      <input type="tel" id="userPhone" name="userPhone" pattern="^\+?\d{7,15}$" placeholder="+919999999999" required="" autocomplete="tel">
-      <label for="userEmail">Email *</label>
-      <input type="email" id="userEmail" name="userEmail" required="" autocomplete="email">
-      <label for="userCompany">Company Name</label>
-      <input type="text" id="userCompany" name="userCompany" autocomplete="organization">
-      <div class="button-row" style="margin-top: 10px;">
-        <button type="submit" id="popupSubmitBtn">Submit</button>
-        <button type="button" id="popupCancelBtn" style="background:#555;">Cancel</button>
-      </div>
-    </form>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
-
-  <script>
-    (() => {
-      const COMPANY = {
-        name: "AfterResult",
-        address: "1438, Sector 2, 25th D Cross, HSR Layout, BDA Layout, HSR Layout, Bengaluru 560102",
-        email: "contact@afterresult.com",
-        phone: "+91 9599169901",
-        logo: "https://www.afterresult.com/web/image/website/1/logo/AfterResult?unique=db83986",
-        executive: "Suraj Pratap Singh",
-        designation: "Business Development Executive",
-        homepage: "https://www.afterresult.com",
-      };
-
-      const TERMS = [
-        "Payment Terms: 70% advance, 20% on milestone completion, and 10% on final project completion.",
-        "Project Timeline: 3-5 working days for setup and enablement after onboarding.",
-        "Any additional services requested will be charged separately.",
-        "Minor variations may occur in real-time due to market dynamics.",
-        "Pricing excludes ad campaign budgets, third-party subscriptions (domain, hosting, marketplace fees), and GST.",
-        "Campaign and tool expenses are billed directly to the client on actuals.",
-        "The proposal is valid for 15 days from the date of issuance.",
-        "Client agrees to terms and conditions upon acceptance of this quotation.",
-        "GST (18%) is applicable on the total invoice value.",
-        "Discounts are applied only on subtotal before GST.",
-        "For Instagram Followers, delivery time is 1-3 days per 1000 followers.",
-        "For any queries, contact us at contact@afterresult.com or WhatsApp +91 9599169901.",
-        "All disputes subject to Bengaluru jurisdiction.",
-        "This quotation is computer generated and does not require signature.",
-      ];
-
-      const pricingData = {
-        "Logo Design": { base: 3000, average: 4000 },
-        "Basic Website": { base: 15000, average: 20000 },
-        "Advanced Website": { base: 40000, average: 45000 },
-        "Social Media Management": { base: 8000, average: 12000 },
-        "SEO Services": { base: 12000, average: 18000 },
-        "App Development": { base: 60000, average: 75000 },
-        "Content Writing": { base: 1000, average: 1500 },
-        "eCommerce Store": { base: 35000, average: 40000 },
-        "Marketplace Management": { base: 10000, average: 15000 },
-        "Digital Marketing": { base: 10000, average: 15000 },
-        "Branding Services": { base: 7000, average: 9000 },
-        "Instagram Followers": { base: 500, average: 700 },
-        "Meta and Google Ads": { base: 10000, average: 15000 },
-        "Other": { base: 0, average: 0 },
-      };
-
-      const complexityMultipliers = { small: 1, medium: 1.5, large: 2.2 };
-
-      const smmPlatformPrices = {
-        Instagram: 3000,
-        Facebook: 2500,
-        LinkedIn: 2800,
-        Twitter: 2200,
-        YouTube: 3500,
-      };
-
-      const marketplacePrices = { Amazon: 1.0, Flipkart: 1.2, Other: 1.1 };
-
-      // Elements
-      const serviceSelect = document.getElementById("serviceSelect");
-      const complexityWrapper = document.getElementById("complexityWrapper");
-      const complexitySelect = document.getElementById("complexitySelect");
-      const durationSliderWrapper = document.getElementById("durationSliderWrapper");
-      const durationSlider = document.getElementById("durationSlider");
-      const durationSliderValue = document.getElementById("durationSliderValue");
-      const budgetWrapper = document.getElementById("budgetWrapper");
-      const budgetInput = document.getElementById("budgetInput");
-      const productCountWrapper = document.getElementById("productCountWrapper");
-      const productCountInput = document.getElementById("productCount");
-      const marketplaceWrapper = document.getElementById("marketplaceWrapper");
-      const marketplaceSelect = document.getElementById("marketplaceSelect");
-      const smmPlatformsWrapper = document.getElementById("smmPlatformsWrapper");
-      const smmPlatformCheckboxes = document.querySelectorAll(".smmPlatform");
-      const followersWrapper = document.getElementById("followersWrapper");
-      const followersCountInput = document.getElementById("followersCount");
-      const estimatedPriceRange = document.getElementById("estimatedPriceRange");
-      const averagePriceRange = document.getElementById("averagePriceRange");
-      const previewQuotationBtn = document.getElementById("previewQuotationBtn");
-      const whatsappQuotationBtn = document.getElementById("whatsappQuotationBtn");
-      const quotePreviewSection = document.getElementById("quotePreviewSection");
-      const quotePreviewContent = document.getElementById("quotePreviewContent");
-      const closePreviewBtn = document.getElementById("closePreviewBtn");
-      const downloadQuoteBtn = document.getElementById("downloadQuoteBtn");
-
-      const popupFormOverlay = document.getElementById("popupFormOverlay");
-      const popupForm = document.getElementById("popupForm");
-      const popupCancelBtn = document.getElementById("popupCancelBtn");
-
-      let clientDetails = null;
-      let lastAction = null;
-
-      function hideAllOptionals() {
-        complexityWrapper.classList.add("hidden");
-        durationSliderWrapper.classList.add("hidden");
-        budgetWrapper.classList.add("hidden");
-        productCountWrapper.classList.add("hidden");
-        marketplaceWrapper.classList.add("hidden");
-        smmPlatformsWrapper.classList.add("hidden");
-        followersWrapper.classList.add("hidden");
-      }
-
-      function updateOptionals() {
-        hideAllOptionals();
-        const service = serviceSelect.value;
-        quotePreviewSection.classList.add("hidden"); // Hide preview on service change
-
-        if (
-          [
-            "Logo Design",
-            "Basic Website",
-            "Advanced Website",
-            "App Development",
-            "eCommerce Store",
-            "Social Media Management",
-          ].includes(service)
-        ) {
-          complexityWrapper.classList.remove("hidden");
-        }
-        if (
-          ["Social Media Management", "SEO Services", "Digital Marketing"].includes(
-            service
-          )
-        ) {
-          durationSliderWrapper.classList.remove("hidden");
-        }
-        if (service === "Digital Marketing") budgetWrapper.classList.remove("hidden");
-        if (service === "eCommerce Store") productCountWrapper.classList.remove("hidden");
-        if (service === "Marketplace Management") marketplaceWrapper.classList.remove("hidden");
-        if (service === "Social Media Management") smmPlatformsWrapper.classList.remove("hidden");
-        if (service === "Instagram Followers") followersWrapper.classList.remove("hidden");
-      }
-
-      function calculatePrice() {
-        const service = serviceSelect.value;
-        if (!service) return { finalPrice: 0, discount: 0, price: 0, averagePrice: 0 };
-
-        let price = pricingData[service]?.base || 0;
-        let averagePrice = pricingData[service]?.average || 0;
-
-        if (!complexityWrapper.classList.contains("hidden")) {
-          const complexity = complexitySelect.value;
-          if (complexity) {
-            price *= complexityMultipliers[complexity];
-            averagePrice *= complexityMultipliers[complexity];
-          }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat Interface</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        if (!durationSliderWrapper.classList.contains("hidden")) {
-          const months = Number(durationSlider.value);
-          price *= months;
-          averagePrice *= months;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
 
-        if (!budgetWrapper.classList.contains("hidden")) {
-          const budget = Number(budgetInput.value);
-          if (budget > 0) {
-            price = budget;
-            averagePrice = budget;
-          }
+        .chat-wrapper {
+            width: 100%;
+            min-height: 100vh;
+            transition: background-color 0.2s, color 0.2s;
         }
 
-        if (!productCountWrapper.classList.contains("hidden")) {
-          const count = Number(productCountInput.value);
-          if (count > 0) {
-            price += count * 100;
-            averagePrice += count * 120;
-          }
+        .dark-mode {
+            background-color: #212121;
+            color: #ececec;
         }
 
-        if (!followersWrapper.classList.contains("hidden")) {
-          const followers = Number(followersCountInput.value);
-          if (followers >= 50) {
-            const units = Math.floor(followers / 50);
-            price = units * pricingData["Instagram Followers"].base;
-            averagePrice = units * pricingData["Instagram Followers"].average;
-          }
+        .light-mode {
+            background-color: #ffffff;
+            color: #2f2f2f;
         }
 
-        if (!smmPlatformsWrapper.classList.contains("hidden")) {
-          const selectedPlatforms = Array.from(smmPlatformCheckboxes).filter(cb => cb.checked);
-          if (selectedPlatforms.length === 0) {
-            price = 0;
-            averagePrice = 0;
-          } else {
-            let platformSum = 0;
-            selectedPlatforms.forEach(cb => platformSum += smmPlatformPrices[cb.value] || 0);
-            const complexityMult = complexityMultipliers[complexitySelect.value] || 1;
-            const months = Number(durationSlider.value) || 1;
-            price = platformSum * complexityMult * months;
-            averagePrice = platformSum * 1.3 * complexityMult * months;
-          }
+        .chat-container {
+            display: flex;
+            height: 100vh;
+            position: relative;
         }
 
-        if (!marketplaceWrapper.classList.contains("hidden")) {
-          const marketplace = marketplaceSelect.value;
-          if (!marketplace) {
-            price = 0;
-            averagePrice = 0;
-          } else {
-            const mult = marketplacePrices[marketplace] || 1;
-            price *= mult;
-            averagePrice *= mult;
-          }
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid;
+            transition: background-color 0.2s;
         }
 
-        let discount = 0;
-        if (price > 25000) discount = price * 0.05;
-        const finalPrice = price - discount;
-
-        return { finalPrice, discount, price, averagePrice };
-      }
-
-      function updatePriceDisplay() {
-        const service = serviceSelect.value;
-        if (!service) {
-          estimatedPriceRange.textContent = "";
-          averagePriceRange.textContent = "";
-          return;
-        }
-        const { finalPrice, discount, price, averagePrice } = calculatePrice();
-
-        if (price === 0) {
-          estimatedPriceRange.textContent = "Please select platform(s) to see price";
-          averagePriceRange.textContent = "";
-          return;
+        .sidebar-dark {
+            background-color: #171717;
+            border-color: #363636;
         }
 
-        let priceText = `Estimated Price: ₹${finalPrice.toLocaleString()}`;
-        if (discount > 0) priceText += ` (5% discount applied, ₹${discount.toFixed(0)} off)`;
-        estimatedPriceRange.textContent = priceText;
-        averagePriceRange.textContent = `Average Market Price: ₹${averagePrice.toLocaleString()}`;
-      }
-
-      function escapeHtml(text) {
-        if (!text) return "";
-        return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-                   .replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-      }
-
-      function showQuotationPreview() {
-        const service = serviceSelect.value;
-        const complexity = complexitySelect.value || "-";
-        const duration = durationSliderWrapper.classList.contains("hidden") ? "-" : durationSlider.value + " month(s)";
-        const { finalPrice, discount } = calculatePrice();
-
-        let html = `<div class="quotation-header">
-          <img src="${COMPANY.logo}" alt="Logo" />
-          <div>
-            <div><b>${COMPANY.name}</b></div>
-            <div style="font-size:12px">${COMPANY.address}</div>
-            <div style="font-size:12px">Email: ${COMPANY.email}, Phone: ${COMPANY.phone}</div>
-          </div>
-        </div>`;
-
-        html += `<div class="quotation-meta">
-          <div><b>Client Name:</b> ${escapeHtml(clientDetails.name)}</div>
-          <div><b>Phone:</b> ${escapeHtml(clientDetails.phone)}</div>
-          <div><b>Email:</b> ${escapeHtml(clientDetails.email)}</div>
-          <div><b>Company:</b> ${escapeHtml(clientDetails.company || "-")}</div>
-        </div>`;
-
-        html += `<div class="quotation-meta">
-          <div><b>Service:</b> ${service}</div>
-          <div><b>Complexity:</b> ${complexity}</div>
-          <div><b>Duration:</b> ${duration}</div>
-        </div>`;
-
-        html += `<div class="quotation-section-title">Estimated Price</div>
-          <table class="quotation-table">
-            <tr>
-              <th>Service</th>
-              <th>Complexity</th>
-              <th>Duration</th>
-              <th>Amount (₹)</th>
-            </tr>
-            <tr>
-              <td class="left">${service}</td>
-              <td>${complexity}</td>
-              <td>${duration}</td>
-              <td>${finalPrice.toLocaleString()}</td>
-            </tr>
-          </table>`;
-
-        if (discount > 0) {
-          html += `<div style="color:#27ae60; font-weight:600; margin-bottom:10px;">
-            5% discount applied: ₹${discount.toFixed(0)}
-          </div>`;
+        .sidebar-light {
+            background-color: #f9f9f9;
+            border-color: #e5e5e5;
         }
 
-        html += `<div class="quotation-section-title">Terms & Conditions</div>
-          <div class="quotation-terms">${TERMS.map(t => `<div>• ${escapeHtml(t)}</div>`).join("")}</div>
-          <div class="quotation-sign">Regards,<br>${COMPANY.executive}<br>${COMPANY.designation}<br>${COMPANY.name}</div>
-          <div class="qr-section">
-            <canvas id="qrCodeCanvas"></canvas>
-            <div>
-              <div>Visit us:</div>
-              <a href="${COMPANY.homepage}" class="website-link" target="_blank">${COMPANY.homepage}</a>
+        .sidebar-header {
+            padding: 12px 8px;
+            border-bottom: 1px solid;
+        }
+
+        .sidebar-dark .sidebar-header {
+            border-color: #363636;
+        }
+
+        .sidebar-light .sidebar-header {
+            border-color: #e5e5e5;
+        }
+
+        .new-chat-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            font-size: 14px;
+            border: 1px solid;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            background: none;
+        }
+
+        .btn-dark {
+            color: #ececec;
+            border-color: #4d4d4d;
+        }
+
+        .btn-dark:hover {
+            background-color: #2f2f2f;
+        }
+
+        .btn-light {
+            color: #2f2f2f;
+            border-color: #d1d1d1;
+        }
+
+        .btn-light:hover {
+            background-color: #f0f0f0;
+        }
+
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+
+        .history-label {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 8px 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #6b7280;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            font-size: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-bottom: 4px;
+        }
+
+        .history-item-dark:hover {
+            background-color: #2f2f2f;
+        }
+
+        .history-item-light:hover {
+            background-color: #ececec;
+        }
+
+        .history-title {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sidebar-footer {
+            padding: 12px 8px;
+            border-top: 1px solid;
+            display: flex;
+            gap: 8px;
+        }
+
+        .footer-dark {
+            border-color: #363636;
+        }
+
+        .footer-light {
+            border-color: #e5e5e5;
+        }
+
+        .footer-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px;
+            font-size: 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            background: none;
+        }
+
+        /* Mobile sidebar */
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 260px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+        }
+
+        .mobile-sidebar-open {
+            transform: translateX(0);
+        }
+
+        .mobile-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .mobile-menu-btn {
+            position: fixed;
+            top: 14px;
+            left: 12px;
+            z-index: 998;
+            padding: 8px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        /* Main content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border-bottom: 1px solid;
+        }
+
+        .header-dark {
+            background-color: #212121;
+            border-color: #363636;
+        }
+
+        .header-light {
+            background-color: #ffffff;
+            border-color: #e5e5e5;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 40px;
+        }
+
+        .brand-name {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .model-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 4px;
+        }
+
+        .human-chat-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .human-chat-btn:hover {
+            opacity: 0.9;
+        }
+
+        .human-chat-text {
+            display: none;
+        }
+
+        /* Chat area */
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .empty-state {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            min-height: 0;
+        }
+
+        .empty-title {
+            font-size: 28px;
+            font-weight: 400;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .search-container-center {
+            width: 100%;
+            max-width: 600px;
+            position: sticky;
+            bottom: 0;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            border: 1px solid;
+            border-radius: 24px;
+            padding: 4px 4px 4px 16px;
+            transition: border-color 0.2s;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .search-dark {
+            background-color: #2f2f2f;
+            border-color: #4d4d4d;
+        }
+
+        .search-light {
+            background-color: #f4f4f4;
+            border-color: #d1d1d1;
+        }
+
+        .search-box:focus-within {
+            border-color: #6e6e6e;
+        }
+
+        .search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            padding: 12px 8px;
+            font-size: 15px;
+            min-width: 0;
+        }
+
+        .input-dark {
+            color: #ececec;
+        }
+
+        .input-dark::placeholder {
+            color: #8e8e8e;
+        }
+
+        .input-light {
+            color: #2f2f2f;
+        }
+
+        .input-light::placeholder {
+            color: #8e8e8e;
+        }
+
+        .send-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 50%;
+            background-color: #676767;
+            color: white;
+            cursor: not-allowed;
+            transition: background-color 0.2s;
+            flex-shrink: 0;
+        }
+
+        .send-btn-active {
+            background-color: #ececec;
+            color: #2f2f2f;
+            cursor: pointer;
+        }
+
+        .send-btn-active:hover {
+            background-color: #d9d9d9;
+        }
+
+        .disclaimer {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        /* Messages */
+        .messages-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 0;
+        }
+
+        .messages-inner {
+            max-width: 768px;
+            margin: 0 auto;
+            padding: 24px 20px 0;
+        }
+
+        .message-group {
+            margin-bottom: 24px;
+        }
+
+        .message-row {
+            display: flex;
+            gap: 16px;
+        }
+
+        .message-avatar {
+            flex-shrink: 0;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .avatar-bot {
+            background: transparent;
+            padding: 2px;
+        }
+
+        .avatar-user {
+            background-color: #5436da;
+        }
+
+        .avatar-icon {
+            width: 28px;
+            height: 28px;
+            color: white;
+        }
+
+        .custom-logo {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .message-content-wrapper {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .message-content {
+            margin-bottom: 8px;
+        }
+
+        .message-text {
+            font-size: 15px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .launch-btn {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .launch-btn:hover {
+            opacity: 0.9;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 4px;
+            margin-top: 8px;
+        }
+
+        .action-btn {
+            padding: 6px;
+            border: none;
+            background: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            color: inherit;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dark-mode .action-btn:hover {
+            background-color: #2f2f2f;
+        }
+
+        .light-mode .action-btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Input area */
+        .input-area {
+            padding: 20px;
+            border-top: 1px solid transparent;
+            position: sticky;
+            bottom: 0;
+            z-index: 100;
+        }
+
+        .dark-mode .input-area {
+            background: linear-gradient(to top, #212121 0%, #212121 85%, transparent 100%);
+        }
+
+        .light-mode .input-area {
+            background: linear-gradient(to top, #ffffff 0%, #ffffff 85%, transparent 100%);
+        }
+
+        .input-container {
+            max-width: 768px;
+            margin: 0 auto;
+        }
+
+        /* Icons */
+        .icon-xs {
+            width: 16px;
+            height: 16px;
+        }
+
+        .icon-sm {
+            width: 20px;
+            height: 20px;
+        }
+
+        .icon-md {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4d4d4d;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6e6e6e;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 240px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .header-title {
+                margin-left: 48px;
+            }
+
+            .empty-title {
+                font-size: 22px;
+                margin-bottom: 30px;
+            }
+
+            .messages-inner {
+                padding: 20px 12px 0;
+            }
+
+            .input-area {
+                padding: 12px;
+            }
+
+            .search-container-center {
+                max-width: 100%;
+                padding: 0 12px;
+            }
+
+            .empty-state {
+                padding: 12px;
+                justify-content: flex-start;
+                padding-top: 40px;
+            }
+
+            .message-row {
+                gap: 12px;
+            }
+
+            .avatar {
+                width: 28px;
+                height: 28px;
+            }
+
+            .avatar-icon {
+                width: 24px;
+                height: 24px;
+            }
+
+            .message-text {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .empty-title {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+
+            .header-title {
+                margin-left: 44px;
+            }
+
+            .mobile-menu-btn {
+                top: 10px;
+                left: 8px;
+                padding: 6px;
+            }
+
+            .chat-header {
+                padding: 8px 10px;
+            }
+
+            .human-chat-btn {
+                padding: 6px 10px;
+                font-size: 12px;
+                gap: 4px;
+            }
+
+            .brand-name {
+                font-size: 16px;
+            }
+
+            .model-badge {
+                width: 18px;
+                height: 18px;
+                font-size: 10px;
+            }
+
+            .search-input {
+                font-size: 14px;
+                padding: 10px 6px;
+            }
+
+            .send-btn {
+                width: 28px;
+                height: 28px;
+            }
+
+            .search-box {
+                padding: 3px 3px 3px 12px;
+            }
+
+            .messages-inner {
+                padding: 16px 8px 0;
+            }
+
+            .input-area {
+                padding: 10px 8px;
+            }
+
+            .search-container-center {
+                padding: 0 8px;
+            }
+
+            .message-row {
+                gap: 8px;
+            }
+
+            .avatar {
+                width: 24px;
+                height: 24px;
+            }
+
+            .avatar-icon {
+                width: 20px;
+                height: 20px;
+            }
+
+            .message-text {
+                font-size: 13px;
+                line-height: 1.5;
+            }
+
+            .launch-btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            .action-btn {
+                padding: 4px;
+            }
+
+            .icon-xs {
+                width: 14px;
+                height: 14px;
+            }
+
+            .disclaimer {
+                font-size: 11px;
+                margin-top: 8px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .empty-title {
+                font-size: 18px;
+            }
+
+            .human-chat-btn {
+                padding: 5px 8px;
+                font-size: 11px;
+            }
+
+            .human-chat-text {
+                display: none;
+            }
+
+            .search-input {
+                font-size: 13px;
+                padding: 8px 6px;
+            }
+
+            .messages-inner {
+                padding: 12px 6px 0;
+            }
+
+            .input-area {
+                padding: 8px 6px;
+            }
+
+            .search-container-center {
+                padding: 0 6px;
+            }
+        }
+
+        @media (min-width: 640px) {
+            .human-chat-text {
+                display: inline;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-menu-btn {
+                display: none;
+            }
+
+            .mobile-sidebar {
+                display: none;
+            }
+
+            .header-title {
+                margin-left: 0;
+            }
+
+            .empty-state {
+                justify-content: center;
+                padding-top: 20px;
+            }
+        }
+
+        /* Landscape mobile improvements */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .empty-state {
+                padding-top: 20px;
+            }
+
+            .empty-title {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Touch improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .search-box {
+                padding: 6px 6px 6px 16px;
+            }
+
+            .search-input {
+                padding: 14px 8px;
+                font-size: 16px;
+            }
+
+            .send-btn {
+                width: 36px;
+                height: 36px;
+            }
+
+            .action-btn {
+                padding: 8px;
+                min-height: 36px;
+                min-width: 36px;
+            }
+
+            .human-chat-btn {
+                padding: 10px 14px;
+                min-height: 40px;
+            }
+
+            .mobile-menu-btn {
+                padding: 10px;
+                min-height: 40px;
+                min-width: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div :class="['chat-wrapper', isDarkMode ? 'dark-mode' : 'light-mode']">
+            <div class="chat-container">
+                <!-- Sidebar for Desktop -->
+                <div :class="['sidebar', isDarkMode ? 'sidebar-dark' : 'sidebar-light']">
+                    <div class="sidebar-header">
+                        <button @click="startNewChat" :class="['new-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
+                            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                            <span>New chat</span>
+                        </button>
+                    </div>
+                    
+                    <div class="sidebar-content">
+                        <div v-if="chatHistory.length > 0" class="history-label">Recent</div>
+                        <div v-for="chat in chatHistory" :key="chat.id" @click="loadChat(chat)" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
+                            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                            </svg>
+                            <span class="history-title">{{ chat.title }}</span>
+                        </div>
+                    </div>
+                    
+                    <div :class="['sidebar-footer', isDarkMode ? 'footer-dark' : 'footer-light']">
+                        <button @click="toggleTheme" :class="['footer-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
+                            <svg v-if="isDarkMode" class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                            </svg>
+                            <svg v-else class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                            </svg>
+                        </button>
+                        <button :class="['footer-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
+                            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Sidebar -->
+                <div v-if="showMenu" @click="showMenu = false" class="mobile-overlay"></div>
+                <div :class="['mobile-sidebar', showMenu ? 'mobile-sidebar-open' : '', isDarkMode ? 'sidebar-dark' : 'sidebar-light']">
+                    <div class="sidebar-header">
+                        <button @click="showMenu = false; startNewChat()" :class="['new-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
+                            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                            <span>New chat</span>
+                        </button>
+                    </div>
+                    
+                    <div class="sidebar-content">
+                        <div v-if="chatHistory.length > 0" class="history-label">Recent</div>
+                        <div v-for="chat in chatHistory" :key="chat.id" @click="loadChat(chat)" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
+                            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                            </svg>
+                            <span class="history-title">{{ chat.title }}</span>
+                        </div>
+                    </div>
+                    
+                    <div :class="['sidebar-footer', isDarkMode ? 'footer-dark' : 'footer-light']">
+                        <button @click="toggleTheme" :class="['footer-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
+                            <svg v-if="isDarkMode" class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                            </svg>
+                            <svg v-else class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile menu toggle -->
+                <button @click="showMenu = !showMenu" :class="['mobile-menu-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
+                    <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+
+                <!-- Main content -->
+                <div class="main-content">
+                    <!-- Header -->
+                    <div :class="['chat-header', isDarkMode ? 'header-dark' : 'header-light']">
+                        <div class="header-title">
+                            <span class="brand-name">ChatGPT</span>
+                            <span class="model-badge">4</span>
+                        </div>
+                        <a href="https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0" target="_blank" class="human-chat-btn">
+                            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                            <span class="human-chat-text">Chat with Human</span>
+                        </a>
+                    </div>
+
+                    <!-- Chat area -->
+                    <div class="chat-area">
+                        <!-- Empty state -->
+                        <div v-if="messages.length === 0" class="empty-state">
+                            <h1 :class="['empty-title', isDarkMode ? '' : '']" :style="isDarkMode ? 'color: white' : 'color: #1f2937'">What can I help with?</h1>
+                            
+                            <div class="search-container-center">
+                                <div :class="['search-box', isDarkMode ? 'search-dark' : 'search-light']">
+                                    <input
+                                        v-model="query"
+                                        @keyup.enter="handleSearch"
+                                        type="text"
+                                        placeholder="Message ChatGPT"
+                                        :class="['search-input', isDarkMode ? 'input-dark' : 'input-light']"
+                                    />
+                                    <button @click="handleSearch" :class="['send-btn', query.trim() ? 'send-btn-active' : '']">
+                                        <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="disclaimer">
+                                    ChatGPT can make mistakes. Check important info.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chat messages -->
+                        <div v-else class="messages-wrapper">
+                            <div ref="messagesContainer" class="messages-container">
+                                <div class="messages-inner">
+                                    <div v-for="(message, index) in messages" :key="index" class="message-group">
+                                        <div :class="['message-row', message.type === 'user' ? 'message-user' : 'message-bot']">
+                                            <div class="message-avatar">
+                                                <div v-if="message.type === 'bot'" :class="['avatar', 'avatar-bot']">
+                                                    <div class="custom-logo">
+                                                        <svg viewBox="0 0 200 200" class="avatar-icon">
+                                                            <defs>
+                                                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                                    <stop offset="0%" style="stop-color:#FFB347"/>
+                                                                    <stop offset="25%" style="stop-color:#FF6B9D"/>
+                                                                    <stop offset="50%" style="stop-color:#C147E9"/>
+                                                                    <stop offset="75%" style="stop-color:#4285F4"/>
+                                                                    <stop offset="100%" style="stop-color:#00CED1"/>
+                                                                </linearGradient>
+                                                                <linearGradient id="grad2" x1="0%" y1="100%" x2="100%" y2="0%">
+                                                                    <stop offset="0%" style="stop-color:#1E3A8A"/>
+                                                                    <stop offset="50%" style="stop-color:#7C3AED"/>
+                                                                    <stop offset="100%" style="stop-color:#EC4899"/>
+                                                                </linearGradient>
+                                                            </defs>
+                                                            <path d="M50 20 Q30 20 20 40 Q20 60 30 70 L30 120 Q30 140 50 140 L90 140 Q110 140 120 130 Q130 120 130 100 L130 70 Q140 60 140 40 Q140 20 120 20 Z" fill="url(#grad1)"/>
+                                                            <path d="M80 180 Q60 180 50 160 Q50 140 60 130 L60 80 Q60 60 80 60 L120 60 Q140 60 150 70 Q160 80 160 100 L160 130 Q170 140 170 160 Q170 180 150 180 Z" fill="url(#grad2)"/>
+                                                            <circle cx="100" cy="100" r="30" fill="white"/>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                                <div v-else :class="['avatar', 'avatar-user']">
+                                                    <svg class="avatar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <div class="message-content-wrapper">
+                                                <div class="message-content">
+                                                    <p class="message-text">{{ message.text }}</p>
+                                                    <a v-if="message.hasButton" :href="message.buttonLink" target="_blank" class="launch-btn">
+                                                        {{ message.buttonText }}
+                                                    </a>
+                                                </div>
+                                                <div v-if="message.type === 'bot'" class="message-actions">
+                                                    <button class="action-btn" title="Good response">
+                                                        <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
+                                                        </svg>
+                                                    </button>
+                                                    <button class="action-btn" title="Bad response">
+                                                        <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"></path>
+                                                        </svg>
+                                                    </button>
+                                                    <button class="action-btn" title="Copy">
+                                                        <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                                        </svg>
+                                                    </button>
+                                                    <button class="action-btn" title="Regenerate">
+                                                        <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                                        </svg>
+                                                    </button>
+                                                    <a href="https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0" target="_blank" class="action-btn" title="WhatsApp">
+                                                        <svg class="icon-xs" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path>
+                                                        </svg>
+                                                    </a>
+                                                    <a href="tel:+919050983530" class="action-btn" title="Call">
+                                                        <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                                        </svg>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bottom input -->
+                            <div class="input-area">
+                                <div class="input-container">
+                                    <div :class="['search-box', isDarkMode ? 'search-dark' : 'search-light']">
+                                        <input
+                                            v-model="query"
+                                            @keyup.enter="handleSearch"
+                                            type="text"
+                                            placeholder="Message ChatGPT"
+                                            :class="['search-input', isDarkMode ? 'input-dark' : 'input-light']"
+                                        />
+                                        <button @click="handleSearch" :class="['send-btn', query.trim() ? 'send-btn-active' : '']">
+                                            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="disclaimer">
+                                        ChatGPT can make mistakes. Check important info.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>`;
+        </div>
+    </div>
 
-        quotePreviewContent.innerHTML = html;
+    <script>
+        const { createApp, ref, nextTick } = Vue;
 
-        setTimeout(() => {
-          if (window.QRious) {
-            new QRious({
-              element: document.getElementById("qrCodeCanvas"),
-              value: COMPANY.homepage,
-              size: 70,
-              background: "#fff",
-            });
-          }
-        }, 50);
+        createApp({
+            setup() {
+                const query = ref("");
+                const showMenu = ref(false);
+                const messages = ref([]);
+                const isDarkMode = ref(true);
+                const chatHistory = ref([]);
+                const currentChatId = ref(null);
+                const messagesContainer = ref(null);
 
-        quotePreviewSection.classList.remove("hidden");
-        window.scrollTo({ top: quotePreviewSection.offsetTop, behavior: "smooth" });
-      }
+                const spellCheckDictionary = {
+                    'teh': 'the',
+                    'recieve': 'receive',
+                    'occured': 'occurred',
+                    'seperate': 'separate',
+                    'definately': 'definitely',
+                    'goverment': 'government',
+                    'accomodate': 'accommodate',
+                    'wich': 'which',
+                    'thier': 'their',
+                    'succesful': 'successful',
+                    'begining': 'beginning',
+                    'untill': 'until',
+                    'occassion': 'occasion',
+                    'calender': 'calendar',
+                    'existance': 'existence'
+                };
 
-      function sendWhatsappQuotation() {
-        const service = serviceSelect.value;
-        const complexity = complexitySelect.value || "-";
-        const duration = durationSliderWrapper.classList.contains("hidden") ? "-" : durationSlider.value + " months";
-        const { finalPrice } = calculatePrice();
+                function autoCorrectText(text) {
+                    let correctedText = text;
+                    Object.keys(spellCheckDictionary).forEach(mistake => {
+                        const regex = new RegExp(`\\b${mistake}\\b`, 'gi');
+                        correctedText = correctedText.replace(regex, spellCheckDictionary[mistake]);
+                    });
+                    return correctedText;
+                }
 
-        let msg = `Quotation Request from AfterResult Estimator:%0A`;
-        msg += `Name: ${encodeURIComponent(clientDetails.name)}%0A`;
-        msg += `Phone: ${encodeURIComponent(clientDetails.phone)}%0A`;
-        msg += `Email: ${encodeURIComponent(clientDetails.email)}%0A`;
-        msg += `Company: ${encodeURIComponent(clientDetails.company || "-")}%0A`;
-        msg += `Service: ${service}%0A`;
-        msg += `Complexity: ${complexity}%0A`;
-        msg += `Duration: ${duration}%0A`;
-        msg += `Estimated Price: ₹${finalPrice.toLocaleString()}%0A`;
-        window.open(`https://wa.me/919599169901?text=${msg}`, "_blank");
-      }
+                async function handleSearch() {
+                    if (!query.value.trim()) return;
+                    
+                    const correctedQuery = autoCorrectText(query.value);
+                    
+                    if (!currentChatId.value) {
+                        currentChatId.value = Date.now();
+                    }
+                    
+                    messages.value.push({
+                        type: 'user',
+                        text: correctedQuery,
+                        timestamp: new Date()
+                    });
+                    
+                    const queryLower = correctedQuery.toLowerCase();
+                    const ecommerceKeywords = ['ecommerce', 'e-commerce', 'online store', 'shopify', 'online selling', 'online shop', 'webstore', 'web store', 'online business', 'sell online', 'store', 'shop'];
+                    const isEcommerceQuery = ecommerceKeywords.some(keyword => queryLower.includes(keyword));
+                    
+                    query.value = "";
+                    
+                    await nextTick();
+                    scrollToBottom();
+                    
+                    setTimeout(() => {
+                        if (isEcommerceQuery) {
+                            messages.value.push({
+                                type: 'bot',
+                                text: 'Hi, thank you so much for sharing your requirement! We surely help you with ecommerce store end to end. We are professional team of ecommerce experts. You will make and live store in just 25 days. Start today!',
+                                timestamp: new Date(),
+                                hasButton: true,
+                                buttonText: 'Launch My Store',
+                                buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
+                            });
+                        } else {
+                            messages.value.push({
+                                type: 'bot',
+                                text: 'Oops! We will be soon live for you. 🚀',
+                                timestamp: new Date()
+                            });
+                        }
+                        scrollToBottom();
+                    }, 500);
+                }
 
-      function openPopupForm() {
-        popupFormOverlay.style.display = "flex";
-        popupForm.reset();
-        if (clientDetails) {
-          popupForm.userName.value = clientDetails.name;
-          popupForm.userPhone.value = clientDetails.phone;
-          popupForm.userEmail.value = clientDetails.email;
-          popupForm.userCompany.value = clientDetails.company;
-        }
-        popupForm.userName.focus();
-      }
+                function scrollToBottom() {
+                    nextTick(() => {
+                        if (messagesContainer.value) {
+                            messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight;
+                        }
+                    });
+                }
 
-      function closePopupForm() {
-        popupFormOverlay.style.display = "none";
-      }
+                function toggleTheme() {
+                    isDarkMode.value = !isDarkMode.value;
+                }
 
-      serviceSelect.addEventListener("change", () => {
-        updateOptionals();
-        updatePriceDisplay();
-      });
+                function startNewChat() {
+                    if (messages.value.length > 0) {
+                        chatHistory.value.unshift({
+                            id: currentChatId.value || Date.now(),
+                            title: messages.value[0].text.substring(0, 30) + (messages.value[0].text.length > 30 ? '...' : ''),
+                            messages: [...messages.value],
+                            date: new Date()
+                        });
+                    }
+                    
+                    messages.value = [];
+                    query.value = "";
+                    currentChatId.value = null;
+                }
 
-      complexitySelect.addEventListener("change", updatePriceDisplay);
-      durationSlider.addEventListener("input", () => {
-        durationSliderValue.textContent = durationSlider.value;
-        updatePriceDisplay();
-      });
-      budgetInput.addEventListener("input", updatePriceDisplay);
-      productCountInput.addEventListener("input", updatePriceDisplay);
-      followersCountInput.addEventListener("input", updatePriceDisplay);
-      marketplaceSelect.addEventListener("change", updatePriceDisplay);
-      smmPlatformCheckboxes.forEach(cb => cb.addEventListener("change", updatePriceDisplay));
+                function loadChat(chat) {
+                    if (messages.value.length > 0 && currentChatId.value !== chat.id) {
+                        const existingIndex = chatHistory.value.findIndex(c => c.id === currentChatId.value);
+                        if (existingIndex === -1) {
+                            chatHistory.value.unshift({
+                                id: currentChatId.value,
+                                title: messages.value[0].text.substring(0, 30) + (messages.value[0].text.length > 30 ? '...' : ''),
+                                messages: [...messages.value],
+                                date: new Date()
+                            });
+                        }
+                    }
+                    messages.value = [...chat.messages];
+                    currentChatId.value = chat.id;
+                    showMenu.value = false;
+                    scrollToBottom();
+                }
 
-      previewQuotationBtn.addEventListener("click", () => {
-        if (!serviceSelect.value) {
-          alert("Please select a service first.");
-          return;
-        }
-        lastAction = "preview";
-        if (!clientDetails) openPopupForm();
-        else showQuotationPreview();
-      });
+                function formatDate(date) {
+                    const now = new Date();
+                    const diff = now - new Date(date);
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    
+                    if (days === 0) return 'Today';
+                    if (days === 1) return 'Yesterday';
+                    if (days < 7) return `${days} days ago`;
+                    return new Date(date).toLocaleDateString();
+                }
 
-      whatsappQuotationBtn.addEventListener("click", () => {
-        if (!serviceSelect.value) {
-          alert("Please select a service first.");
-          return;
-        }
-        lastAction = "whatsapp";
-        if (!clientDetails) openPopupForm();
-        else sendWhatsappQuotation();
-      });
-
-      popupCancelBtn.addEventListener("click", e => {
-        e.preventDefault();
-        closePopupForm();
-      });
-
-      popupForm.addEventListener("submit", e => {
-        e.preventDefault();
-        if (!popupForm.checkValidity()) {
-          popupForm.reportValidity();
-          return;
-        }
-        clientDetails = {
-          name: popupForm.userName.value.trim(),
-          phone: popupForm.userPhone.value.trim(),
-          email: popupForm.userEmail.value.trim(),
-          company: popupForm.userCompany.value.trim(),
-        };
-        closePopupForm();
-        if (lastAction === "preview") showQuotationPreview();
-        else if (lastAction === "whatsapp") sendWhatsappQuotation();
-      });
-
-      closePreviewBtn.addEventListener("click", () => {
-        quotePreviewSection.classList.add("hidden");
-      });
-
-      downloadQuoteBtn.addEventListener("click", () => {
-        html2canvas(quotePreviewSection, { backgroundColor: "#fff", scale: 2 }).then(canvas => {
-          const imgData = canvas.toDataURL("image/png");
-          const pdf = new window.jspdf.jsPDF({
-            orientation: "portrait",
-            unit: "px",
-            format: [quotePreviewSection.offsetWidth, quotePreviewSection.offsetHeight + 40],
-          });
-          pdf.addImage(imgData, "PNG", 0, 0, quotePreviewSection.offsetWidth, quotePreviewSection.offsetHeight);
-          pdf.save("AfterResult_Quotation.pdf");
-        });
-      });
-
-      // Initialize
-      updateOptionals();
-      updatePriceDisplay();
-    })();
-  </script>
+                return {
+                    query,
+                    showMenu,
+                    messages,
+                    isDarkMode,
+                    chatHistory,
+                    currentChatId,
+                    messagesContainer,
+                    handleSearch,
+                    scrollToBottom,
+                    toggleTheme,
+                    startNewChat,
+                    loadChat,
+                    formatDate
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
