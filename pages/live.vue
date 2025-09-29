@@ -273,13 +273,21 @@ export default {
       const query = q.toLowerCase();
       const kb = this.kb;
       
-      const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste'];
-      if (greetings.some(g => query === g || query.startsWith(g + ' ') || query.endsWith(' ' + g))) {
-        return {
-          text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}`,
-          hasButton: true
-        };
-      }
+const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste'];
+if (greetings.some(g => query === g || query === g + '!' || query === g + '?')) {
+  return {
+    text: "Hi there! Welcome to AR Solutions! 👋\n\nI can help you with information about launching your online store. Feel free to ask me about:\n\n• Pricing and payment plans\n• What's included in our package\n• Timeline and delivery\n• Technical requirements\n• And more!\n\nWhat would you like to know?",
+    hasButton: false
+  };
+}
+
+// If greeting with more text (like "hi, I need a store"), treat as inquiry
+if (greetings.some(g => query.startsWith(g + ' ') || query.startsWith(g + ','))) {
+  return {
+    text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}`,
+    hasButton: true
+  };
+}
       
       if (kb.keywords.confirmation.some(kw => query.includes(kw))) {
         return {
