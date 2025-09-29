@@ -269,13 +269,121 @@ export default {
     }
   },
   methods: {
-    autoCorrectText(text) {
-      let correctedText = text;
-      Object.keys(this.spellCheckDictionary).forEach(mistake => {
-        const regex = new RegExp(`\\b${mistake}\\b`, 'gi');
-        correctedText = correctedText.replace(regex, this.spellCheckDictionary[mistake]);
-      });
-      return correctedText;
+    generateResponse(q) {
+      const query = q.toLowerCase();
+      const kb = this.kb;
+      
+      const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste'];
+      if (greetings.some(g => query === g || query.startsWith(g + ' ') || query.endsWith(' ' + g))) {
+        return {
+          text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.confirmation.some(kw => query.includes(kw))) {
+        return {
+          text: kb.responses.confirmation,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.pricing.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.pricing}\n\n${kb.responses.quickDelivery}\n\n${kb.responses.confirmation}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.installment.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.installments}\n\n${kb.responses.pricing}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.quickdelivery.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.quickDelivery}\n\n${kb.responses.timeline}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.features.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.timeline.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.timeline}\n\n${kb.responses.confirmation}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.technical.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.noTech}\n\n${kb.responses.fullPackage}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.products.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.products}\n\n${kb.responses.pricing}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.domain.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.domain}\n\n${kb.responses.confirmation}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.training.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.training}\n\n${kb.responses.confirmation}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.platform.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.platform}\n\n${kb.responses.fullPackage}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.payment_gateway.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.paymentGateway}\n\n${kb.responses.confirmation}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.design.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.design}\n\n${kb.responses.confirmation}`,
+          hasButton: true
+        };
+      }
+      
+      const ecommerceKeywords = ['ecommerce', 'e-commerce', 'online store', 'store', 'shop', 'website', 'sell online', 'business'];
+      if (ecommerceKeywords.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
+          hasButton: true
+        };
+      }
+      
+      return {
+        text: "Thank you for reaching out! I'd be happy to help you with information about our ecommerce store setup service. Feel free to ask about pricing, features, timeline, or anything else. You can also chat with our team directly for personalized assistance.",
+        hasButton: false
+      };
     },
 
     async handleSearch() {
