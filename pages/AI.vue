@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import logoImage from "/images/logo.png";
 
 definePageMeta({
   layout: "default",
@@ -15,7 +14,7 @@ function handleSearch() {
 <template>
   <div class="flex flex-col items-center justify-center min-h-screen bg-white px-4">
     <div class="mb-12 mt-8">
-      <img :src="logoImage" alt="Logo" class="h-10 md:h-12" />
+      <img src="/images/logo.png" alt="Logo" class="h-10 md:h-12" />
     </div>
     <h1 class="text-2xl md:text-3xl font-normal mb-6 text-gray-900 text-center">
       What are you working on?
