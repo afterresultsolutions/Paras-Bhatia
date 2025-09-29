@@ -1,5 +1,3 @@
-<script setup>
-</script>
 <template>
   <Container>
     <header class="flex flex-row flex-wrap items-center justify-between my-4 gap-x-6 gap-y-4">
