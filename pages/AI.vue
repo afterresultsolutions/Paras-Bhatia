@@ -229,174 +229,169 @@
   </div>
 </template>
 
-<script setup>
-import { ref, nextTick } from "vue";
-
-const query = ref("");
-const showMenu = ref(false);
-const messages = ref([]);
-const isDarkMode = ref(true);
-const chatHistory = ref([]);
-const currentChatId = ref(null);
-const messagesContainer = ref(null);
-
-const spellCheckDictionary = {
-  'teh': 'the',
-  'recieve': 'receive',
-  'occured': 'occurred',
-  'seperate': 'separate',
-  'definately': 'definitely',
-  'goverment': 'government',
-  'accomodate': 'accommodate',
-  'wich': 'which',
-  'thier': 'their',
-  'succesful': 'successful',
-  'begining': 'beginning',
-  'untill': 'until',
-  'occassion': 'occasion',
-  'calender': 'calendar',
-  'existance': 'existence'
-};
-
-function autoCorrectText(text) {
-  let correctedText = text;
-  Object.keys(spellCheckDictionary).forEach(mistake => {
-    const regex = new RegExp(`\\b${mistake}\\b`, 'gi');
-    correctedText = correctedText.replace(regex, spellCheckDictionary[mistake]);
-  });
-  return correctedText;
-}
-
-async function handleSearch() {
-  if (!query.value.trim()) return;
-  
-  const correctedQuery = autoCorrectText(query.value);
-  
-  if (!currentChatId.value) {
-    currentChatId.value = Date.now();
-  }
-  
-  messages.value.push({
-    type: 'user',
-    text: correctedQuery,
-    timestamp: new Date()
-  });
-  
-  const queryLower = correctedQuery.toLowerCase();
-  const ecommerceKeywords = ['ecommerce', 'e-commerce', 'online store', 'shopify', 'online selling', 'online shop', 'webstore', 'web store', 'online business', 'sell online', 'store', 'shop'];
-  const isEcommerceQuery = ecommerceKeywords.some(keyword => queryLower.includes(keyword));
-  
-  query.value = "";
-  
-  await nextTick();
-  scrollToBottom();
-  
-  setTimeout(() => {
-    if (isEcommerceQuery) {
-      messages.value.push({
-        type: 'bot',
-        text: 'Hi, thank you so much for sharing your requirement! We surely help you with ecommerce store end to end. We are professional team of ecommerce experts. You will make and live store in just 25 days. Start today!',
-        timestamp: new Date(),
-        hasButton: true,
-        buttonText: 'Launch My Store',
-        buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
+<script>
+export default {
+  name: 'ChatbotPage',
+  data() {
+    return {
+      query: "",
+      showMenu: false,
+      messages: [],
+      isDarkMode: true,
+      chatHistory: [],
+      currentChatId: null,
+      spellCheckDictionary: {
+        'teh': 'the',
+        'recieve': 'receive',
+        'occured': 'occurred',
+        'seperate': 'separate',
+        'definately': 'definitely',
+        'goverment': 'government',
+        'accomodate': 'accommodate',
+        'wich': 'which',
+        'thier': 'their',
+        'succesful': 'successful',
+        'begining': 'beginning',
+        'untill': 'until',
+        'occassion': 'occasion',
+        'calender': 'calendar',
+        'existance': 'existence'
+      }
+    }
+  },
+  methods: {
+    autoCorrectText(text) {
+      let correctedText = text;
+      Object.keys(this.spellCheckDictionary).forEach(mistake => {
+        const regex = new RegExp(`\\b${mistake}\\b`, 'gi');
+        correctedText = correctedText.replace(regex, this.spellCheckDictionary[mistake]);
       });
-    } else {
-      messages.value.push({
-        type: 'bot',
-        text: 'Oops! We will be soon live for you. 🚀',
+      return correctedText;
+    },
+
+    async handleSearch() {
+      if (!this.query.trim()) return;
+      
+      const correctedQuery = this.autoCorrectText(this.query);
+      
+      if (!this.currentChatId) {
+        this.currentChatId = Date.now();
+      }
+      
+      this.messages.push({
+        type: 'user',
+        text: correctedQuery,
         timestamp: new Date()
       });
-    }
-    scrollToBottom();
-  }, 500);
-}
+      
+      const queryLower = correctedQuery.toLowerCase();
+      const ecommerceKeywords = ['ecommerce', 'e-commerce', 'online store', 'shopify', 'online selling', 'online shop', 'webstore', 'web store', 'online business', 'sell online', 'store', 'shop'];
+      const isEcommerceQuery = ecommerceKeywords.some(keyword => queryLower.includes(keyword));
+      
+      this.query = "";
+      
+      await this.$nextTick();
+      this.scrollToBottom();
+      
+      setTimeout(() => {
+        if (isEcommerceQuery) {
+          this.messages.push({
+            type: 'bot',
+            text: 'Hi, thank you so much for sharing your requirement! We surely help you with ecommerce store end to end. We are professional team of ecommerce experts. You will make and live store in just 25 days. Start today!',
+            timestamp: new Date(),
+            hasButton: true,
+            buttonText: 'Launch My Store',
+            buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
+          });
+        } else {
+          this.messages.push({
+            type: 'bot',
+            text: 'Oops! We will be soon live for you. 🚀',
+            timestamp: new Date()
+          });
+        }
+        this.scrollToBottom();
+      }, 500);
+    },
 
-function scrollToBottom() {
-  nextTick(() => {
-    if (messagesContainer.value) {
-      messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight;
-    }
-  });
-}
-
-function toggleTheme() {
-  isDarkMode.value = !isDarkMode.value;
-}
-
-function startNewChat() {
-  if (messages.value.length > 0) {
-    chatHistory.value.unshift({
-      id: currentChatId.value || Date.now(),
-      title: messages.value[0].text.substring(0, 30) + (messages.value[0].text.length > 30 ? '...' : ''),
-      messages: [...messages.value],
-      date: new Date()
-    });
-  }
-  
-  messages.value = [];
-  query.value = "";
-  currentChatId.value = null;
-}
-
-function loadChat(chat) {
-  if (messages.value.length > 0 && currentChatId.value !== chat.id) {
-    const existingIndex = chatHistory.value.findIndex(c => c.id === currentChatId.value);
-    if (existingIndex === -1) {
-      chatHistory.value.unshift({
-        id: currentChatId.value,
-        title: messages.value[0].text.substring(0, 30) + (messages.value[0].text.length > 30 ? '...' : ''),
-        messages: [...messages.value],
-        date: new Date()
+    scrollToBottom() {
+      this.$nextTick(() => {
+        if (this.$refs.messagesContainer) {
+          this.$refs.messagesContainer.scrollTop = this.$refs.messagesContainer.scrollHeight;
+        }
       });
+    },
+
+    toggleTheme() {
+      this.isDarkMode = !this.isDarkMode;
+    },
+
+    startNewChat() {
+      if (this.messages.length > 0) {
+        this.chatHistory.unshift({
+          id: this.currentChatId || Date.now(),
+          title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
+          messages: [...this.messages],
+          date: new Date()
+        });
+      }
+      
+      this.messages = [];
+      this.query = "";
+      this.currentChatId = null;
+    },
+
+    loadChat(chat) {
+      if (this.messages.length > 0 && this.currentChatId !== chat.id) {
+        const existingIndex = this.chatHistory.findIndex(c => c.id === this.currentChatId);
+        if (existingIndex === -1) {
+          this.chatHistory.unshift({
+            id: this.currentChatId,
+            title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
+            messages: [...this.messages],
+            date: new Date()
+          });
+        }
+      }
+      this.messages = [...chat.messages];
+      this.currentChatId = chat.id;
+      this.showMenu = false;
+      this.scrollToBottom();
+    },
+
+    copyMessage(text) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+          console.log('Message copied to clipboard');
+        }).catch(err => {
+          console.error('Failed to copy message: ', err);
+        });
+      }
+    },
+
+    likeMessage(index) {
+      console.log('Liked message at index:', index);
+    },
+
+    dislikeMessage(index) {
+      console.log('Disliked message at index:', index);
+    },
+
+    regenerateResponse(index) {
+      console.log('Regenerating response at index:', index);
+    },
+
+    shareMessage(text) {
+      if (navigator.share) {
+        navigator.share({
+          title: 'AR Solutions AI Response',
+          text: text
+        });
+      } else {
+        this.copyMessage(text);
+      }
     }
   }
-  messages.value = [...chat.messages];
-  currentChatId.value = chat.id;
-  showMenu.value = false;
-  scrollToBottom();
-}
-
-function copyMessage(text) {
-  navigator.clipboard.writeText(text).then(() => {
-    console.log('Message copied to clipboard');
-  }).catch(err => {
-    console.error('Failed to copy message: ', err);
-  });
-}
-
-function likeMessage(index) {
-  console.log('Liked message at index:', index);
-}
-
-function dislikeMessage(index) {
-  console.log('Disliked message at index:', index);
-}
-
-function regenerateResponse(index) {
-  console.log('Regenerating response at index:', index);
-}
-
-function shareMessage(text) {
-  if (navigator.share) {
-    navigator.share({
-      title: 'AR Solutions AI Response',
-      text: text
-    });
-  } else {
-    copyMessage(text);
-  }
-}
-
-function formatDate(date) {
-  const now = new Date();
-  const diff = now - new Date(date);
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  
-  if (days === 0) return 'Today';
-  if (days === 1) return 'Yesterday';
-  if (days < 7) return `${days} days ago`;
-  return new Date(date).toLocaleDateString();
 }
 </script>
 
@@ -1000,7 +995,6 @@ function formatDate(date) {
   background: #6e6e6e;
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .sidebar {
     width: 240px;
@@ -1011,53 +1005,42 @@ function formatDate(date) {
   .sidebar {
     display: none;
   }
-
   .header-title {
     margin-left: 48px;
   }
-
   .empty-title {
     font-size: 22px;
     margin-bottom: 30px;
   }
-
   .messages-inner {
     padding: 20px 12px 0;
   }
-
   .input-area {
     padding: 12px;
   }
-
   .search-container-center {
     max-width: 100%;
     padding: 0 12px;
   }
-
   .empty-state {
     padding: 12px;
     justify-content: flex-start;
     padding-top: 40px;
   }
-
   .message-row {
     gap: 12px;
   }
-
   .avatar {
     width: 28px;
     height: 28px;
   }
-
   .avatar-icon {
     width: 24px;
     height: 24px;
   }
-
   .message-text {
     font-size: 14px;
   }
-
   .disclaimer {
     padding-bottom: 20px;
   }
@@ -1068,96 +1051,76 @@ function formatDate(date) {
     font-size: 20px;
     margin-bottom: 20px;
   }
-
   .header-title {
     margin-left: 44px;
   }
-
   .mobile-menu-btn {
     top: 10px;
     left: 8px;
     padding: 6px;
   }
-
   .chat-header {
     padding: 8px 10px;
   }
-
   .human-chat-btn {
     padding: 6px 10px;
     font-size: 12px;
     gap: 4px;
   }
-
   .brand-name {
     font-size: 16px;
   }
-
   .model-badge {
     width: 18px;
     height: 18px;
     font-size: 10px;
   }
-
   .search-input {
     font-size: 14px;
     padding: 10px 6px;
   }
-
   .send-btn {
     width: 28px;
     height: 28px;
   }
-
   .search-box {
     padding: 3px 3px 3px 12px;
   }
-
   .messages-inner {
     padding: 16px 8px 0;
   }
-
   .input-area {
     padding: 10px 8px;
   }
-
   .search-container-center {
     padding: 0 8px;
   }
-
   .message-row {
     gap: 8px;
   }
-
   .avatar {
     width: 24px;
     height: 24px;
   }
-
   .avatar-icon {
     width: 20px;
     height: 20px;
   }
-
   .message-text {
     font-size: 13px;
     line-height: 1.5;
   }
-
   .launch-btn {
     padding: 8px 16px;
     font-size: 13px;
   }
-
   .action-btn {
     padding: 4px;
   }
-
   .icon-xs {
     width: 14px;
     height: 14px;
   }
-
   .disclaimer {
     font-size: 11px;
     margin-top: 8px;
@@ -1169,29 +1132,23 @@ function formatDate(date) {
   .empty-title {
     font-size: 18px;
   }
-
   .human-chat-btn {
     padding: 5px 8px;
     font-size: 11px;
   }
-
   .human-chat-text {
     display: none;
   }
-
   .search-input {
     font-size: 13px;
     padding: 8px 6px;
   }
-
   .messages-inner {
     padding: 12px 6px 0;
   }
-
   .input-area {
     padding: 8px 6px;
   }
-
   .search-container-center {
     padding: 0 6px;
   }
@@ -1207,15 +1164,12 @@ function formatDate(date) {
   .mobile-menu-btn {
     display: none;
   }
-
   .mobile-sidebar {
     display: none;
   }
-
   .header-title {
     margin-left: 0;
   }
-
   .empty-state {
     justify-content: center;
     padding-top: 20px;
@@ -1226,7 +1180,6 @@ function formatDate(date) {
   .empty-state {
     padding-top: 20px;
   }
-
   .empty-title {
     font-size: 20px;
     margin-bottom: 20px;
@@ -1237,34 +1190,28 @@ function formatDate(date) {
   .search-box {
     padding: 6px 6px 6px 16px;
   }
-
   .search-input {
     padding: 14px 8px;
     font-size: 16px;
   }
-
   .send-btn {
     width: 36px;
     height: 36px;
   }
-
   .action-btn {
     padding: 8px;
     min-height: 36px;
     min-width: 36px;
   }
-
   .human-chat-btn {
     padding: 10px 14px;
     min-height: 40px;
   }
-
   .mobile-menu-btn {
     padding: 10px;
     min-height: 40px;
     min-width: 40px;
   }
-
   .message-actions {
     opacity: 1;
   }
@@ -1289,3 +1236,4 @@ function formatDate(date) {
 .text-gray-800 {
   color: #1f2937;
 }
+</style>
