@@ -386,41 +386,41 @@ export default {
       };
     },
 
-    async handleSearch() {
-      if (!this.query.trim()) return;
-      
-      const correctedQuery = this.autoCorrectText(this.query);
-      
-      if (!this.currentChatId) {
-        this.currentChatId = Date.now();
-      }
-      
-      this.messages.push({
-        type: 'user',
-        text: userQuery,
-        timestamp: new Date()
-      });
-      
-      this.query = "";
-      
-      await this.$nextTick();
-      this.scrollToBottom();
-      
-      setTimeout(() => {
-        const aiResponse = this.generateResponse(userQuery);
-        
-        this.messages.push({
-          type: 'bot',
-          text: aiResponse.text,
-          timestamp: new Date(),
-          hasButton: aiResponse.hasButton,
-          buttonText: 'Launch My Store - ₹1,599',
-          buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
-        });
-        
-        this.scrollToBottom();
-      }, 500);
-    },
+async handleSearch() {
+  if (!this.query.trim()) return;
+  
+  const userQuery = this.query.trim();
+  
+  if (!this.currentChatId) {
+    this.currentChatId = Date.now();
+  }
+  
+  this.messages.push({
+    type: 'user',
+    text: userQuery,
+    timestamp: new Date()
+  });
+  
+  this.query = "";
+  
+  await this.$nextTick();
+  this.scrollToBottom();
+  
+  setTimeout(() => {
+    const aiResponse = this.generateResponse(userQuery);
+    
+    this.messages.push({
+      type: 'bot',
+      text: aiResponse.text,
+      timestamp: new Date(),
+      hasButton: aiResponse.hasButton,
+      buttonText: 'Launch My Store - ₹1,599',
+      buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
+    });
+    
+    this.scrollToBottom();
+  }, 500);
+},
 
     scrollToBottom() {
       this.$nextTick(() => {
