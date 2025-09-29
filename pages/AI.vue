@@ -1208,3 +1208,4 @@ function formatDate(date) {
 .text-gray-800 {
   color: #1f2937;
 }
+</style>
