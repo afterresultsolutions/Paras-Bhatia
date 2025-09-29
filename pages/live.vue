@@ -18,7 +18,7 @@
       padding: 0;
       overflow: hidden;
     }
-
+    
     .chat-wrapper {
       width: 100%;
       min-height: 100vh;
