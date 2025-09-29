@@ -123,13 +123,15 @@
             
             <div class="search-container-center">
               <div :class="['search-box', isDarkMode ? 'search-dark' : 'search-light']">
-                <input
-                  v-model="query"
-                  @keyup.enter="handleSearch"
-                  type="text"
-                  placeholder="Ask anything"
-                  :class="['search-input', isDarkMode ? 'input-dark' : 'input-light']"
-                />
+<input
+  ref="queryInput"
+  v-model="query"
+  @input="handleInputChange"
+  @keyup.enter="handleSearch"
+  type="text"
+  placeholder="Ask anything"
+  :class="['search-input', isDarkMode ? 'input-dark' : 'input-light']"
+/>
                 <button @click="handleSearch" :class="['send-btn', query.trim() ? 'send-btn-active' : '']">
                   <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
@@ -202,13 +204,15 @@
             <div class="input-area">
               <div class="input-container">
                 <div :class="['search-box', isDarkMode ? 'search-dark' : 'search-light']">
-                  <input
-                    v-model="query"
-                    @keyup.enter="handleSearch"
-                    type="text"
-                    placeholder="Message AR Solutions AI"
-                    :class="['search-input', isDarkMode ? 'input-dark' : 'input-light']"
-                  />
+<input
+  ref="queryInputBottom"
+  v-model="query"
+  @input="handleInputChange"
+  @keyup.enter="handleSearch"
+  type="text"
+  placeholder="Message AR Solutions AI"
+  :class="['search-input', isDarkMode ? 'input-dark' : 'input-light']"
+/>
                   <button @click="handleSearch" :class="['send-btn', query.trim() ? 'send-btn-active' : '']">
                     <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
@@ -228,6 +232,66 @@
 </template>
 
 <script>
+const autocorrectDict = {
+  'hu': 'hi',
+  'helo': 'hello',
+  'helllo': 'hello',
+  'heljhs': 'help',
+  'halp': 'help',
+  'plz': 'please',
+  'pls': 'please',
+  'thnks': 'thanks',
+  'thanx': 'thanks',
+  'thx': 'thanks',
+  'servcie': 'service',
+  'serivce': 'service',
+  'servise': 'service',
+  'delevery': 'delivery',
+  'delivry': 'delivery',
+  'pcakage': 'package',
+  'pakage': 'package',
+  'prise': 'price',
+  'priice': 'price',
+  'fetures': 'features',
+  'featurs': 'features',
+  'websit': 'website',
+  'webiste': 'website',
+  'ecomerce': 'ecommerce',
+  'ecomerse': 'ecommerce',
+  'shopfi': 'shopify',
+  'shopfy': 'shopify',
+  'paymnet': 'payment',
+  'payemnt': 'payment',
+  'doamin': 'domain',
+  'domian': 'domain',
+  'traning': 'training',
+  'trainig': 'training',
+  'stroe': 'store',
+  'stor': 'store',
+  'prodcut': 'product',
+  'porduct': 'product',
+  'wnat': 'want',
+  'waht': 'what',
+  'whta': 'what',
+  'hwo': 'how',
+  'cna': 'can',
+  'teh': 'the',
+  'adn': 'and',
+  'wiht': 'with',
+  'yuor': 'your',
+  'yoru': 'your',
+  'thsi': 'this',
+  'taht': 'that',
+  'jsut': 'just',
+  'dont': "don't",
+  'doesnt': "doesn't",
+  'wont': "won't",
+  'cant': "can't",
+  'isnt': "isn't",
+  'arent': "aren't",
+  'deck': 'deck'
+};
+
 export default {
   name: 'ChatbotPage',
   data() {
@@ -239,6 +303,7 @@ export default {
       chatHistory: [],
       currentChatId: null,
       searchQuery: "",
+      autocorrectTimeout: null,
       kb: {
         keywords: {
           pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget'],
@@ -330,6 +395,11 @@ export default {
           console.error('Failed to load current chat:', e);
         }
       }
+    }
+  },
+  beforeUnmount() {
+    if (this.autocorrectTimeout) {
+      clearTimeout(this.autocorrectTimeout);
     }
   },
   methods: {
@@ -493,6 +563,65 @@ export default {
         text: "Thank you for reaching out! I'd be happy to help you with information about our ecommerce store setup service or other business solutions.\n\nFeel free to ask about:\n• Pricing and packages\n• Features and services\n• Timeline and delivery\n• Marketing support\n• Or anything else!\n\nYou can also chat with our team directly for personalized assistance.",
         hasButton: false
       };
+    },
+
+    autocorrectText(text) {
+      const words = text.split(/(\s+|[.,!?;:])/);
+      
+      const correctedWords = words.map(word => {
+        if (/^\s+$/.test(word) || /^[.,!?;:]$/.test(word)) {
+          return word;
+        }
+        
+        const lowerWord = word.toLowerCase();
+        
+        if (lowerWord.endsWith('?') || lowerWord.endsWith('!')) {
+          const baseWord = lowerWord.slice(0, -1);
+          const punctuation = lowerWord.slice(-1);
+          if (autocorrectDict[baseWord]) {
+            return word.charAt(0) === word.charAt(0).toUpperCase() 
+              ? autocorrectDict[baseWord].charAt(0).toUpperCase() + autocorrectDict[baseWord].slice(1) + punctuation
+              : autocorrectDict[baseWord] + punctuation;
+          }
+        }
+        
+        if (autocorrectDict[lowerWord]) {
+          const corrected = autocorrectDict[lowerWord];
+          if (word.charAt(0) === word.charAt(0).toUpperCase()) {
+            return corrected.charAt(0).toUpperCase() + corrected.slice(1);
+          }
+          return corrected;
+        }
+        
+        return word;
+      });
+      
+      return correctedWords.join('');
+    },
+
+    handleInputChange() {
+      if (this.autocorrectTimeout) {
+        clearTimeout(this.autocorrectTimeout);
+      }
+      
+      this.autocorrectTimeout = setTimeout(() => {
+        const input = this.$refs.queryInput || this.$refs.queryInputBottom;
+        const cursorPosition = input?.selectionStart || 0;
+        const originalLength = this.query.length;
+        const corrected = this.autocorrectText(this.query);
+        
+        if (corrected !== this.query) {
+          this.query = corrected;
+          
+          this.$nextTick(() => {
+            if (input) {
+              const lengthDiff = this.query.length - originalLength;
+              const newPosition = cursorPosition + lengthDiff;
+              input.setSelectionRange(newPosition, newPosition);
+            }
+          });
+        }
+      }, 500);
     },
 
     async handleSearch() {
