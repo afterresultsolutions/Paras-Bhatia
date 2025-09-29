@@ -1,44 +1,62 @@
 <template>
   <div :class="['chat-wrapper', isDarkMode ? 'dark-mode' : 'light-mode']">
     <div class="chat-container">
-      <!-- Sidebar for Desktop -->
-      <div :class="['sidebar', isDarkMode ? 'sidebar-dark' : 'sidebar-light']">
-        <div class="sidebar-header">
-          <button @click="startNewChat" :class="['new-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
-            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-            </svg>
-            <span>New chat</span>
-          </button>
-        </div>
-        
-        <div class="sidebar-content">
-          <div v-if="chatHistory.length > 0" class="history-label">Recent</div>
-          <div v-for="chat in chatHistory" :key="chat.id" @click="loadChat(chat)" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
-            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-            </svg>
-            <span class="history-title">{{ chat.title }}</span>
-          </div>
-        </div>
-        
-        <div :class="['sidebar-footer', isDarkMode ? 'footer-dark' : 'footer-light']">
-          <a href="https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0" target="_blank" class="human-chat-btn footer-human-btn">
-            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-            </svg>
-            <span class="human-chat-text">Chat with Human</span>
-          </a>
-          <button @click="toggleTheme" :class="['footer-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
-            <svg v-if="isDarkMode" class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-            </svg>
-            <svg v-else class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-            </svg>
-          </button>
-        </div>
-      </div>
+<!-- Sidebar for Desktop -->
+<div :class="['sidebar', showMenu ? 'sidebar-open' : '', isDarkMode ? 'sidebar-dark' : 'sidebar-light']">
+  <div class="sidebar-header">
+    <button @click="showMenu = false" class="close-sidebar-btn">
+      <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+    <button @click="startNewChat" :class="['new-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
+      <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+      </svg>
+      <span>New chat</span>
+    </button>
+  </div>
+  
+  <!-- Search box -->
+  <div class="sidebar-search">
+    <input
+      v-model="searchQuery"
+      type="text"
+      placeholder="Search chats..."
+      :class="['search-chat-input', isDarkMode ? 'input-dark' : 'input-light']"
+    />
+  </div>
+  
+  <div class="sidebar-content">
+    <div v-if="filteredChatHistory.length > 0" class="history-label">Recent</div>
+    <div v-if="filteredChatHistory.length === 0 && searchQuery" class="no-results">
+      No chats found
+    </div>
+    <div v-for="chat in filteredChatHistory" :key="chat.id" @click="loadChat(chat)" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
+      <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+      </svg>
+      <span class="history-title">{{ chat.title }}</span>
+    </div>
+  </div>
+  
+  <div :class="['sidebar-footer', isDarkMode ? 'footer-dark' : 'footer-light']">
+    <a href="https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0" target="_blank" class="human-chat-btn footer-human-btn">
+      <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+      </svg>
+      <span class="human-chat-text">Chat with Human</span>
+    </a>
+    <button @click="toggleTheme" :class="['footer-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
+      <svg v-if="isDarkMode" class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+      </svg>
+      <svg v-else class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+      </svg>
+    </button>
+  </div>
+</div>
 
       <!-- Mobile Sidebar -->
       <div v-if="showMenu" @click="showMenu = false" class="mobile-overlay"></div>
@@ -80,12 +98,12 @@
         </div>
       </div>
 
-      <!-- Mobile menu toggle -->
-      <button @click="showMenu = !showMenu" :class="['mobile-menu-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
-        <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
-      </button>
+<!-- Mobile menu toggle -->
+<button @click="showMenu = !showMenu" :class="['menu-toggle-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
+  <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+  </svg>
+</button>
 
       <!-- Main content -->
       <div class="main-content">
@@ -213,14 +231,15 @@
 export default {
   name: 'ChatbotPage',
 data() {
-    return {
-      query: "",
-      showMenu: false,
-      messages: [],
-      isDarkMode: false,
-      chatHistory: [],
-      currentChatId: null,
-      kb: {
+  return {
+    query: "",
+    showMenu: false,
+    messages: [],
+    isDarkMode: false,
+    chatHistory: [],
+    currentChatId: null,
+    searchQuery: "", // Add this
+    kb: {
         keywords: {
           pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget'],
           features: ['features', 'include', 'get', 'what', 'benefit', 'offer', 'provide', 'service', 'package', 'comes with'],
@@ -490,13 +509,13 @@ data() {
       };
     },
 
-    async handleSearch() {
+async handleSearch() {
   if (!this.query.trim()) return;
   
   const userQuery = this.query.trim();
   
   if (!this.currentChatId) {
-    this.currentChatId = Date.now();
+    this.currentChatId = Date.now().toString();
   }
   
   this.messages.push({
@@ -506,6 +525,10 @@ data() {
   });
   
   this.query = "";
+  
+  // Save current chat
+  localStorage.setItem('ar-current-messages', JSON.stringify(this.messages));
+  localStorage.setItem('ar-current-chat-id', this.currentChatId);
   
   await this.$nextTick();
   this.scrollToBottom();
@@ -522,6 +545,9 @@ data() {
       buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
     });
     
+    // Save updated messages
+    localStorage.setItem('ar-current-messages', JSON.stringify(this.messages));
+    
     this.scrollToBottom();
   }, 500);
 },
@@ -534,24 +560,32 @@ data() {
       });
     },
 
-    toggleTheme() {
-      this.isDarkMode = !this.isDarkMode;
-    },
+toggleTheme() {
+  this.isDarkMode = !this.isDarkMode;
+  localStorage.setItem('ar-theme', this.isDarkMode ? 'dark' : 'light');
+},
 
-    startNewChat() {
-      if (this.messages.length > 0) {
-        this.chatHistory.unshift({
-          id: this.currentChatId || Date.now(),
-          title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
-          messages: [...this.messages],
-          date: new Date()
-        });
-      }
-      
-      this.messages = [];
-      this.query = "";
-      this.currentChatId = null;
-    },
+startNewChat() {
+  if (this.messages.length > 0) {
+    this.chatHistory.unshift({
+      id: this.currentChatId || Date.now().toString(),
+      title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
+      messages: [...this.messages],
+      date: new Date()
+    });
+    
+    // Save chat history
+    localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+  }
+  
+  this.messages = [];
+  this.query = "";
+  this.currentChatId = null;
+  
+  // Clear current chat from storage
+  localStorage.removeItem('ar-current-messages');
+  localStorage.removeItem('ar-current-chat-id');
+},
 
     loadChat(chat) {
       if (this.messages.length > 0 && this.currentChatId !== chat.id) {
@@ -871,6 +905,111 @@ shareMessage(text) {
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s;
+}
+/* Sidebar toggle - hidden by default */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+.sidebar-open {
+  transform: translateX(0);
+}
+
+.close-sidebar-btn {
+  position: absolute;
+  right: 8px;
+  top: 12px;
+  padding: 6px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 6px;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark-mode .close-sidebar-btn:hover {
+  background-color: #2f2f2f;
+}
+
+.light-mode .close-sidebar-btn:hover {
+  background-color: #ececec;
+}
+
+.sidebar-search {
+  padding: 8px;
+  border-bottom: 1px solid;
+}
+
+.sidebar-dark .sidebar-search {
+  border-color: #363636;
+}
+
+.sidebar-light .sidebar-search {
+  border-color: #e5e5e5;
+}
+
+.search-chat-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-dark.search-chat-input {
+  background-color: #2f2f2f;
+  border-color: #4d4d4d;
+  color: #ececec;
+}
+
+.input-light.search-chat-input {
+  background-color: #f4f4f4;
+  border-color: #d1d1d1;
+  color: #2f2f2f;
+}
+
+.search-chat-input:focus {
+  border-color: #667eea;
+}
+
+.no-results {
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.menu-toggle-btn {
+  position: fixed;
+  top: 14px;
+  left: 12px;
+  z-index: 998;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+@media (min-width: 769px) {
+  .menu-toggle-btn {
+    display: block;
+  }
+  
+  .mobile-sidebar {
+    display: none;
+  }
 }
 
 .main-content {
