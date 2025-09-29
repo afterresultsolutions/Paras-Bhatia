@@ -1,17 +1,5 @@
 <script setup>
 const menuitems = [
-  {
-    title: "Service Deck",
-    url: "https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf",
-  },
-  {
-    title: "WhatsApp",
-    url: "https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0",
-  },
-  {
-    title: "Call",
-    url: "tel:+919050983530",
-  },
 ];
 </script>
 <template>
