@@ -220,79 +220,207 @@ export default {
       isDarkMode: false,
       chatHistory: [],
       currentChatId: null,
-      spellCheckDictionary: {
-        'teh': 'the',
-        'recieve': 'receive',
-        'occured': 'occurred',
-        'seperate': 'separate',
-        'definately': 'definitely',
-        'goverment': 'government',
-        'accomodate': 'accommodate',
-        'wich': 'which',
-        'thier': 'their',
-        'succesful': 'successful',
-        'begining': 'beginning',
-        'untill': 'until',
-        'occassion': 'occasion',
-        'calender': 'calendar',
-        'existance': 'existence'
+      kb: {
+        keywords: {
+          pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget'],
+          features: ['features', 'include', 'get', 'what', 'benefit', 'offer', 'provide', 'service', 'package', 'comes with'],
+          timeline: ['when', 'how long', 'time', 'duration', 'days', 'delivery', 'fast', 'quick', 'ready', 'complete'],
+          products: ['product', 'sell', 'item', 'clothing', 'shoes', 'jewellery', 'jewelry', 'fashion', 'niche', 'categories'],
+          technical: ['technical', 'tech', 'difficult', 'easy', 'knowledge', 'skill', 'learn', 'manage', 'complicated'],
+          domain: ['domain', 'website name', 'url', 'web address', 'brand name', 'site name'],
+          training: ['training', 'teach', 'learn', 'help', 'support', 'tutorial', 'guide', 'how to'],
+          platform: ['shopify', 'platform', 'ecommerce', 'e-commerce', 'which platform'],
+          payment_gateway: ['payment gateway', 'accept payment', 'online payment', 'transaction', 'pay online'],
+          design: ['design', 'logo', 'banner', 'look', 'appearance', 'branding', 'graphics'],
+          confirmation: ['start', 'begin', 'sign up', 'register', 'book', 'confirm', 'interested', 'want', 'ready'],
+          installment: ['installment', 'instalment', 'emi', 'partial payment', 'split payment'],
+          quickdelivery: ['quick delivery', 'fast delivery', 'urgent', 'asap', 'faster']
+        },
+        responses: {
+          greeting: "Thank you for your interest in AR Solutions! We help entrepreneurs launch professional online stores quickly and affordably. Starting your own branded online store has never been this simple.",
+          
+          fullPackage: "With AR Solutions, you'll get:\n\n✓ Complete Shopify store setup\n✓ 1-year free domain (your brand name as a gift from us)\n✓ Payment gateway integration for easy online payments\n✓ Up to 20 products listed & ready to sell\n✓ Simple logo design, banners & content creation\n✓ FREE training on store management\n✓ Project delivered in 25 days\n✓ Transparent pricing with no hidden charges\n✓ Monthly subscription (paid separately, cancel anytime)\n\nYou'll get a ready-to-use, business-grade online store at the lowest possible cost — designed to help you start selling from day one.",
+          
+          pricing: "The total project cost is ₹7,999/- (including all taxes). To begin, you only need to pay a confirmation milestone of ₹1,599/- to secure your project slot. The remaining balance will be paid in 4 simple instalments during the 25-day project timeline.",
+          
+          quickDelivery: "Want faster delivery? Choose our Quick Delivery Option by paying 70% upfront for a faster, hassle-free setup!",
+          
+          noTech: "You don't need to worry about the tech side — we handle it all for you! No technical knowledge required. We take care of building your complete business-ready store.",
+          
+          timeline: "Your complete store will be delivered in 25 days. Want it faster? Choose our Quick Delivery Option by paying 70% upfront.",
+          
+          domain: "Yes! You get a 1-year free domain with your brand name as a gift from us. It's included in the package.",
+          
+          training: "We provide FREE training on how to manage your store and add products. You'll learn everything you need to run your store successfully.",
+          
+          platform: "We build your store on Shopify, one of the world's most reliable and user-friendly ecommerce platforms. It's trusted by millions of businesses worldwide.",
+          
+          products: "You can sell any type of products — clothing, shoes, jewellery, or any niche you choose. The store can be customized for your specific business. You'll be able to sell directly on Google, social media, and worldwide.",
+          
+          paymentGateway: "Yes! We integrate a payment gateway so you can accept online payments easily from customers. This is included in the setup.",
+          
+          design: "We provide simple logo design, banners, and content creation for your store. Everything is included in the package.",
+          
+          installments: "After paying the confirmation fee of ₹1,599/-, the remaining balance will be paid in 4 simple instalments during the 25-day project timeline. It's flexible and easy.",
+          
+          confirmation: "To get started, you only need to pay ₹1,599/- as a confirmation fee to secure your project slot. Click the button below to begin your journey!"
+        }
       }
     }
   },
   methods: {
-    autoCorrectText(text) {
-      let correctedText = text;
-      Object.keys(this.spellCheckDictionary).forEach(mistake => {
-        const regex = new RegExp(`\\b${mistake}\\b`, 'gi');
-        correctedText = correctedText.replace(regex, this.spellCheckDictionary[mistake]);
-      });
-      return correctedText;
-    },
-
-    async handleSearch() {
-      if (!this.query.trim()) return;
+    generateResponse(q) {
+      const query = q.toLowerCase();
+      const kb = this.kb;
       
-      const correctedQuery = this.autoCorrectText(this.query);
-      
-      if (!this.currentChatId) {
-        this.currentChatId = Date.now();
+      const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste'];
+      if (greetings.some(g => query === g || query.startsWith(g + ' ') || query.endsWith(' ' + g))) {
+        return {
+          text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}`,
+          hasButton: true
+        };
       }
       
-      this.messages.push({
-        type: 'user',
-        text: correctedQuery,
-        timestamp: new Date()
-      });
+      if (kb.keywords.confirmation.some(kw => query.includes(kw))) {
+        return {
+          text: kb.responses.confirmation,
+          hasButton: true
+        };
+      }
       
-      const queryLower = correctedQuery.toLowerCase();
-      const ecommerceKeywords = ['ecommerce', 'e-commerce', 'online store', 'shopify', 'online selling', 'online shop', 'webstore', 'web store', 'online business', 'sell online', 'store', 'shop'];
-      const isEcommerceQuery = ecommerceKeywords.some(keyword => queryLower.includes(keyword));
+      if (kb.keywords.pricing.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.pricing}\n\n${kb.responses.quickDelivery}\n\n${kb.responses.confirmation}`,
+          hasButton: true
+        };
+      }
       
-      this.query = "";
+      if (kb.keywords.installment.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.installments}\n\n${kb.responses.pricing}`,
+          hasButton: true
+        };
+      }
       
-      await this.$nextTick();
-      this.scrollToBottom();
+      if (kb.keywords.quickdelivery.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.quickDelivery}\n\n${kb.responses.timeline}`,
+          hasButton: true
+        };
+      }
       
-      setTimeout(() => {
-        if (isEcommerceQuery) {
-          this.messages.push({
-            type: 'bot',
-            text: 'Hi, thank you so much for sharing your requirement! We surely help you with ecommerce store end to end. We are professional team of ecommerce experts. You will make and live store in just 25 days. Start today!',
-            timestamp: new Date(),
-            hasButton: true,
-            buttonText: 'Launch My Store',
-            buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
-          });
-        } else {
-          this.messages.push({
-            type: 'bot',
-            text: 'Oops! We will be soon live for you. 🚀',
-            timestamp: new Date()
-          });
-        }
-        this.scrollToBottom();
-      }, 500);
+      if (kb.keywords.features.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.timeline.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.timeline}\n\n${kb.responses.confirmation}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.technical.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.noTech}\n\n${kb.responses.fullPackage}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.products.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.products}\n\n${kb.responses.pricing}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.domain.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.domain}\n\n${kb.responses.confirmation}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.training.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.training}\n\n${kb.responses.confirmation}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.platform.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.platform}\n\n${kb.responses.fullPackage}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.payment_gateway.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.paymentGateway}\n\n${kb.responses.confirmation}`,
+          hasButton: true
+        };
+      }
+      
+      if (kb.keywords.design.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.design}\n\n${kb.responses.confirmation}`,
+          hasButton: true
+        };
+      }
+      
+      const ecommerceKeywords = ['ecommerce', 'e-commerce', 'online store', 'store', 'shop', 'website', 'sell online', 'business'];
+      if (ecommerceKeywords.some(kw => query.includes(kw))) {
+        return {
+          text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
+          hasButton: true
+        };
+      }
+      
+      return {
+        text: "Thank you for reaching out! I'd be happy to help you with information about our ecommerce store setup service. Feel free to ask about pricing, features, timeline, or anything else. You can also chat with our team directly for personalized assistance.",
+        hasButton: false
+      };
     },
+
+async handleSearch() {
+  if (!this.query.trim()) return;
+  
+  const userQuery = this.query.trim();
+  
+  if (!this.currentChatId) {
+    this.currentChatId = Date.now();
+  }
+  
+  this.messages.push({
+    type: 'user',
+    text: userQuery,
+    timestamp: new Date()
+  });
+  
+  this.query = "";
+  
+  await this.$nextTick();
+  this.scrollToBottom();
+  
+  setTimeout(() => {
+    const aiResponse = this.generateResponse(userQuery);
+    
+    this.messages.push({
+      type: 'bot',
+      text: aiResponse.text,
+      timestamp: new Date(),
+      hasButton: aiResponse.hasButton,
+      buttonText: 'Launch My Store - ₹1,599',
+      buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
+    });
+    
+    this.scrollToBottom();
+  }, 500);
+},
 
     scrollToBottom() {
       this.$nextTick(() => {
