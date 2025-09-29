@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
   title: String,
-  icons: 
+  icons: Array
 });
 </script>
 
