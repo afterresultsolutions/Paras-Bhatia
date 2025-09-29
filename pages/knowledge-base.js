@@ -1,7 +1,7 @@
 // knowledge-base.js
-// Place this file in the same directory as your live.vue file
+// Place this file in the pages directory (same folder as live.vue)
 
-export const knowledgeBase = {
+const knowledgeBase = {
   // Main service information
   serviceOverview: {
     name: "AR Solutions Ecommerce Store Setup",
@@ -139,7 +139,7 @@ export const knowledgeBase = {
 };
 
 // AI Response Generator Function
-export function generateResponse(userQuery) {
+function generateResponse(userQuery) {
   const query = userQuery.toLowerCase().trim();
   const kb = knowledgeBase;
   
