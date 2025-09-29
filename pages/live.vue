@@ -1570,77 +1570,65 @@ export default {
   }
 }
 
-@media (max-width: 480px) {
-  .empty-title {
-    font-size: 20px;
-    margin-bottom: 20px;
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
   }
   .header-title {
-    margin-left: 44px;
+    margin-left: 50px;
   }
-  .mobile-menu-btn {
-    top: 10px;
-    left: 8px;
-    padding: 6px;
+  .empty-title {
+    font-size: 26px;
+    margin-bottom: 40px;
+    font-weight: 500;
+    padding: 0 16px;
   }
-  .chat-header {
-    padding: 8px 10px;
+  .messages-inner {
+    padding: 20px 16px 0;
   }
-  .human-chat-btn {
-    padding: 6px 10px;
-    font-size: 12px;
-    gap: 4px;
+  .input-area {
+    padding: 16px;
   }
-  .brand-name {
-    font-size: 16px;
+  .search-container-center {
+    max-width: 100%;
+    padding: 0;
   }
-  .model-badge {
-    width: 18px;
-    height: 18px;
-    font-size: 10px;
+  .empty-state {
+    padding: 20px 16px;
+    justify-content: center;
+    min-height: calc(100vh - 160px);
   }
-  .search-input {
-    font-size: 14px;
-    padding: 10px 6px;
+  .message-row {
+    gap: 12px;
   }
-  .send-btn {
+  .avatar {
+    width: 32px;
+    height: 32px;
+  }
+  .avatar-icon {
     width: 28px;
     height: 28px;
   }
-  .search-box {
-    padding: 3px 3px 3px 12px;
-  }
-  .messages-inner {
-    padding: 16px 8px 0;
-  }
-  .input-area {
-    padding: 10px 8px;
-  }
-  .search-container-center {
-    padding: 0 8px;
-  }
-  .message-row {
-    gap: 8px;
-  }
-  .avatar {
-    width: 24px;
-    height: 24px;
-  }
-  .avatar-icon {
-    width: 20px;
-    height: 20px;
-  }
   .message-text {
-    font-size: 13px;
-    line-height: 1.5;
+    font-size: 15px;
+    line-height: 1.55;
   }
-  .launch-btn {
-    padding: 8px 16px;
-    font-size: 13px;
+  .message-content {
+    max-width: 80%;
+  }
+  .disclaimer {
+    padding-bottom: 0;
+    margin-top: 12px;
+    font-size: 12px;
+  }
+  .search-box {
+    border-radius: 24px;
   }
   .action-btn {
-    padding: 4px;
+    padding: 8px;
+    border-radius: 8px;
   }
+}
   .icon-xs {
     width: 14px;
     height: 14px;
