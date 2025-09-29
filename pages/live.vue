@@ -232,8 +232,6 @@
 </template>
 
 <script>
-  <script>
-// ADD THIS ENTIRE BLOCK HERE
 const autocorrectDict = {
   'hu': 'hi',
   'helo': 'hello',
@@ -290,12 +288,10 @@ const autocorrectDict = {
   'wont': "won't",
   'cant': "can't",
   'isnt': "isn't",
-  'arent': "aren't"
+  'arent': "aren't",
+  'deck': 'deck'
 };
 
-export default {
-  name: 'ChatbotPage',
-  data() {
 export default {
   name: 'ChatbotPage',
   data() {
@@ -307,16 +303,7 @@ export default {
       chatHistory: [],
       currentChatId: null,
       searchQuery: "",
-      data() {
-  return {
-    query: "",
-    showMenu: false,
-    messages: [],
-    isDarkMode: false,
-    chatHistory: [],
-    currentChatId: null,
-    searchQuery: "",
-    autocorrectTimeout: null, // ADD THIS LINE HERE
+      autocorrectTimeout: null,
       kb: {
         keywords: {
           pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget'],
@@ -410,41 +397,11 @@ export default {
       }
     }
   },
-      mounted() {
-    if (process.client) {
-      const savedTheme = localStorage.getItem('ar-theme');
-      if (savedTheme) {
-        this.isDarkMode = savedTheme === 'dark';
-      }
-      
-      const savedHistory = localStorage.getItem('ar-chat-history');
-      if (savedHistory) {
-        try {
-          this.chatHistory = JSON.parse(savedHistory);
-        } catch (e) {
-          console.error('Failed to load chat history:', e);
-        }
-      }
-      
-      const savedMessages = localStorage.getItem('ar-current-messages');
-      const savedChatId = localStorage.getItem('ar-current-chat-id');
-      if (savedMessages && savedChatId) {
-        try {
-          this.messages = JSON.parse(savedMessages);
-          this.currentChatId = savedChatId;
-        } catch (e) {
-          console.error('Failed to load current chat:', e);
-        }
-      }
-    }
-  },
-  // ADD THIS ENTIRE BLOCK HERE
   beforeUnmount() {
     if (this.autocorrectTimeout) {
       clearTimeout(this.autocorrectTimeout);
     }
   },
-  methods: {
   methods: {
     generateResponse(q) {
       const query = q.toLowerCase().trim();
@@ -607,76 +564,65 @@ export default {
         hasButton: false
       };
     },
-    methods: {
-  generateResponse(q) {
-    // ... all existing code ...
-    return {
-      text: "Thank you for reaching out! I'd be happy to help you with information about our ecommerce store setup service or other business solutions.\n\nFeel free to ask about:\n• Pricing and packages\n• Features and services\n• Timeline and delivery\n• Marketing support\n• Or anything else!\n\nYou can also chat with our team directly for personalized assistance.",
-      hasButton: false
-    };
-  },
 
-  // ADD THESE TWO METHODS HERE
-  autocorrectText(text) {
-    const words = text.split(/(\s+|[.,!?;:])/);
-    
-    const correctedWords = words.map(word => {
-      if (/^\s+$/.test(word) || /^[.,!?;:]$/.test(word)) {
-        return word;
-      }
+    autocorrectText(text) {
+      const words = text.split(/(\s+|[.,!?;:])/);
       
-      const lowerWord = word.toLowerCase();
-      
-      if (lowerWord.endsWith('?')) {
-        const baseWord = lowerWord.slice(0, -1);
-        if (autocorrectDict[baseWord]) {
-          return word.charAt(0) === word.charAt(0).toUpperCase() 
-            ? autocorrectDict[baseWord].charAt(0).toUpperCase() + autocorrectDict[baseWord].slice(1) + '?'
-            : autocorrectDict[baseWord] + '?';
+      const correctedWords = words.map(word => {
+        if (/^\s+$/.test(word) || /^[.,!?;:]$/.test(word)) {
+          return word;
         }
-      }
-      
-      if (autocorrectDict[lowerWord]) {
-        const corrected = autocorrectDict[lowerWord];
-        if (word.charAt(0) === word.charAt(0).toUpperCase()) {
-          return corrected.charAt(0).toUpperCase() + corrected.slice(1);
-        }
-        return corrected;
-      }
-      
-      return word;
-    });
-    
-    return correctedWords.join('');
-  },
-
-  handleInputChange() {
-    if (this.autocorrectTimeout) {
-      clearTimeout(this.autocorrectTimeout);
-    }
-    
-    this.autocorrectTimeout = setTimeout(() => {
-      const input = this.$refs.queryInput || this.$refs.queryInputBottom;
-      const cursorPosition = input?.selectionStart || 0;
-      const originalLength = this.query.length;
-      const corrected = this.autocorrectText(this.query);
-      
-      if (corrected !== this.query) {
-        this.query = corrected;
         
-        this.$nextTick(() => {
-          if (input) {
-            const lengthDiff = this.query.length - originalLength;
-            const newPosition = cursorPosition + lengthDiff;
-            input.setSelectionRange(newPosition, newPosition);
+        const lowerWord = word.toLowerCase();
+        
+        if (lowerWord.endsWith('?') || lowerWord.endsWith('!')) {
+          const baseWord = lowerWord.slice(0, -1);
+          const punctuation = lowerWord.slice(-1);
+          if (autocorrectDict[baseWord]) {
+            return word.charAt(0) === word.charAt(0).toUpperCase() 
+              ? autocorrectDict[baseWord].charAt(0).toUpperCase() + autocorrectDict[baseWord].slice(1) + punctuation
+              : autocorrectDict[baseWord] + punctuation;
           }
-        });
-      }
-    }, 500);
-  },
+        }
+        
+        if (autocorrectDict[lowerWord]) {
+          const corrected = autocorrectDict[lowerWord];
+          if (word.charAt(0) === word.charAt(0).toUpperCase()) {
+            return corrected.charAt(0).toUpperCase() + corrected.slice(1);
+          }
+          return corrected;
+        }
+        
+        return word;
+      });
+      
+      return correctedWords.join('');
+    },
 
-  async handleSearch() {
-    if (!this.query.trim()) return;
+    handleInputChange() {
+      if (this.autocorrectTimeout) {
+        clearTimeout(this.autocorrectTimeout);
+      }
+      
+      this.autocorrectTimeout = setTimeout(() => {
+        const input = this.$refs.queryInput || this.$refs.queryInputBottom;
+        const cursorPosition = input?.selectionStart || 0;
+        const originalLength = this.query.length;
+        const corrected = this.autocorrectText(this.query);
+        
+        if (corrected !== this.query) {
+          this.query = corrected;
+          
+          this.$nextTick(() => {
+            if (input) {
+              const lengthDiff = this.query.length - originalLength;
+              const newPosition = cursorPosition + lengthDiff;
+              input.setSelectionRange(newPosition, newPosition);
+            }
+          });
+        }
+      }, 500);
+    },
 
     async handleSearch() {
       if (!this.query.trim()) return;
