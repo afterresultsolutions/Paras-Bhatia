@@ -237,15 +237,7 @@
   
   <!-- ... rest of footer ... -->
 </div>
-
-<!-- Mobile menu toggle -->
-<button @click="showMenu = !showMenu" :class="['menu-toggle-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
-  <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-  </svg>
-</button>
-
-      <!-- Main content -->
+            <!-- Main content -->
       <div class="main-content">
         <!-- Header -->
 <div :class="['chat-header', isDarkMode ? 'header-dark' : 'header-light']">
@@ -257,7 +249,14 @@
       <span class="live-text">Live</span>
     </span>
   </div>
+
+<!-- Mobile menu toggle -->
+<button @click="showMenu = !showMenu" :class="['menu-toggle-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
+  <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+  </svg>
   
+</button> 
   <button @click="toggleTempMode" :class="['temp-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light', { 'temp-active': isTempMode }]" :title="isTempMode ? 'Temporary Mode Active' : 'Enable Temporary Mode'">
     <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
@@ -272,16 +271,19 @@
             <h1 :class="['empty-title', isDarkMode ? 'text-white' : 'text-gray-800']">Hey there! How can I help you today?</h1>
             
             <div class="search-container-center">
+              <div v-if="isTempMode" class="temp-mode-indicator">
+                <span> Temporary Mode - Chat not saved</span>
+              </div>
               <div :class="['search-box', isDarkMode ? 'search-dark' : 'search-light']">
-<input
-  ref="queryInput"
-  v-model="query"
-  @input="handleInputChange"
-  @keyup.enter="handleSearch"
-  type="text"
-  placeholder="Ask anything"
-  :class="['search-input', isDarkMode ? 'input-dark' : 'input-light']"
-/>
+                <input
+                  ref="queryInput"
+                  v-model="query"
+                  @input="handleInputChange"
+                  @keyup.enter="handleSearch"
+                  type="text"
+                  placeholder="Ask anything"
+                  :class="['search-input', isDarkMode ? 'input-dark' : 'input-light']"
+                />
                 <button @click="handleSearch" :class="['send-btn', query.trim() ? 'send-btn-active' : '']">
                   <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
@@ -301,12 +303,13 @@
                 <div v-for="(message, index) in messages" :key="index" class="message-group">
                   <div :class="['message-row', message.type === 'user' ? 'message-user' : 'message-bot']">
                     <div class="message-content-wrapper">
-                      <div class="message-content">
-                        <p class="message-text">{{ message.text }}</p>
-                        <a v-if="message.hasButton" :href="message.buttonLink" target="_blank" class="launch-btn">
-                          {{ message.buttonText }}
-                        </a>
-                      </div>
+<div class="message-content">
+  <p class="message-text">{{ message.text }}</p>
+  <a v-if="message.hasButton" :href="message.buttonLink" target="_blank" 
+     :class="message.buttonType === 'whatsapp' ? 'whatsapp-marketing-btn' : 'launch-btn'">
+    {{ message.buttonText }}
+  </a>
+</div>
                       <div v-if="message.type === 'bot'" class="message-actions">
                         <button @click="copyMessage(message.text)" class="action-btn" title="Copy">
                           <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -459,6 +462,7 @@ export default {
       kb: {
         keywords: {
           pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget'],
+          whatsappmarketing: ['whatsapp marketing', 'whatsapp setup', 'lead generation', 'linkedin scraping', 'google scraping', 'whatsapp business', 'promotional messages', 'auto reply', 'whatsapp leads'],
           features: ['features', 'include', 'get', 'what', 'benefit', 'offer', 'provide', 'service', 'package', 'comes with'],
           timeline: ['when', 'how long', 'time', 'duration', 'days', 'delivery', 'fast', 'quick', 'ready', 'complete'],
           products: ['product', 'sell', 'item', 'clothing', 'shoes', 'jewellery', 'jewelry', 'fashion', 'niche', 'categories'],
@@ -473,6 +477,14 @@ export default {
           quickdelivery: ['quick delivery', 'fast delivery', 'urgent', 'asap', 'faster'],
           marketing: ['marketing', 'advertisement', 'promote', 'advertising', 'campaign', 'ads', 'digital marketing'],
           sales: ['sales', 'selling', 'revenue', 'grow business', 'increase sales', 'boost sales'],
+whatsapp_messages: ['how many messages', 'message quantity', 'messages per day', 'daily messages', 'message limit', 'how many promotional', 'message delivery', 'promotional limit', 'send messages'],
+whatsapp_timeline: ['how long whatsapp', 'whatsapp delivery time', 'whatsapp project time', 'when complete whatsapp', 'whatsapp days', 'timeline whatsapp'],
+whatsapp_leads: ['where leads from', 'lead source', 'linkedin scraping', 'google scraping', 'how get leads', 'lead generation', 'finding leads', 'scraping data', 'data scraping'],
+whatsapp_setup: ['whatsapp business setup', 'whatsapp account', 'business account setup', 'whatsapp installation', 'setup whatsapp', 'configure whatsapp'],
+whatsapp_features: ['auto reply', 'catalog', 'away message', 'quick response', 'profile message', 'what features whatsapp', 'whatsapp automation', 'auto response'],
+whatsapp_price: ['whatsapp cost', 'whatsapp price', 'whatsapp marketing price', 'how much whatsapp', 'pricing whatsapp'],
+whatsapp_community: ['community building', 'whatsapp group', 'group marketing', 'organic growth', 'community strategy'],
+whatsapp_restrictions: ['account ban', 'restricted', 'account safety', 'prevent ban', 'safe messaging'],
           scaling: ['scale', 'scaling', 'growth', 'expand', 'expansion'],
           contact: ['contact', 'reach', 'email', 'phone', 'call', 'demo', 'meeting'],
           services: ['services', 'what do you do', 'offerings', 'solutions', 'brochure', 'catalog'],
@@ -487,6 +499,7 @@ export default {
           fullPackage: "With AR Solutions, you'll get:\n\n✓ Complete Shopify store setup\n✓ 1-year free domain (your brand name as a gift from us)\n✓ Payment gateway integration for easy online payments\n✓ Up to 20 products listed & ready to sell\n✓ Simple logo design, banners & content creation\n✓ FREE training on store management\n✓ Project delivered in 25 days\n✓ Transparent pricing with no hidden charges\n✓ Monthly subscription (paid separately, cancel anytime)\n\nYou'll get a ready-to-use, business-grade online store at the lowest possible cost — designed to help you start selling from day one.",
           pricing: "The total project cost is ₹7,999/- (including all taxes). To begin, you only need to pay a confirmation milestone of ₹1,599/- to secure your project slot. The remaining balance will be paid in 4 simple instalments during the 25-day project timeline.",
           quickDelivery: "Want faster delivery? Choose our Quick Delivery Option by paying 70% upfront for a faster, hassle-free setup!",
+          whatsappmarketing: "We provide a complete WhatsApp marketing setup and execution plan designed to generate quality leads and streamline communication.\n\nWhat's Included:\n✓ Lead generation using LinkedIn and Google scraping\n✓ Delivery of up to 1,400 promotional messages (average 200 per day)\n✓ Setup of WhatsApp Business Account\n✓ Lead management and forwarding for tracking prospects\n✓ Community building strategies for organic growth\n✓ Auto-replies to prevent lead loss\n✓ Catalog setup for product/service showcase\n✓ Profile message & quick response templates\n✓ Away message configuration\n✓ 7-day completion timeline with full execution\n\nPackage Price: ₹2,000/- (Complete WhatsApp marketing setup & lead generation)",
           noTech: "You don't need to worry about the tech side — we handle it all for you! No technical knowledge required. We take care of building your complete business-ready store.",
           timeline: "Your complete store will be delivered in 25 days. Want it faster? Choose our Quick Delivery Option by paying 70% upfront.",
           domain: "Yes! You get a 1-year free domain with your brand name as a gift from us. It's included in the package.",
@@ -501,6 +514,14 @@ export default {
           sales: "We help businesses scale sales through structured campaigns, lead nurturing, and data-driven strategies. Our ecommerce solutions are designed to maximize your revenue from day one!",
           scaling: "Our solutions are designed to help businesses grow smarter, with customized plans for scaling operations, boosting revenue, and maximizing ROI. Let's build something amazing together!",
           contact: "You can reach us at:\n📧 Email: info.afterresult@gmail.com\n📱 WhatsApp: +91 9050983530\n\nOr click below to connect directly!",
+whatsapp_setup: "We set up your WhatsApp Business Account with profile, catalog, and all professional details ready to go. The setup is complete and professional, making your business look credible and trustworthy.",
+whatsapp_messages: "With our package, we deliver up to 1,400 promotional messages throughout the campaign. That's an average of 200 messages per day. This daily limit is strategically set to keep your account safe from restrictions while still reaching a significant audience.",
+whatsapp_leads: "We generate quality leads for you through two powerful methods: LinkedIn scraping and Google scraping. These leads are targeted, relevant to your business, and shared with you for easy tracking and follow-up. It's like having a dedicated research team finding potential customers for you!",
+whatsapp_features: "Your WhatsApp setup includes auto-replies (so you never miss a lead), catalog setup (showcase your products/services professionally), profile message, quick response templates, and away message configuration. Everything you need to run a professional business account!",
+whatsapp_timeline: "Your complete WhatsApp marketing setup and lead generation campaign will be ready and executed within 7 days. Quick turnaround so you can start seeing results fast!",
+whatsapp_price: "The full WhatsApp Marketing & Lead Generation package costs only ₹2,000/- all inclusive. No hidden charges. You get complete setup, 1,400 promotional messages, and quality lead generation.",
+whatsapp_community: "We also help you build strategies to grow WhatsApp groups and communities for organic engagement. This creates a loyal customer base that keeps coming back!",
+whatsapp_restrictions: "We keep your account safe by limiting messages to 200 per day. Sending too many messages can get your account restricted or banned by WhatsApp. Our approach is designed to maximize reach while keeping your account healthy and active long-term.",
           services: "We offer comprehensive business solutions! Want to explore our complete service offerings? Check out our Services Brochure for detailed information.",
           howareyou: "I'm doing great, thank you for asking! How about you? How can I help you today?",
           whoareyou: "I'm your service assistant from AR Solutions, here to help you discover the best solutions for launching and growing your online business!",
@@ -612,16 +633,13 @@ methods: {
     }
   },
 
-  toggleTempMode() {
-    this.isTempMode = !this.isTempMode;
-    if (this.isTempMode) {
-      this.messages = [];
-      this.currentChatId = null;
-      alert('Temporary mode enabled. Your chat history will not be saved.');
-    } else {
-      alert('Temporary mode disabled. Chat history will be saved normally.');
-    }
-  },
+toggleTempMode() {
+  this.isTempMode = !this.isTempMode;
+  if (this.isTempMode) {
+    this.messages = [];
+    this.currentChatId = null;
+  }
+},
 
   generateResponse(q) {
     const query = q.toLowerCase().trim();
@@ -639,16 +657,93 @@ methods: {
       return { text: kb.responses.howareyou, hasButton: false };
     }
 
-    if (kb.keywords.casual.some(kw => query.includes(kw))) {
-      return {
-        text: "That's wonderful to hear! How can I assist you with your online business today? Feel free to ask about our services, pricing, or anything else!",
-        hasButton: false
-      };
-    }
-
+if (kb.keywords.casual.some(kw => query.includes(kw))) {
+  return {
+    text: "That's wonderful to hear! How can I assist you with your online business today? Feel free to ask about our services, pricing, or anything else!",
+    hasButton: false
+  };
+}
+if (kb.keywords.whatsapp_messages.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.whatsapp_messages}\n\n${kb.responses.whatsapp_restrictions}\n\nInterested in getting started? The complete package is just ₹2,000/-`,
+    hasButton: true,
+    buttonText: 'Get WhatsApp Marketing - ₹2,000',
+    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
+    buttonType: 'whatsapp'
+  };
+}
     if (kb.keywords.whoareyou.some(kw => query.includes(kw))) {
       return { text: kb.responses.whoareyou, hasButton: false };
     }
+    if (kb.keywords.whatsapp_leads.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.whatsapp_leads}\n\n${kb.responses.whatsapp_price}`,
+    hasButton: true,
+    buttonText: 'Get WhatsApp Marketing - ₹2,000',
+    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
+    buttonType: 'whatsapp'
+  };
+}
+
+if (kb.keywords.whatsapp_timeline.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.whatsapp_timeline}\n\nReady to start generating leads? Just ₹2,000/- for the complete package!`,
+    hasButton: true,
+    buttonText: 'Get WhatsApp Marketing - ₹2,000',
+    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
+    buttonType: 'whatsapp'
+  };
+}
+
+if (kb.keywords.whatsapp_setup.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.whatsapp_setup}\n\n${kb.responses.whatsapp_features}`,
+    hasButton: true,
+    buttonText: 'Get WhatsApp Marketing - ₹2,000',
+    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
+    buttonType: 'whatsapp'
+  };
+}
+
+if (kb.keywords.whatsapp_features.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.whatsapp_features}\n\n${kb.responses.whatsapp_price}`,
+    hasButton: true,
+    buttonText: 'Get WhatsApp Marketing - ₹2,000',
+    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
+    buttonType: 'whatsapp'
+  };
+}
+
+if (kb.keywords.whatsapp_price.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.whatsapp_price}\n\n${kb.responses.whatsapp_messages}`,
+    hasButton: true,
+    buttonText: 'Get WhatsApp Marketing - ₹2,000',
+    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
+    buttonType: 'whatsapp'
+  };
+}
+
+if (kb.keywords.whatsapp_community.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.whatsapp_community}\n\nWant to start building your community? Get the complete WhatsApp Marketing package for ₹2,000/-`,
+    hasButton: true,
+    buttonText: 'Get WhatsApp Marketing - ₹2,000',
+    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
+    buttonType: 'whatsapp'
+  };
+}
+
+if (kb.keywords.whatsapp_restrictions.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.whatsapp_restrictions}\n\n${kb.responses.whatsapp_messages}`,
+    hasButton: true,
+    buttonText: 'Get WhatsApp Marketing - ₹2,000',
+    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
+    buttonType: 'whatsapp'
+  };
+}
     
     if (kb.keywords.thankyou.some(kw => query.includes(kw))) {
       return { text: kb.responses.thankyou, hasButton: false };
@@ -874,14 +969,15 @@ methods: {
     setTimeout(() => {
       const aiResponse = this.generateResponse(userQuery);
       
-      this.messages.push({
-        type: 'bot',
-        text: aiResponse.text,
-        timestamp: new Date(),
-        hasButton: aiResponse.hasButton,
-        buttonText: aiResponse.buttonText || 'Launch My Store - ₹1,599',
-        buttonLink: aiResponse.buttonLink || 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
-      });
+this.messages.push({
+  type: 'bot',
+  text: aiResponse.text,
+  timestamp: new Date(),
+  hasButton: aiResponse.hasButton,
+  buttonText: aiResponse.buttonText || 'Launch My Store - ₹1,599',
+  buttonLink: aiResponse.buttonLink || 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view',
+  buttonType: aiResponse.buttonType || 'default'
+});
       
       this.scrollToBottom();
     }, 500);
@@ -981,14 +1077,15 @@ methods: {
       setTimeout(() => {
         const aiResponse = this.generateResponse(userQuery);
         
-        this.messages.push({
-          type: 'bot',
-          text: aiResponse.text,
-          timestamp: new Date(),
-          hasButton: aiResponse.hasButton,
-          buttonText: 'Launch My Store - ₹1,599',
-          buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
-        });
+this.messages.push({
+  type: 'bot',
+  text: aiResponse.text,
+  timestamp: new Date(),
+  hasButton: aiResponse.hasButton,
+  buttonText: aiResponse.buttonText || 'Launch My Store - ₹1,599',
+  buttonLink: aiResponse.buttonLink || 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view',
+  buttonType: aiResponse.buttonType || 'default'
+});
         
         this.scrollToBottom();
       }, 300);
@@ -1861,6 +1958,32 @@ methods: {
   z-index: 100;
 }
 
+.temp-mode-indicator {
+  text-align: center;
+  padding: 8px 16px;
+  margin-bottom: 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dark-mode .temp-mode-indicator {
+  background-color: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+@media (max-width: 768px) {
+  .temp-mode-indicator {
+    font-size: 11px;
+    padding: 6px 12px;
+    margin-bottom: 10px;
+  }
+}
 .dark-mode .input-area {
   background: linear-gradient(to top, #212121 0%, #212121 85%, transparent 100%);
 }
@@ -2335,5 +2458,23 @@ methods: {
   .history-item-actions {
     display: flex !important;
   }
+}
+.whatsapp-marketing-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.whatsapp-marketing-btn:hover {
+  opacity: 0.9;
 }
 </style>
