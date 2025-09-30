@@ -517,7 +517,7 @@ export default {
     touchStartY: 0,
     touchEndY: 0,
 kb: {
-  keywords: {
+ keywords: {
     // ========== GREETINGS & OPENING (150+ keywords) ==========
     greeting: ['hello', 'hi', 'hey', 'hii', 'hiii', 'hlo', 'hola', 'namaste', 'good morning', 'good afternoon', 'good evening', 'good night', 'greetings', 'yo', 'wassup', 'sup', 'hiya', 'heya', 'howdy', 'whats up', "what's up"],
     
