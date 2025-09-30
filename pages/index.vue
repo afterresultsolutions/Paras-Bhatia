@@ -301,12 +301,13 @@
                 <div v-for="(message, index) in messages" :key="index" class="message-group">
                   <div :class="['message-row', message.type === 'user' ? 'message-user' : 'message-bot']">
                     <div class="message-content-wrapper">
-                      <div class="message-content">
-                        <p class="message-text">{{ message.text }}</p>
-                        <a v-if="message.hasButton" :href="message.buttonLink" target="_blank" class="launch-btn">
-                          {{ message.buttonText }}
-                        </a>
-                      </div>
+<div class="message-content">
+  <p class="message-text">{{ message.text }}</p>
+  <a v-if="message.hasButton" :href="message.buttonLink" target="_blank" 
+     :class="message.buttonType === 'whatsapp' ? 'whatsapp-marketing-btn' : 'launch-btn'">
+    {{ message.buttonText }}
+  </a>
+</div>
                       <div v-if="message.type === 'bot'" class="message-actions">
                         <button @click="copyMessage(message.text)" class="action-btn" title="Copy">
                           <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -2344,5 +2345,23 @@ methods: {
   .history-item-actions {
     display: flex !important;
   }
+}
+.whatsapp-marketing-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.whatsapp-marketing-btn:hover {
+  opacity: 0.9;
 }
 </style>
