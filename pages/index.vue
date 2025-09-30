@@ -485,7 +485,6 @@ mounted() {
       clearTimeout(this.autocorrectTimeout);
     }
   },
-  methods: { 
 methods: {
     generateResponse(q) {
       const query = q.toLowerCase().trim();
