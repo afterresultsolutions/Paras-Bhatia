@@ -272,7 +272,7 @@
             
             <div class="search-container-center">
               <div v-if="isTempMode" class="temp-mode-indicator">
-                <span>🔒 Temporary Mode - Chat not saved</span>
+                <span> Temporary Mode - Chat not saved</span>
               </div>
               <div :class="['search-box', isDarkMode ? 'search-dark' : 'search-light']">
                 <input
