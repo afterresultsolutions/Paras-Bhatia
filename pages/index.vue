@@ -237,6 +237,18 @@
   
   <!-- ... rest of footer ... -->
 </div>
+            <!-- Main content -->
+      <div class="main-content">
+        <!-- Header -->
+<div :class="['chat-header', isDarkMode ? 'header-dark' : 'header-light']">
+  <div class="header-title">
+    <span class="brand-name">AR Solutions</span>
+    <span class="model-badge">AI</span>
+    <span class="live-indicator">
+      <span class="live-dot"></span>
+      <span class="live-text">Live</span>
+    </span>
+  </div>
 
 <!-- Mobile menu toggle -->
 <button @click="showMenu = !showMenu" :class="['menu-toggle-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
@@ -251,19 +263,6 @@
     </svg>
   </button>
 </div>
-
-      <!-- Main content -->
-      <div class="main-content">
-        <!-- Header -->
-<div :class="['chat-header', isDarkMode ? 'header-dark' : 'header-light']">
-  <div class="header-title">
-    <span class="brand-name">AR Solutions</span>
-    <span class="model-badge">AI</span>
-    <span class="live-indicator">
-      <span class="live-dot"></span>
-      <span class="live-text">Live</span>
-    </span>
-  </div>
 
         <!-- Chat area -->
         <div class="chat-area">
