@@ -728,150 +728,146 @@ if (kb.keywords.whatsappmarketing.some(kw => query.includes(kw))) {
 }
 
 if (greetings.some(g => query.startsWith(g + ' ') || query.startsWith(g + ','))) {
-    if (kb.keywords.whoareyou.some(kw => query.includes(kw))) {
-      return { text: kb.responses.whoareyou, hasButton: false };
-    }
-    
-    if (kb.keywords.thankyou.some(kw => query.includes(kw))) {
-      return { text: kb.responses.thankyou, hasButton: false };
-    }
-    
-    if (kb.keywords.bye.some(kw => query.includes(kw))) {
-      return { text: kb.responses.bye, hasButton: false };
-    }
-    
-    if (kb.keywords.services.some(kw => query.includes(kw))) {
-      return {
-        text: kb.responses.services,
-        hasButton: true,
-        buttonText: 'Download Services Brochure',
-        buttonLink: 'https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf'
-      };
-    }
-    
-    if (kb.keywords.marketing.some(kw => query.includes(kw))) {
-      return { text: kb.responses.marketing, hasButton: true };
-    }
-    
-    if (kb.keywords.sales.some(kw => query.includes(kw))) {
-      return { text: kb.responses.sales, hasButton: true };
-    }
-    
-    if (kb.keywords.scaling.some(kw => query.includes(kw))) {
-      return { text: kb.responses.scaling, hasButton: true };
-    }
-    
-    if (kb.keywords.contact.some(kw => query.includes(kw))) {
-      return { text: kb.responses.contact, hasButton: false };
-    }
-    
-    if (greetings.some(g => query.startsWith(g + ' ') || query.startsWith(g + ','))) {
-      return {
-        text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.confirmation.some(kw => query.includes(kw))) {
-      return { text: kb.responses.confirmation, hasButton: true };
-    }
-    
-    if (kb.keywords.pricing.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.pricing}\n\n${kb.responses.quickDelivery}\n\n${kb.responses.confirmation}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.installment.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.installments}\n\n${kb.responses.pricing}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.quickdelivery.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.quickDelivery}\n\n${kb.responses.timeline}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.features.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.timeline.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.timeline}\n\n${kb.responses.confirmation}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.technical.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.noTech}\n\n${kb.responses.fullPackage}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.products.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.products}\n\n${kb.responses.pricing}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.domain.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.domain}\n\n${kb.responses.confirmation}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.training.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.training}\n\n${kb.responses.confirmation}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.platform.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.platform}\n\n${kb.responses.fullPackage}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.payment_gateway.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.paymentGateway}\n\n${kb.responses.confirmation}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.design.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.design}\n\n${kb.responses.confirmation}`,
-        hasButton: true
-      };
-    }
-    
-    const ecommerceKeywords = ['ecommerce', 'e-commerce', 'online store', 'store', 'shop', 'website', 'sell online', 'business'];
-    if (ecommerceKeywords.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
-        hasButton: true
-      };
-    }
-    
-    return {
-      text: "Oops! Looks like I'm not trained for that yet, but I'm learning every day!",
-      hasButton: false
-    };
+if (kb.keywords.whoareyou.some(kw => query.includes(kw))) {
+  return { text: kb.responses.whoareyou, hasButton: false };
+}
+
+if (kb.keywords.thankyou.some(kw => query.includes(kw))) {
+  return { text: kb.responses.thankyou, hasButton: false };
+}
+
+if (kb.keywords.bye.some(kw => query.includes(kw))) {
+  return { text: kb.responses.bye, hasButton: false };
+}
+
+if (kb.keywords.services.some(kw => query.includes(kw))) {
+  return {
+    text: kb.responses.services,
+    hasButton: true,
+    buttonText: 'Download Services Brochure',
+    buttonLink: 'https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf'
+  };
+}
+
+if (kb.keywords.marketing.some(kw => query.includes(kw))) {
+  return { text: kb.responses.marketing, hasButton: true };
+}
+
+if (kb.keywords.sales.some(kw => query.includes(kw))) {
+  return { text: kb.responses.sales, hasButton: true };
+}
+
+if (kb.keywords.scaling.some(kw => query.includes(kw))) {
+  return { text: kb.responses.scaling, hasButton: true };
+}
+
+if (greetings.some(g => query.startsWith(g + ' ') || query.startsWith(g + ','))) {
+  return {
+    text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}`,
+    hasButton: true
+  };
+}
+
+if (kb.keywords.confirmation.some(kw => query.includes(kw))) {
+  return { text: kb.responses.confirmation, hasButton: true };
+}
+
+if (kb.keywords.pricing.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.pricing}\n\n${kb.responses.quickDelivery}\n\n${kb.responses.confirmation}`,
+    hasButton: true
+  };
+}
+
+if (kb.keywords.installment.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.installments}\n\n${kb.responses.pricing}`,
+    hasButton: true
+  };
+}
+
+if (kb.keywords.quickdelivery.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.quickDelivery}\n\n${kb.responses.timeline}`,
+    hasButton: true
+  };
+}
+
+if (kb.keywords.features.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
+    hasButton: true
+  };
+}
+
+if (kb.keywords.timeline.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.timeline}\n\n${kb.responses.confirmation}`,
+    hasButton: true
+  };
+}
+
+if (kb.keywords.technical.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.noTech}\n\n${kb.responses.fullPackage}`,
+    hasButton: true
+  };
+}
+
+if (kb.keywords.products.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.products}\n\n${kb.responses.pricing}`,
+    hasButton: true
+  };
+}
+
+if (kb.keywords.domain.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.domain}\n\n${kb.responses.confirmation}`,
+    hasButton: true
+  };
+}
+
+if (kb.keywords.training.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.training}\n\n${kb.responses.confirmation}`,
+    hasButton: true
+  };
+}
+
+if (kb.keywords.platform.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.platform}\n\n${kb.responses.fullPackage}`,
+    hasButton: true
+  };
+}
+
+if (kb.keywords.payment_gateway.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.paymentGateway}\n\n${kb.responses.confirmation}`,
+    hasButton: true
+  };
+}
+
+if (kb.keywords.design.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.design}\n\n${kb.responses.confirmation}`,
+    hasButton: true
+  };
+}
+
+const ecommerceKeywords = ['ecommerce', 'e-commerce', 'online store', 'store', 'shop', 'website', 'sell online', 'business'];
+if (ecommerceKeywords.some(kw => query.includes(kw))) {
+  return {
+    text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
+    hasButton: true
+  };
+}
+
+return {
+  text: "Oops! Looks like I'm not trained for that yet, but I'm learning every day!",
+  hasButton: false
+};
   },
 
   autocorrectText(text) {
