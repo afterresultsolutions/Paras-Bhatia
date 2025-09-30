@@ -272,6 +272,22 @@
   </div>
   
   <!-- ... rest of footer ... -->
+    <div :class="['sidebar-footer', isDarkMode ? 'footer-dark' : 'footer-light']">
+    <a href="https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0" target="_blank" class="human-chat-btn footer-human-btn mobile-human-btn">
+      <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+      </svg>
+      <span class="human-chat-text">Chat with Human</span>
+    </a>
+    <button @click="toggleTheme" :class="['footer-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
+      <svg v-if="isDarkMode" class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+      </svg>
+      <svg v-else class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+      </svg>
+    </button>
+  </div>
 </div>
             <!-- Main content -->
       <div class="main-content">
@@ -1429,8 +1445,8 @@ this.messages.push({
   padding: 10px 12px;
   font-size: 12px;
   font-weight: 500;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: #000000 !important;
+  color: white;!important;
   border: none;
   border-radius: 20px;
   text-decoration: none;
@@ -1439,6 +1455,9 @@ this.messages.push({
   flex: 1;
   max-width: none;
   white-space: nowrap;
+}
+.mobile-human-btn:hover {
+  opacity: 0.85 !important;
 }
 
 .human-chat-text {
