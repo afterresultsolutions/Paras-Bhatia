@@ -1115,9 +1115,10 @@ startNewChat() {
     display: none;
   }
 
-.history-item:hover .history-item-actions {
-  display: flex;
-}
+  .history-item:hover .history-item-actions {
+    display: flex;
+  }
+} 
 
 .history-action-btn {
   padding: 4px;
