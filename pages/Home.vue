@@ -3,14 +3,12 @@
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-content">
-        <h1>AR Solutions</h1>
-        <p>Powering Business Growth with Smart, Scalable Solutions</p>
-        <a href="#contact" class="cta-button">Schedule a Consultation</a>
-        
-         <a href="https://afterresult.solutions/" class="cta-button">Talk to AI</a>
+        <h1>AR Solutions - Revenue Operations Services</h1>
+        <p>Scale your revenue engine with strategic automation, seamless integrations, and data-driven operations</p>
+        <a href="https://afterresult.solutions/" class="cta-button">Talk to AI</a>
       </div>
     </section>
-    
+
     <!-- Problem Section -->
     <section class="section problem-section">
       <div class="container">
