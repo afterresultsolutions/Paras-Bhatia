@@ -12,7 +12,7 @@
   </button>
 </div>
 
-<!-- Search box -->
+<!-- Mobile Search box - MOVED UP -->
 <div class="sidebar-search">
   <div class="search-input-wrapper">
     <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -26,7 +26,12 @@
     />
   </div>
 </div>
-  
+
+<!-- Mobile Quick Action Pills - NOW BELOW SEARCH -->
+<div class="quick-pills">
+  <!-- ... all your pill buttons ... -->
+</div>
+
 <!-- Quick Action Pills -->
 <div class="quick-pills">
   <a href="https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf" target="_blank" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
@@ -59,11 +64,11 @@
 </div>
   
 <div class="sidebar-content">
-<div v-if="filteredChatHistory.length > 0" class="history-label">Recent</div>
-  <div v-else-if="searchQuery" class="no-results">
+  <div v-if="filteredChatHistory.length > 0" class="history-label">Recent</div>
+  <div v-if="filteredChatHistory.length === 0 && searchQuery" class="no-results">
     No chats found
   </div>
-  <div v-for="chat in filteredChatHistory" :key="chat.id" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
+<div v-for="chat in filteredChatHistory" :key="chat.id" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
   <div class="history-item-content" @click="loadChat(chat)">
     <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
@@ -88,8 +93,7 @@
     </button>
   </div>
 </div>
-  
-  <!-- Archived Section -->
+    <!-- ADD ARCHIVED SECTION HERE -->
   <div v-if="archivedChats.length > 0" class="archived-section">
     <button @click="showArchived = !showArchived" :class="['archived-toggle', isDarkMode ? 'btn-dark' : 'btn-light']">
       <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -202,9 +206,9 @@
     </a>
   </div>
 
-<div class="sidebar-content">
-  <div v-if="filteredChatHistory.length > 0" class="history-label">Recent</div>
-  <div v-for="chat in filteredChatHistory" :key="chat.id" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
+  <div class="sidebar-content">
+    <div v-if="filteredChatHistory.length > 0" class="history-label">Recent</div>
+    <div v-for="chat in filteredChatHistory" :key="chat.id" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
       <div class="history-item-content" @click="loadChat(chat); showMenu = false">
         <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
@@ -478,69 +482,33 @@ export default {
           howareyou: ['how are you', 'how are you doing', 'whats up', "what's up", 'hows it going'],
           whoareyou: ['who are you', 'what are you', 'your name', 'about you'],
           thankyou: ['thank you', 'thanks', 'thank u', 'thx', 'appreciate'],
-          marketplace_listing: ['product listing', 'add products amazon', 'add products flipkart', 'upload products', 'catalog management'],
-          marketplace_price: ['amazon listing price', 'flipkart listing cost', 'product upload charges'],
-          marketplace_timeline: ['how long listing', 'listing delivery time', 'days to complete listing'],
-general_who: ['who are you', 'about your agency', 'what is ar solutions'],
-general_contact: ['how contact you', 'your email', 'your phone', 'reach you'],
-marketplace_leads: ['marketplace sales', 'how get orders amazon', 'flipkart sales growth'],
-          ecommerce_platforms: ['ecommerce setup', 'shopify store', 'odoo store', 'woocommerce store', 'wordpress ecommerce', 'online store build'],
-          ecommerce_monthly: ['shopify monthly plan', 'odoo monthly plan', 'woocommerce monthly plan', 'wordpress monthly cost', 'subscription plan'],
-          ecommerce_features: ['what features ecommerce', 'store features', 'ecommerce benefits', 'website features'],
-          ecommerce_timeline: ['how long ecommerce', 'ecommerce project time', 'store delivery time', 'days to complete store'],
-          ecommerce_price: ['ecommerce cost', 'shopify price', 'odoo price', 'woocommerce price', 'ecommerce charges'],
-          ecommerce_support: ['do you provide support', 'maintenance', 'after sales support', 'post project help'],
-          whatsapp_messages: ['how many messages', 'message quantity', 'messages per day', 'daily messages', 'message limit', 'how many promotional'],
-          whatsapp_timeline: ['how long whatsapp', 'whatsapp delivery time', 'whatsapp project time', 'when complete whatsapp', 'whatsapp days'],
-          whatsapp_leads: ['where leads from', 'lead source', 'linkedin scraping', 'google scraping', 'how get leads'],
-          whatsapp_setup: ['whatsapp business setup', 'whatsapp account', 'business account setup', 'whatsapp installation'],
-          whatsapp_features: ['auto reply', 'catalog', 'away message', 'quick response', 'profile message', 'what features whatsapp'],
-          whatsapp_price: ['whatsapp cost', 'whatsapp price', 'whatsapp marketing price', 'how much whatsapp'],
           bye: ['bye', 'goodbye', 'see you', 'later', 'farewell']
         },
         responses: {
-  greeting: "Thank you for your interest in AR Solutions! We help entrepreneurs launch professional online stores quickly and affordably. Starting your own branded online store has never been this simple.",
-  fullPackage: "With AR Solutions, you'll get:\n\n✓ Complete Shopify store setup\n✓ 1-year free domain (your brand name as a gift from us)\n✓ Payment gateway integration for easy online payments\n✓ Up to 20 products listed & ready to sell\n✓ Simple logo design, banners & content creation\n✓ FREE training on store management\n✓ Project delivered in 25 days\n✓ Transparent pricing with no hidden charges\n✓ Monthly subscription (paid separately, cancel anytime)\n\nYou'll get a ready-to-use, business-grade online store at the lowest possible cost — designed to help you start selling from day one.",
-  pricing: "The total project cost is ₹7,999/- (including all taxes). To begin, you only need to pay a confirmation milestone of ₹1,599/- to secure your project slot. The remaining balance will be paid in 4 simple instalments during the 25-day project timeline.",
-  ecommerce_platforms: "We help businesses launch their online stores on top platforms like **Shopify, Odoo, WooCommerce (WordPress)**. Our team ensures a professional, sales-ready store that fits your brand and industry.",
-  ecommerce_monthly: "Our monthly subscription plans are designed to fit every budget:\n\n✓ Shopify: Starting at ₹2,500/month\n✓ Odoo: Starting at ₹3,000/month\n✓ WooCommerce (WordPress): Starting at ₹1,999/month\n\nThese plans cover store maintenance, product updates, and technical support.",
-  ecommerce_features: "With AR Solutions, your eCommerce store includes:\n✓ Professional design with banners & branding\n✓ Payment gateway integration\n✓ Responsive mobile-first setup\n✓ Product catalog & inventory management\n✓ SEO-friendly structure\n✓ Free basic training to manage your store",
-  ecommerce_timeline: "A complete eCommerce store is delivered within **25 days**. Need it faster? We also offer a **Quick Delivery Option** with priority setup.",
-  ecommerce_price: "The full eCommerce setup starts at just **₹7,999/-** (all-inclusive). Pay a small milestone to start, and the balance in easy instalments.",
-  ecommerce_support: "Yes, we provide **ongoing support & maintenance**. Whether you need updates, bug fixes, or product management — we've got you covered.",
-  marketplace_listing: "We provide **product listing services** for Amazon, Flipkart, and other marketplaces. Our team handles product upload, catalog optimization, and compliance with marketplace guidelines.",
-  marketplace_price: "Amazon & Flipkart product listing services start at just **₹50 per product** (bulk discounts available).",
-  marketplace_timeline: "Product listing delivery depends on quantity. Example: 100 products can be listed within **5-7 working days**.",
-  marketplace_leads: "We don't just upload products — we optimize titles, descriptions, and images to help your products rank higher and generate more **sales on Amazon & Flipkart**.",
-  general_who: "We are **AR Solutions**, a digital-first agency helping brands grow with **eCommerce stores, marketplace management, and lead generation**. Our goal is to make your business profitable online.",
-  general_contact: "You can reach us anytime at:\n📧 afterresult.solutions@gmail.com\n📞 +91-9599169901",
-  quickDelivery: "Want faster delivery? Choose our Quick Delivery Option by paying 70% upfront for a faster, hassle-free setup!",
-  whatsappmarketing: "We provide a complete WhatsApp marketing setup and execution plan designed to generate quality leads and streamline communication.\n\nWhat's Included:\n✓ Lead generation using LinkedIn and Google scraping\n✓ Delivery of up to 1,400 promotional messages (average 200 per day)\n✓ Setup of WhatsApp Business Account\n✓ Lead management and forwarding for tracking prospects\n✓ Community building strategies for organic growth\n✓ Auto-replies to prevent lead loss\n✓ Catalog setup for product/service showcase\n✓ Profile message & quick response templates\n✓ Away message configuration\n✓ 7-day completion timeline with full execution\n\nPackage Price: ₹2,000/- (Complete WhatsApp marketing setup & lead generation)",
-  noTech: "You don't need to worry about the tech side — we handle it all for you! No technical knowledge required. We take care of building your complete business-ready store.",
-  timeline: "Your complete store will be delivered in 25 days. Want it faster? Choose our Quick Delivery Option by paying 70% upfront.",
-  domain: "Yes! You get a 1-year free domain with your brand name as a gift from us. It's included in the package.",
-  training: "We provide FREE training on how to manage your store and add products. You'll learn everything you need to run your store successfully.",
-  platform: "We build your store on Shopify, one of the world's most reliable and user-friendly ecommerce platforms. It's trusted by millions of businesses worldwide.",
-  products: "You can sell any type of products — clothing, shoes, jewellery, or any niche you choose. The store can be customized for your specific business. You'll be able to sell directly on Google, social media, and worldwide.",
-  paymentGateway: "Yes! We integrate a payment gateway so you can accept online payments easily from customers. This is included in the setup.",
-  design: "We provide simple logo design, banners, and content creation for your store. Everything is included in the package.",
-  installments: "After paying the confirmation fee of ₹1,599/-, the remaining balance will be paid in 4 simple instalments during the 25-day project timeline. It's flexible and easy.",
-  confirmation: "To get started, you only need to pay ₹1,599/- as a confirmation fee to secure your project slot. Click the button below to begin your journey!",
-  marketing: "We provide end-to-end marketing support including digital strategy, paid ads, social media, SEO, and performance tracking. Would you like to know more about how we can help your business grow?",
-  sales: "We help businesses scale sales through structured campaigns, lead nurturing, and data-driven strategies. Our ecommerce solutions are designed to maximize your revenue from day one!",
-  scaling: "Our solutions are designed to help businesses grow smarter, with customized plans for scaling operations, boosting revenue, and maximizing ROI. Let's build something amazing together!",
-  contact: "You can reach us at:\n📧 Email: info.afterresult@gmail.com\n📱 WhatsApp: +91 9050983530\n\nOr click below to connect directly!",
-  services: "We offer comprehensive business solutions! Want to explore our complete service offerings? Check out our Services Brochure for detailed information.",
-  howareyou: "I'm doing great, thank you for asking! How about you? How can I help you today?",
-  whatsapp_messages: "We deliver an average of 200 messages per day to avoid restrictions by Meta. This ensures your account stays safe while maintaining consistent outreach.",
-  whatsapp_timeline: "The complete WhatsApp marketing setup takes 7 days from start to finish. We handle everything so you can start generating leads by day 8!",
-  whatsapp_leads: "We generate leads using LinkedIn and Google scraping techniques. This helps us find quality prospects who match your target audience.",
-  whatsapp_setup: "Yes! We'll set up your WhatsApp Business Account from scratch, including profile optimization, catalog setup, and all automation features.",
-  whatsapp_features: "The setup includes auto-replies to capture leads 24/7, catalog for showcasing products, quick response templates, away messages, and profile messaging. Everything is configured to maximize conversions!",
-  whatsapp_price: "The WhatsApp Marketing package is ₹2,000/- for the complete 7-day project. This includes setup, lead generation, and up to 1,400 promotional messages.",
-  whoareyou: "I'm your service assistant from AR Solutions, here to help you discover the best solutions for launching and growing your online business!",
-  thankyou: "You're most welcome! Happy to help anytime 😊",
-  bye: "Goodbye! Wishing you a productive day ahead. Feel free to return anytime you need assistance!"
+          greeting: "Thank you for your interest in AR Solutions! We help entrepreneurs launch professional online stores quickly and affordably. Starting your own branded online store has never been this simple.",
+          fullPackage: "With AR Solutions, you'll get:\n\n✓ Complete Shopify store setup\n✓ 1-year free domain (your brand name as a gift from us)\n✓ Payment gateway integration for easy online payments\n✓ Up to 20 products listed & ready to sell\n✓ Simple logo design, banners & content creation\n✓ FREE training on store management\n✓ Project delivered in 25 days\n✓ Transparent pricing with no hidden charges\n✓ Monthly subscription (paid separately, cancel anytime)\n\nYou'll get a ready-to-use, business-grade online store at the lowest possible cost — designed to help you start selling from day one.",
+          pricing: "The total project cost is ₹7,999/- (including all taxes). To begin, you only need to pay a confirmation milestone of ₹1,599/- to secure your project slot. The remaining balance will be paid in 4 simple instalments during the 25-day project timeline.",
+          quickDelivery: "Want faster delivery? Choose our Quick Delivery Option by paying 70% upfront for a faster, hassle-free setup!",
+          whatsappmarketing: "We provide a complete WhatsApp marketing setup and execution plan designed to generate quality leads and streamline communication.\n\nWhat's Included:\n✓ Lead generation using LinkedIn and Google scraping\n✓ Delivery of up to 1,400 promotional messages (average 200 per day)\n✓ Setup of WhatsApp Business Account\n✓ Lead management and forwarding for tracking prospects\n✓ Community building strategies for organic growth\n✓ Auto-replies to prevent lead loss\n✓ Catalog setup for product/service showcase\n✓ Profile message & quick response templates\n✓ Away message configuration\n✓ 7-day completion timeline with full execution\n\nPackage Price: ₹2,000/- (Complete WhatsApp marketing setup & lead generation)",
+          noTech: "You don't need to worry about the tech side — we handle it all for you! No technical knowledge required. We take care of building your complete business-ready store.",
+          timeline: "Your complete store will be delivered in 25 days. Want it faster? Choose our Quick Delivery Option by paying 70% upfront.",
+          domain: "Yes! You get a 1-year free domain with your brand name as a gift from us. It's included in the package.",
+          training: "We provide FREE training on how to manage your store and add products. You'll learn everything you need to run your store successfully.",
+          platform: "We build your store on Shopify, one of the world's most reliable and user-friendly ecommerce platforms. It's trusted by millions of businesses worldwide.",
+          products: "You can sell any type of products — clothing, shoes, jewellery, or any niche you choose. The store can be customized for your specific business. You'll be able to sell directly on Google, social media, and worldwide.",
+          paymentGateway: "Yes! We integrate a payment gateway so you can accept online payments easily from customers. This is included in the setup.",
+          design: "We provide simple logo design, banners, and content creation for your store. Everything is included in the package.",
+          installments: "After paying the confirmation fee of ₹1,599/-, the remaining balance will be paid in 4 simple instalments during the 25-day project timeline. It's flexible and easy.",
+          confirmation: "To get started, you only need to pay ₹1,599/- as a confirmation fee to secure your project slot. Click the button below to begin your journey!",
+          marketing: "We provide end-to-end marketing support including digital strategy, paid ads, social media, SEO, and performance tracking. Would you like to know more about how we can help your business grow?",
+          sales: "We help businesses scale sales through structured campaigns, lead nurturing, and data-driven strategies. Our ecommerce solutions are designed to maximize your revenue from day one!",
+          scaling: "Our solutions are designed to help businesses grow smarter, with customized plans for scaling operations, boosting revenue, and maximizing ROI. Let's build something amazing together!",
+          contact: "You can reach us at:\n📧 Email: info.afterresult@gmail.com\n📱 WhatsApp: +91 9050983530\n\nOr click below to connect directly!",
+          services: "We offer comprehensive business solutions! Want to explore our complete service offerings? Check out our Services Brochure for detailed information.",
+          howareyou: "I'm doing great, thank you for asking! How about you? How can I help you today?",
+          whoareyou: "I'm your service assistant from AR Solutions, here to help you discover the best solutions for launching and growing your online business!",
+          thankyou: "You're most welcome! Happy to help anytime 😊",
+          bye: "Goodbye! Wishing you a productive day ahead. Feel free to return anytime you need assistance!"
         }
       }
     };
@@ -567,54 +535,40 @@ mounted() {
   this.query = "";
   this.currentChatId = null;
   
-  if (import.meta.client) {
+  if (process.client) {
+    // Load theme preference
     const savedTheme = localStorage.getItem('ar-theme');
     if (savedTheme) {
       this.isDarkMode = savedTheme === 'dark';
     }
     
+    // Load chat history (but not current messages)
     const savedHistory = localStorage.getItem('ar-chat-history');
     if (savedHistory) {
       try {
         this.chatHistory = JSON.parse(savedHistory);
       } catch (e) {
         console.error('Failed to load chat history:', e);
-        this.chatHistory = [];
       }
     }
-  }
-},
-
+      
+      const savedMessages = localStorage.getItem('ar-current-messages');
+      const savedChatId = localStorage.getItem('ar-current-chat-id');
+      if (savedMessages && savedChatId) {
+        try {
+          this.messages = JSON.parse(savedMessages);
+          this.currentChatId = savedChatId;
+        } catch (e) {
+          console.error('Failed to load current chat:', e);
+        }
+      }
+    }
+  },
   beforeUnmount() {
     if (this.autocorrectTimeout) {
       clearTimeout(this.autocorrectTimeout);
     }
   },
-  watch: {
-  messages: {
-    handler(newMessages) {
-      if (import.meta.client && !this.isTempMode && this.currentChatId) {
-        localStorage.setItem('ar-current-messages', JSON.stringify(newMessages));
-      }
-    },
-    deep: true
-  },
-  
-  currentChatId(newId) {
-    if (import.meta.client && newId) {
-      localStorage.setItem('ar-current-chat-id', newId);
-    }
-  },
-  
-  chatHistory: {
-    handler(newHistory) {
-      if (import.meta.client && !this.isTempMode) {
-        localStorage.setItem('ar-chat-history', JSON.stringify(newHistory));
-      }
-    },
-    deep: true
-  }
-},
 methods: {
   renameChat(chat) {
     const newTitle = prompt('Enter new chat name:', chat.title);
@@ -622,6 +576,9 @@ methods: {
       const chatIndex = this.chatHistory.findIndex(c => c.id === chat.id);
       if (chatIndex !== -1) {
         this.chatHistory[chatIndex].title = newTitle.trim();
+        if (process.client) {
+          localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+        }
       }
     }
   },
@@ -630,6 +587,9 @@ methods: {
     const chatIndex = this.chatHistory.findIndex(c => c.id === chatId);
     if (chatIndex !== -1) {
       this.chatHistory[chatIndex].archived = true;
+      if (process.client) {
+        localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+      }
     }
   },
 
@@ -637,6 +597,9 @@ methods: {
     const chatIndex = this.chatHistory.findIndex(c => c.id === chatId);
     if (chatIndex !== -1) {
       this.chatHistory[chatIndex].archived = false;
+      if (process.client) {
+        localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+      }
     }
   },
 
@@ -645,6 +608,9 @@ methods: {
       this.chatHistory = this.chatHistory.filter(c => c.id !== chatId);
       if (this.currentChatId === chatId) {
         this.startNewChat();
+      }
+      if (process.client) {
+        localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
       }
     }
   },
@@ -682,63 +648,6 @@ methods: {
         hasButton: false
       };
     }
-if (kb.keywords.contact.some(kw => query.includes(kw))) {
-  return { text: kb.responses.contact, hasButton: false };
-}
-
-// Specific WhatsApp Marketing questions - CHECK THESE FIRST
-if (kb.keywords.whatsapp_messages.some(kw => query.includes(kw))) {
-  return {
-    text: kb.responses.whatsapp_messages,
-    hasButton: false
-  };
-}
-
-if (kb.keywords.whatsapp_timeline.some(kw => query.includes(kw))) {
-  return {
-    text: kb.responses.whatsapp_timeline,
-    hasButton: true,
-    buttonText: 'Get WhatsApp Marketing - ₹2,000',
-    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
-    buttonType: 'whatsapp'
-  };
-}
-
-if (kb.keywords.whatsapp_leads.some(kw => query.includes(kw))) {
-  return {
-    text: kb.responses.whatsapp_leads,
-    hasButton: false
-  };
-}
-
-if (kb.keywords.whatsapp_setup.some(kw => query.includes(kw))) {
-  return {
-    text: kb.responses.whatsapp_setup,
-    hasButton: true,
-    buttonText: 'Get WhatsApp Marketing - ₹2,000',
-    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
-    buttonType: 'whatsapp'
-  };
-}
-
-if (kb.keywords.whatsapp_features.some(kw => query.includes(kw))) {
-  return {
-    text: kb.responses.whatsapp_features,
-    hasButton: false
-  };
-}
-
-if (kb.keywords.whatsapp_price.some(kw => query.includes(kw))) {
-  return {
-    text: kb.responses.whatsapp_price,
-    hasButton: true,
-    buttonText: 'Get WhatsApp Marketing - ₹2,000',
-    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
-    buttonType: 'whatsapp'
-  };
-}
-
-// General WhatsApp marketing query - CHECK THIS LAST
 if (kb.keywords.whatsappmarketing.some(kw => query.includes(kw))) {
   return {
     text: kb.responses.whatsappmarketing,
@@ -748,148 +657,150 @@ if (kb.keywords.whatsappmarketing.some(kw => query.includes(kw))) {
     buttonType: 'whatsapp'
   };
 }
-
-if (greetings.some(g => query.startsWith(g + ' ') || query.startsWith(g + ','))) {
-if (kb.keywords.whoareyou.some(kw => query.includes(kw))) {
-  return { text: kb.responses.whoareyou, hasButton: false };
-}
-
-if (kb.keywords.thankyou.some(kw => query.includes(kw))) {
-  return { text: kb.responses.thankyou, hasButton: false };
-}
-
-if (kb.keywords.bye.some(kw => query.includes(kw))) {
-  return { text: kb.responses.bye, hasButton: false };
-}
-
-if (kb.keywords.services.some(kw => query.includes(kw))) {
-  return {
-    text: kb.responses.services,
-    hasButton: true,
-    buttonText: 'Download Services Brochure',
-    buttonLink: 'https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf'
-  };
-}
-
-if (kb.keywords.marketing.some(kw => query.includes(kw))) {
-  return { text: kb.responses.marketing, hasButton: true };
-}
-
-if (kb.keywords.sales.some(kw => query.includes(kw))) {
-  return { text: kb.responses.sales, hasButton: true };
-}
-
-if (kb.keywords.scaling.some(kw => query.includes(kw))) {
-  return { text: kb.responses.scaling, hasButton: true };
-}
-
-if (kb.keywords.whoareyou.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}`,
-    hasButton: true
-  };
-}
-
-if (kb.keywords.confirmation.some(kw => query.includes(kw))) {
-  return { text: kb.responses.confirmation, hasButton: true };
-}
-
-if (kb.keywords.pricing.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.pricing}\n\n${kb.responses.quickDelivery}\n\n${kb.responses.confirmation}`,
-    hasButton: true
-  };
-}
-
-if (kb.keywords.installment.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.installments}\n\n${kb.responses.pricing}`,
-    hasButton: true
-  };
-}
-
-if (kb.keywords.quickdelivery.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.quickDelivery}\n\n${kb.responses.timeline}`,
-    hasButton: true
-  };
-}
-
-if (kb.keywords.features.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
-    hasButton: true
-  };
-}
-
-if (kb.keywords.timeline.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.timeline}\n\n${kb.responses.confirmation}`,
-    hasButton: true
-  };
-}
-
-if (kb.keywords.technical.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.noTech}\n\n${kb.responses.fullPackage}`,
-    hasButton: true
-  };
-}
-
-if (kb.keywords.products.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.products}\n\n${kb.responses.pricing}`,
-    hasButton: true
-  };
-}
-
-if (kb.keywords.domain.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.domain}\n\n${kb.responses.confirmation}`,
-    hasButton: true
-  };
-}
-
-if (kb.keywords.training.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.training}\n\n${kb.responses.confirmation}`,
-    hasButton: true
-  };
-}
-
-if (kb.keywords.platform.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.platform}\n\n${kb.responses.fullPackage}`,
-    hasButton: true
-  };
-}
-
-if (kb.keywords.payment_gateway.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.paymentGateway}\n\n${kb.responses.confirmation}`,
-    hasButton: true
-  };
-}
-
-if (kb.keywords.design.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.design}\n\n${kb.responses.confirmation}`,
-    hasButton: true
-  };
-}
-
-const ecommerceKeywords = ['ecommerce', 'e-commerce', 'online store', 'store', 'shop', 'website', 'sell online', 'business'];
-if (ecommerceKeywords.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
-    hasButton: true
-  };
-}
-
-return {
-  text: "Oops! Looks like I'm not trained for that yet, but I'm learning every day!",
-  hasButton: false
-};
+    if (kb.keywords.whoareyou.some(kw => query.includes(kw))) {
+      return { text: kb.responses.whoareyou, hasButton: false };
+    }
+    
+    if (kb.keywords.thankyou.some(kw => query.includes(kw))) {
+      return { text: kb.responses.thankyou, hasButton: false };
+    }
+    
+    if (kb.keywords.bye.some(kw => query.includes(kw))) {
+      return { text: kb.responses.bye, hasButton: false };
+    }
+    
+    if (kb.keywords.services.some(kw => query.includes(kw))) {
+      return {
+        text: kb.responses.services,
+        hasButton: true,
+        buttonText: 'Download Services Brochure',
+        buttonLink: 'https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf'
+      };
+    }
+    
+    if (kb.keywords.marketing.some(kw => query.includes(kw))) {
+      return { text: kb.responses.marketing, hasButton: true };
+    }
+    
+    if (kb.keywords.sales.some(kw => query.includes(kw))) {
+      return { text: kb.responses.sales, hasButton: true };
+    }
+    
+    if (kb.keywords.scaling.some(kw => query.includes(kw))) {
+      return { text: kb.responses.scaling, hasButton: true };
+    }
+    
+    if (kb.keywords.contact.some(kw => query.includes(kw))) {
+      return { text: kb.responses.contact, hasButton: false };
+    }
+    
+    if (greetings.some(g => query.startsWith(g + ' ') || query.startsWith(g + ','))) {
+      return {
+        text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.confirmation.some(kw => query.includes(kw))) {
+      return { text: kb.responses.confirmation, hasButton: true };
+    }
+    
+    if (kb.keywords.pricing.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.pricing}\n\n${kb.responses.quickDelivery}\n\n${kb.responses.confirmation}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.installment.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.installments}\n\n${kb.responses.pricing}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.quickdelivery.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.quickDelivery}\n\n${kb.responses.timeline}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.features.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.timeline.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.timeline}\n\n${kb.responses.confirmation}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.technical.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.noTech}\n\n${kb.responses.fullPackage}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.products.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.products}\n\n${kb.responses.pricing}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.domain.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.domain}\n\n${kb.responses.confirmation}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.training.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.training}\n\n${kb.responses.confirmation}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.platform.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.platform}\n\n${kb.responses.fullPackage}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.payment_gateway.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.paymentGateway}\n\n${kb.responses.confirmation}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.design.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.design}\n\n${kb.responses.confirmation}`,
+        hasButton: true
+      };
+    }
+    
+    const ecommerceKeywords = ['ecommerce', 'e-commerce', 'online store', 'store', 'shop', 'website', 'sell online', 'business'];
+    if (ecommerceKeywords.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
+        hasButton: true
+      };
+    }
+    
+    return {
+      text: "Oops! Looks like I'm not trained for that yet, but I'm learning every day!",
+      hasButton: false
+    };
   },
 
   autocorrectText(text) {
@@ -998,7 +909,7 @@ this.messages.push({
 
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
-    if (import.meta.client) {
+    if (process.client) {
       localStorage.setItem('ar-theme', this.isDarkMode ? 'dark' : 'light');
     }
   },
@@ -1011,9 +922,8 @@ this.messages.push({
         this.chatHistory.unshift({
           id: this.currentChatId || Date.now().toString(),
           title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
-messages: [...this.messages],
-          date: new Date(),
-          archived: false
+          messages: [...this.messages],
+          date: new Date()
         });
       } else {
         this.chatHistory[existingIndex] = {
@@ -1022,6 +932,10 @@ messages: [...this.messages],
           date: new Date()
         };
       }
+      
+      if (process.client) {
+        localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+      }
     }
     
     this.messages = [];
@@ -1029,7 +943,7 @@ messages: [...this.messages],
     this.currentChatId = null;
     this.showMenu = false;
     
-    if (import.meta.client && !this.isTempMode) {
+    if (process.client && !this.isTempMode) {
       localStorage.removeItem('ar-current-messages');
       localStorage.removeItem('ar-current-chat-id');
     }
@@ -1054,7 +968,7 @@ messages: [...this.messages],
   },
 
   copyMessage(text) {
-    if (import.meta.client && navigator.clipboard) {
+    if (process.client && navigator.clipboard) {
       navigator.clipboard.writeText(text).then(() => {
         alert('Message copied to clipboard!');
       }).catch(() => {
@@ -1095,7 +1009,7 @@ this.messages.push({
   },
 
   shareMessage(text) {
-    if (import.meta.client && navigator.share) {
+    if (process.client && navigator.share) {
       navigator.share({
         title: 'AR Solutions AI Response',
         text: text
