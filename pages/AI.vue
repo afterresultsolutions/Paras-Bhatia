@@ -17,15 +17,46 @@
     </button>
   </div>
   
-  <!-- Search box -->
-  <div class="sidebar-search">
-    <input
-      v-model="searchQuery"
-      type="text"
-      placeholder="Search chats..."
-      :class="['search-chat-input', isDarkMode ? 'input-dark' : 'input-light']"
-    />
-  </div>
+<!-- Search box -->
+<div class="sidebar-search">
+  <input
+    v-model="searchQuery"
+    type="text"
+    placeholder="Search chats..."
+    :class="['search-chat-input', isDarkMode ? 'input-dark' : 'input-light']"
+  />
+</div>
+
+<!-- Quick Action Pills -->
+<div class="quick-pills">
+  <a href="https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf" target="_blank" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+    </svg>
+    <span>Download Brochure</span>
+  </a>
+  
+  <a href="https://api.whatsapp.com/send/?phone=919050983530&text=Hi,%20I%20want%20to%20hire%20your%20services" target="_blank" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+    </svg>
+    <span>Hire Us</span>
+  </a>
+  
+  <a href="https://api.whatsapp.com/send/?phone=919050983530&text=Hi,%20I%20want%20to%20discuss%20partnership%20opportunities" target="_blank" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+    </svg>
+    <span>Partnership</span>
+  </a>
+  
+  <a href="mailto:info.afterresult@gmail.com" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+    </svg>
+    <span>Contact/Support</span>
+  </a>
+</div>
   
   <div class="sidebar-content">
     <div v-if="filteredChatHistory.length > 0" class="history-label">Recent</div>
@@ -61,24 +92,65 @@
       <!-- Mobile Sidebar -->
       <div v-if="showMenu" @click="showMenu = false" class="mobile-overlay"></div>
       <div :class="['mobile-sidebar', showMenu ? 'mobile-sidebar-open' : '', isDarkMode ? 'sidebar-dark' : 'sidebar-light']">
-        <div class="sidebar-header">
-          <button @click="showMenu = false; startNewChat()" :class="['new-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
-            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-            </svg>
-            <span>New chat</span>
-          </button>
-        </div>
-        
-        <div class="sidebar-content">
-          <div v-if="chatHistory.length > 0" class="history-label">Recent</div>
-          <div v-for="chat in chatHistory" :key="chat.id" @click="loadChat(chat)" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
-            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-            </svg>
-            <span class="history-title">{{ chat.title }}</span>
-          </div>
-        </div>
+<div class="sidebar-header">
+  <button @click="showMenu = false; startNewChat()" :class="['new-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+    </svg>
+    <span>New chat</span>
+  </button>
+</div>
+
+<!-- Mobile Search box -->
+<div class="sidebar-search">
+  <input
+    v-model="searchQuery"
+    type="text"
+    placeholder="Search chats..."
+    :class="['search-chat-input', isDarkMode ? 'input-dark' : 'input-light']"
+  />
+</div>
+
+<!-- Mobile Quick Action Pills -->
+<div class="quick-pills">
+  <a href="https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf" target="_blank" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+    </svg>
+    <span>Download Brochure</span>
+  </a>
+  
+  <a href="https://api.whatsapp.com/send/?phone=919050983530&text=Hi,%20I%20want%20to%20hire%20your%20services" target="_blank" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+    </svg>
+    <span>Hire Us</span>
+  </a>
+  
+  <a href="https://api.whatsapp.com/send/?phone=919050983530&text=Hi,%20I%20want%20to%20discuss%20partnership%20opportunities" target="_blank" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+    </svg>
+    <span>Partnership</span>
+  </a>
+  
+  <a href="mailto:info.afterresult@gmail.com" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+    </svg>
+    <span>Contact/Support</span>
+  </a>
+</div>
+
+<div class="sidebar-content">
+  <div v-if="chatHistory.length > 0" class="history-label">Recent</div>
+  <div v-for="chat in chatHistory" :key="chat.id" @click="loadChat(chat)" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+    </svg>
+    <span class="history-title">{{ chat.title }}</span>
+  </div>
+</div>
         
         <div :class="['sidebar-footer', isDarkMode ? 'footer-dark' : 'footer-light']">
           <a href="https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0" target="_blank" class="human-chat-btn footer-human-btn">
@@ -109,10 +181,14 @@
       <div class="main-content">
         <!-- Header -->
         <div :class="['chat-header', isDarkMode ? 'header-dark' : 'header-light']">
-          <div class="header-title">
-            <span class="brand-name">AR Solutions</span>
-            <span class="model-badge">AI</span>
-          </div>
+<div class="header-title">
+  <span class="brand-name">AR Solutions</span>
+  <span class="model-badge">AI</span>
+  <span class="live-indicator">
+    <span class="live-dot"></span>
+    <span class="live-text">Live</span>
+  </span>
+</div>
         </div>
 
         <!-- Chat area -->
@@ -369,21 +445,28 @@ export default {
       );
     }
   },
-  mounted() {
-    if (process.client) {
-      const savedTheme = localStorage.getItem('ar-theme');
-      if (savedTheme) {
-        this.isDarkMode = savedTheme === 'dark';
+mounted() {
+  // Always start with a fresh chat on page load/refresh
+  this.messages = [];
+  this.query = "";
+  this.currentChatId = null;
+  
+  if (process.client) {
+    // Load theme preference
+    const savedTheme = localStorage.getItem('ar-theme');
+    if (savedTheme) {
+      this.isDarkMode = savedTheme === 'dark';
+    }
+    
+    // Load chat history (but not current messages)
+    const savedHistory = localStorage.getItem('ar-chat-history');
+    if (savedHistory) {
+      try {
+        this.chatHistory = JSON.parse(savedHistory);
+      } catch (e) {
+        console.error('Failed to load chat history:', e);
       }
-      
-      const savedHistory = localStorage.getItem('ar-chat-history');
-      if (savedHistory) {
-        try {
-          this.chatHistory = JSON.parse(savedHistory);
-        } catch (e) {
-          console.error('Failed to load chat history:', e);
-        }
-      }
+    }
       
       const savedMessages = localStorage.getItem('ar-current-messages');
       const savedChatId = localStorage.getItem('ar-current-chat-id');
@@ -624,50 +707,44 @@ export default {
       }, 500);
     },
 
-    async handleSearch() {
-      if (!this.query.trim()) return;
-      
-      const userQuery = this.query.trim();
-      
-      if (!this.currentChatId) {
-        this.currentChatId = Date.now().toString();
-      }
-      
-      this.messages.push({
-        type: 'user',
-        text: userQuery,
-        timestamp: new Date()
-      });
-      
-      this.query = "";
-      
-      if (process.client) {
-        localStorage.setItem('ar-current-messages', JSON.stringify(this.messages));
-        localStorage.setItem('ar-current-chat-id', this.currentChatId);
-      }
-      
-      await this.$nextTick();
-      this.scrollToBottom();
-      
-      setTimeout(() => {
-        const aiResponse = this.generateResponse(userQuery);
-        
-        this.messages.push({
-          type: 'bot',
-          text: aiResponse.text,
-          timestamp: new Date(),
-          hasButton: aiResponse.hasButton,
-          buttonText: aiResponse.buttonText || 'Launch My Store - ₹1,599',
-          buttonLink: aiResponse.buttonLink || 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
-        });
-        
-        if (process.client) {
-          localStorage.setItem('ar-current-messages', JSON.stringify(this.messages));
-        }
-        
-        this.scrollToBottom();
-      }, 500);
-    },
+async handleSearch() {
+  if (!this.query.trim()) return;
+  
+  const userQuery = this.query.trim();
+  
+  // Create new chat ID if starting fresh
+  if (!this.currentChatId) {
+    this.currentChatId = Date.now().toString();
+  }
+  
+  this.messages.push({
+    type: 'user',
+    text: userQuery,
+    timestamp: new Date()
+  });
+  
+  this.query = "";
+  
+  // Don't save current messages to localStorage - only keep in memory
+  
+  await this.$nextTick();
+  this.scrollToBottom();
+  
+  setTimeout(() => {
+    const aiResponse = this.generateResponse(userQuery);
+    
+    this.messages.push({
+      type: 'bot',
+      text: aiResponse.text,
+      timestamp: new Date(),
+      hasButton: aiResponse.hasButton,
+      buttonText: aiResponse.buttonText || 'Launch My Store - ₹1,599',
+      buttonLink: aiResponse.buttonLink || 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
+    });
+    
+    this.scrollToBottom();
+  }, 500);
+},
 
     scrollToBottom() {
       this.$nextTick(() => {
@@ -684,29 +761,43 @@ export default {
       }
     },
 
-    startNewChat() {
-      if (this.messages.length > 0) {
-        this.chatHistory.unshift({
-          id: this.currentChatId || Date.now().toString(),
-          title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
-          messages: [...this.messages],
-          date: new Date()
-        });
-        
-        if (process.client) {
-          localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
-        }
-      }
-      
-      this.messages = [];
-      this.query = "";
-      this.currentChatId = null;
-      
-      if (process.client) {
-        localStorage.removeItem('ar-current-messages');
-        localStorage.removeItem('ar-current-chat-id');
-      }
-    },
+startNewChat() {
+  // Save current chat to history before starting new one
+  if (this.messages.length > 0) {
+    const existingIndex = this.chatHistory.findIndex(c => c.id === this.currentChatId);
+    
+    if (existingIndex === -1) {
+      this.chatHistory.unshift({
+        id: this.currentChatId || Date.now().toString(),
+        title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
+        messages: [...this.messages],
+        date: new Date()
+      });
+    } else {
+      // Update existing chat
+      this.chatHistory[existingIndex] = {
+        ...this.chatHistory[existingIndex],
+        messages: [...this.messages],
+        date: new Date()
+      };
+    }
+    
+    if (process.client) {
+      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+    }
+  }
+  
+  // Clear current chat
+  this.messages = [];
+  this.query = "";
+  this.currentChatId = null;
+  this.showMenu = false;
+  
+  if (process.client) {
+    localStorage.removeItem('ar-current-messages');
+    localStorage.removeItem('ar-current-chat-id');
+  }
+},
 
     loadChat(chat) {
       if (this.messages.length > 0 && this.currentChatId !== chat.id) {
@@ -951,9 +1042,10 @@ export default {
 .footer-human-btn {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 8px 16px;
-  font-size: 14px;
+  padding: 10px 14px;
+  font-size: 13px;
   font-weight: 500;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
@@ -964,6 +1056,7 @@ export default {
   transition: opacity 0.2s;
   flex: 1;
   max-width: none;
+  white-space: nowrap;
 }
 
 .footer-human-btn:hover {
@@ -1088,10 +1181,65 @@ export default {
   font-size: 14px;
   color: #6b7280;
 }
+.quick-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 8px;
+  border-bottom: 1px solid;
+}
+
+.sidebar-dark .quick-pills {
+  border-color: #363636;
+}
+
+.sidebar-light .quick-pills {
+  border-color: #e5e5e5;
+}
+
+.pill-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: 1px solid;
+}
+
+.pill-dark {
+  background-color: #2f2f2f;
+  color: #ececec;
+  border-color: #4d4d4d;
+}
+
+.pill-dark:hover {
+  background-color: #3a3a3a;
+  border-color: #667eea;
+}
+
+.pill-light {
+  background-color: #f4f4f4;
+  color: #2f2f2f;
+  border-color: #d1d1d1;
+}
+
+.pill-light:hover {
+  background-color: #e8e8e8;
+  border-color: #667eea;
+}
+
+.pill-btn span {
+  flex: 1;
+  white-space: nowrap;
+}
 
 .menu-toggle-btn {
-  position: fixed;
-  top: 14px;
+  position: absolute;
+  top: 18px;
   left: 12px;
   z-index: 998;
   padding: 8px;
@@ -1121,9 +1269,11 @@ export default {
 .chat-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
-  border-bottom: 1px solid;
+  justify-content: center;
+  padding: 16px;
+  border-bottom: 2px solid;
+  position: relative;
+  min-height: 60px;
 }
 
 .header-dark {
@@ -1140,7 +1290,9 @@ export default {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-left: 40px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .brand-name {
@@ -1148,17 +1300,39 @@ export default {
   font-weight: 600;
 }
 
-.model-badge {
-  display: inline-flex;
+.live-indicator {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
+  gap: 4px;
+  margin-left: 4px;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #ff6b35;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+  box-shadow: 0 0 10px rgba(255, 107, 53, 0.8);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.15);
+  }
+}
+
+.live-text {
   font-size: 11px;
   font-weight: 600;
-  background: linear-gradient(135deg, #00d084 0%, #00a86b 100%);
-  color: white;
-  border-radius: 4px;
+  color: #ff6b35;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .human-chat-btn {
@@ -1182,6 +1356,16 @@ export default {
 }
 
 .human-chat-text {
+  @media (max-width: 640px) {
+  .footer-human-btn {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+  
+  .human-chat-text {
+    display: inline;
+  }
+}
   display: none;
 }
 
@@ -1218,10 +1402,11 @@ export default {
   display: flex;
   align-items: center;
   border: 1px solid;
-  border-radius: 24px;
-  padding: 4px 4px 4px 16px;
+  border-radius: 20px;
+  padding: 2px 4px 2px 14px;
   transition: border-color 0.2s;
   width: 100%;
+  max-height: 44px;
 }
 
 .search-dark {
@@ -1243,7 +1428,7 @@ export default {
   background: transparent;
   border: none;
   outline: none;
-  padding: 12px 8px;
+  padding: 10px 8px;
   font-size: 15px;
   min-width: 0;
 }
@@ -1265,8 +1450,8 @@ export default {
 }
 
 .send-btn {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1516,8 +1701,51 @@ export default {
   .sidebar {
     display: none;
   }
+  
+  .chat-header {
+    padding: 10px 8px;
+  }
+  
   .header-title {
-    margin-left: 48px;
+    position: static;
+    transform: none;
+    margin: 0 auto;
+    padding: 0 50px;
+    justify-content: center;
+    flex: 1;
+  }
+  
+  .brand-name {
+    font-size: 16px;
+  }
+  
+  .model-badge {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+  }
+  
+  .live-text {
+    font-size: 10px;
+  }
+  
+  .live-dot {
+    width: 7px;
+    height: 7px;
+  }
+  
+  .header-actions {
+    gap: 6px;
+    position: static;
+  }
+  
+  .header-link {
+    display: none;
+  }
+  
+  .auth-btn {
+    padding: 6px 12px;
+    font-size: 13px;
   }
   .empty-title {
     font-size: 22px;
@@ -1562,16 +1790,32 @@ export default {
     font-size: 20px;
     margin-bottom: 20px;
   }
-  .header-title {
-    margin-left: 44px;
-  }
-  .mobile-menu-btn {
-    top: 10px;
-    left: 8px;
-    padding: 6px;
-  }
+  
   .chat-header {
-    padding: 8px 10px;
+    padding: 8px 6px;
+  }
+  
+  .header-title {
+    padding: 0 45px;
+  }
+  
+  .brand-name {
+    font-size: 15px;
+  }
+  
+  .model-badge {
+    width: 16px;
+    height: 16px;
+    font-size: 9px;
+  }
+  
+  .live-text {
+    font-size: 9px;
+  }
+  
+  .live-dot {
+    width: 6px;
+    height: 6px;
   }
   .human-chat-btn {
     padding: 6px 10px;
@@ -1637,18 +1881,67 @@ export default {
     margin-top: 8px;
     padding-bottom: 15px;
   }
+  .footer-human-btn {
+    padding: 8px 8px;
+    font-size: 11px;
+    gap: 4px;
+  }
+  
+  .search-input {
+    padding: 9px 6px;
+    font-size: 14px;
+  }
+  
+  .send-btn {
+    width: 28px;
+    height: 28px;
+  }
 }
 
 @media (max-width: 360px) {
   .empty-title {
     font-size: 18px;
   }
+  
+  .header-title {
+    padding: 0 40px;
+  }
+  
+  .brand-name {
+    font-size: 14px;
+  }
+  
+  .model-badge {
+    width: 15px;
+    height: 15px;
+    font-size: 8px;
+  }
+  
+  .live-indicator {
+    gap: 3px;
+  }
+  
+  .live-text {
+    font-size: 8px;
+  }
+  
+  .live-dot {
+    width: 5px;
+    height: 5px;
+  }
+  
   .human-chat-btn {
     padding: 5px 8px;
     font-size: 11px;
   }
+  
   .human-chat-text {
     display: none;
+  }
+  
+  .auth-btn {
+    padding: 5px 10px;
+    font-size: 12px;
   }
   .search-input {
     font-size: 13px;
