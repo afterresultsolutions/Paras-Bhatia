@@ -181,7 +181,7 @@
       <div class="main-content">
         <!-- Header -->
         <div :class="['chat-header', isDarkMode ? 'header-dark' : 'header-light']">
-<div class="header-title">
+<div class="header-title" @click="refreshPage" style="cursor: pointer;">
   <span class="brand-name">AR Solutions</span>
   <span class="model-badge">AI</span>
   <span class="live-indicator">
@@ -486,6 +486,13 @@ mounted() {
     }
   },
   methods: {
+    refreshPage() {
+    if (process.client) {
+      window.location.reload();
+    }
+  },
+  
+  generateResponse(q) {
     generateResponse(q) {
       const query = q.toLowerCase().trim();
       const kb = this.kb;
