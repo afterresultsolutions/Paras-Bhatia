@@ -182,13 +182,13 @@
         <!-- Header -->
         <div :class="['chat-header', isDarkMode ? 'header-dark' : 'header-light']">
 <div class="header-title">
-  <span class="brand-name">AR Solutions</span>
-  <span class="model-badge">AI</span>
-  <span class="live-indicator">
-    <span class="live-dot"></span>
-    <span class="live-text">Live</span>
-  </span>
-</div>
+               <span class="brand-name">AR Solutions</span>
+               <span class="model-badge">AI</span>
+               <span class="live-indicator">
+               <span class="live-dot"></span>
+               <span class="live-text">Live</span>
+             </span>
+          </div>
         </div>
 
         <!-- Chat area -->
@@ -400,6 +400,7 @@ export default {
           scaling: ['scale', 'scaling', 'growth', 'expand', 'expansion'],
           contact: ['contact', 'reach', 'email', 'phone', 'call', 'demo', 'meeting'],
           services: ['services', 'what do you do', 'offerings', 'solutions', 'brochure', 'catalog'],
+          casual: ['i am good', 'im good', 'i am fine', 'im fine', 'i am also good', 'im also good', 'doing well', 'doing good', 'all good', 'great', 'fine', 'okay', 'ok', 'good', 'nice', 'cool', 'awesome'],
           howareyou: ['how are you', 'how are you doing', 'whats up', "what's up", 'hows it going'],
           whoareyou: ['who are you', 'what are you', 'your name', 'about you'],
           thankyou: ['thank you', 'thanks', 'thank u', 'thx', 'appreciate'],
@@ -485,26 +486,33 @@ mounted() {
       clearTimeout(this.autocorrectTimeout);
     }
   },
-  methods: {
+methods: {
     generateResponse(q) {
       const query = q.toLowerCase().trim();
       const kb = this.kb;
       
-      const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste'];
-      if (greetings.some(g => query === g || query === g + '!' || query === g + '?')) {
-        return {
-          text: "Hi there! Welcome to AR Solutions! 👋\n\nI can help you with information about launching your online store. Feel free to ask me about:\n\n• Pricing and payment plans\n• What's included in our package\n• Timeline and delivery\n• Technical requirements\n• Marketing and sales support\n• And more!\n\nWhat would you like to know?",
-          hasButton: false
-        };
-      }
+const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste'];
+if (greetings.some(g => query === g || query === g + '!' || query === g + '?')) {
+  return {
+    text: "Hi there! How's it going? How may I help you today?",
+    hasButton: false
+  };
+}
       
-      if (kb.keywords.howareyou.some(kw => query.includes(kw))) {
-        return { text: kb.responses.howareyou, hasButton: false };
-      }
-      
-      if (kb.keywords.whoareyou.some(kw => query.includes(kw))) {
-        return { text: kb.responses.whoareyou, hasButton: false };
-      }
+if (kb.keywords.howareyou.some(kw => query.includes(kw))) {
+  return { text: kb.responses.howareyou, hasButton: false };
+}
+
+if (kb.keywords.casual.some(kw => query.includes(kw))) {
+  return {
+    text: "That's wonderful to hear! How can I assist you with your online business today? Feel free to ask about our services, pricing, or anything else!",
+    hasButton: false
+  };
+}
+
+if (kb.keywords.whoareyou.some(kw => query.includes(kw))) {
+  return { text: kb.responses.whoareyou, hasButton: false };
+}
       
       if (kb.keywords.thankyou.some(kw => query.includes(kw))) {
         return { text: kb.responses.thankyou, hasButton: false };
@@ -642,10 +650,10 @@ mounted() {
         };
       }
       
-      return {
-        text: "Thank you for reaching out! I'd be happy to help you with information about our ecommerce store setup service or other business solutions.\n\nFeel free to ask about:\n• Pricing and packages\n• Features and services\n• Timeline and delivery\n• Marketing support\n• Or anything else!\n\nYou can also chat with our team directly for personalized assistance.",
-        hasButton: false
-      };
+return {
+  text: "Oops! Looks like I'm not trained for that yet, but I'm learning every day!",
+  hasButton: false
+};
     },
 
     autocorrectText(text) {
@@ -1044,8 +1052,8 @@ startNewChat() {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 10px 14px;
-  font-size: 13px;
+  padding: 10px 12px;
+  font-size: 12px;
   font-weight: 500;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
@@ -1057,6 +1065,10 @@ startNewChat() {
   flex: 1;
   max-width: none;
   white-space: nowrap;
+}
+
+.human-chat-text {
+  display: inline;
 }
 
 .footer-human-btn:hover {
@@ -1353,20 +1365,6 @@ startNewChat() {
 
 .human-chat-btn:hover {
   opacity: 0.9;
-}
-
-.human-chat-text {
-  @media (max-width: 640px) {
-  .footer-human-btn {
-    padding: 8px 10px;
-    font-size: 12px;
-  }
-  
-  .human-chat-text {
-    display: inline;
-  }
-}
-  display: none;
 }
 
 .chat-area {
