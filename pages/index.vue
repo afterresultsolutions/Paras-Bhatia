@@ -567,22 +567,23 @@ mounted() {
   this.query = "";
   this.currentChatId = null;
   
-  if (process.client) {
-    // Load theme preference
+  if (import.meta.client) {
     const savedTheme = localStorage.getItem('ar-theme');
     if (savedTheme) {
       this.isDarkMode = savedTheme === 'dark';
     }
     
-    // Load chat history (but not current messages)
     const savedHistory = localStorage.getItem('ar-chat-history');
     if (savedHistory) {
       try {
         this.chatHistory = JSON.parse(savedHistory);
       } catch (e) {
         console.error('Failed to load chat history:', e);
+        this.chatHistory = [];
       }
     }
+  }
+},
       
       const savedMessages = localStorage.getItem('ar-current-messages');
       const savedChatId = localStorage.getItem('ar-current-chat-id');
@@ -601,6 +602,31 @@ mounted() {
       clearTimeout(this.autocorrectTimeout);
     }
   },
+  watch: {
+  messages: {
+    handler(newMessages) {
+      if (import.meta.client && !this.isTempMode && this.currentChatId) {
+        localStorage.setItem('ar-current-messages', JSON.stringify(newMessages));
+      }
+    },
+    deep: true
+  },
+  
+  currentChatId(newId) {
+    if (import.meta.client && newId) {
+      localStorage.setItem('ar-current-chat-id', newId);
+    }
+  },
+  
+  chatHistory: {
+    handler(newHistory) {
+      if (import.meta.client && !this.isTempMode) {
+        localStorage.setItem('ar-chat-history', JSON.stringify(newHistory));
+      }
+    },
+    deep: true
+  }
+},
 methods: {
   renameChat(chat) {
     const newTitle = prompt('Enter new chat name:', chat.title);
@@ -608,9 +634,6 @@ methods: {
       const chatIndex = this.chatHistory.findIndex(c => c.id === chat.id);
       if (chatIndex !== -1) {
         this.chatHistory[chatIndex].title = newTitle.trim();
-        if (process.client) {
-          localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
-        }
       }
     }
   },
@@ -619,9 +642,6 @@ methods: {
     const chatIndex = this.chatHistory.findIndex(c => c.id === chatId);
     if (chatIndex !== -1) {
       this.chatHistory[chatIndex].archived = true;
-      if (process.client) {
-        localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
-      }
     }
   },
 
@@ -629,9 +649,6 @@ methods: {
     const chatIndex = this.chatHistory.findIndex(c => c.id === chatId);
     if (chatIndex !== -1) {
       this.chatHistory[chatIndex].archived = false;
-      if (process.client) {
-        localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
-      }
     }
   },
 
@@ -640,9 +657,6 @@ methods: {
       this.chatHistory = this.chatHistory.filter(c => c.id !== chatId);
       if (this.currentChatId === chatId) {
         this.startNewChat();
-      }
-      if (process.client) {
-        localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
       }
     }
   },
@@ -996,7 +1010,7 @@ this.messages.push({
 
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
-    if (process.client) {
+    if (import.meta.client) {
       localStorage.setItem('ar-theme', this.isDarkMode ? 'dark' : 'light');
     }
   },
@@ -1019,10 +1033,6 @@ this.messages.push({
           date: new Date()
         };
       }
-      
-      if (process.client) {
-        localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
-      }
     }
     
     this.messages = [];
@@ -1030,7 +1040,7 @@ this.messages.push({
     this.currentChatId = null;
     this.showMenu = false;
     
-    if (process.client && !this.isTempMode) {
+    if (import.meta.client && !this.isTempMode) {
       localStorage.removeItem('ar-current-messages');
       localStorage.removeItem('ar-current-chat-id');
     }
@@ -1055,7 +1065,7 @@ this.messages.push({
   },
 
   copyMessage(text) {
-    if (process.client && navigator.clipboard) {
+    if (import.meta.client && navigator.clipboard) {
       navigator.clipboard.writeText(text).then(() => {
         alert('Message copied to clipboard!');
       }).catch(() => {
@@ -1096,7 +1106,7 @@ this.messages.push({
   },
 
   shareMessage(text) {
-    if (process.client && navigator.share) {
+    if (import.meta.client && navigator.share) {
       navigator.share({
         title: 'AR Solutions AI Response',
         text: text
