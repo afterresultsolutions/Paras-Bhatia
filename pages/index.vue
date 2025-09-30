@@ -271,17 +271,23 @@
           <div v-if="messages.length === 0" class="empty-state">
             <h1 :class="['empty-title', isDarkMode ? 'text-white' : 'text-gray-800']">Hey there! How can I help you today?</h1>
             
-            <div class="search-container-center">
-              <div :class="['search-box', isDarkMode ? 'search-dark' : 'search-light']">
-                <input
-                  ref="queryInput"
-                  v-model="query"
-                  @input="handleInputChange"
-                  @keyup.enter="handleSearch"
-                  type="text"
-                  placeholder="Ask anything"
-                  :class="['search-input', isDarkMode ? 'input-dark' : 'input-light']"
-                />
+ <div v-if="messages.length === 0" class="empty-state">
+  <h1 :class="['empty-title', isDarkMode ? 'text-white' : 'text-gray-800']">Hey there! How can I help you today?</h1>
+  
+  <div class="search-container-center">
+    <div v-if="isTempMode" class="temp-mode-indicator">
+      <span>🔒 Temporary Mode - Chat not saved</span>
+    </div>
+    <div :class="['search-box', isDarkMode ? 'search-dark' : 'search-light']">
+      <input
+        ref="queryInput"
+        v-model="query"
+        @input="handleInputChange"
+        @keyup.enter="handleSearch"
+        type="text"
+        placeholder="Ask anything"
+        :class="['search-input', isDarkMode ? 'input-dark' : 'input-light']"
+      />
                 <button @click="handleSearch" :class="['send-btn', query.trim() ? 'send-btn-active' : '']">
                   <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
