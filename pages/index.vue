@@ -265,29 +265,48 @@
   </button>
 </div>
 
+</div>
+
+      <!-- Main content -->
+      <div class="main-content">
+        <!-- Header -->
+<div :class="['chat-header', isDarkMode ? 'header-dark' : 'header-light']">
+  <div class="header-title">
+    <span class="brand-name">AR Solutions</span>
+    <span class="model-badge">AI</span>
+    <span class="live-indicator">
+      <span class="live-dot"></span>
+      <span class="live-text">Live</span>
+    </span>
+  </div>
+  
+  <button @click="toggleTempMode" :class="['temp-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light', { 'temp-active': isTempMode }]" :title="isTempMode ? 'Temporary Mode Active' : 'Enable Temporary Mode'">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+    </svg>
+  </button>
+</div>
+
         <!-- Chat area -->
         <div class="chat-area">
           <!-- Empty state -->
           <div v-if="messages.length === 0" class="empty-state">
             <h1 :class="['empty-title', isDarkMode ? 'text-white' : 'text-gray-800']">Hey there! How can I help you today?</h1>
             
- <div v-if="messages.length === 0" class="empty-state">
-  <h1 :class="['empty-title', isDarkMode ? 'text-white' : 'text-gray-800']">Hey there! How can I help you today?</h1>
-  
-  <div class="search-container-center">
-    <div v-if="isTempMode" class="temp-mode-indicator">
-      <span>🔒 Temporary Mode - Chat not saved</span>
-    </div>
-    <div :class="['search-box', isDarkMode ? 'search-dark' : 'search-light']">
-      <input
-        ref="queryInput"
-        v-model="query"
-        @input="handleInputChange"
-        @keyup.enter="handleSearch"
-        type="text"
-        placeholder="Ask anything"
-        :class="['search-input', isDarkMode ? 'input-dark' : 'input-light']"
-      />
+            <div class="search-container-center">
+              <div v-if="isTempMode" class="temp-mode-indicator">
+                <span>🔒 Temporary Mode - Chat not saved</span>
+              </div>
+              <div :class="['search-box', isDarkMode ? 'search-dark' : 'search-light']">
+                <input
+                  ref="queryInput"
+                  v-model="query"
+                  @input="handleInputChange"
+                  @keyup.enter="handleSearch"
+                  type="text"
+                  placeholder="Ask anything"
+                  :class="['search-input', isDarkMode ? 'input-dark' : 'input-light']"
+                />
                 <button @click="handleSearch" :class="['send-btn', query.trim() ? 'send-btn-active' : '']">
                   <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
@@ -299,8 +318,6 @@
               </div>
             </div>
           </div>
-
-          <!-- Chat messages -->
 
           <!-- Chat messages -->
           <div v-else class="messages-wrapper">
