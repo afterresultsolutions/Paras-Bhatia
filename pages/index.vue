@@ -494,7 +494,7 @@ mounted() {
       const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste'];
       if (greetings.some(g => query === g || query === g + '!' || query === g + '?')) {
         return {
-          text: "Hi there! Welcome to AR Solutions! 👋\n\nI can help you with information about launching your online store. Feel free to ask me about:\n\n• Pricing and payment plans\n• What's included in our package\n• Timeline and delivery\n• Technical requirements\n• Marketing and sales support\n• And more!\n\nWhat would you like to know?",
+          text: "Oops! Looks like I'm not trained for that yet, but I'm learning every day!",
           hasButton: false
         };
       }
