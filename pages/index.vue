@@ -487,7 +487,7 @@ export default {
           marketplace_timeline: ['how long listing', 'listing delivery time', 'days to complete listing'],
           general_who: ['who are you', 'about your agency', 'what is ar solutions'],
           general_contact: ['how contact you', 'your email', 'your phone', 'reach you'],
-          general_thanks: ['thanks', 'thank you', 'appreciate', 'good work']
+          general_thanks: ['thanks', 'thank you', 'appreciate', 'good work'],
           marketplace_leads: ['marketplace sales', 'how get orders amazon', 'flipkart sales growth'],
           ecommerce_platforms: ['ecommerce setup', 'shopify store', 'odoo store', 'woocommerce store', 'wordpress ecommerce', 'online store build'],
           ecommerce_monthly: ['shopify monthly plan', 'odoo monthly plan', 'woocommerce monthly plan', 'wordpress monthly cost', 'subscription plan'],
