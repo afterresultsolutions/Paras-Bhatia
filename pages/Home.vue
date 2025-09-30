@@ -230,7 +230,7 @@ const handleSubmit = () => {
 
 Please schedule a call for me. Thank you!`
 
-  const whatsappUrl = `https://wa.me/919991183530?text=${encodeURIComponent(message)}`
+  const whatsappUrl = `https://wa.me/919050983530?text=${encodeURIComponent(message)}`
   window.open(whatsappUrl, '_blank')
   
   closePopup()
