@@ -482,6 +482,12 @@ export default {
           howareyou: ['how are you', 'how are you doing', 'whats up', "what's up", 'hows it going'],
           whoareyou: ['who are you', 'what are you', 'your name', 'about you'],
           thankyou: ['thank you', 'thanks', 'thank u', 'thx', 'appreciate'],
+          whatsapp_messages: ['how many messages', 'message quantity', 'messages per day', 'daily messages', 'message limit', 'how many promotional'],
+          whatsapp_timeline: ['how long whatsapp', 'whatsapp delivery time', 'whatsapp project time', 'when complete whatsapp', 'whatsapp days'],
+          whatsapp_leads: ['where leads from', 'lead source', 'linkedin scraping', 'google scraping', 'how get leads'],
+          whatsapp_setup: ['whatsapp business setup', 'whatsapp account', 'business account setup', 'whatsapp installation'],
+          whatsapp_features: ['auto reply', 'catalog', 'away message', 'quick response', 'profile message', 'what features whatsapp'],
+          whatsapp_price: ['whatsapp cost', 'whatsapp price', 'whatsapp marketing price', 'how much whatsapp'],
           bye: ['bye', 'goodbye', 'see you', 'later', 'farewell']
         },
         responses: {
@@ -506,6 +512,12 @@ export default {
           contact: "You can reach us at:\n📧 Email: info.afterresult@gmail.com\n📱 WhatsApp: +91 9050983530\n\nOr click below to connect directly!",
           services: "We offer comprehensive business solutions! Want to explore our complete service offerings? Check out our Services Brochure for detailed information.",
           howareyou: "I'm doing great, thank you for asking! How about you? How can I help you today?",
+          whatsapp_messages: "We deliver an average of 200 messages per day to avoid restrictions by Meta. This ensures your account stays safe while maintaining consistent outreach.",
+          whatsapp_timeline: "The complete WhatsApp marketing setup takes 7 days from start to finish. We handle everything so you can start generating leads by day 8!",
+          whatsapp_leads: "We generate leads using LinkedIn and Google scraping techniques. This helps us find quality prospects who match your target audience.",
+          whatsapp_setup: "Yes! We'll set up your WhatsApp Business Account from scratch, including profile optimization, catalog setup, and all automation features.",
+          whatsapp_features: "The setup includes auto-replies to capture leads 24/7, catalog for showcasing products, quick response templates, away messages, and profile messaging. Everything is configured to maximize conversions!",
+          whatsapp_price: "The WhatsApp Marketing package is ₹2,000/- for the complete 7-day project. This includes setup, lead generation, and up to 1,400 promotional messages.",
           whoareyou: "I'm your service assistant from AR Solutions, here to help you discover the best solutions for launching and growing your online business!",
           thankyou: "You're most welcome! Happy to help anytime 😊",
           bye: "Goodbye! Wishing you a productive day ahead. Feel free to return anytime you need assistance!"
@@ -648,6 +660,63 @@ methods: {
         hasButton: false
       };
     }
+if (kb.keywords.contact.some(kw => query.includes(kw))) {
+  return { text: kb.responses.contact, hasButton: false };
+}
+
+// Specific WhatsApp Marketing questions - CHECK THESE FIRST
+if (kb.keywords.whatsapp_messages.some(kw => query.includes(kw))) {
+  return {
+    text: kb.responses.whatsapp_messages,
+    hasButton: false
+  };
+}
+
+if (kb.keywords.whatsapp_timeline.some(kw => query.includes(kw))) {
+  return {
+    text: kb.responses.whatsapp_timeline,
+    hasButton: true,
+    buttonText: 'Get WhatsApp Marketing - ₹2,000',
+    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
+    buttonType: 'whatsapp'
+  };
+}
+
+if (kb.keywords.whatsapp_leads.some(kw => query.includes(kw))) {
+  return {
+    text: kb.responses.whatsapp_leads,
+    hasButton: false
+  };
+}
+
+if (kb.keywords.whatsapp_setup.some(kw => query.includes(kw))) {
+  return {
+    text: kb.responses.whatsapp_setup,
+    hasButton: true,
+    buttonText: 'Get WhatsApp Marketing - ₹2,000',
+    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
+    buttonType: 'whatsapp'
+  };
+}
+
+if (kb.keywords.whatsapp_features.some(kw => query.includes(kw))) {
+  return {
+    text: kb.responses.whatsapp_features,
+    hasButton: false
+  };
+}
+
+if (kb.keywords.whatsapp_price.some(kw => query.includes(kw))) {
+  return {
+    text: kb.responses.whatsapp_price,
+    hasButton: true,
+    buttonText: 'Get WhatsApp Marketing - ₹2,000',
+    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
+    buttonType: 'whatsapp'
+  };
+}
+
+// General WhatsApp marketing query - CHECK THIS LAST
 if (kb.keywords.whatsappmarketing.some(kw => query.includes(kw))) {
   return {
     text: kb.responses.whatsappmarketing,
@@ -657,6 +726,8 @@ if (kb.keywords.whatsappmarketing.some(kw => query.includes(kw))) {
     buttonType: 'whatsapp'
   };
 }
+
+if (greetings.some(g => query.startsWith(g + ' ') || query.startsWith(g + ','))) {
     if (kb.keywords.whoareyou.some(kw => query.includes(kw))) {
       return { text: kb.responses.whoareyou, hasButton: false };
     }
