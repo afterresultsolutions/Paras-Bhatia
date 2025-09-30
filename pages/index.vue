@@ -209,7 +209,7 @@
 
 <div class="sidebar-content">
   <div v-if="filteredChatHistory.length > 0" class="history-label">Recent</div>
-  <div v-for="chat in filteredChatHistory" :key="chat.id">
+  <div v-for="chat in filteredChatHistory" :key="chat.id" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
       <div class="history-item-content" @click="loadChat(chat); showMenu = false">
         <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
@@ -519,9 +519,9 @@ export default {
           marketplace_timeline: "Product listing delivery depends on quantity. Example: 100 products can be listed within **5-7 working days**.",
           marketplace_leads: "We don’t just upload products — we optimize titles, descriptions, and images to help your products rank higher and generate more **sales on Amazon & Flipkart**.",
           general_who: "We are **AR Solutions**, a digital-first agency helping brands grow with **eCommerce stores, marketplace management, and lead generation**. Our goal is to make your business profitable online.",
-          general_contact: "You can reach us anytime at:\n📧 afterresult.solutions@gmail.com\n📞 +91-9599169901",
-          general_thanks: "Happy to help! 🚀 Let’s build your growth story together."
-          quickDelivery: "Want faster delivery? Choose our Quick Delivery Option by paying 70% upfront for a faster, hassle-free setup!",
+general_contact: "You can reach us anytime at:\n📧 afterresult.solutions@gmail.com\n📞 +91-9599169901",
+general_thanks: "Happy to help! 🚀 Let's build your growth story together.",
+quickDelivery: "Want faster delivery? Choose our Quick Delivery Option by paying 70% upfront for a faster, hassle-free setup!",
           whatsappmarketing: "We provide a complete WhatsApp marketing setup and execution plan designed to generate quality leads and streamline communication.\n\nWhat's Included:\n✓ Lead generation using LinkedIn and Google scraping\n✓ Delivery of up to 1,400 promotional messages (average 200 per day)\n✓ Setup of WhatsApp Business Account\n✓ Lead management and forwarding for tracking prospects\n✓ Community building strategies for organic growth\n✓ Auto-replies to prevent lead loss\n✓ Catalog setup for product/service showcase\n✓ Profile message & quick response templates\n✓ Away message configuration\n✓ 7-day completion timeline with full execution\n\nPackage Price: ₹2,000/- (Complete WhatsApp marketing setup & lead generation)",
           noTech: "You don't need to worry about the tech side — we handle it all for you! No technical knowledge required. We take care of building your complete business-ready store.",
           timeline: "Your complete store will be delivered in 25 days. Want it faster? Choose our Quick Delivery Option by paying 70% upfront.",
@@ -788,7 +788,7 @@ if (kb.keywords.scaling.some(kw => query.includes(kw))) {
   return { text: kb.responses.scaling, hasButton: true };
 }
 
-if (greetings.some(g => query.startsWith(g + ' ') || query.startsWith(g + ','))) {
+if (kb.keywords.whoareyou.some(kw => query.includes(kw))) {
   return {
     text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}`,
     hasButton: true
