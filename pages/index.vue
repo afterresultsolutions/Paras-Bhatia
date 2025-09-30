@@ -657,6 +657,18 @@ methods: {
     }
   },
 
+  deleteChat(chatId) {
+    if (confirm('Are you sure you want to delete this chat?')) {
+      this.chatHistory = this.chatHistory.filter(c => c.id !== chatId);
+      if (this.currentChatId === chatId) {
+        this.startNewChat();
+      }
+      if (process.client) {
+        localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+      }
+    }
+  },
+
 toggleTempMode() {
   this.isTempMode = !this.isTempMode;
   if (this.isTempMode) {
