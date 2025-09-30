@@ -64,11 +64,11 @@
 </div>
   
 <div class="sidebar-content">
-  <div v-if="filteredChatHistory.length > 0" class="history-label">Recent</div>
-  <div v-if="filteredChatHistory.length === 0 && searchQuery" class="no-results">
+<div v-if="filteredChatHistory.length > 0" class="history-label">Recent</div>
+  <div v-else-if="searchQuery" class="no-results">
     No chats found
   </div>
-<div v-for="chat in filteredChatHistory" :key="chat.id" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
+  <div v-for="chat in filteredChatHistory" :key="chat.id" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
   <div class="history-item-content" @click="loadChat(chat)">
     <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
