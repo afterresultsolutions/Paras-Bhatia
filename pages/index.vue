@@ -1308,7 +1308,7 @@ startNewChat() {
 
 .search-chat-input {
   width: 100%;
-  padding: 8px 12px 8px 38px;
+  padding: 8px 12px 8px 42px;
   border: 1px solid;
   border-radius: 12px;
   font-size: 14px;
