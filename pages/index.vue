@@ -584,19 +584,7 @@ mounted() {
     }
   }
 },
-      
-      const savedMessages = localStorage.getItem('ar-current-messages');
-      const savedChatId = localStorage.getItem('ar-current-chat-id');
-      if (savedMessages && savedChatId) {
-        try {
-          this.messages = JSON.parse(savedMessages);
-          this.currentChatId = savedChatId;
-        } catch (e) {
-          console.error('Failed to load current chat:', e);
-        }
-      }
-    }
-  },
+
   beforeUnmount() {
     if (this.autocorrectTimeout) {
       clearTimeout(this.autocorrectTimeout);
@@ -1023,8 +1011,9 @@ this.messages.push({
         this.chatHistory.unshift({
           id: this.currentChatId || Date.now().toString(),
           title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
-          messages: [...this.messages],
-          date: new Date()
+messages: [...this.messages],
+          date: new Date(),
+          archived: false
         });
       } else {
         this.chatHistory[existingIndex] = {
