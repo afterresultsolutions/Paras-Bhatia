@@ -109,10 +109,14 @@
       <div class="main-content">
         <!-- Header -->
         <div :class="['chat-header', isDarkMode ? 'header-dark' : 'header-light']">
-          <div class="header-title">
-            <span class="brand-name">AR Solutions</span>
-            <span class="model-badge">AI</span>
-          </div>
+<div class="header-title">
+  <span class="brand-name">AR Solutions</span>
+  <span class="model-badge">AI</span>
+  <span class="live-indicator">
+    <span class="live-dot"></span>
+    <span class="live-text">Live</span>
+  </span>
+</div>
         </div>
 
         <!-- Chat area -->
@@ -369,21 +373,28 @@ export default {
       );
     }
   },
-  mounted() {
-    if (process.client) {
-      const savedTheme = localStorage.getItem('ar-theme');
-      if (savedTheme) {
-        this.isDarkMode = savedTheme === 'dark';
+mounted() {
+  // Always start with a fresh chat on page load/refresh
+  this.messages = [];
+  this.query = "";
+  this.currentChatId = null;
+  
+  if (process.client) {
+    // Load theme preference
+    const savedTheme = localStorage.getItem('ar-theme');
+    if (savedTheme) {
+      this.isDarkMode = savedTheme === 'dark';
+    }
+    
+    // Load chat history (but not current messages)
+    const savedHistory = localStorage.getItem('ar-chat-history');
+    if (savedHistory) {
+      try {
+        this.chatHistory = JSON.parse(savedHistory);
+      } catch (e) {
+        console.error('Failed to load chat history:', e);
       }
-      
-      const savedHistory = localStorage.getItem('ar-chat-history');
-      if (savedHistory) {
-        try {
-          this.chatHistory = JSON.parse(savedHistory);
-        } catch (e) {
-          console.error('Failed to load chat history:', e);
-        }
-      }
+    }
       
       const savedMessages = localStorage.getItem('ar-current-messages');
       const savedChatId = localStorage.getItem('ar-current-chat-id');
@@ -624,50 +635,44 @@ export default {
       }, 500);
     },
 
-    async handleSearch() {
-      if (!this.query.trim()) return;
-      
-      const userQuery = this.query.trim();
-      
-      if (!this.currentChatId) {
-        this.currentChatId = Date.now().toString();
-      }
-      
-      this.messages.push({
-        type: 'user',
-        text: userQuery,
-        timestamp: new Date()
-      });
-      
-      this.query = "";
-      
-      if (process.client) {
-        localStorage.setItem('ar-current-messages', JSON.stringify(this.messages));
-        localStorage.setItem('ar-current-chat-id', this.currentChatId);
-      }
-      
-      await this.$nextTick();
-      this.scrollToBottom();
-      
-      setTimeout(() => {
-        const aiResponse = this.generateResponse(userQuery);
-        
-        this.messages.push({
-          type: 'bot',
-          text: aiResponse.text,
-          timestamp: new Date(),
-          hasButton: aiResponse.hasButton,
-          buttonText: aiResponse.buttonText || 'Launch My Store - ₹1,599',
-          buttonLink: aiResponse.buttonLink || 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
-        });
-        
-        if (process.client) {
-          localStorage.setItem('ar-current-messages', JSON.stringify(this.messages));
-        }
-        
-        this.scrollToBottom();
-      }, 500);
-    },
+async handleSearch() {
+  if (!this.query.trim()) return;
+  
+  const userQuery = this.query.trim();
+  
+  // Create new chat ID if starting fresh
+  if (!this.currentChatId) {
+    this.currentChatId = Date.now().toString();
+  }
+  
+  this.messages.push({
+    type: 'user',
+    text: userQuery,
+    timestamp: new Date()
+  });
+  
+  this.query = "";
+  
+  // Don't save current messages to localStorage - only keep in memory
+  
+  await this.$nextTick();
+  this.scrollToBottom();
+  
+  setTimeout(() => {
+    const aiResponse = this.generateResponse(userQuery);
+    
+    this.messages.push({
+      type: 'bot',
+      text: aiResponse.text,
+      timestamp: new Date(),
+      hasButton: aiResponse.hasButton,
+      buttonText: aiResponse.buttonText || 'Launch My Store - ₹1,599',
+      buttonLink: aiResponse.buttonLink || 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
+    });
+    
+    this.scrollToBottom();
+  }, 500);
+},
 
     scrollToBottom() {
       this.$nextTick(() => {
@@ -684,29 +689,43 @@ export default {
       }
     },
 
-    startNewChat() {
-      if (this.messages.length > 0) {
-        this.chatHistory.unshift({
-          id: this.currentChatId || Date.now().toString(),
-          title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
-          messages: [...this.messages],
-          date: new Date()
-        });
-        
-        if (process.client) {
-          localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
-        }
-      }
-      
-      this.messages = [];
-      this.query = "";
-      this.currentChatId = null;
-      
-      if (process.client) {
-        localStorage.removeItem('ar-current-messages');
-        localStorage.removeItem('ar-current-chat-id');
-      }
-    },
+startNewChat() {
+  // Save current chat to history before starting new one
+  if (this.messages.length > 0) {
+    const existingIndex = this.chatHistory.findIndex(c => c.id === this.currentChatId);
+    
+    if (existingIndex === -1) {
+      this.chatHistory.unshift({
+        id: this.currentChatId || Date.now().toString(),
+        title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
+        messages: [...this.messages],
+        date: new Date()
+      });
+    } else {
+      // Update existing chat
+      this.chatHistory[existingIndex] = {
+        ...this.chatHistory[existingIndex],
+        messages: [...this.messages],
+        date: new Date()
+      };
+    }
+    
+    if (process.client) {
+      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+    }
+  }
+  
+  // Clear current chat
+  this.messages = [];
+  this.query = "";
+  this.currentChatId = null;
+  this.showMenu = false;
+  
+  if (process.client) {
+    localStorage.removeItem('ar-current-messages');
+    localStorage.removeItem('ar-current-chat-id');
+  }
+},
 
     loadChat(chat) {
       if (this.messages.length > 0 && this.currentChatId !== chat.id) {
@@ -1090,9 +1109,10 @@ export default {
 }
 
 .menu-toggle-btn {
-  position: fixed;
-  top: 14px;
+  position: absolute;
+  top: 50%;
   left: 12px;
+  transform: translateY(-50%);
   z-index: 998;
   padding: 8px;
   border: none;
@@ -1121,9 +1141,10 @@ export default {
 .chat-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 12px 16px;
   border-bottom: 1px solid;
+  position: relative;
 }
 
 .header-dark {
@@ -1140,7 +1161,9 @@ export default {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-left: 40px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .brand-name {
@@ -1148,17 +1171,39 @@ export default {
   font-weight: 600;
 }
 
-.model-badge {
-  display: inline-flex;
+.live-indicator {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
+  gap: 4px;
+  margin-left: 4px;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #00ff88;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+.live-text {
   font-size: 11px;
-  font-weight: 600;
-  background: linear-gradient(135deg, #00d084 0%, #00a86b 100%);
-  color: white;
-  border-radius: 4px;
+  font-weight: 500;
+  color: #00ff88;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .human-chat-btn {
@@ -1517,7 +1562,8 @@ export default {
     display: none;
   }
   .header-title {
-    margin-left: 48px;
+    transform: translateX(-50%);
+    margin-left: 0;
   }
   .empty-title {
     font-size: 22px;
