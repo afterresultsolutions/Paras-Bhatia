@@ -583,17 +583,6 @@ deleteChat(chatId) {
       localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
     }
   }
-},
-deleteChat(chatId) {
-  if (confirm('Are you sure you want to delete this chat?')) {
-    this.chatHistory = this.chatHistory.filter(c => c.id !== chatId);
-    if (this.currentChatId === chatId) {
-      this.startNewChat();
-    }
-    if (process.client) {
-      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
-    }
-  }
 },  // <-- This comma is important
 
 toggleTempMode() {  // <-- ADD THIS NEW METHOD HERE
@@ -900,7 +889,7 @@ async handleSearch() {
 
 startNewChat() {
   // Save current chat to history before starting new one (only if NOT in temp mode)
-  if (this.messages.length > 0 && !this.isTempMode) {  // <-- CHANGED THIS LINE
+  if (this.messages.length > 0 && !this.isTempMode) {
     const existingIndex = this.chatHistory.findIndex(c => c.id === this.currentChatId);
     
     if (existingIndex === -1) {
@@ -930,12 +919,12 @@ startNewChat() {
   this.showMenu = false;
   
   if (process.client && !this.isTempMode) {
-  localStorage.removeItem('ar-current-messages');
+    localStorage.removeItem('ar-current-messages');
     localStorage.removeItem('ar-current-chat-id');
   }
 },
     
-    if (existingIndex === -1) {
+if (existingIndex === -1) {
       this.chatHistory.unshift({
         id: this.currentChatId || Date.now().toString(),
         title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
