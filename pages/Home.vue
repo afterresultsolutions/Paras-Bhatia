@@ -6,6 +6,7 @@
         <h1>AR Solutions</h1>
         <p>Powering Business Growth with Smart, Scalable Solutions</p>
         <a href="#contact" class="cta-button">Schedule a Consultation</a>
+        
          <a href="https://afterresult.solutions/" class="cta-button">Talk to AI</a>
       </div>
     </section>
