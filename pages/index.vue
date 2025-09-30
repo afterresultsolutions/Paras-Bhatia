@@ -2000,6 +2000,13 @@ this.messages.push({
   background-color: rgba(239, 68, 68, 0.15);
   border-color: rgba(239, 68, 68, 0.4);
 }
+@media (max-width: 768px) {
+  .temp-mode-indicator {
+    font-size: 11px;
+    padding: 6px 12px;
+    margin-bottom: 10px;
+  }
+}
 .dark-mode .input-area {
   background: linear-gradient(to top, #212121 0%, #212121 85%, transparent 100%);
 }
