@@ -19,12 +19,17 @@
   
 <!-- Search box -->
 <div class="sidebar-search">
-  <input
-    v-model="searchQuery"
-    type="text"
-    placeholder="Search chats..."
-    :class="['search-chat-input', isDarkMode ? 'input-dark' : 'input-light']"
-  />
+  <div class="search-input-wrapper">
+    <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+    </svg>
+    <input
+      v-model="searchQuery"
+      type="text"
+      placeholder="Search chats..."
+      :class="['search-chat-input', isDarkMode ? 'input-dark' : 'input-light']"
+    />
+  </div>
 </div>
 
 <!-- Quick Action Pills -->
@@ -1151,6 +1156,30 @@ startNewChat() {
 .sidebar-search {
   padding: 8px;
   border-bottom: 1px solid;
+}
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  width: 18px;
+  height: 18px;
+  color: #6b7280;
+  pointer-events: none;
+}
+
+.search-chat-input {
+  width: 100%;
+  padding: 8px 12px 8px 38px;
+  border: 1px solid;
+  border-radius: 12px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
 }
 
 .sidebar-dark .sidebar-search {
