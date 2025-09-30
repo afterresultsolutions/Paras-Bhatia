@@ -17,15 +17,46 @@
     </button>
   </div>
   
-  <!-- Search box -->
-  <div class="sidebar-search">
-    <input
-      v-model="searchQuery"
-      type="text"
-      placeholder="Search chats..."
-      :class="['search-chat-input', isDarkMode ? 'input-dark' : 'input-light']"
-    />
-  </div>
+<!-- Search box -->
+<div class="sidebar-search">
+  <input
+    v-model="searchQuery"
+    type="text"
+    placeholder="Search chats..."
+    :class="['search-chat-input', isDarkMode ? 'input-dark' : 'input-light']"
+  />
+</div>
+
+<!-- Quick Action Pills -->
+<div class="quick-pills">
+  <a href="https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf" target="_blank" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+    </svg>
+    <span>Download Brochure</span>
+  </a>
+  
+  <a href="https://api.whatsapp.com/send/?phone=919050983530&text=Hi,%20I%20want%20to%20hire%20your%20services" target="_blank" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+    </svg>
+    <span>Hire Us</span>
+  </a>
+  
+  <a href="https://api.whatsapp.com/send/?phone=919050983530&text=Hi,%20I%20want%20to%20discuss%20partnership%20opportunities" target="_blank" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+    </svg>
+    <span>Partnership</span>
+  </a>
+  
+  <a href="mailto:info.afterresult@gmail.com" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+    </svg>
+    <span>Contact/Support</span>
+  </a>
+</div>
   
   <div class="sidebar-content">
     <div v-if="filteredChatHistory.length > 0" class="history-label">Recent</div>
@@ -61,14 +92,57 @@
       <!-- Mobile Sidebar -->
       <div v-if="showMenu" @click="showMenu = false" class="mobile-overlay"></div>
       <div :class="['mobile-sidebar', showMenu ? 'mobile-sidebar-open' : '', isDarkMode ? 'sidebar-dark' : 'sidebar-light']">
-        <div class="sidebar-header">
-          <button @click="showMenu = false; startNewChat()" :class="['new-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
-            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-            </svg>
-            <span>New chat</span>
-          </button>
-        </div>
+<div class="sidebar-header">
+  <button @click="showMenu = false; startNewChat()" :class="['new-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+    </svg>
+    <span>New chat</span>
+  </button>
+</div>
+
+<!-- Mobile Search box -->
+<div class="sidebar-search">
+  <input
+    v-model="searchQuery"
+    type="text"
+    placeholder="Search chats..."
+    :class="['search-chat-input', isDarkMode ? 'input-dark' : 'input-light']"
+  />
+</div>
+
+<!-- Mobile Quick Action Pills -->
+<div class="quick-pills">
+  <a href="https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf" target="_blank" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+    </svg>
+    <span>Download Brochure</span>
+  </a>
+  
+  <a href="https://api.whatsapp.com/send/?phone=919050983530&text=Hi,%20I%20want%20to%20hire%20your%20services" target="_blank" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+    </svg>
+    <span>Hire Us</span>
+  </a>
+  
+  <a href="https://api.whatsapp.com/send/?phone=919050983530&text=Hi,%20I%20want%20to%20discuss%20partnership%20opportunities" target="_blank" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+    </svg>
+    <span>Partnership</span>
+  </a>
+  
+  <a href="mailto:info.afterresult@gmail.com" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+    </svg>
+    <span>Contact/Support</span>
+  </a>
+</div>
+
+<div class="sidebar-content">
         
         <div class="sidebar-content">
           <div v-if="chatHistory.length > 0" class="history-label">Recent</div>
@@ -1108,6 +1182,61 @@ startNewChat() {
   text-align: center;
   font-size: 14px;
   color: #6b7280;
+}
+.quick-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 8px;
+  border-bottom: 1px solid;
+}
+
+.sidebar-dark .quick-pills {
+  border-color: #363636;
+}
+
+.sidebar-light .quick-pills {
+  border-color: #e5e5e5;
+}
+
+.pill-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: 1px solid;
+}
+
+.pill-dark {
+  background-color: #2f2f2f;
+  color: #ececec;
+  border-color: #4d4d4d;
+}
+
+.pill-dark:hover {
+  background-color: #3a3a3a;
+  border-color: #667eea;
+}
+
+.pill-light {
+  background-color: #f4f4f4;
+  color: #2f2f2f;
+  border-color: #d1d1d1;
+}
+
+.pill-light:hover {
+  background-color: #e8e8e8;
+  border-color: #667eea;
+}
+
+.pill-btn span {
+  flex: 1;
+  white-space: nowrap;
 }
 
 .menu-toggle-btn {
