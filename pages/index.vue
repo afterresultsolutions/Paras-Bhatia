@@ -1443,12 +1443,12 @@ this.messages.push({
   justify-content: center;
   gap: 6px;
   padding: 10px 12px;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 500;
-  background: #000000 !important;
-  color: white;!important;
+  background: #000000; 
+  color: white;
   border: none;
-  border-radius: 20px;
+  border-radius: 18px;
   text-decoration: none;
   cursor: pointer;
   transition: opacity 0.2s;
