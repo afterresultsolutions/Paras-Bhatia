@@ -648,12 +648,13 @@ methods: {
         hasButton: false
       };
     }
-    if (kb.keywords.whatsappmarketing.some(kw => query.includes(kw))) {
+if (kb.keywords.whatsappmarketing.some(kw => query.includes(kw))) {
   return {
     text: kb.responses.whatsappmarketing,
     hasButton: true,
     buttonText: 'Get WhatsApp Marketing - ₹2,000',
-    buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
+    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
+    buttonType: 'whatsapp'
   };
 }
     if (kb.keywords.whoareyou.some(kw => query.includes(kw))) {
@@ -884,14 +885,15 @@ methods: {
     setTimeout(() => {
       const aiResponse = this.generateResponse(userQuery);
       
-      this.messages.push({
-        type: 'bot',
-        text: aiResponse.text,
-        timestamp: new Date(),
-        hasButton: aiResponse.hasButton,
-        buttonText: aiResponse.buttonText || 'Launch My Store - ₹1,599',
-        buttonLink: aiResponse.buttonLink || 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
-      });
+this.messages.push({
+  type: 'bot',
+  text: aiResponse.text,
+  timestamp: new Date(),
+  hasButton: aiResponse.hasButton,
+  buttonText: aiResponse.buttonText || 'Launch My Store - ₹1,599',
+  buttonLink: aiResponse.buttonLink || 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view',
+  buttonType: aiResponse.buttonType || 'default'
+});
       
       this.scrollToBottom();
     }, 500);
@@ -991,14 +993,15 @@ methods: {
       setTimeout(() => {
         const aiResponse = this.generateResponse(userQuery);
         
-        this.messages.push({
-          type: 'bot',
-          text: aiResponse.text,
-          timestamp: new Date(),
-          hasButton: aiResponse.hasButton,
-          buttonText: 'Launch My Store - ₹1,599',
-          buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
-        });
+this.messages.push({
+  type: 'bot',
+  text: aiResponse.text,
+  timestamp: new Date(),
+  hasButton: aiResponse.hasButton,
+  buttonText: aiResponse.buttonText || 'Launch My Store - ₹1,599',
+  buttonLink: aiResponse.buttonLink || 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view',
+  buttonType: aiResponse.buttonType || 'default'
+});
         
         this.scrollToBottom();
       }, 300);
