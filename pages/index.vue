@@ -459,6 +459,7 @@ export default {
       kb: {
         keywords: {
           pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget'],
+          whatsappmarketing: ['whatsapp marketing', 'whatsapp setup', 'lead generation', 'linkedin scraping', 'google scraping', 'whatsapp business', 'promotional messages', 'auto reply', 'whatsapp leads'],
           features: ['features', 'include', 'get', 'what', 'benefit', 'offer', 'provide', 'service', 'package', 'comes with'],
           timeline: ['when', 'how long', 'time', 'duration', 'days', 'delivery', 'fast', 'quick', 'ready', 'complete'],
           products: ['product', 'sell', 'item', 'clothing', 'shoes', 'jewellery', 'jewelry', 'fashion', 'niche', 'categories'],
@@ -487,6 +488,7 @@ export default {
           fullPackage: "With AR Solutions, you'll get:\n\n✓ Complete Shopify store setup\n✓ 1-year free domain (your brand name as a gift from us)\n✓ Payment gateway integration for easy online payments\n✓ Up to 20 products listed & ready to sell\n✓ Simple logo design, banners & content creation\n✓ FREE training on store management\n✓ Project delivered in 25 days\n✓ Transparent pricing with no hidden charges\n✓ Monthly subscription (paid separately, cancel anytime)\n\nYou'll get a ready-to-use, business-grade online store at the lowest possible cost — designed to help you start selling from day one.",
           pricing: "The total project cost is ₹7,999/- (including all taxes). To begin, you only need to pay a confirmation milestone of ₹1,599/- to secure your project slot. The remaining balance will be paid in 4 simple instalments during the 25-day project timeline.",
           quickDelivery: "Want faster delivery? Choose our Quick Delivery Option by paying 70% upfront for a faster, hassle-free setup!",
+          whatsappmarketing: "We provide a complete WhatsApp marketing setup and execution plan designed to generate quality leads and streamline communication.\n\nWhat's Included:\n✓ Lead generation using LinkedIn and Google scraping\n✓ Delivery of up to 1,400 promotional messages (average 200 per day)\n✓ Setup of WhatsApp Business Account\n✓ Lead management and forwarding for tracking prospects\n✓ Community building strategies for organic growth\n✓ Auto-replies to prevent lead loss\n✓ Catalog setup for product/service showcase\n✓ Profile message & quick response templates\n✓ Away message configuration\n✓ 7-day completion timeline with full execution\n\nPackage Price: ₹2,000/- (Complete WhatsApp marketing setup & lead generation)",
           noTech: "You don't need to worry about the tech side — we handle it all for you! No technical knowledge required. We take care of building your complete business-ready store.",
           timeline: "Your complete store will be delivered in 25 days. Want it faster? Choose our Quick Delivery Option by paying 70% upfront.",
           domain: "Yes! You get a 1-year free domain with your brand name as a gift from us. It's included in the package.",
@@ -645,7 +647,14 @@ methods: {
         hasButton: false
       };
     }
-
+    if (kb.keywords.whatsappmarketing.some(kw => query.includes(kw))) {
+  return {
+    text: kb.responses.whatsappmarketing,
+    hasButton: true,
+    buttonText: 'Get WhatsApp Marketing - ₹2,000',
+    buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
+  };
+}
     if (kb.keywords.whoareyou.some(kw => query.includes(kw))) {
       return { text: kb.responses.whoareyou, hasButton: false };
     }
