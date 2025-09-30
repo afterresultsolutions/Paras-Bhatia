@@ -244,19 +244,6 @@
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
   </svg>
 </button>
-
-      <!-- Main content -->
-      <div class="main-content">
-        <!-- Header -->
-<div :class="['chat-header', isDarkMode ? 'header-dark' : 'header-light']">
-  <div class="header-title">
-    <span class="brand-name">AR Solutions</span>
-    <span class="model-badge">AI</span>
-    <span class="live-indicator">
-      <span class="live-dot"></span>
-      <span class="live-text">Live</span>
-    </span>
-  </div>
   
   <button @click="toggleTempMode" :class="['temp-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light', { 'temp-active': isTempMode }]" :title="isTempMode ? 'Temporary Mode Active' : 'Enable Temporary Mode'">
     <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
