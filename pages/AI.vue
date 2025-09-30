@@ -516,80 +516,167 @@ export default {
     touchEndX: 0,
     touchStartY: 0,
     touchEndY: 0,
-    kb: {
-        keywords: {
-          pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget'],
-          skeptical: ['really', 'sure', 'guarantee', 'proof', 'evidence', 'trust', 'believe', 'legit', 'genuine', 'scam'],
-          whatsappmarketing: ['whatsapp marketing', 'whatsapp setup', 'lead generation', 'linkedin scraping', 'google scraping', 'whatsapp business', 'promotional messages', 'auto reply', 'whatsapp leads'],
-          features: ['features', 'include', 'get', 'what', 'benefit', 'offer', 'provide', 'service', 'package', 'comes with'],
-          timeline: ['when', 'how long', 'time', 'duration', 'days', 'delivery', 'fast', 'quick', 'ready', 'complete'],
-          products: ['product', 'sell', 'item', 'clothing', 'shoes', 'jewellery', 'jewelry', 'fashion', 'niche', 'categories'],
-          technical: ['technical', 'tech', 'difficult', 'easy', 'knowledge', 'skill', 'learn', 'manage', 'complicated'],
-          domain: ['domain', 'website name', 'url', 'web address', 'brand name', 'site name'],
-          training: ['training', 'teach', 'learn', 'help', 'support', 'tutorial', 'guide', 'how to'],
-          platform: ['shopify', 'platform', 'ecommerce', 'e-commerce', 'which platform'],
-          payment_gateway: ['payment gateway', 'accept payment', 'online payment', 'transaction', 'pay online'],
-          design: ['design', 'logo', 'banner', 'look', 'appearance', 'branding', 'graphics'],
-          confirmation: ['start', 'begin', 'sign up', 'register', 'book', 'confirm', 'interested', 'want', 'ready'],
-          installment: ['installment', 'instalment', 'emi', 'partial payment', 'split payment'],
-          quickdelivery: ['quick delivery', 'fast delivery', 'urgent', 'asap', 'faster'],
-          marketing: ['marketing', 'advertisement', 'promote', 'advertising', 'campaign', 'ads', 'digital marketing'],
-          sales: ['sales', 'selling', 'revenue', 'grow business', 'increase sales', 'boost sales'],
-          interested: ['interested', 'sounds good', 'tell me more', 'more info', 'details', 'detailed', 'elaborate', 'explain more'],
-whatsapp_messages: ['how many messages', 'how many message', 'message quantity', 'messages per day', 'daily messages', 'message limit', 'how many promotional', 'message delivery', 'promotional limit', 'send messages'],
-whatsapp_timeline: ['how long whatsapp', 'whatsapp delivery time', 'whatsapp project time', 'when complete whatsapp', 'whatsapp days', 'timeline whatsapp'],
-whatsapp_leads: ['where leads from', 'lead source', 'linkedin scraping', 'google scraping', 'how get leads', 'lead generation', 'finding leads', 'scraping data', 'data scraping'],
-whatsapp_setup: ['whatsapp business setup', 'whatsapp account', 'whatsapp', 'business account setup', 'whatsapp installation', 'setup whatsapp', 'configure whatsapp'],
-whatsapp_features: ['auto reply', 'catalog', 'away message', 'quick response', 'profile message', 'what features whatsapp', 'whatsapp automation', 'auto response'],
-whatsapp_price: ['whatsapp cost', 'whatsapp price', 'whatsapp marketing price', 'how much whatsapp', 'pricing whatsapp'],
-whatsapp_community: ['community building', 'whatsapp group', 'group marketing', 'organic growth', 'community strategy'],
-whatsapp_restrictions: ['account ban', 'restricted', 'account safety', 'prevent ban', 'safe messaging'],
-          scaling: ['scale', 'scaling', 'growth', 'expand', 'expansion'],
-          contact: ['contact', 'reach', 'email', 'phone', 'call', 'demo', 'meeting'],
-          services: ['services', 'what do you do', 'offerings', 'solutions', 'brochure', 'catalog'],
-          casual: ['i am good', 'im good', 'i am fine', 'im fine', 'i am also good', 'im also good', 'doing well', 'doing good', 'all good', 'great', 'fine', 'okay', 'ok', 'good', 'nice', 'cool', 'awesome'],
-          howareyou: ['how are you', 'how are you doing', 'whats up', "what's up", 'hows it going'],
-          whoareyou: ['who are you', 'what are you', 'your name', 'about you'],
-          thankyou: ['thank you', 'thanks', 'thank u', 'thx', 'appreciate'],
-          bye: ['bye', 'goodbye', 'see you', 'later', 'farewell']
-        },
-        responses: {
-          greeting: "Thank you for your interest in AR Solutions! We help entrepreneurs launch professional online stores quickly and affordably. Starting your own branded online store has never been this simple.",
-          fullPackage: "With AR Solutions, you'll get:\n\n✓ Complete Shopify store setup\n✓ 1-year free domain (your brand name as a gift from us)\n✓ Payment gateway integration for easy online payments\n✓ Up to 20 products listed & ready to sell\n✓ Simple logo design, banners & content creation\n✓ FREE training on store management\n✓ Project delivered in 25 days\n✓ Transparent pricing with no hidden charges\n✓ Monthly subscription (paid separately, cancel anytime)\n\nYou'll get a ready-to-use, business-grade online store at the lowest possible cost — designed to help you start selling from day one.",
-          pricing: "The total project cost is ₹7,999/- (including all taxes). To begin, you only need to pay a confirmation milestone of ₹1,599/- to secure your project slot. The remaining balance will be paid in 4 simple instalments during the 25-day project timeline.",
-          quickDelivery: "Want faster delivery? Choose our Quick Delivery Option by paying 70% upfront for a faster, hassle-free setup!",
-          skeptical: "I understand your concern. AR Solutions has been delivering results since 2024. We offer:\n✓ Transparent pricing\n✓ No hidden charges\n✓ Complete support\n✓ Real deliverables\n\nWant to see our work or talk to our team?",
-          whatsappmarketing: "We provide a complete WhatsApp marketing setup and execution plan designed to generate quality leads and streamline communication.\n\nWhat's Included:\n✓ Lead generation using LinkedIn and Google scraping\n✓ Delivery of up to 1,400 promotional messages (average 200 per day)\n✓ Setup of WhatsApp Business Account\n✓ Lead management and forwarding for tracking prospects\n✓ Community building strategies for organic growth\n✓ Auto-replies to prevent lead loss\n✓ Catalog setup for product/service showcase\n✓ Profile message & quick response templates\n✓ Away message configuration\n✓ 7-day completion timeline with full execution\n\nPackage Price: ₹2,000/- (Complete WhatsApp marketing setup & lead generation)",
-          noTech: "You don't need to worry about the tech side — we handle it all for you! No technical knowledge required. We take care of building your complete business-ready store.",
-          timeline: "Your complete store will be delivered in 25 days. Want it faster? Choose our Quick Delivery Option by paying 70% upfront.",
-          domain: "Yes! You get a 1-year free domain with your brand name as a gift from us. It's included in the package.",
-          interested: "Great! Let me share more details...",
-          training: "We provide FREE training on how to manage your store and add products. You'll learn everything you need to run your store successfully.",
-          platform: "We build your store on Shopify, one of the world's most reliable and user-friendly ecommerce platforms. It's trusted by millions of businesses worldwide.",
-          products: "You can sell any type of products — clothing, shoes, jewellery, or any niche you choose. The store can be customized for your specific business. You'll be able to sell directly on Google, social media, and worldwide.",
-          paymentGateway: "Yes! We integrate a payment gateway so you can accept online payments easily from customers. This is included in the setup.",
-          design: "We provide simple logo design, banners, and content creation for your store. Everything is included in the package.",
-          installments: "After paying the confirmation fee of ₹1,599/-, the remaining balance will be paid in 4 simple instalments during the 25-day project timeline. It's flexible and easy.",
-          confirmation: "To get started, you only need to pay ₹1,599/- as a confirmation fee to secure your project slot. Click the button below to begin your journey!",
-          marketing: "We provide end-to-end marketing support including digital strategy, paid ads, social media, SEO, and performance tracking. Would you like to know more about how we can help your business grow?",
-          sales: "We help businesses scale sales through structured campaigns, lead nurturing, and data-driven strategies. Our ecommerce solutions are designed to maximize your revenue from day one!",
-          scaling: "Our solutions are designed to help businesses grow smarter, with customized plans for scaling operations, boosting revenue, and maximizing ROI. Let's build something amazing together!",
-          contact: "You can reach us at:\n📧 Email: info.afterresult@gmail.com\n📱 WhatsApp: +91 9050983530\n\nOr click below to connect directly!",
-whatsapp_setup: "We set up your WhatsApp Business Account with profile, catalog, and all professional details ready to go. The setup is complete and professional, making your business look credible and trustworthy.",
-whatsapp_messages: "With our package, we deliver up to 1,400 promotional messages throughout the campaign. That's an average of 200 messages per day. This daily limit is strategically set to keep your account safe from restrictions while still reaching a significant audience.",
-whatsapp_leads: "We generate quality leads for you through two powerful methods: LinkedIn scraping and Google scraping. These leads are targeted, relevant to your business, and shared with you for easy tracking and follow-up. It's like having a dedicated research team finding potential customers for you!",
-whatsapp_features: "Your WhatsApp setup includes auto-replies (so you never miss a lead), catalog setup (showcase your products/services professionally), profile message, quick response templates, and away message configuration. Everything you need to run a professional business account!",
-whatsapp_timeline: "Your complete WhatsApp marketing setup and lead generation campaign will be ready and executed within 7 days. Quick turnaround so you can start seeing results fast!",
-whatsapp_price: "The full WhatsApp Marketing & Lead Generation package costs only ₹2,000/- all inclusive. No hidden charges. You get complete setup, 1,400 promotional messages, and quality lead generation.",
-whatsapp_community: "We also help you build strategies to grow WhatsApp groups and communities for organic engagement. This creates a loyal customer base that keeps coming back!",
-whatsapp_restrictions: "We keep your account safe by limiting messages to 200 per day. Sending too many messages can get your account restricted or banned by WhatsApp. Our approach is designed to maximize reach while keeping your account healthy and active long-term.",
-          services: "We offer comprehensive business solutions! Want to explore our complete service offerings? Check out our Services Brochure for detailed information.",
-          howareyou: "I'm doing great, thank you for asking! How about you? How can I help you today?",
-          whoareyou: "I'm your service assistant from AR Solutions, here to help you discover the best solutions for launching and growing your online business!",
-          thankyou: "You're most welcome! Happy to help anytime 😊",
-          bye: "Goodbye! Wishing you a productive day ahead. Feel free to return anytime you need assistance!"
-        }
-      }
+kb: {
+  keywords: {
+    // PRICING & COST
+    pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget', 'rate', 'quote', 'estimate', 'investment', 'spend', 'value', 'worth', 'affordable', 'costly', 'economical', 'pricing structure', 'payment plan', 'how much', 'what price', 'total cost'],
+    
+    // WHATSAPP MARKETING
+    whatsappmarketing: ['whatsapp marketing', 'whatsapp setup', 'lead generation', 'linkedin scraping', 'google scraping', 'whatsapp business', 'promotional messages', 'auto reply', 'whatsapp leads', 'wa marketing', 'bulk messaging', 'whatsapp campaign', 'message blast'],
+    whatsapp_messages: ['how many messages', 'how many message', 'message quantity', 'messages per day', 'daily messages', 'message limit', 'how many promotional', 'message delivery', 'promotional limit', 'send messages', 'message count', 'bulk send', 'message volume'],
+    whatsapp_timeline: ['how long whatsapp', 'whatsapp delivery time', 'whatsapp project time', 'when complete whatsapp', 'whatsapp days', 'timeline whatsapp', 'whatsapp duration', 'completion time', 'delivery date'],
+    whatsapp_leads: ['where leads from', 'lead source', 'linkedin scraping', 'google scraping', 'how get leads', 'lead generation', 'finding leads', 'scraping data', 'data scraping', 'prospect sourcing', 'lead database', 'contact list'],
+    whatsapp_setup: ['whatsapp business setup', 'whatsapp account', 'whatsapp', 'business account setup', 'whatsapp installation', 'setup whatsapp', 'configure whatsapp', 'wa setup', 'business profile'],
+    whatsapp_features: ['auto reply', 'catalog', 'away message', 'quick response', 'profile message', 'what features whatsapp', 'whatsapp automation', 'auto response', 'automated messages', 'quick replies'],
+    whatsapp_price: ['whatsapp cost', 'whatsapp price', 'whatsapp marketing price', 'how much whatsapp', 'pricing whatsapp', 'whatsapp rate', 'wa cost'],
+    whatsapp_community: ['community building', 'whatsapp group', 'group marketing', 'organic growth', 'community strategy', 'group management', 'community engagement'],
+    whatsapp_restrictions: ['account ban', 'restricted', 'account safety', 'prevent ban', 'safe messaging', 'avoid suspension', 'account security'],
+
+    // ECOMMERCE STORE
+    ecommerce: ['ecommerce', 'e-commerce', 'online store', 'store', 'shop', 'website', 'sell online', 'business', 'shopify', 'woocommerce', 'online shop', 'web store', 'digital store', 'internet store', 'online selling', 'ecom', 'e commerce'],
+    features: ['features', 'include', 'get', 'what', 'benefit', 'offer', 'provide', 'service', 'package', 'comes with', 'included', 'benefits', 'advantages', 'offerings', 'inclusions', 'what included', 'package details'],
+    timeline: ['when', 'how long', 'time', 'duration', 'days', 'delivery', 'fast', 'quick', 'ready', 'complete', 'timeline', 'completion', 'deadline', 'turnaround', 'how soon', 'when ready', 'time frame', 'project duration'],
+    products: ['product', 'sell', 'item', 'clothing', 'shoes', 'jewellery', 'jewelry', 'fashion', 'niche', 'categories', 'goods', 'merchandise', 'inventory', 'catalog', 'what sell', 'product type'],
+    
+    // TECHNICAL & SUPPORT
+    technical: ['technical', 'tech', 'difficult', 'easy', 'knowledge', 'skill', 'learn', 'manage', 'complicated', 'complex', 'simple', 'user friendly', 'technical knowledge', 'coding', 'expertise required', 'hard', 'challenging'],
+    domain: ['domain', 'website name', 'url', 'web address', 'brand name', 'site name', 'domain name', 'website url', 'web domain', 'site address', 'domain registration'],
+    training: ['training', 'teach', 'learn', 'help', 'support', 'tutorial', 'guide', 'how to', 'training session', 'onboarding', 'learning', 'education', 'instruction', 'guidance', 'walkthrough'],
+    platform: ['shopify', 'platform', 'ecommerce', 'e-commerce', 'which platform', 'what platform', 'platform choice', 'system', 'cms', 'technology'],
+    payment_gateway: ['payment gateway', 'accept payment', 'online payment', 'transaction', 'pay online', 'payment processing', 'payment method', 'payment integration', 'checkout', 'payment system'],
+    design: ['design', 'logo', 'banner', 'look', 'appearance', 'branding', 'graphics', 'visual', 'theme', 'layout', 'ui', 'ux', 'user interface', 'aesthetic', 'creative', 'design work'],
+
+    // BUSINESS INTENT
+    confirmation: ['start', 'begin', 'sign up', 'register', 'book', 'confirm', 'interested', 'want', 'ready', 'proceed', 'go ahead', 'lets start', 'im ready', 'book now', 'register now', 'get started', 'take it', 'buy', 'purchase'],
+    installment: ['installment', 'instalment', 'emi', 'partial payment', 'split payment', 'monthly payment', 'payment plan', 'pay in parts', 'flexible payment', 'milestone payment'],
+    quickdelivery: ['quick delivery', 'fast delivery', 'urgent', 'asap', 'faster', 'rush', 'express', 'immediate', 'quick turnaround', 'fast completion', 'speed delivery'],
+    
+    // DIGITAL SERVICES
+    marketing: ['marketing', 'advertisement', 'promote', 'advertising', 'campaign', 'ads', 'digital marketing', 'social media marketing', 'online marketing', 'promotion', 'advertise', 'brand promotion', 'marketing strategy'],
+    sales: ['sales', 'selling', 'revenue', 'grow business', 'increase sales', 'boost sales', 'more sales', 'improve sales', 'sales growth', 'revenue growth', 'business growth'],
+    scaling: ['scale', 'scaling', 'growth', 'expand', 'expansion', 'grow', 'growing', 'scale up', 'business expansion', 'market expansion'],
+    
+    // DPM SERVICES
+    dpm: ['digital presence', 'dpm', 'online presence', 'digital footprint', 'web presence', 'digital visibility', 'online visibility', 'digital identity'],
+    website: ['website', 'web', 'site', 'webpage', 'landing page', 'corporate website', 'business website', 'professional website', 'responsive website'],
+    socialmedia: ['social media', 'instagram', 'facebook', 'linkedin', 'twitter', 'social', 'sm', 'social media management', 'social presence', 'social profiles'],
+    seo: ['seo', 'search engine', 'google ranking', 'search optimization', 'visibility', 'ranking', 'google search', 'search result', 'organic traffic'],
+    branding: ['branding', 'brand', 'brand identity', 'logo', 'brand guidelines', 'visual identity', 'brand recognition', 'brand building'],
+    
+    // AGENCY INFO
+    aboutar: ['about', 'who are you', 'ar solutions', 'afterresult', 'your company', 'about company', 'company info', 'agency', 'your services'],
+    experience: ['experience', 'portfolio', 'past work', 'projects', 'clients', 'track record', 'case study', 'success stories', 'expertise'],
+    
+    // COMPARISON & DIFFERENTIATION
+    comparison: ['compare', 'difference', 'better than', 'vs', 'versus', 'competitor', 'alternative', 'why choose', 'what makes different', 'unique', 'advantage over'],
+    guarantee: ['guarantee', 'assured', 'promise', 'warranty', 'refund', 'money back', 'risk free', 'guaranteed results'],
+    
+    // DISCOUNTS & OFFERS
+    discount: ['discount', 'offer', 'deal', 'coupon', 'promo', 'promotion', 'special offer', 'limited offer', 'sale', 'reduced price', 'save money', 'cheaper', 'best price'],
+    
+    // CONTACT
+    contact: ['contact', 'reach', 'email', 'phone', 'call', 'demo', 'meeting', 'consultation', 'connect', 'get in touch', 'talk to someone'],
+    services: ['services', 'what do you do', 'offerings', 'solutions', 'brochure', 'catalog', 'service list', 'what you offer', 'all services'],
+    
+    // CONVERSATIONAL
+    casual: ['i am good', 'im good', 'i am fine', 'im fine', 'i am also good', 'im also good', 'doing well', 'doing good', 'all good', 'great', 'fine', 'okay', 'ok', 'good', 'nice', 'cool', 'awesome'],
+    howareyou: ['how are you', 'how are you doing', 'whats up', "what's up", 'hows it going', 'how you doing'],
+    whoareyou: ['who are you', 'what are you', 'your name', 'about you', 'bot', 'ai', 'chatbot'],
+    thankyou: ['thank you', 'thanks', 'thank u', 'thx', 'appreciate', 'grateful', 'thanks a lot'],
+    bye: ['bye', 'goodbye', 'see you', 'later', 'farewell', 'gotta go', 'take care'],
+    
+    // URGENCY & EMOTION
+    urgent: ['urgent', 'asap', 'immediately', 'right now', 'quick', 'fast', 'hurry', 'rush'],
+    confused: ['confused', 'dont understand', 'explain', 'clarify', 'not clear', 'unclear', 'elaborate'],
+    interested: ['interested', 'sounds good', 'tell me more', 'more info', 'details', 'detailed', 'elaborate', 'explain more'],
+    skeptical: ['really', 'sure', 'guarantee', 'proof', 'evidence', 'trust', 'believe', 'legit', 'genuine', 'scam'],
+    
+    // DETAILED REQUEST
+    detailed: ['tell me more', 'more details', 'detailed', 'elaborate', 'full package', 'complete info', 'everything', 'all details', 'comprehensive']
+  },
+
+  responses: {
+    // SHORT RESPONSES (DEFAULT)
+    greeting: "Welcome to AR Solutions! We help businesses grow with affordable digital solutions - from online stores to WhatsApp marketing. What interests you?",
+    
+    // DETAILED RESPONSES (WHEN USER ASKS)
+    greeting_detailed: "Thank you for your interest in AR Solutions! Founded in 2024, we're a full-service growth agency helping startups and SMEs scale digitally and offline.\n\nWe specialize in:\n✓ E-Commerce Store Setup (Shopify)\n✓ WhatsApp Marketing & Lead Generation\n✓ Digital Presence Management\n✓ Branding & Marketplace Enablement\n\nWhat would you like to explore?",
+    
+    aboutar: "AR Solutions (AfterResult) - Your trusted digital growth partner since 2024. We deliver results-driven marketing, e-commerce, and branding solutions.",
+    
+    aboutar_detailed: "**About AR Solutions**\n\nAR Solutions (AfterResult Solutions) is a full-service marketing and business growth agency dedicated to helping brands scale digitally and offline.\n\n**Our Expertise:**\n• Digital Presence Management (DPM)\n• Lead Generation (Leadin)\n• E-Commerce Development\n• Marketplace Enablement\n• Offline Presence Management (OPM)\n\n**Founded:** 2024\n**Mission:** Grow businesses faster with affordable, results-focused solutions\n\nWe're not just a service provider—we're your growth partner!",
+    
+    // ECOMMERCE RESPONSES
+    fullPackage: "**Shopify Store - ₹7,999**\n✓ Complete setup\n✓ Free domain (1 year)\n✓ Payment gateway\n✓ 20 products listed\n✓ Logo & banners\n✓ FREE training\n✓ Delivered in 25 days\n\nStart with just ₹1,599!",
+    
+    fullPackage_detailed: "**Complete Shopify E-Commerce Package - ₹7,999**\n\n**What You Get:**\n✓ Complete Shopify store setup\n✓ 1-year free domain (your brand name - our gift!)\n✓ Payment gateway integration\n✓ Up to 20 products listed & ready\n✓ Simple logo design + banners\n✓ Content creation\n✓ FREE training on store management\n✓ Delivered in 25 days\n✓ Transparent pricing - no hidden charges\n✓ Monthly subscription paid separately (cancel anytime)\n\n**Payment Plan:**\n• Confirmation: ₹1,599\n• Remaining: 4 easy installments\n\n**Quick Delivery Option:** Pay 70% upfront for faster delivery!\n\nReady-to-use, business-grade store designed for immediate sales.",
+    
+    pricing: "₹7,999 total. Start with ₹1,599 confirmation, rest in 4 installments over 25 days. Want quick delivery? Pay 70% upfront!",
+    
+    quickDelivery: "Get your store faster! Pay 70% upfront for Quick Delivery Option - hassle-free priority setup.",
+    
+    // WHATSAPP MARKETING
+    whatsappmarketing: "**WhatsApp Marketing - ₹2,000**\n✓ 1,400 messages delivered\n✓ LinkedIn & Google leads\n✓ Business account setup\n✓ Auto-replies & catalog\n✓ 7-day delivery",
+    
+    whatsappmarketing_detailed: "**Complete WhatsApp Marketing & Lead Generation - ₹2,000**\n\n**What's Included:**\n✓ Lead generation (LinkedIn + Google scraping)\n✓ Up to 1,400 promotional messages (200/day avg)\n✓ WhatsApp Business Account setup\n✓ Lead management & forwarding\n✓ Community building strategies\n✓ Auto-replies (never miss a lead)\n✓ Catalog setup (showcase products/services)\n✓ Profile message & quick responses\n✓ Away message configuration\n✓ 7-day completion\n\n**Why 200/day limit?** Keeps your account safe from WhatsApp restrictions while maximizing reach.\n\n**Price:** ₹2,000 all-inclusive - no hidden charges!",
+    
+    whatsapp_setup: "We'll set up your professional WhatsApp Business Account with profile, catalog, and all features - making you look credible and trustworthy.",
+    whatsapp_messages: "1,400 promotional messages total - about 200 per day. This daily limit keeps your account safe while reaching maximum audience.",
+    whatsapp_leads: "Quality leads from LinkedIn & Google scraping - targeted, relevant contacts shared for easy tracking and follow-up!",
+    whatsapp_features: "Auto-replies, catalog, profile message, quick responses, away messages - everything for a professional business account!",
+    whatsapp_timeline: "Complete setup & execution in 7 days. Quick turnaround, fast results!",
+    whatsapp_price: "₹2,000 all-inclusive. Complete setup + 1,400 messages + quality leads. No hidden charges.",
+    whatsapp_community: "We help build WhatsApp groups and communities for organic engagement - creating loyal customers who keep coming back!",
+    whatsapp_restrictions: "200 messages/day keeps your account safe. Too many messages = risk of ban. We maximize reach while keeping you secure long-term.",
+    
+    // DPM SERVICES
+    dpm: "**Digital Presence Management** - Complete online identity: website, social media, SEO, branding. Want details?",
+    
+    dpm_detailed: "**Digital Presence Management (DPM)**\n\nEstablish, enhance, and scale your presence across all digital channels:\n\n**Services Include:**\n• Website & Platform Development\n• Branding & Creative Identity\n• Social Media Management\n• SEO & Visibility Optimization\n• Digital Advertising & Campaigns\n• Analytics & CRM Integration\n• Reputation Management\n• Specialized SME Solutions\n\nWe ensure every digital touchpoint reflects your brand and drives growth. Interested in a specific service?",
+    
+    // TECHNICAL ASSURANCE
+    noTech: "No technical knowledge needed! We handle everything - you get a complete business-ready store.",
+    timeline: "25 days for complete store. Want faster? Quick Delivery Option available with 70% upfront.",
+    domain: "Yes! Free 1-year domain with your brand name - our gift to you. Included in package.",
+    training: "FREE training on store management and adding products. You'll learn everything to run successfully.",
+    platform: "Shopify - world's most reliable e-commerce platform. Trusted by millions globally.",
+    products: "Any products - clothing, shoes, jewelry, any niche. Customized for your business. Sell on Google, social media, worldwide.",
+    paymentGateway: "Yes! Payment gateway integrated for easy online payments from customers. Included.",
+    design: "Simple logo, banners, and content creation included in the package.",
+    installments: "After ₹1,599 confirmation, remaining balance in 4 simple installments over 25 days. Flexible and easy.",
+    confirmation: "Start with just ₹1,599 confirmation fee to secure your slot!",
+    
+    // VALUE PROPOSITIONS
+    comparison: "**Why AR Solutions?**\n✓ Affordable pricing\n✓ Complete solutions (no hidden costs)\n✓ FREE training & support\n✓ Quick delivery options\n✓ Proven track record since 2024\n✓ End-to-end service",
+    
+    guarantee: "We deliver quality work on time. Your satisfaction is our priority. Transparent pricing, no hidden charges, complete support throughout.",
+    
+    // DISCOUNTS & OFFERS
+    discount: "**Current Offers:**\n• E-Commerce: Start at ₹1,599 only\n• WhatsApp Marketing: ₹2,000 complete package\n• Quick Delivery: 70% upfront bonus\n\nLimited time! Secure your slot now.",
+    
+    // URGENCY HANDLING
+    urgent: "I understand it's urgent! Our Quick Delivery Option gets your store live faster - pay 70% upfront for priority service. Want to proceed?",
+    
+    // CONTACT & SUPPORT
+    marketing: "End-to-end marketing: digital strategy, paid ads, social media, SEO, performance tracking. Want to know more?",
+    sales: "We scale sales through structured campaigns, lead nurturing, and data-driven strategies. Maximize your revenue from day one!",
+    scaling: "Grow smarter with customized scaling plans - boosting revenue and maximizing ROI. Let's build something amazing!",
+    contact: "📧 Email: info.afterresult@gmail.com\n📱 WhatsApp: +91 9050983530\n\nOr click below to connect directly!",
+    services: "We offer comprehensive business solutions! Check our Services Brochure for complete details.",
+    
+    // CONVERSATIONAL
+    howareyou: "Doing great! How about you? How can I help you today?",
+    whoareyou: "I'm your service assistant from AR Solutions - here to help you discover the best solutions for your business!",
+    thankyou: "You're welcome! Happy to help anytime 😊",
+    bye: "Goodbye! Wishing you success. Feel free to return anytime!",
+    
+    // INTEREST SIGNALS
+    interested: "Great! Let me share more details...",
+    
+    // SKEPTICISM HANDLING
+    skeptical: "I understand your concern. AR Solutions has been delivering results since 2024. We offer:\n✓ Transparent pricing\n✓ No hidden charges\n✓ Complete support\n✓ Real deliverables\n\nWant to see our work or talk to our team?"
+  }
+}
     };
   },
 computed: {
