@@ -517,612 +517,117 @@ export default {
     touchStartY: 0,
     touchEndY: 0,
 kb: {
- keywords: {
-    // ========== GREETINGS & OPENING (150+ keywords) ==========
-    greeting: ['hello', 'hi', 'hey', 'hii', 'hiii', 'hlo', 'hola', 'namaste', 'good morning', 'good afternoon', 'good evening', 'good night', 'greetings', 'yo', 'wassup', 'sup', 'hiya', 'heya', 'howdy', 'whats up', "what's up"],
+  keywords: {
+    pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget', 'rate', 'quote', 'estimate', 'investment', 'spend', 'value', 'worth', 'affordable', 'costly', 'economical', 'pricing structure', 'payment plan', 'how much', 'what price', 'total cost'],
     
-    // ========== CONVERSATIONAL & ENGAGEMENT (200+ keywords) ==========
-    casual: ['i am good', 'im good', 'i am fine', 'im fine', 'i am also good', 'im also good', 'doing well', 'doing good', 'all good', 'great', 'fine', 'okay', 'ok', 'good', 'nice', 'cool', 'awesome', 'fantastic', 'excellent', 'wonderful', 'amazing', 'superb', 'brilliant', 'pretty good', 'not bad', 'cant complain'],
-    
-    howareyou: ['how are you', 'how are you doing', 'whats up', "what's up", 'hows it going', 'how you doing', 'how do you do', 'how have you been', 'hows everything', 'hows life', 'how r u', 'how r you', 'how is everything', 'you good', 'all well'],
-    
-    whoareyou: ['who are you', 'what are you', 'your name', 'about you', 'bot', 'ai', 'chatbot', 'what is your name', 'tell me about yourself', 'introduce yourself', 'who am i talking to', 'are you human', 'are you a bot', 'are you real'],
-    
-    thankyou: ['thank you', 'thanks', 'thank u', 'thx', 'ty', 'appreciate', 'grateful', 'thanks a lot', 'thank you so much', 'many thanks', 'much appreciated', 'thanks alot', 'appreciate it', 'thank you very much', 'thanx', 'thnx', 'thnks'],
-    
-    bye: ['bye', 'goodbye', 'see you', 'later', 'farewell', 'gotta go', 'take care', 'see ya', 'catch you later', 'talk to you later', 'ttyl', 'bye bye', 'good bye', 'byeee', 'cya', 'peace out', 'im leaving', 'have to go'],
-    
-    yes: ['yes', 'yeah', 'yep', 'sure', 'definitely', 'absolutely', 'of course', 'certainly', 'indeed', 'affirmative', 'yup', 'yea', 'ya', 'ok', 'okay', 'alright', 'sounds good', 'perfect', 'agreed', 'correct', 'right', 'true', 'proceed', 'go ahead'],
-    
-    no: ['no', 'nope', 'nah', 'not really', 'not interested', 'maybe later', 'not now', 'not sure', 'dont think so', 'i dont think', 'negative', 'not at all', 'never mind', 'forget it', 'cancel', 'stop'],
-    
-    maybe: ['maybe', 'perhaps', 'possibly', 'might', 'could be', 'not sure', 'thinking about it', 'considering', 'let me think', 'ill think about it', 'need to think', 'undecided', 'on the fence'],
-    
-    // ========== PRICING & COST (250+ keywords) ==========
-    pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget', 'rate', 'quote', 'estimate', 'investment', 'spend', 'value', 'worth', 'affordable', 'costly', 'economical', 'pricing structure', 'payment plan', 'how much', 'what price', 'total cost', 'final cost', 'actual price', 'real price', 'starting price', 'minimum cost', 'maximum cost', 'price range', 'cost breakdown', 'detailed pricing', 'complete cost', 'all inclusive', 'total amount', 'final amount', 'what will it cost', 'how expensive', 'is it cheap', 'is it affordable', 'can i afford', 'within budget', 'budget friendly', 'low cost', 'high cost', 'reasonable price', 'fair price', 'best price', 'competitive price', 'market rate', 'standard rate', 'special rate', 'discount rate'],
-    
-    // ========== WHATSAPP MARKETING (400+ keywords) ==========
-    whatsappmarketing: ['whatsapp marketing', 'whatsapp setup', 'lead generation', 'linkedin scraping', 'google scraping', 'whatsapp business', 'promotional messages', 'auto reply', 'whatsapp leads', 'wa marketing', 'bulk messaging', 'whatsapp campaign', 'message blast', 'whatsapp promotion', 'whatsapp advertising', 'whatsapp outreach', 'mass messaging', 'broadcast message', 'whatsapp service', 'whatsapp solution', 'whatsapp package', 'wa business', 'business whatsapp', 'professional whatsapp'],
-    
-    whatsapp_messages: ['how many messages', 'how many message', 'message quantity', 'messages per day', 'daily messages', 'message limit', 'how many promotional', 'message delivery', 'promotional limit', 'send messages', 'message count', 'bulk send', 'message volume', 'total messages', 'maximum messages', 'minimum messages', 'average messages', 'message capacity', 'delivery count', 'how many can send', 'message quota', 'daily limit', 'weekly messages', 'monthly messages'],
-    
-    whatsapp_timeline: ['how long whatsapp', 'whatsapp delivery time', 'whatsapp project time', 'when complete whatsapp', 'whatsapp days', 'timeline whatsapp', 'whatsapp duration', 'completion time', 'delivery date', 'how fast whatsapp', 'whatsapp speed', 'quick whatsapp', 'when will complete', 'how soon whatsapp', 'whatsapp turnaround'],
-    
-    whatsapp_leads: ['where leads from', 'lead source', 'linkedin scraping', 'google scraping', 'how get leads', 'lead generation', 'finding leads', 'scraping data', 'data scraping', 'prospect sourcing', 'lead database', 'contact list', 'quality leads', 'targeted leads', 'relevant leads', 'genuine leads', 'verified leads', 'fresh leads', 'lead collection', 'lead extraction'],
-    
-    whatsapp_setup: ['whatsapp business setup', 'whatsapp account', 'whatsapp', 'business account setup', 'whatsapp installation', 'setup whatsapp', 'configure whatsapp', 'wa setup', 'business profile', 'whatsapp configuration', 'account creation', 'whatsapp onboarding', 'business whatsapp setup'],
-    
-    whatsapp_features: ['auto reply', 'catalog', 'away message', 'quick response', 'profile message', 'what features whatsapp', 'whatsapp automation', 'auto response', 'automated messages', 'quick replies', 'whatsapp tools', 'business features', 'whatsapp benefits', 'catalog setup', 'product showcase'],
-    
-    whatsapp_price: ['whatsapp cost', 'whatsapp price', 'whatsapp marketing price', 'how much whatsapp', 'pricing whatsapp', 'whatsapp rate', 'wa cost', 'whatsapp package cost', 'whatsapp service price', 'whatsapp fee', 'whatsapp charges'],
-    
-    whatsapp_community: ['community building', 'whatsapp group', 'group marketing', 'organic growth', 'community strategy', 'group management', 'community engagement', 'group creation', 'building community', 'whatsapp groups', 'customer community'],
-    
-    whatsapp_restrictions: ['account ban', 'restricted', 'account safety', 'prevent ban', 'safe messaging', 'avoid suspension', 'account security', 'ban risk', 'account block', 'safety measures', 'secure account', 'avoid restriction'],
+    whatsappmarketing: ['whatsapp marketing', 'whatsapp setup', 'lead generation', 'linkedin scraping', 'google scraping', 'whatsapp business', 'promotional messages', 'auto reply', 'whatsapp leads', 'wa marketing', 'bulk messaging', 'whatsapp campaign', 'message blast'],
+    whatsapp_messages: ['how many messages', 'how many message', 'message quantity', 'messages per day', 'daily messages', 'message limit', 'how many promotional', 'message delivery', 'promotional limit', 'send messages', 'message count', 'bulk send', 'message volume'],
+    whatsapp_timeline: ['how long whatsapp', 'whatsapp delivery time', 'whatsapp project time', 'when complete whatsapp', 'whatsapp days', 'timeline whatsapp', 'whatsapp duration', 'completion time', 'delivery date'],
+    whatsapp_leads: ['where leads from', 'lead source', 'linkedin scraping', 'google scraping', 'how get leads', 'lead generation', 'finding leads', 'scraping data', 'data scraping', 'prospect sourcing', 'lead database', 'contact list'],
+    whatsapp_setup: ['whatsapp business setup', 'whatsapp account', 'whatsapp', 'business account setup', 'whatsapp installation', 'setup whatsapp', 'configure whatsapp', 'wa setup', 'business profile'],
+    whatsapp_features: ['auto reply', 'catalog', 'away message', 'quick response', 'profile message', 'what features whatsapp', 'whatsapp automation', 'auto response', 'automated messages', 'quick replies'],
+    whatsapp_price: ['whatsapp cost', 'whatsapp price', 'whatsapp marketing price', 'how much whatsapp', 'pricing whatsapp', 'whatsapp rate', 'wa cost'],
+    whatsapp_community: ['community building', 'whatsapp group', 'group marketing', 'organic growth', 'community strategy', 'group management', 'community engagement'],
+    whatsapp_restrictions: ['account ban', 'restricted', 'account safety', 'prevent ban', 'safe messaging', 'avoid suspension', 'account security'],
 
-    // ========== ECOMMERCE STORE (500+ keywords) ==========
-    ecommerce: ['ecommerce', 'e-commerce', 'online store', 'store', 'shop', 'website', 'sell online', 'business', 'shopify', 'woocommerce', 'online shop', 'web store', 'digital store', 'internet store', 'online selling', 'ecom', 'e commerce', 'online business', 'retail store', 'shopping site', 'ecommerce site', 'ecommerce website', 'store setup', 'store development', 'online platform', 'ecommerce platform', 'selling platform', 'commerce site', 'shopping website', 'retail website'],
+    ecommerce: ['ecommerce', 'e-commerce', 'online store', 'store', 'shop', 'website', 'sell online', 'business', 'shopify', 'woocommerce', 'online shop', 'web store', 'digital store', 'internet store', 'online selling', 'ecom', 'e commerce'],
+    features: ['features', 'include', 'get', 'what', 'benefit', 'offer', 'provide', 'service', 'package', 'comes with', 'included', 'benefits', 'advantages', 'offerings', 'inclusions', 'what included', 'package details'],
+    timeline: ['when', 'how long', 'time', 'duration', 'days', 'delivery', 'fast', 'quick', 'ready', 'complete', 'timeline', 'completion', 'deadline', 'turnaround', 'how soon', 'when ready', 'time frame', 'project duration'],
+    products: ['product', 'sell', 'item', 'clothing', 'shoes', 'jewellery', 'jewelry', 'fashion', 'niche', 'categories', 'goods', 'merchandise', 'inventory', 'catalog', 'what sell', 'product type'],
     
-    features: ['features', 'include', 'get', 'what', 'benefit', 'offer', 'provide', 'service', 'package', 'comes with', 'included', 'benefits', 'advantages', 'offerings', 'inclusions', 'what included', 'package details', 'features list', 'full package', 'complete package', 'package include', 'whats included', 'what do i get', 'deliverables', 'specifications', 'specs', 'details', 'breakdown'],
-    
-    timeline: ['when', 'how long', 'time', 'duration', 'days', 'delivery', 'fast', 'quick', 'ready', 'complete', 'timeline', 'completion', 'deadline', 'turnaround', 'how soon', 'when ready', 'time frame', 'project duration', 'delivery time', 'completion time', 'how many days', 'time required', 'development time', 'setup time', 'launch time'],
-    
-    products: ['product', 'sell', 'item', 'clothing', 'shoes', 'jewellery', 'jewelry', 'fashion', 'niche', 'categories', 'goods', 'merchandise', 'inventory', 'catalog', 'what sell', 'product type', 'what products', 'product list', 'items sell', 'which products', 'product categories', 'product range', 'what can sell', 'anything sell'],
-    
-    // ========== TECHNICAL & SUPPORT (400+ keywords) ==========
-    technical: ['technical', 'tech', 'difficult', 'easy', 'knowledge', 'skill', 'learn', 'manage', 'complicated', 'complex', 'simple', 'user friendly', 'technical knowledge', 'coding', 'expertise required', 'hard', 'challenging', 'technical skills', 'technical expertise', 'do i need tech', 'is it technical', 'technical requirement', 'tech knowledge', 'programming', 'development skills', 'web development', 'coding knowledge', 'it knowledge'],
-    
-    domain: ['domain', 'website name', 'url', 'web address', 'brand name', 'site name', 'domain name', 'website url', 'web domain', 'site address', 'domain registration', 'domain included', 'free domain', 'domain cost', 'register domain', 'domain purchase', 'domain setup', 'custom domain', 'business domain'],
-    
-    training: ['training', 'teach', 'learn', 'help', 'support', 'tutorial', 'guide', 'how to', 'training session', 'onboarding', 'learning', 'education', 'instruction', 'guidance', 'walkthrough', 'video tutorial', 'training material', 'learning material', 'will you teach', 'training included', 'free training', 'support included', 'after sales support', 'customer support'],
-    
-    platform: ['shopify', 'platform', 'ecommerce', 'e-commerce', 'which platform', 'what platform', 'platform choice', 'system', 'cms', 'technology', 'platform use', 'best platform', 'wordpress', 'wix', 'magento', 'opencart', 'bigcommerce', 'platform comparison'],
-    
-    payment_gateway: ['payment gateway', 'accept payment', 'online payment', 'transaction', 'pay online', 'payment processing', 'payment method', 'payment integration', 'checkout', 'payment system', 'razorpay', 'paytm', 'paypal', 'stripe', 'payment options', 'payment setup', 'online transactions', 'secure payment', 'payment security'],
-    
-    design: ['design', 'logo', 'banner', 'look', 'appearance', 'branding', 'graphics', 'visual', 'theme', 'layout', 'ui', 'ux', 'user interface', 'aesthetic', 'creative', 'design work', 'custom design', 'design included', 'logo design', 'banner design', 'visual design', 'creative design', 'professional design', 'modern design'],
+    technical: ['technical', 'tech', 'difficult', 'easy', 'knowledge', 'skill', 'learn', 'manage', 'complicated', 'complex', 'simple', 'user friendly', 'technical knowledge', 'coding', 'expertise required', 'hard', 'challenging'],
+    domain: ['domain', 'website name', 'url', 'web address', 'brand name', 'site name', 'domain name', 'website url', 'web domain', 'site address', 'domain registration'],
+    training: ['training', 'teach', 'learn', 'help', 'support', 'tutorial', 'guide', 'how to', 'training session', 'onboarding', 'learning', 'education', 'instruction', 'guidance', 'walkthrough'],
+    platform: ['shopify', 'platform', 'ecommerce', 'e-commerce', 'which platform', 'what platform', 'platform choice', 'system', 'cms', 'technology'],
+    payment_gateway: ['payment gateway', 'accept payment', 'online payment', 'transaction', 'pay online', 'payment processing', 'payment method', 'payment integration', 'checkout', 'payment system'],
+    design: ['design', 'logo', 'banner', 'look', 'appearance', 'branding', 'graphics', 'visual', 'theme', 'layout', 'ui', 'ux', 'user interface', 'aesthetic', 'creative', 'design work'],
 
-    // ========== BUSINESS INTENT (300+ keywords) ==========
-    confirmation: ['start', 'begin', 'sign up', 'register', 'book', 'confirm', 'interested', 'want', 'ready', 'proceed', 'go ahead', 'lets start', 'im ready', 'book now', 'register now', 'get started', 'take it', 'buy', 'purchase', 'lets do it', 'im in', 'count me in', 'sign me up', 'enroll', 'join', 'i want to start', 'when can we start', 'lets begin', 'move forward', 'next step'],
+    confirmation: ['start', 'begin', 'sign up', 'register', 'book', 'confirm', 'interested', 'want', 'ready', 'proceed', 'go ahead', 'lets start', 'im ready', 'book now', 'register now', 'get started', 'take it', 'buy', 'purchase'],
+    installment: ['installment', 'instalment', 'emi', 'partial payment', 'split payment', 'monthly payment', 'payment plan', 'pay in parts', 'flexible payment', 'milestone payment'],
+    quickdelivery: ['quick delivery', 'fast delivery', 'urgent', 'asap', 'faster', 'rush', 'express', 'immediate', 'quick turnaround', 'fast completion', 'speed delivery'],
     
-    installment: ['installment', 'instalment', 'emi', 'partial payment', 'split payment', 'monthly payment', 'payment plan', 'pay in parts', 'flexible payment', 'milestone payment', 'pay later', 'easy payment', 'installment plan', 'payment schedule', 'phased payment', 'staggered payment'],
+    marketing: ['marketing', 'advertisement', 'promote', 'advertising', 'campaign', 'ads', 'digital marketing', 'social media marketing', 'online marketing', 'promotion', 'advertise', 'brand promotion', 'marketing strategy'],
+    sales: ['sales', 'selling', 'revenue', 'grow business', 'increase sales', 'boost sales', 'more sales', 'improve sales', 'sales growth', 'revenue growth', 'business growth'],
+    scaling: ['scale', 'scaling', 'growth', 'expand', 'expansion', 'grow', 'growing', 'scale up', 'business expansion', 'market expansion'],
     
-    quickdelivery: ['quick delivery', 'fast delivery', 'urgent', 'asap', 'faster', 'rush', 'express', 'immediate', 'quick turnaround', 'fast completion', 'speed delivery', 'priority delivery', 'expedited', 'hurry', 'fast track', 'quick setup', 'rapid delivery'],
+    dpm: ['digital presence', 'dpm', 'online presence', 'digital footprint', 'web presence', 'digital visibility', 'online visibility', 'digital identity'],
+    website: ['website', 'web', 'site', 'webpage', 'landing page', 'corporate website', 'business website', 'professional website', 'responsive website'],
+    socialmedia: ['social media', 'instagram', 'facebook', 'linkedin', 'twitter', 'social', 'sm', 'social media management', 'social presence', 'social profiles'],
+    seo: ['seo', 'search engine', 'google ranking', 'search optimization', 'visibility', 'ranking', 'google search', 'search result', 'organic traffic'],
+    branding: ['branding', 'brand', 'brand identity', 'logo', 'brand guidelines', 'visual identity', 'brand recognition', 'brand building'],
     
-    // ========== DIGITAL SERVICES (350+ keywords) ==========
-    marketing: ['marketing', 'advertisement', 'promote', 'advertising', 'campaign', 'ads', 'digital marketing', 'social media marketing', 'online marketing', 'promotion', 'advertise', 'brand promotion', 'marketing strategy', 'marketing plan', 'marketing service', 'paid ads', 'google ads', 'facebook ads', 'instagram ads', 'linkedin ads', 'ad campaign', 'marketing campaign', 'promotional campaign'],
+    aboutar: ['about', 'who are you', 'ar solutions', 'afterresult', 'your company', 'about company', 'company info', 'agency', 'your services'],
+    experience: ['experience', 'portfolio', 'past work', 'projects', 'clients', 'track record', 'case study', 'success stories', 'expertise'],
     
-    sales: ['sales', 'selling', 'revenue', 'grow business', 'increase sales', 'boost sales', 'more sales', 'improve sales', 'sales growth', 'revenue growth', 'business growth', 'sales strategy', 'sales funnel', 'conversion', 'lead conversion', 'generate revenue', 'profit', 'earnings', 'income', 'make money', 'earn more'],
+    comparison: ['compare', 'difference', 'better than', 'vs', 'versus', 'competitor', 'alternative', 'why choose', 'what makes different', 'unique', 'advantage over'],
+    guarantee: ['guarantee', 'assured', 'promise', 'warranty', 'refund', 'money back', 'risk free', 'guaranteed results'],
     
-    scaling: ['scale', 'scaling', 'growth', 'expand', 'expansion', 'grow', 'growing', 'scale up', 'business expansion', 'market expansion', 'scale business', 'business scaling', 'rapid growth', 'exponential growth', 'grow faster', 'business development', 'growth strategy'],
+    discount: ['discount', 'offer', 'deal', 'coupon', 'promo', 'promotion', 'special offer', 'limited offer', 'sale', 'reduced price', 'save money', 'cheaper', 'best price'],
     
-    // ========== DPM SERVICES (300+ keywords) ==========
-    dpm: ['digital presence', 'dpm', 'online presence', 'digital footprint', 'web presence', 'digital visibility', 'online visibility', 'digital identity', 'online identity', 'digital branding', 'web visibility', 'internet presence'],
+    contact: ['contact', 'reach', 'email', 'phone', 'call', 'demo', 'meeting', 'consultation', 'connect', 'get in touch', 'talk to someone'],
+    services: ['services', 'what do you do', 'offerings', 'solutions', 'brochure', 'catalog', 'service list', 'what you offer', 'all services'],
     
-    website: ['website', 'web', 'site', 'webpage', 'landing page', 'corporate website', 'business website', 'professional website', 'responsive website', 'website development', 'website design', 'web development', 'site development', 'website creation', 'build website', 'make website', 'create website'],
+    casual: ['i am good', 'im good', 'i am fine', 'im fine', 'i am also good', 'im also good', 'doing well', 'doing good', 'all good', 'great', 'fine', 'okay', 'ok', 'good', 'nice', 'cool', 'awesome'],
+    howareyou: ['how are you', 'how are you doing', 'whats up', "what's up", 'hows it going', 'how you doing'],
+    whoareyou: ['who are you', 'what are you', 'your name', 'about you', 'bot', 'ai', 'chatbot'],
+    thankyou: ['thank you', 'thanks', 'thank u', 'thx', 'appreciate', 'grateful', 'thanks a lot'],
+    bye: ['bye', 'goodbye', 'see you', 'later', 'farewell', 'gotta go', 'take care'],
     
-    socialmedia: ['social media', 'instagram', 'facebook', 'linkedin', 'twitter', 'social', 'sm', 'social media management', 'social presence', 'social profiles', 'social media marketing', 'instagram marketing', 'facebook marketing', 'social media account', 'social media setup', 'social media strategy', 'social media content', 'social media posts'],
+    urgent: ['urgent', 'asap', 'immediately', 'right now', 'quick', 'fast', 'hurry', 'rush'],
+    confused: ['confused', 'dont understand', 'explain', 'clarify', 'not clear', 'unclear', 'elaborate'],
+    interested: ['interested', 'sounds good', 'tell me more', 'more info', 'details', 'detailed', 'elaborate', 'explain more'],
+    skeptical: ['really', 'sure', 'guarantee', 'proof', 'evidence', 'trust', 'believe', 'legit', 'genuine', 'scam'],
     
-    seo: ['seo', 'search engine', 'google ranking', 'search optimization', 'visibility', 'ranking', 'google search', 'search result', 'organic traffic', 'search engine optimization', 'google optimization', 'seo service', 'rank higher', 'top ranking', 'page ranking', 'search visibility', 'google visibility'],
-    
-    branding: ['branding', 'brand', 'brand identity', 'logo', 'brand guidelines', 'visual identity', 'brand recognition', 'brand building', 'brand creation', 'brand development', 'brand strategy', 'brand design', 'corporate identity', 'business branding', 'brand positioning'],
-    
-    // ========== AGENCY INFO (250+ keywords) ==========
-    aboutar: ['about', 'who are you', 'ar solutions', 'afterresult', 'your company', 'about company', 'company info', 'agency', 'your services', 'tell me about', 'company details', 'business info', 'who is ar', 'what is ar', 'ar solutions info', 'about your company', 'company profile', 'your business'],
-    
-    experience: ['experience', 'portfolio', 'past work', 'projects', 'clients', 'track record', 'case study', 'success stories', 'expertise', 'previous work', 'completed projects', 'client list', 'testimonials', 'reviews', 'client reviews', 'success rate', 'proven results', 'past clients', 'work samples'],
-    
-    // ========== COMPARISON & DIFFERENTIATION (200+ keywords) ==========
-    comparison: ['compare', 'difference', 'better than', 'vs', 'versus', 'competitor', 'alternative', 'why choose', 'what makes different', 'unique', 'advantage over', 'why you', 'why ar solutions', 'what makes you different', 'what sets you apart', 'competitive advantage', 'your advantage', 'why should i choose', 'comparison with', 'how are you different'],
-    
-    guarantee: ['guarantee', 'assured', 'promise', 'warranty', 'refund', 'money back', 'risk free', 'guaranteed results', 'assurance', 'guarantee success', 'success guarantee', 'satisfaction guarantee', 'result guarantee', 'performance guarantee'],
-    
-    // ========== DISCOUNTS & OFFERS (300+ keywords) ==========
-    discount: ['discount', 'offer', 'deal', 'coupon', 'promo', 'promotion', 'special offer', 'limited offer', 'sale', 'reduced price', 'save money', 'cheaper', 'best price', 'special price', 'discounted price', 'promotional offer', 'special deal', 'limited time', 'limited period', 'seasonal offer', 'festive offer', 'exclusive offer', 'member discount', 'first time discount', 'new customer offer', 'bulk discount', 'package discount'],
-    
-    // ========== CONTACT (200+ keywords) ==========
-    contact: ['contact', 'reach', 'email', 'phone', 'call', 'demo', 'meeting', 'consultation', 'connect', 'get in touch', 'talk to someone', 'speak to', 'contact details', 'contact info', 'phone number', 'email address', 'whatsapp number', 'how to contact', 'reach you', 'call you', 'email you', 'schedule call', 'book consultation', 'free consultation', 'speak with expert', 'talk to expert'],
-    
-    services: ['services', 'what do you do', 'offerings', 'solutions', 'brochure', 'catalog', 'service list', 'what you offer', 'all services', 'complete services', 'service details', 'what services', 'service catalog', 'service brochure', 'full list', 'complete list'],
-    
-    // ========== URGENCY & EMOTION (250+ keywords) ==========
-    urgent: ['urgent', 'asap', 'immediately', 'right now', 'quick', 'fast', 'hurry', 'rush', 'emergency', 'time sensitive', 'need now', 'urgent need', 'quickly', 'very urgent'],
-    
-    confused: ['confused', 'dont understand', 'explain', 'clarify', 'not clear', 'unclear', 'elaborate', 'confusing', 'didnt get it', 'didnt understand', 'can you explain', 'explain again', 'explain better', 'simplify', 'make it simple', 'dont get it'],
-    
-    interested: ['interested', 'sounds good', 'tell me more', 'more info', 'details', 'detailed', 'elaborate', 'explain more', 'interested in', 'want to know', 'want details', 'more details', 'full details', 'complete details', 'detailed info', 'comprehensive info'],
-    
-    skeptical: ['really', 'sure', 'guarantee', 'proof', 'evidence', 'trust', 'believe', 'legit', 'genuine', 'scam', 'is it real', 'are you real', 'can i trust', 'trustworthy', 'reliable', 'authentic', 'fake', 'not fake', 'legitimate', 'verified'],
-    
-    // ========== ADDITIONAL ENGAGEMENT (400+ keywords) ==========
-    help: ['help', 'assist', 'support', 'help me', 'can you help', 'need help', 'assistance', 'need assistance', 'require help', 'looking for help'],
-    
-    problem: ['problem', 'issue', 'trouble', 'facing issue', 'having problem', 'challenge', 'difficulty', 'concern', 'worried', 'confused about'],
-    
-    recommendation: ['suggest', 'recommend', 'recommendation', 'suggestion', 'advice', 'what should i', 'what do you suggest', 'what do you recommend', 'best option', 'best choice', 'which one', 'which is better', 'your opinion'],
-    
-    time_inquiry: ['when', 'what time', 'timing', 'schedule', 'availability', 'available', 'working hours', 'business hours', 'open', 'closed', 'when open', 'timing'],
-    
-    location: ['location', 'where', 'address', 'office', 'where located', 'your location', 'city', 'where are you', 'office address'],
-    
-    team: ['team', 'who will do', 'who works', 'team size', 'your team', 'developers', 'designers', 'experts', 'professionals', 'staff'],
-    
-    competitors: ['fiverr', 'upwork', 'freelancer', '99designs', 'other agencies', 'competitor', 'alternatives'],
-    
-    quality: ['quality', 'high quality', 'premium', 'professional', 'best quality', 'top quality', 'standard', 'quality work'],
-    
-    customization: ['custom', 'customize', 'customization', 'personalize', 'tailor', 'specific requirements', 'custom made', 'bespoke'],
-    
-    examples: ['example', 'sample', 'demo', 'showcase', 'show me', 'can i see', 'preview', 'examples'],
-    
-    refund: ['refund', 'money back', 'return', 'cancel', 'cancellation', 'refund policy', 'return policy'],
-    
-    contract: ['contract', 'agreement', 'terms', 'conditions', 'terms and conditions', 'legal', 'documentation'],
-    
-    maintenance: ['maintenance', 'support', 'updates', 'after launch', 'ongoing support', 'technical support', 'maintenance plan'],
-    
-    migration: ['migration', 'migrate', 'transfer', 'move', 'switch', 'change platform', 'migrate store'],
-    
-    integration: ['integration', 'integrate', 'connect', 'link', 'third party', 'plugin', 'addon', 'extension'],
-    
-    security: ['security', 'secure', 'safe', 'protected', 'ssl', 'https', 'data security', 'secure payment'],
-    
-    mobile: ['mobile', 'mobile friendly', 'responsive', 'mobile version', 'app', 'mobile app'],
-    
-    speed: ['speed', 'fast', 'performance', 'loading time', 'slow', 'optimization', 'fast loading'],
-    
-    backup: ['backup', 'data backup', 'backup plan', 'restore', 'recovery', 'data recovery'],
-    
-    analytics: ['analytics', 'tracking', 'data', 'insights', 'google analytics', 'reports', 'statistics', 'metrics'],
-    
-    inventory: ['inventory', 'stock', 'product management', 'inventory management', 'stock management'],
-    
-    shipping: ['shipping', 'delivery', 'courier', 'shipping integration', 'delivery options', 'shipping charges'],
-    
-    multiple_stores: ['multiple stores', 'multi store', 'more than one store', 'several stores', 'multiple websites'],
-    
-    language: ['language', 'multilingual', 'languages', 'english', 'hindi', 'regional language'],
-    
-    currency: ['currency', 'multiple currency', 'international', 'usd', 'inr', 'currency support'],
-    
-    complaint: ['complaint', 'not satisfied', 'unhappy', 'disappointed', 'problem with', 'issue with'],
-    
-    positive_feedback: ['excellent', 'amazing', 'wonderful', 'fantastic', 'great service', 'impressive', 'loved it'],
-    
-    deciding: ['thinking', 'deciding', 'not decided', 'need time', 'let me think', 'will decide', 'considering'],
-    
-    budget_concern: ['too expensive', 'costly', 'cant afford', 'out of budget', 'high price', 'reduce price'],
-    
-    competitor_mention: ['someone else offering', 'other company', 'cheaper option', 'got better offer'],
-    
-    deadline: ['deadline', 'specific date', 'by when', 'need by', 'launch date', 'target date']
+    detailed: ['tell me more', 'more details', 'detailed', 'elaborate', 'full package', 'complete info', 'everything', 'all details', 'comprehensive']
   },
 
   responses: {
-    // ========== GREETING VARIATIONS (10 unique responses) ==========
-    greeting: [
-      "Hey there! 👋 Welcome to AR Solutions! We turn business ideas into digital reality. What brings you here today?",
-      "Hello! Great to see you here! 😊 Looking to grow your business online? I'm here to help!",
-      "Hi! Welcome to AR Solutions - where businesses scale faster! Tell me, what's on your mind?",
-      "Hey! 🚀 Ready to transform your business digitally? Let's chat about what you need!",
-      "Welcome! I'm your business growth assistant from AR Solutions. What can I help you achieve today?",
-      "Hi there! Looking for affordable digital solutions? You're in the right place! What interests you?",
-      "Hello! 😊 AR Solutions here - helping businesses succeed since 2024. How can I assist you?",
-      "Hey! Excited to help you grow! Whether it's e-commerce, marketing, or branding - I've got you covered. What do you need?",
-      "Welcome aboard! 🎯 AR Solutions specializes in turning startups into success stories. What's your goal?",
-      "Hi! Ready to scale your business? From online stores to WhatsApp marketing - we do it all! What would you like to explore?"
-    ],
-    
-    // ========== CASUAL CONVERSATION (15+ variations) ==========
-    howareyou: [
-      "I'm doing fantastic, thanks for asking! 😊 More importantly - how can I make your day better?",
-      "Doing great! Always excited to help businesses grow. How about you? What brings you here?",
-      "I'm wonderful! Ready to help you succeed. How are things on your end?",
-      "Amazing, thanks! 🚀 Every conversation is a chance to help someone succeed. How can I help you today?",
-      "Doing well! Grateful to connect with entrepreneurs like you. What's on your mind?"
-    ],
-    
-    casual: [
-      "That's awesome! 😊 So, what brings you to AR Solutions today?",
-      "Great to hear! Now, let's talk business - what are you looking to achieve?",
-      "Love the positive energy! ⚡ Ready to grow your business? Tell me what you need!",
-      "Perfect! Let's channel that good mood into growing your business. What interests you?",
-      "Fantastic! Now let's make your business even better. What solution are you exploring?"
-    ],
-    
-    whoareyou: [
-      "I'm your dedicated business assistant from AR Solutions! Think of me as your first step toward digital success. 🚀",
-      "I'm AR's virtual consultant - here 24/7 to help you discover the perfect solution for your business growth!",
-      "I'm your friendly guide from AR Solutions! My job? Making sure you get the best solutions at unbeatable prices. 😊",
-      "I'm the service assistant for AR Solutions - your trusted partner in scaling businesses digitally. How can I help?"
-    ],
-    
-    thankyou: [
-      "You're most welcome! 😊 Anything else you'd like to know?",
-      "Happy to help! That's what we're here for. Need anything else?",
-      "My pleasure! Feel free to ask anything - I'm here for you! 🙌",
-      "Glad I could help! Want to explore more about our services?"
-    ],
-    
-    bye: [
-      "Goodbye! 👋 Remember, AR Solutions is here whenever you're ready to grow. Wishing you success!",
-      "Take care! Don't hesitate to return when you need us. We're just a message away! 😊",
-      "See you soon! May your business thrive. We'll be here when you need us! 🚀",
-      "Farewell! Thanks for connecting. Come back anytime - your success is our mission!"
-    ],
-    
-    yes: [
-      "Awesome! Let me share the exciting details with you... 🎯",
-      "Perfect! I love your enthusiasm! Here's what you need to know...",
-      "Great decision! Let me walk you through everything...",
-      "Fantastic! You're going to love this..."
-    ],
-    
-    no: [
-      "No worries! Take your time. Is there something specific you'd like to know more about? 😊",
-      "That's completely fine! Maybe I can help with something else? What are you curious about?",
-      "Understood! If you change your mind or have questions, I'm right here. What else can I help with?",
-      "No problem at all! Feel free to explore. What else interests you?"
-    ],
-    
-    maybe: [
-      "I hear you! Let me share some info that might help you decide... 🤔",
-      "Totally understand! How about I give you the key details so you can make an informed choice?",
-      "Fair enough! Want me to break down what makes us different? Might help you decide!",
-      "No pressure! Would more information help? I'm happy to answer any questions."
-    ],
-    
-    // ========== ECOMMERCE RESPONSES ==========
-    fullPackage: [
-      "**Shopify Store - ₹7,999**\n✓ Complete setup\n✓ Free domain (1 year)\n✓ Payment gateway\n✓ 20 products listed\n✓ Logo & banners\n✓ FREE training\n✓ Delivered in 25 days\n\nStart with just ₹1,599! Want the detailed breakdown?",
-      "**Complete E-Commerce Package - ₹7,999**\n✓ Professional Shopify store\n✓ Your brand domain FREE for 1 year\n✓ Secure payment integration\n✓ 20 products ready to sell\n✓ Custom logo + banners\n✓ FREE store management training\n✓ 25-day delivery\n\nConfirmation: Just ₹1,599! Interested in details?"
-    ],
-    
-    fullPackage_detailed: "**Complete Shopify E-Commerce Package - ₹7,999**\n\n**What You Get:**\n✓ Complete Shopify store setup\n✓ 1-year free domain (your brand name - our gift!)\n✓ Payment gateway integration (accept online payments)\n✓ Up to 20 products listed & ready to sell\n✓ Simple logo design + promotional banners\n✓ Content creation for products\n✓ FREE comprehensive training on store management\n✓ Delivered in 25 days\n✓ 100% transparent pricing - no hidden charges\n✓ Monthly Shopify subscription paid separately (cancel anytime)\n\n**Flexible Payment Plan:**\n• Confirmation: ₹1,599\n• Remaining: 4 easy installments over project duration\n\n**Quick Delivery Option:** Pay 70% upfront for expedited delivery!\n\n**Perfect for:** Clothing, jewelry, shoes, accessories, or ANY product niche\n**Sell on:** Google, Social Media, and Worldwide\n\nReady-to-use, business-grade store designed for immediate sales. Questions?",
-    
-    pricing: [
-      "₹7,999 total - business-ready store! Start with ₹1,599, rest in 4 easy installments. Need faster delivery? We have a Quick option!",
-      "Total investment: ₹7,999. Pay ₹1,599 to confirm your slot, balance in 4 installments. Want to fast-track? Pay 70% upfront!",
-      "Just ₹7,999 for a complete online store! Confirmation: ₹1,599. Flexible installments available. Quick delivery option too!"
-    ],
-    
-    quickDelivery: [
-      "Want your store faster? Quick Delivery Option: Pay 70% upfront and get priority treatment - your store ready in record time! 🚀",
-      "Fast-track your success! Pay 70% upfront for Quick Delivery - we prioritize your project and deliver faster!",
-      "Speed matters? Quick Delivery Option available! 70% advance payment = faster setup, faster launch, faster sales!"
-    ],
-    
-    // ========== WHATSAPP MARKETING RESPONSES ==========
-    whatsappmarketing: [
-      "**WhatsApp Marketing - ₹2,000**\n✓ 1,400 messages delivered\n✓ Quality leads (LinkedIn + Google)\n✓ Business account setup\n✓ Auto-replies & catalog\n✓ 7-day delivery\n\nWant detailed info?",
-      "**Complete WhatsApp Marketing Package - ₹2,000**\n✓ 1,400 promotional messages\n✓ Targeted lead generation\n✓ Professional business setup\n✓ Automated features\n✓ Ready in 7 days\n\nAll-inclusive! Need more details?"
-    ],
-    
-    whatsappmarketing_detailed: "**Complete WhatsApp Marketing & Lead Generation - ₹2,000**\n\n**What's Included:**\n✓ Targeted lead generation (LinkedIn + Google scraping)\n✓ Up to 1,400 promotional messages (avg 200/day)\n✓ Professional WhatsApp Business Account setup\n✓ Lead management & organized forwarding\n✓ Community building strategies\n✓ Auto-reply setup (never miss a lead!)\n✓ Product/service catalog setup\n✓ Professional profile message\n✓ Quick response templates\n✓ Away message configuration\n✓ Completed in 7 days\n\n**Why 200 messages/day?**\nKeeps your account 100% safe from bans while maximizing reach and engagement!\n\n**Total Cost:** ₹2,000 - completely transparent, no hidden fees!\n\n**Perfect for:** Service providers, product sellers, coaches, consultants, local businesses\n\nReady to generate quality leads?",
-    
-    whatsapp_setup: [
-      "We'll set up your professional WhatsApp Business Account with everything - profile, catalog, auto-replies. You'll look 100% credible!",
-      "Complete business account setup included! Professional profile, product catalog, automated responses - making you look trustworthy and established."
-    ],
-    
-    whatsapp_messages: [
-      "1,400 total messages - about 200 per day. This daily limit keeps your account safe while reaching maximum potential customers! 🎯",
-      "You get 1,400 promotional messages delivered. We send ~200/day to protect your account from restrictions while ensuring great reach!"
-    ],
-    
-    whatsapp_leads: [
-      "Quality leads scraped from LinkedIn & Google - targeted, relevant contacts! We share them in organized format for easy tracking. 📊",
-      "We generate targeted leads using LinkedIn and Google scraping - real potential customers, shared with you for follow-ups!"
-    ],
-    
-    whatsapp_features: [
-      "Auto-replies, product catalog, profile message, quick responses, away messages - everything to run a professional business account! ✨",
-      "Complete feature setup: automated replies, showcase catalog, professional profile, instant responses - everything included!"
-    ],
-    
-    whatsapp_timeline: [
-      "Complete setup and execution in just 7 days! Fast turnaround, quick results, immediate lead generation! ⚡",
-      "7-day delivery - setup, leads, messages, everything! Quick and efficient service!"
-    ],
-    
-    whatsapp_price: [
-      "₹2,000 all-inclusive! Complete setup + 1,400 messages + quality leads. Zero hidden charges - what you see is what you pay!",
-      "Just ₹2,000 for the complete package. Setup, messages, leads, features - everything included. Transparent pricing!"
-    ],
-    
-    whatsapp_community: [
-      "We help build engaged WhatsApp groups and communities - organic growth, loyal customers, repeat business! Perfect for long-term success. 🌱",
-      "Community building included! We create and manage WhatsApp groups for organic engagement - turning customers into brand advocates!"
-    ],
-    
-    whatsapp_restrictions: [
-      "200 messages/day keeps you safe! More messages = ban risk. We maximize reach while protecting your account long-term. Your safety is our priority! 🛡️",
-      "Daily limits prevent account bans. WhatsApp restricts heavy usage - we stay within safe limits while delivering maximum results!"
-    ],
-    
-    // ========== DPM & DIGITAL SERVICES ==========
-    dpm: [
-      "**Digital Presence Management** - Your complete online identity: website, social media, SEO, branding. Want to know more?",
-      "**DPM Services** - Establish your brand everywhere online! Website, social profiles, search rankings, complete digital identity. Interested in details?"
-    ],
-    
-    dpm_detailed: "**Digital Presence Management (DPM)**\n\nBuild, enhance, and dominate your digital space across all channels:\n\n**Services Include:**\n• Website & Platform Development\n• Complete Branding & Creative Identity\n• Social Media Management (All platforms)\n• SEO & Google Visibility Optimization\n• Digital Advertising & Paid Campaigns\n• Analytics, Tracking & CRM Integration\n• Online Reputation Management\n• Specialized SME & Startup Solutions\n\n**Why DPM?**\nEvery digital touchpoint should reflect your brand and drive growth. We ensure consistency, visibility, and results across the entire digital ecosystem.\n\n**Pricing:** Custom packages based on requirements\n\nInterested in a specific service? Let me share details!",
-    
-    marketing: [
-      "End-to-end digital marketing! Strategy, paid ads, social media, SEO, analytics. Want to learn more about how we boost your sales?",
-      "Complete marketing solutions - from brand awareness to lead conversion! Paid campaigns, organic growth, data-driven strategies. Interested?"
-    ],
-    
-    sales: [
-      "We scale sales through proven strategies! Lead generation, conversion optimization, sales funnels, data analytics. Maximize ROI from day one! 💰",
-      "Structured sales growth! Lead nurturing, conversion tactics, performance tracking - turning visitors into paying customers! Want details?"
-    ],
-    
-    scaling: [
-      "Scale smarter, not harder! Customized growth plans that boost revenue and maximize efficiency. Let's build something amazing! 🚀",
-      "Business scaling done right! Strategic expansion, revenue optimization, market penetration - sustainable growth guaranteed!"
-    ],
-    
-    website: [
-      "Professional website development! Corporate sites, landing pages, responsive design - optimized for conversions. Want more info?",
-      "Business websites that work! Professional, mobile-friendly, conversion-focused. Perfect for establishing credibility!"
-    ],
-    
-    socialmedia: [
-      "Complete social media management! Instagram, Facebook, LinkedIn, Twitter - content creation, posting, engagement, growth. Interested?",
-      "Social media done right! Profile setup, content strategy, regular posts, community management - building your brand presence!"
-    ],
-    
-    seo: [
-      "SEO services to boost your Google ranking! On-page optimization, keyword strategy, backlinks - more visibility, more traffic! 📈",
-      "Rank higher on Google! Complete SEO - technical optimization, content strategy, link building - drive organic traffic!"
-    ],
-    
-    branding: [
-      "Complete branding solutions! Logo design, brand identity, guidelines, visual assets - creating memorable brands! 🎨",
-      "Brand identity that stands out! Logo, color palette, typography, brand guidelines - professional branding from scratch!"
-    ],
-    
-    // ========== TECHNICAL ASSURANCE ==========
-    noTech: [
-      "Zero technical knowledge needed! We handle everything from A to Z - you get a ready-to-use business store. Simple! 😊",
-      "No tech skills required! We build, you sell. Everything managed for you - completely hassle-free!",
-      "Don't worry about technical stuff! That's our job. You focus on your business, we handle the tech!"
-    ],
-    
-    timeline: [
-      "25 days for complete store setup. Need it faster? Quick Delivery Option available with 70% upfront payment! ⏱️",
-      "Standard delivery: 25 days. Expedited option: Pay 70% advance for faster turnaround!",
-      "Your store will be ready in 25 days! Can't wait? Choose Quick Delivery for faster setup!"
-    ],
-    
-    domain: [
-      "Yes! FREE 1-year domain with your brand name - our gift to you! Included in the package, no extra cost. 🎁",
-      "FREE domain for 1 year! Choose your brand name - it's on us. Completely included!",
-      "1-year free domain registration included! Your brand name, professionally set up!"
-    ],
-    
-    training: [
-      "FREE comprehensive training on store management! You'll learn product uploads, order processing, everything to run successfully. 📚",
-      "Complete training included! We teach you everything - managing products, orders, customers. You'll be a pro!",
-      "FREE training session! Learn to manage your store independently - adding products, handling orders, tracking sales!"
-    ],
-    
-    platform: [
-      "Shopify - the world's #1 e-commerce platform! Trusted by millions globally. Reliable, secure, easy to scale! 🌐",
-      "We use Shopify - industry-leading platform. Powers millions of stores worldwide. Best choice for serious businesses!",
-      "Shopify platform - trusted, secure, scalable. From startups to Fortune 500 companies use it!"
-    ],
-    
-    products: [
-      "Any products! Clothing, jewelry, shoes, electronics, accessories - ANY niche. Customized for your business. Sell anywhere! 🛍️",
-      "Sell anything you want! We customize based on your products - fashion, home decor, gadgets, anything!",
-      "All product types supported! Whether physical goods, digital products, or services - we set it up perfectly!"
-    ],
-    
-    paymentGateway: [
-      "Yes! Payment gateway fully integrated - accept credit cards, debit cards, UPI, wallets. Easy online payments from customers! 💳",
-      "Payment gateway included! Razorpay/PayPal integration - secure, easy transactions. Start accepting payments immediately!",
-      "Complete payment integration! Multiple payment options for customers - cards, UPI, wallets, everything!"
-    ],
-    
-    design: [
-      "Logo design, promotional banners, and content creation - all included! Professional look guaranteed! ✨",
-      "Complete design package! Simple logo, attractive banners, product descriptions - everything for a professional store!",
-      "Design services included! Logo, graphics, banners - making your store visually appealing and professional!"
-    ],
-    
-    installments: [
-      "After ₹1,599 confirmation, remaining balance in 4 easy installments over 25 days. Flexible and stress-free! 💯",
-      "Simple payment plan! ₹1,599 to start, then 4 installments during project. Easy on your budget!",
-      "Flexible installments! Pay ₹1,599 now, rest in 4 parts. Budget-friendly payment schedule!"
-    ],
-    
-    confirmation: [
-      "Secure your slot with just ₹1,599 confirmation fee! Limited spots available - let's get started! 🎯",
-      "Ready to begin? Just ₹1,599 to confirm your project! Shall we proceed?",
-      "Start your journey with ₹1,599 confirmation! Book your spot now - let's build your success!"
-    ],
-    
-    // ========== VALUE PROPOSITIONS ==========
-    comparison: [
-      "**Why AR Solutions?**\n✓ Unbeatable pricing\n✓ Complete solutions (zero hidden costs)\n✓ FREE training & ongoing support\n✓ Quick delivery options\n✓ Proven results since 2024\n✓ End-to-end service\n✓ Dedicated support team\n\nWe're not just vendors - we're your growth partners!",
-      "**What Makes Us Different?**\n✓ Affordable packages for startups\n✓ Transparent pricing\n✓ Free training included\n✓ Faster delivery options\n✓ Complete service - nothing extra to buy\n✓ Real support, real results\n\nWe succeed when you succeed!"
-    ],
-    
-    guarantee: [
-      "We deliver quality work on time - that's our promise! Your satisfaction is our priority. Transparent pricing, zero hidden charges, complete support. 🤝",
-      "Quality guaranteed! On-time delivery, transparent pricing, full support throughout. Your success is our reputation!",
-      "Our guarantee: Professional work, timely delivery, honest pricing, dedicated support. We stand behind our services 100%!"
-    ],
-    
-    aboutar_detailed: "**About AR Solutions (AfterResult Solutions)**\n\nYour trusted digital growth partner since 2024 - dedicated to helping brands scale both digitally and offline.\n\n**Our Expertise:**\n• Digital Presence Management (DPM)\n• Lead Generation (Leadin)\n• E-Commerce Development\n• Marketplace Enablement\n• Offline Presence Management (OPM)\n• WhatsApp Marketing\n• Branding & Creative Services\n\n**Founded:** 2024\n**Mission:** Accelerate business growth with affordable, results-focused solutions\n**Vision:** Empowering 10,000+ businesses by 2027\n\n**Why Choose Us?**\n✓ Startup-friendly pricing\n✓ End-to-end solutions\n✓ Proven track record\n✓ Dedicated support\n✓ Results-driven approach\n\nWe're not just a service provider - we're your growth partner! 🚀",
-    
-    // ========== DISCOUNTS & OFFERS ==========
-    discount: [
-      "**Current Special Offers!**\n• E-Commerce Store: Start at just ₹1,599\n• WhatsApp Marketing: Complete package ₹2,000\n• Quick Delivery Bonus: Priority service with 70% upfront\n• FREE domain & training with e-commerce package\n\nLimited time offers - secure your spot now! ⚡",
-      "**Exclusive Deals Today!**\n• E-Commerce: ₹7,999 (Start with ₹1,599)\n• WhatsApp Marketing: ₹2,000 all-inclusive\n• Combo packages available\n• Quick delivery options\n\nDon't miss out - these prices won't last!"
-    ],
-    
-    // ========== URGENCY HANDLING ==========
-    urgent: [
-      "I understand the urgency! Our Quick Delivery Option gets your store live faster - pay 70% upfront for priority treatment. Want to proceed immediately? 🚀",
-      "Time-sensitive? No problem! Quick Delivery Option available - expedited setup with 70% advance. Let's fast-track your success!",
-      "Urgent need? We've got you! Pay 70% upfront for express delivery. Your project becomes our top priority!"
-    ],
-    
-    // ========== CONTACT & SUPPORT ==========
-    contact: [
-      "📧 **Email:** info.afterresult@gmail.com\n📱 **WhatsApp:** +91 9050983530\n\nReach out anytime! We're here to help you succeed. 😊",
-      "**Let's Connect!**\n📧 info.afterresult@gmail.com\n📱 +91 9050983530\n\nDirect line to our team - we respond fast!",
-      "**Get In Touch:**\nEmail: info.afterresult@gmail.com\nWhatsApp: +91 9050983530\n\nQuestions? Consultation? We're just a message away!"
-    ],
-    
-    services: [
-      "We offer comprehensive business growth solutions! E-Commerce, WhatsApp Marketing, DPM, Branding, and more. Want our complete Services Brochure?",
-      "**Our Services:**\n• E-Commerce Development\n• WhatsApp Marketing\n• Digital Presence Management\n• Branding & Creative\n• SEO & Marketing\n• Lead Generation\n\nWant detailed info on any specific service?"
-    ],
-    
-    // ========== INTEREST & ENGAGEMENT ==========
-    interested: [
-      "Excellent! Let me share the complete details with you... 📋",
-      "Great to hear! Here's everything you need to know...",
-      "Perfect timing! Let me walk you through the details...",
-      "Love your enthusiasm! Here's the full breakdown..."
-    ],
-    
-    skeptical: [
-      "I completely understand your concern! AR Solutions has been delivering real results since 2024. We offer:\n✓ 100% transparent pricing\n✓ Zero hidden charges\n✓ Complete documentation\n✓ Real deliverables\n✓ Satisfied client base\n\nWant to see our portfolio or speak with our team directly? 📞",
-      "Fair question! Trust is earned. Here's why clients choose us:\n✓ Honest, upfront pricing\n✓ Proven track record\n✓ Real client testimonials\n✓ Complete transparency\n✓ Dedicated support\n\nHappy to provide references or answer specific concerns!"
-    ],
-    
-    confused: [
-      "No worries! Let me break it down simply for you... 💡",
-      "I'll make it crystal clear! Here's the simple explanation...",
-      "Let me simplify that for you! Here's what it means...",
-      "Totally understand! Let me explain it differently..."
-    ],
-    
-    help: [
-      "Absolutely! I'm here to help. Tell me what you need and I'll guide you through everything! 😊",
-      "Of course! That's exactly why I'm here. What specific help do you need?",
-      "Happy to assist! What would you like help with? Let's solve it together!"
-    ],
-    
-    problem: [
-      "I'm sorry you're facing an issue! Let me help resolve it. Can you tell me more about the problem? 🤔",
-      "That's concerning! Don't worry, we'll figure it out. What's the specific issue?",
-      "Let's fix this! Can you describe the problem so I can provide the best solution?"
-    ],
-    
-    recommendation: [
-      "Based on your needs, I'd suggest... Let me share my recommendation! 💡",
-      "Great question! Here's what I recommend for your situation...",
-      "I'd suggest starting with... Here's my professional recommendation..."
-    ],
-    
-    // ========== ADDITIONAL RESPONSES ==========
-    quality: [
-      "Premium quality guaranteed! Professional work, attention to detail, business-grade deliverables. We don't compromise on quality! ⭐",
-      "Top-tier quality! Every project gets professional treatment. Your success depends on quality - we take it seriously!"
-    ],
-    
-    customization: [
-      "Fully customizable! We tailor everything to your specific needs and brand identity. Your vision, our execution! 🎨",
-      "100% customization available! Tell us your requirements - we'll build exactly what you need!"
-    ],
-    
-    examples: [
-      "I'd love to show you examples! Contact us at +91 9050983530 or info.afterresult@gmail.com for portfolio and live demos! 📸",
-      "Great question! Our team can share portfolio samples and case studies. Want to connect with them directly?"
-    ],
-    
-    refund: [
-      "We have a clear refund policy for genuine cases. Quality and satisfaction are guaranteed. Want to discuss specific concerns? 🤝",
-      "Refund policy applies to specific scenarios. We ensure quality delivery - but if issues arise, we're fair and transparent!"
-    ],
-    
-    maintenance: [
-      "Ongoing support available! We don't abandon you after launch. Maintenance packages and technical support offered separately. Want details?",
-      "Post-launch support included! Plus, we offer maintenance plans for long-term technical support and updates!"
-    ],
-    
-    integration: [
-      "Multiple integrations supported! Payment gateways, shipping, CRM, analytics - we connect everything you need! 🔗",
-      "Full integration capability! Third-party tools, plugins, APIs - we make everything work together seamlessly!"
-    ],
-    
-    security: [
-      "100% secure! SSL certificates, secure payment gateways, data encryption - your store and customer data fully protected! 🔒",
-      "Security is priority! HTTPS, secure checkout, data protection - enterprise-grade security for your peace of mind!"
-    ],
-    
-    mobile: [
-      "Fully mobile-responsive! Your store looks perfect on phones, tablets, desktops - optimized for all devices! 📱",
-      "Mobile-first design! 70% of shoppers use phones - your store will be stunning on every device!"
-    ],
-    
-    speed: [
-      "Optimized for speed! Fast loading times, smooth performance - we optimize for best user experience and SEO! ⚡",
-      "Lightning-fast performance! Speed optimization included - faster sites = better sales and rankings!"
-    ],
-    
-    analytics: [
-      "Google Analytics integrated! Track visitors, sales, behavior - complete insights into your business performance! 📊",
-      "Full analytics setup! Monitor traffic, conversions, customer behavior - data-driven growth strategies!"
-    ],
-    
-    inventory: [
-      "Complete inventory management! Track stock, manage variants, automatic updates - easy product management included! 📦",
-      "Robust inventory system! Stock tracking, low-stock alerts, variant management - all included!"
-    ],
-    
-    shipping: [
-      "Shipping integration available! Connect with major couriers, automatic rate calculation, tracking - smooth delivery management! 🚚",
-      "Full shipping setup! Multiple courier options, real-time tracking, automated notifications!"
-    ],
-    
-    language: [
-      "Multiple language support possible! Hindi, English, regional languages - reach wider audience! Want multilingual setup? 🌐",
-      "Multilingual stores supported! English, Hindi, or any regional language - let's discuss your needs!"
-    ],
-    
-    experience: [
-      "We've successfully delivered numerous projects since 2024! Growing portfolio of satisfied clients across industries. Want to see our work? 🏆",
-      "Proven track record! Helping startups and SMEs scale digitally. Our results speak for themselves!"
-    ],
-    
-    team: [
-      "Professional team of developers, designers, and marketers! Experienced experts dedicated to your success. Quality guaranteed! 👥",
-      "Skilled team behind every project! Developers, designers, strategists - all working to deliver excellence!"
-    ],
-    
-    deadline: [
-      "We respect deadlines! Standard: 25 days. Quick delivery available with advance payment. Have a specific date? Let's discuss! 📅",
-      "Deadline-driven delivery! We plan carefully to meet your launch date. Quick options available!"
-    ],
-    
-    budget_concern: [
-      "I understand budget matters! That's why we offer flexible installments - ₹1,599 to start, rest in easy payments. We work with your budget! 💰",
-      "Budget-conscious? We get it! Flexible payment plans, transparent pricing, no hidden costs. Let's find what works for you!"
-    ],
-    
-    deciding: [
-      "Take your time! No pressure. Want me to send you a summary to review? You can reach out whenever ready! 😊",
-      "Totally understand! Big decisions need thought. Any questions that might help you decide?",
-      "No rush! Would more information help your decision? I'm here to answer anything!"
-    ],
-    
-    positive_feedback: [
-      "Thank you so much! 🙏 That means a lot! Ready to work together and create something amazing?",
-      "Appreciate your kind words! ⭐ Let's channel this energy into building your success!",
-      "Wow, thank you! 😊 Excited to exceed your expectations. Shall we get started?"
-    ],
-    
-    complaint: [
-      "I sincerely apologize for any inconvenience! 😔 Let me help resolve this immediately. Can you share details so we can fix it?",
-      "I'm sorry to hear that! Your satisfaction matters most. Please share what went wrong so we can make it right!"
-    ]
+    greeting: "Welcome to AR Solutions! We help businesses grow with affordable digital solutions - from online stores to WhatsApp marketing. What interests you?",
+    greeting_detailed: "Thank you for your interest in AR Solutions! Founded in 2024, we're a full-service growth agency helping startups and SMEs scale digitally and offline.\n\nWe specialize in:\n✓ E-Commerce Store Setup (Shopify)\n✓ WhatsApp Marketing & Lead Generation\n✓ Digital Presence Management\n✓ Branding & Marketplace Enablement\n\nWhat would you like to explore?",
+    aboutar: "AR Solutions (AfterResult) - Your trusted digital growth partner since 2024. We deliver results-driven marketing, e-commerce, and branding solutions.",
+    aboutar_detailed: "**About AR Solutions**\n\nAR Solutions (AfterResult Solutions) is a full-service marketing and business growth agency dedicated to helping brands scale digitally and offline.\n\n**Our Expertise:**\n• Digital Presence Management (DPM)\n• Lead Generation (Leadin)\n• E-Commerce Development\n• Marketplace Enablement\n• Offline Presence Management (OPM)\n\n**Founded:** 2024\n**Mission:** Grow businesses faster with affordable, results-focused solutions\n\nWe're not just a service provider—we're your growth partner!",
+    fullPackage: "**Shopify Store - ₹7,999**\n✓ Complete setup\n✓ Free domain (1 year)\n✓ Payment gateway\n✓ 20 products listed\n✓ Logo & banners\n✓ FREE training\n✓ Delivered in 25 days\n\nStart with just ₹1,599!",
+    fullPackage_detailed: "**Complete Shopify E-Commerce Package - ₹7,999**\n\n**What You Get:**\n✓ Complete Shopify store setup\n✓ 1-year free domain (your brand name - our gift!)\n✓ Payment gateway integration\n✓ Up to 20 products listed & ready\n✓ Simple logo design + banners\n✓ Content creation\n✓ FREE training on store management\n✓ Delivered in 25 days\n✓ Transparent pricing - no hidden charges\n✓ Monthly subscription paid separately (cancel anytime)\n\n**Payment Plan:**\n• Confirmation: ₹1,599\n• Remaining: 4 easy installments\n\n**Quick Delivery Option:** Pay 70% upfront for faster delivery!\n\nReady-to-use, business-grade store designed for immediate sales.",
+    pricing: "₹7,999 total. Start with ₹1,599 confirmation, rest in 4 installments over 25 days. Want quick delivery? Pay 70% upfront!",
+    quickDelivery: "Get your store faster! Pay 70% upfront for Quick Delivery Option - hassle-free priority setup.",
+    whatsappmarketing: "**WhatsApp Marketing - ₹2,000**\n✓ 1,400 messages delivered\n✓ LinkedIn & Google leads\n✓ Business account setup\n✓ Auto-replies & catalog\n✓ 7-day delivery",
+    whatsappmarketing_detailed: "**Complete WhatsApp Marketing & Lead Generation - ₹2,000**\n\n**What's Included:**\n✓ Lead generation (LinkedIn + Google scraping)\n✓ Up to 1,400 promotional messages (200/day avg)\n✓ WhatsApp Business Account setup\n✓ Lead management & forwarding\n✓ Community building strategies\n✓ Auto-replies (never miss a lead)\n✓ Catalog setup (showcase products/services)\n✓ Profile message & quick responses\n✓ Away message configuration\n✓ 7-day completion\n\n**Why 200/day limit?** Keeps your account safe from WhatsApp restrictions while maximizing reach.\n\n**Price:** ₹2,000 all-inclusive - no hidden charges!",
+    whatsapp_setup: "We'll set up your professional WhatsApp Business Account with profile, catalog, and all features - making you look credible and trustworthy.",
+    whatsapp_messages: "1,400 promotional messages total - about 200 per day. This daily limit keeps your account safe while reaching maximum audience.",
+    whatsapp_leads: "Quality leads from LinkedIn & Google scraping - targeted, relevant contacts shared for easy tracking and follow-up!",
+    whatsapp_features: "Auto-replies, catalog, profile message, quick responses, away messages - everything for a professional business account!",
+    whatsapp_timeline: "Complete setup & execution in 7 days. Quick turnaround, fast results!",
+    whatsapp_price: "₹2,000 all-inclusive. Complete setup + 1,400 messages + quality leads. No hidden charges.",
+    whatsapp_community: "We help build WhatsApp groups and communities for organic engagement - creating loyal customers who keep coming back!",
+    whatsapp_restrictions: "200 messages/day keeps your account safe. Too many messages = risk of ban. We maximize reach while keeping you secure long-term.",
+    dpm: "**Digital Presence Management** - Complete online identity: website, social media, SEO, branding. Want details?",
+    dpm_detailed: "**Digital Presence Management (DPM)**\n\nEstablish, enhance, and scale your presence across all digital channels:\n\n**Services Include:**\n• Website & Platform Development\n• Branding & Creative Identity\n• Social Media Management\n• SEO & Visibility Optimization\n• Digital Advertising & Campaigns\n• Analytics & CRM Integration\n• Reputation Management\n• Specialized SME Solutions\n\nWe ensure every digital touchpoint reflects your brand and drives growth. Interested in a specific service?",
+    noTech: "No technical knowledge needed! We handle everything - you get a complete business-ready store.",
+    timeline: "25 days for complete store. Want faster? Quick Delivery Option available with 70% upfront.",
+    domain: "Yes! Free 1-year domain with your brand name - our gift to you. Included in package.",
+    training: "FREE training on store management and adding products. You'll learn everything to run successfully.",
+    platform: "Shopify - world's most reliable e-commerce platform. Trusted by millions globally.",
+    products: "Any products - clothing, shoes, jewelry, any niche. Customized for your business. Sell on Google, social media, worldwide.",
+    paymentGateway: "Yes! Payment gateway integrated for easy online payments from customers. Included.",
+    design: "Simple logo, banners, and content creation included in the package.",
+    installments: "After ₹1,599 confirmation, remaining balance in 4 simple installments over 25 days. Flexible and easy.",
+    confirmation: "Start with just ₹1,599 confirmation fee to secure your slot!",
+    comparison: "**Why AR Solutions?**\n✓ Affordable pricing\n✓ Complete solutions (no hidden costs)\n✓ FREE training & support\n✓ Quick delivery options\n✓ Proven track record since 2024\n✓ End-to-end service",
+    guarantee: "We deliver quality work on time. Your satisfaction is our priority. Transparent pricing, no hidden charges, complete support throughout.",
+    discount: "**Current Offers:**\n• E-Commerce: Start at ₹1,599 only\n• WhatsApp Marketing: ₹2,000 complete package\n• Quick Delivery: 70% upfront bonus\n\nLimited time! Secure your slot now.",
+    urgent: "I understand it's urgent! Our Quick Delivery Option gets your store live faster - pay 70% upfront for priority service. Want to proceed?",
+    marketing: "End-to-end marketing: digital strategy, paid ads, social media, SEO, performance tracking. Want to know more?",
+    sales: "We scale sales through structured campaigns, lead nurturing, and data-driven strategies. Maximize your revenue from day one!",
+    scaling: "Grow smarter with customized scaling plans - boosting revenue and maximizing ROI. Let's build something amazing!",
+    contact: "📧 Email: info.afterresult@gmail.com\n📱 WhatsApp: +91 9050983530\n\nOr click below to connect directly!",
+    services: "We offer comprehensive business solutions! Check our Services Brochure for complete details.",
+    howareyou: "Doing great! How about you? How can I help you today?",
+    whoareyou: "I'm your service assistant from AR Solutions - here to help you discover the best solutions for your business!",
+    thankyou: "You're welcome! Happy to help anytime 😊",
+    bye: "Goodbye! Wishing you success. Feel free to return anytime!",
+    interested: "Great! Let me share more details...",
+    skeptical: "I understand your concern. AR Solutions has been delivering results since 2024. We offer:\n✓ Transparent pricing\n✓ No hidden charges\n✓ Complete support\n✓ Real deliverables\n\nWant to see our work or talk to our team?"
+  }
   }
     };
   },
