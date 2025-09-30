@@ -266,20 +266,19 @@
 </div>
 
         <!-- Chat area -->
-        <div class="chat-area">
-          <!-- Empty state -->
-          <div v-if="messages.length === 0" class="empty-state">
-            <h1 :class="['empty-title', isDarkMode ? 'text-white' : 'text-gray-800']">Hey there! How can I help you today?</h1>
-            
-            <div class="search-container-center">
-              <div :class="['search-box', isDarkMode ? 'search-dark' : 'search-light']">
+<div class="input-area">
+  <div class="input-container">
+    <div v-if="isTempMode" class="temp-mode-indicator">
+      <span>🔒 Temporary Mode - Chat not saved</span>
+    </div>
+    <div :class="['search-box', isDarkMode ? 'search-dark' : 'search-light']">
 <input
-  ref="queryInput"
+  ref="queryInputBottom"
   v-model="query"
   @input="handleInputChange"
   @keyup.enter="handleSearch"
   type="text"
-  placeholder="Ask anything"
+  placeholder="Message AR Solutions AI"
   :class="['search-input', isDarkMode ? 'input-dark' : 'input-light']"
 />
                 <button @click="handleSearch" :class="['send-btn', query.trim() ? 'send-btn-active' : '']">
@@ -1956,6 +1955,22 @@ this.messages.push({
   z-index: 100;
 }
 
+.temp-mode-indicator {
+  text-align: center;
+  padding: 6px 12px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.dark-mode .temp-mode-indicator {
+  background-color: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.4);
+}
 .dark-mode .input-area {
   background: linear-gradient(to top, #212121 0%, #212121 85%, transparent 100%);
 }
