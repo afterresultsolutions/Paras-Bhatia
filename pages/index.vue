@@ -1983,14 +1983,17 @@ this.messages.push({
 
 .temp-mode-indicator {
   text-align: center;
-  padding: 6px 12px;
-  margin-bottom: 8px;
-  border-radius: 12px;
-  font-size: 12px;
+  padding: 8px 16px;
+  margin-bottom: 12px;
+  border-radius: 20px;
+  font-size: 13px;
   font-weight: 500;
   background-color: rgba(239, 68, 68, 0.1);
   color: #ef4444;
   border: 1px solid rgba(239, 68, 68, 0.3);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .dark-mode .temp-mode-indicator {
