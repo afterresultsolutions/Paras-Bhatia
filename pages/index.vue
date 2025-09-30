@@ -1440,7 +1440,7 @@ startNewChat() {
   .mobile-sidebar {
     display: none;
   }
-}
+} 
 
 .main-content {
   flex: 1;
