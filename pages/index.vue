@@ -580,7 +580,7 @@ kb: {
     services: [ 'what do you do', 'offerings', 'solutions', 'brochure', 'catalog', 'service list', 'what you offer', 'all services'],
     
     // CONVERSATIONAL
-    casual: ['i am good', 'im good', 'i am fine', 'im fine', 'i am also good', 'im also good', 'doing well', 'doing good', 'all good', 'great', 'fine', 'okay', 'ok', 'good', 'nice', 'cool', 'awesome'],
+    casual: ['i am good', 'im good', 'i am fine', 'im fine', 'i am also good', 'im also good', 'doing well', 'doing good', 'all good', 'online business', 'business', 'onlinne', 'ok', 'okay', 'hmm', 'need help', 'help'],
     howareyou: ['how are you', 'how are you doing', 'whats up', "what's up", 'hows it going', 'how you doing'],
     whoareyou: ['who are you', 'what are you', 'your name', 'about you', 'bot', 'ai', 'chatbot'],
     thankyou: ['thank you', 'thanks', 'thank u', 'thx', 'appreciate', 'grateful', 'thanks a lot'],
@@ -838,7 +838,9 @@ toggleTempMode() {
 if (kb.keywords.casual.some(kw => query.includes(kw))) {
   return {
     text: "That's wonderful to hear! How can I assist you with your online business today? Feel free to ask about our services, pricing, or anything else!",
-    hasButton: false
+    hasButton: true,
+    buttonText: 'Explore More',
+    buttonLink: 'https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf" target="_blank',
   };
 }
 if (kb.keywords.whatsapp_messages.some(kw => query.includes(kw))) {
