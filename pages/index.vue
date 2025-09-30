@@ -1109,10 +1109,9 @@ startNewChat() {
 }
 
 .menu-toggle-btn {
-  position: absolute;
-  top: 50%;
+  position: fixed;
+  top: 12px;
   left: 12px;
-  transform: translateY(-50%);
   z-index: 998;
   padding: 8px;
   border: none;
@@ -1181,10 +1180,10 @@ startNewChat() {
 .live-dot {
   width: 8px;
   height: 8px;
-  background-color: #00ff88;
+  background-color: #ff6b35;
   border-radius: 50%;
   animation: pulse 2s infinite;
-  box-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
+  box-shadow: 0 0 10px rgba(255, 107, 53, 0.8);
 }
 
 @keyframes pulse {
@@ -1193,15 +1192,15 @@ startNewChat() {
     transform: scale(1);
   }
   50% {
-    opacity: 0.6;
-    transform: scale(1.1);
+    opacity: 0.7;
+    transform: scale(1.15);
   }
 }
 
 .live-text {
   font-size: 11px;
-  font-weight: 500;
-  color: #00ff88;
+  font-weight: 600;
+  color: #ff6b35;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -1561,9 +1560,51 @@ startNewChat() {
   .sidebar {
     display: none;
   }
+  
+  .chat-header {
+    padding: 10px 8px;
+  }
+  
   .header-title {
-    transform: translateX(-50%);
-    margin-left: 0;
+    position: static;
+    transform: none;
+    margin: 0 auto;
+    padding: 0 50px;
+    justify-content: center;
+    flex: 1;
+  }
+  
+  .brand-name {
+    font-size: 16px;
+  }
+  
+  .model-badge {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+  }
+  
+  .live-text {
+    font-size: 10px;
+  }
+  
+  .live-dot {
+    width: 7px;
+    height: 7px;
+  }
+  
+  .header-actions {
+    gap: 6px;
+    position: static;
+  }
+  
+  .header-link {
+    display: none;
+  }
+  
+  .auth-btn {
+    padding: 6px 12px;
+    font-size: 13px;
   }
   .empty-title {
     font-size: 22px;
@@ -1608,16 +1649,32 @@ startNewChat() {
     font-size: 20px;
     margin-bottom: 20px;
   }
-  .header-title {
-    margin-left: 44px;
-  }
-  .mobile-menu-btn {
-    top: 10px;
-    left: 8px;
-    padding: 6px;
-  }
+  
   .chat-header {
-    padding: 8px 10px;
+    padding: 8px 6px;
+  }
+  
+  .header-title {
+    padding: 0 45px;
+  }
+  
+  .brand-name {
+    font-size: 15px;
+  }
+  
+  .model-badge {
+    width: 16px;
+    height: 16px;
+    font-size: 9px;
+  }
+  
+  .live-text {
+    font-size: 9px;
+  }
+  
+  .live-dot {
+    width: 6px;
+    height: 6px;
   }
   .human-chat-btn {
     padding: 6px 10px;
@@ -1689,12 +1746,46 @@ startNewChat() {
   .empty-title {
     font-size: 18px;
   }
+  
+  .header-title {
+    padding: 0 40px;
+  }
+  
+  .brand-name {
+    font-size: 14px;
+  }
+  
+  .model-badge {
+    width: 15px;
+    height: 15px;
+    font-size: 8px;
+  }
+  
+  .live-indicator {
+    gap: 3px;
+  }
+  
+  .live-text {
+    font-size: 8px;
+  }
+  
+  .live-dot {
+    width: 5px;
+    height: 5px;
+  }
+  
   .human-chat-btn {
     padding: 5px 8px;
     font-size: 11px;
   }
+  
   .human-chat-text {
     display: none;
+  }
+  
+  .auth-btn {
+    padding: 5px 10px;
+    font-size: 12px;
   }
   .search-input {
     font-size: 13px;
