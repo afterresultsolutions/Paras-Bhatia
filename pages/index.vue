@@ -585,16 +585,6 @@ deleteChat(chatId) {
   }
 },  // <-- This comma is important
 
-toggleTempMode() {  // <-- ADD THIS NEW METHOD HERE
-  this.isTempMode = !this.isTempMode;
-  if (this.isTempMode) {
-    this.messages = [];
-    this.currentChatId = null;
-    alert('Temporary mode enabled. Your chat history will not be saved.');
-  } else {
-    alert('Temporary mode disabled. Chat history will be saved normally.');
-  }
-},
 toggleTempMode() {
   this.isTempMode = !this.isTempMode;
   if (this.isTempMode) {
