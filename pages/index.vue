@@ -1111,17 +1111,15 @@ startNewChat() {
 }
 
 .menu-toggle-btn {
-  position: fixed;
-  top: 50%;
+  position: absolute;
+  top: 18px;
   left: 12px;
-  transform: translateY(-50%);
   z-index: 998;
   padding: 8px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s;
-  margin-top: 1px;
 }
 
 @media (min-width: 769px) {
