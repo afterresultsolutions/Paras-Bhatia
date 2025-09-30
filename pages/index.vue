@@ -93,7 +93,8 @@
     </button>
   </div>
 </div>
-    <!-- ADD ARCHIVED SECTION HERE -->
+  
+  <!-- Archived Section -->
   <div v-if="archivedChats.length > 0" class="archived-section">
     <button @click="showArchived = !showArchived" :class="['archived-toggle', isDarkMode ? 'btn-dark' : 'btn-light']">
       <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -206,9 +207,9 @@
     </a>
   </div>
 
-  <div class="sidebar-content">
-    <div v-if="filteredChatHistory.length > 0" class="history-label">Recent</div>
-    <div v-for="chat in filteredChatHistory" :key="chat.id" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
+<div class="sidebar-content">
+  <div v-if="filteredChatHistory.length > 0" class="history-label">Recent</div>
+  <div v-for="chat in filteredChatHistory" :key="chat.id">
       <div class="history-item-content" @click="loadChat(chat); showMenu = false">
         <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
