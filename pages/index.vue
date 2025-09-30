@@ -182,13 +182,13 @@
         <!-- Header -->
         <div :class="['chat-header', isDarkMode ? 'header-dark' : 'header-light']">
 <div class="header-title">
-  <span class="brand-name">AR Solutions</span>
-  <span class="model-badge">AI</span>
-  <span class="live-indicator">
-    <span class="live-dot"></span>
-    <span class="live-text">Live</span>
-  </span>
-</div>
+               <span class="brand-name">AR Solutions</span>
+               <span class="model-badge">AI</span>
+               <span class="live-indicator">
+               <span class="live-dot"></span>
+               <span class="live-text">Live</span>
+             </span>
+          </div>
         </div>
 
         <!-- Chat area -->
