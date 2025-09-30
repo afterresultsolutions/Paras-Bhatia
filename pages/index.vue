@@ -1440,29 +1440,25 @@ methods: {
   border-radius: 8px;
   text-decoration: none;
   transition: all 0.2s;
-  border: 1px solid;
+  border: none;
 }
 
 .pill-dark {
-  background-color: #2f2f2f;
+  background-color: transparent;
   color: #ececec;
-  border-color: #4d4d4d;
 }
 
 .pill-dark:hover {
-  background-color: #3a3a3a;
-  border-color: #667eea;
+  background-color: #2f2f2f;
 }
 
 .pill-light {
-  background-color: #f4f4f4;
+  background-color: transparent;
   color: #2f2f2f;
-  border-color: #d1d1d1;
 }
 
 .pill-light:hover {
-  background-color: #e8e8e8;
-  border-color: #667eea;
+  background-color: #f0f0f0;
 }
 
 .pill-btn span {
