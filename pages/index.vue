@@ -3,21 +3,16 @@
     <div class="chat-container">
 <!-- Sidebar for Desktop -->
 <div :class="['sidebar', showMenu ? 'sidebar-open' : '', isDarkMode ? 'sidebar-dark' : 'sidebar-light']">
-  <div class="sidebar-header">
-    <button @click="showMenu = false" class="close-sidebar-btn">
-      <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
-    </button>
-    <button @click="startNewChat" :class="['new-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
-      <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-      </svg>
-      <span>New chat</span>
-    </button>
-  </div>
-  
-<!-- Search box -->
+<div class="sidebar-header">
+  <button @click="showMenu = false; startNewChat()" :class="['new-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+    </svg>
+    <span>New chat</span>
+  </button>
+</div>
+
+<!-- Mobile Search box - MOVED UP -->
 <div class="sidebar-search">
   <div class="search-input-wrapper">
     <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -30,6 +25,11 @@
       :class="['search-chat-input', isDarkMode ? 'input-dark' : 'input-light']"
     />
   </div>
+</div>
+
+<!-- Mobile Quick Action Pills - NOW BELOW SEARCH -->
+<div class="quick-pills">
+  <!-- ... all your pill buttons ... -->
 </div>
 
 <!-- Quick Action Pills -->
@@ -1100,10 +1100,16 @@ startNewChat() {
 }
 
 .history-item-actions {
-  display: none;
+  display: flex; /* Changed from display: none */
   align-items: center;
   gap: 4px;
 }
+
+/* Keep hover effect for desktop only */
+@media (min-width: 769px) {
+  .history-item-actions {
+    display: none;
+  }
 
 .history-item:hover .history-item-actions {
   display: flex;
