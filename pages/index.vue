@@ -528,11 +528,7 @@ whatsapp_community: ['community building', 'whatsapp group', 'group marketing', 
 whatsapp_restrictions: ['account ban', 'restricted', 'account safety', 'prevent ban', 'safe messaging'],
           scaling: ['scale', 'scaling', 'growth', 'expand', 'expansion'],
           contact: ['contact', 'reach', 'email', 'phone', 'call', 'demo', 'meeting'],
-          services: [‘services’, ‘what do you do’, ‘offerings’, ‘solutions’, ‘brochure’, ‘catalog’,
-‘packages’, ‘plans’, ‘pricing’, ‘rates’, ‘charges’, ‘deals’,
-‘products’, ‘menu’, ‘list’, ‘options’, ‘features’, ‘proposals’,
-‘quote’, ‘quotation’, ‘estimate’, ‘portfolio’, ‘capabilities’, ‘programs’,
-‘bundles’, ‘offers’],
+          services: [‘services’, ‘what you do’, ‘offerings’, ‘solutions’, ‘brochure’, ‘deals’, ‘products’, ‘menu’, ‘list’, ‘options’, ‘features’, ‘proposals’,‘quote’, ‘quotation’, ‘estimate’, ‘portfolio’, ‘capabilities’, ‘programs’,‘bundles’, ‘offers'],
           casual: ['i am good', 'im good', 'i am fine', 'im fine', 'i am also good', 'im also good', 'doing well', 'doing good', 'all good', 'great', 'fine', 'okay', 'ok', 'good', 'nice', 'cool', 'awesome'],
           howareyou: ['how are you', 'how are you doing', 'whats up', "what's up", 'hows it going'],
           whoareyou: ['who are you', 'what are you', 'your name', 'about you'],
@@ -719,7 +715,7 @@ toggleTempMode() {
     const query = q.toLowerCase().trim();
     const kb = this.kb;
     
-    const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste'];
+    const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste', 'yes', 'hy', 'hlo', 'kon'];
     if (greetings.some(g => query === g || query === g + '!' || query === g + '?')) {
       return {
         text: "Hi there! How's it going? How may I help you today?",
