@@ -593,8 +593,8 @@ keywords: {
     skeptical: ['really', 'sure', 'guarantee', 'proof', 'evidence', 'trust', 'believe', 'legit', 'genuine', 'scam'],
     
     // DETAILED REQUEST
-    detailed: ['tell me more', 'more details', 'detailed', 'elaborate', 'full package', 'complete info', 'everything', 'all details', 'comprehensive'],
-        }
+    detailed: ['tell me more', 'more details', 'detailed', 'elaborate', 'full package', 'complete info', 'everything', 'all details', 'comprehensive']
+        },
         responses: {
     // SHORT RESPONSES (DEFAULT)
     greeting: "Welcome to AR Solutions! We help businesses grow with affordable digital solutions - from online stores to WhatsApp marketing. What interests you?",
@@ -674,8 +674,8 @@ keywords: {
     interested: "Great! Let me share more details...",
     
     // SKEPTICISM HANDLING
-    skeptical: "I understand your concern. AR Solutions has been delivering results since 2024. We offer:\n✓ Transparent pricing\n✓ No hidden charges\n✓ Complete support\n✓ Real deliverables\n\nWant to see our work or talk to our team?",
-        }
+    skeptical: "I understand your concern. AR Solutions has been delivering results since 2024. We offer:\n✓ Transparent pricing\n✓ No hidden charges\n✓ Complete support\n✓ Real deliverables\n\nWant to see our work or talk to our team?"
+        },
       }
     };
   },
