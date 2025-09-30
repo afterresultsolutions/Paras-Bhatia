@@ -484,18 +484,23 @@ const autocorrectDict = {
 export default {
   name: 'ChatbotPage',
   data() {
-    return {
-      query: "",
-      showMenu: false,
-      messages: [],
-      isDarkMode: false,
-      chatHistory: [],
-      currentChatId: null,
-      searchQuery: "",
-      autocorrectTimeout: null,
-      isTempMode: false, 
-      showArchived: false,
-      kb: {
+  return {
+    query: "",
+    showMenu: false,
+    messages: [],
+    isDarkMode: false,
+    chatHistory: [],
+    currentChatId: null,
+    searchQuery: "",
+    autocorrectTimeout: null,
+    isTempMode: false, 
+    showArchived: false,
+    // Add these new touch tracking variables
+    touchStartX: 0,
+    touchEndX: 0,
+    touchStartY: 0,
+    touchEndY: 0,
+    kb: {
         keywords: {
           pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget'],
           whatsappmarketing: ['whatsapp marketing', 'whatsapp setup', 'lead generation', 'linkedin scraping', 'google scraping', 'whatsapp business', 'promotional messages', 'auto reply', 'whatsapp leads'],
@@ -624,6 +629,35 @@ mounted() {
     }
   },
 methods: {
+  handleTouchStart(e) {
+    this.touchStartX = e.changedTouches[0].screenX;
+    this.touchStartY = e.changedTouches[0].screenY;
+  },
+
+  handleTouchEnd(e) {
+    this.touchEndX = e.changedTouches[0].screenX;
+    this.touchEndY = e.changedTouches[0].screenY;
+    this.handleSwipe();
+  },
+
+  handleSwipe() {
+    const swipeDistance = this.touchEndX - this.touchStartX;
+    const verticalDistance = Math.abs(this.touchEndY - this.touchStartY);
+    
+    // Only trigger if horizontal swipe is more than 50px and vertical movement is less than 100px
+    if (Math.abs(swipeDistance) > 50 && verticalDistance < 100) {
+      // Swipe right (left to right) - open sidebar
+      if (swipeDistance > 0 && this.touchStartX < 50) {
+        this.showMenu = true;
+      }
+      // Swipe left (right to left) - close sidebar
+      else if (swipeDistance < 0 && this.showMenu) {
+        this.showMenu = false;
+      }
+    }
+  },
+
+  // ... rest of your existing methods
   renameChat(chat) {
     const newTitle = prompt('Enter new chat name:', chat.title);
     if (newTitle && newTitle.trim()) {
