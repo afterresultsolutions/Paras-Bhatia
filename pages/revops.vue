@@ -3,37 +3,33 @@
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-content">
-        <h1>RevOps Excellence</h1>
-        <p>Transform Your Revenue Operations with Strategic Automation & Process Optimization</p>
-        <a href="#contact" class="cta-button">Get Started Today</a>
+        <h1>Revenue Operations Services</h1>
+        <p>Scale your revenue engine with strategic automation, seamless integrations, and data-driven operations</p>
+        <a href="#contact" class="cta-button">Schedule a Consultation</a>
       </div>
     </section>
 
     <!-- Problem Section -->
     <section class="section problem-section">
       <div class="container">
-        <h2 class="section-title">The Challenge</h2>
-        <p class="section-subtitle">Growing businesses face critical operational bottlenecks that limit their revenue potential</p>
+        <h2 class="section-title">The Problem</h2>
+        <p class="section-subtitle">Most growing companies struggle with operational inefficiencies that directly impact revenue growth</p>
         <div class="problem-grid">
           <div class="problem-card">
-            <div class="problem-icon">⚠️</div>
-            <h3>Fragmented Systems</h3>
-            <p>Disconnected tools and platforms creating data silos and inefficiencies across sales, marketing, and customer success teams.</p>
+            <h3>Disconnected Systems</h3>
+            <p>Sales, marketing, and customer success teams operate in silos with fragmented data across multiple platforms, leading to inconsistent customer experiences and missed opportunities.</p>
           </div>
           <div class="problem-card">
-            <div class="problem-icon">📉</div>
-            <h3>Manual Processes</h3>
-            <p>Time-consuming manual tasks eating up valuable hours that could be spent on strategic revenue-generating activities.</p>
+            <h3>Manual Workflows</h3>
+            <p>Revenue teams spend countless hours on repetitive administrative tasks instead of focusing on strategic initiatives that drive growth and customer value.</p>
           </div>
           <div class="problem-card">
-            <div class="problem-icon">🔍</div>
-            <h3>Limited Visibility</h3>
-            <p>Lack of real-time insights and analytics making it difficult to make data-driven decisions and forecast accurately.</p>
+            <h3>Poor Data Quality</h3>
+            <p>Incomplete, inconsistent, or outdated data makes it impossible to forecast accurately, measure performance, or make informed decisions about resource allocation.</p>
           </div>
           <div class="problem-card">
-            <div class="problem-icon">🚫</div>
-            <h3>Scaling Challenges</h3>
-            <p>Current systems and processes unable to scale efficiently as your business grows and customer demands increase.</p>
+            <h3>Lack of Visibility</h3>
+            <p>Leadership lacks real-time insights into pipeline health, revenue metrics, and team performance, making it difficult to identify problems and opportunities quickly.</p>
           </div>
         </div>
       </div>
@@ -42,38 +38,38 @@
     <!-- Solution Section -->
     <section class="section solution-section">
       <div class="container">
-        <h2 class="section-title">Our Solution</h2>
-        <p class="section-subtitle">A comprehensive RevOps framework that aligns your revenue teams and automates critical processes</p>
+        <h2 class="section-title">Our Approach</h2>
+        <p class="section-subtitle">We build and optimize revenue operations infrastructure that scales with your business</p>
         <div class="solution-grid">
           <div class="solution-card">
-            <div class="solution-number">1</div>
-            <h3>Strategic Assessment</h3>
-            <p>We conduct a deep dive into your current revenue operations, identifying bottlenecks, inefficiencies, and opportunities for automation and optimization.</p>
+            <div class="solution-number">01</div>
+            <h3>Revenue Audit & Strategy</h3>
+            <p>Comprehensive assessment of your current tech stack, processes, and workflows. We identify bottlenecks, inefficiencies, and high-impact opportunities for optimization across your entire revenue organization.</p>
           </div>
           <div class="solution-card">
-            <div class="solution-number">2</div>
-            <h3>System Integration</h3>
-            <p>Seamlessly connect your CRM, marketing automation, sales tools, and analytics platforms to create a unified revenue ecosystem with real-time data flow.</p>
+            <div class="solution-number">02</div>
+            <h3>Tech Stack Integration</h3>
+            <p>Connect your CRM, marketing automation, analytics, and business intelligence tools into a unified ecosystem. We ensure seamless data flow between systems and eliminate manual data entry.</p>
           </div>
           <div class="solution-card">
-            <div class="solution-number">3</div>
+            <div class="solution-number">03</div>
             <h3>Process Automation</h3>
-            <p>Implement intelligent automation for lead routing, data enrichment, follow-ups, reporting, and other repetitive tasks to free up your team's time.</p>
+            <p>Design and implement intelligent workflows that automate repetitive tasks including lead routing, data enrichment, follow-up sequences, reporting, and administrative operations.</p>
           </div>
           <div class="solution-card">
-            <div class="solution-number">4</div>
+            <div class="solution-number">04</div>
+            <h3>Data Infrastructure</h3>
+            <p>Build robust data architecture with proper field mapping, validation rules, and governance policies. We establish single source of truth for all revenue metrics and customer data.</p>
+          </div>
+          <div class="solution-card">
+            <div class="solution-number">05</div>
             <h3>Analytics & Reporting</h3>
-            <p>Build custom dashboards and reporting systems that provide real-time visibility into your revenue metrics, pipeline health, and team performance.</p>
+            <p>Create custom dashboards and automated reports that provide real-time visibility into key metrics, pipeline health, and team performance across all revenue functions.</p>
           </div>
           <div class="solution-card">
-            <div class="solution-number">5</div>
-            <h3>Ongoing Optimization</h3>
-            <p>Continuous monitoring, testing, and refinement of your revenue operations to ensure peak performance and adapt to changing business needs.</p>
-          </div>
-          <div class="solution-card">
-            <div class="solution-number">6</div>
-            <h3>Team Training</h3>
-            <p>Comprehensive training and documentation to ensure your team can effectively use and maintain the new systems and processes.</p>
+            <div class="solution-number">06</div>
+            <h3>Continuous Optimization</h3>
+            <p>Ongoing monitoring, testing, and refinement of systems and processes. We adapt your operations as your business evolves and implement improvements based on performance data.</p>
           </div>
         </div>
       </div>
@@ -82,48 +78,40 @@
     <!-- Services Section -->
     <section class="section services-section">
       <div class="container">
-        <h2 class="section-title">Core Services</h2>
-        <p class="section-subtitle">Everything you need to build a world-class revenue operations function</p>
+        <h2 class="section-title">What's Included</h2>
+        <p class="section-subtitle">Comprehensive revenue operations support on a monthly retainer basis</p>
         <div class="services-grid">
           <div class="service-card">
-            <div class="service-icon">🔗</div>
-            <h3>CRM Setup & Optimization</h3>
-            <p>Complete configuration and customization of your CRM platform</p>
+            <h3>CRM Administration</h3>
+            <p>Platform configuration, custom object creation, field management, user permissions, and ongoing system maintenance</p>
           </div>
           <div class="service-card">
-            <div class="service-icon">⚙️</div>
-            <h3>Workflow Automation</h3>
-            <p>Design and implement automated workflows across all revenue functions</p>
+            <h3>Workflow Development</h3>
+            <p>Custom automation build-out, trigger logic design, multi-step sequences, and conditional branching</p>
           </div>
           <div class="service-card">
-            <div class="service-icon">📊</div>
-            <h3>Data Management</h3>
-            <p>Clean, organize, and maintain your revenue data for accuracy</p>
+            <h3>Integration Management</h3>
+            <p>API connections, data mapping, sync monitoring, error handling, and integration troubleshooting</p>
           </div>
           <div class="service-card">
-            <div class="service-icon">🔄</div>
-            <h3>Integration Services</h3>
-            <p>Connect all your tools and platforms for seamless data flow</p>
+            <h3>Data Operations</h3>
+            <p>Database hygiene, duplicate management, enrichment workflows, import/export processes, and migration support</p>
           </div>
           <div class="service-card">
-            <div class="service-icon">📈</div>
-            <h3>Analytics & Insights</h3>
-            <p>Custom dashboards and reports for data-driven decision making</p>
+            <h3>Reporting & Analytics</h3>
+            <p>Dashboard creation, custom report building, metric tracking, forecasting models, and data visualization</p>
           </div>
           <div class="service-card">
-            <div class="service-icon">🎯</div>
             <h3>Lead Management</h3>
-            <p>Optimize lead capture, scoring, routing, and nurturing processes</p>
+            <p>Lead scoring models, routing rules, qualification frameworks, and conversion optimization</p>
           </div>
           <div class="service-card">
-            <div class="service-icon">💼</div>
             <h3>Sales Enablement</h3>
-            <p>Equip your sales team with tools and processes to close more deals</p>
+            <p>Territory planning, quota management, sales process documentation, and performance tracking</p>
           </div>
           <div class="service-card">
-            <div class="service-icon">🎓</div>
             <h3>Training & Support</h3>
-            <p>Ongoing training and technical support for your team</p>
+            <p>Team onboarding, process documentation, best practices training, and ongoing technical support</p>
           </div>
         </div>
       </div>
@@ -132,38 +120,28 @@
     <!-- Benefits Section -->
     <section class="section benefits-section">
       <div class="container">
-        <h2 class="section-title">Results You Can Expect</h2>
-        <p class="section-subtitle">Our clients typically see significant improvements across key revenue metrics</p>
+        <h2 class="section-title">Expected Outcomes</h2>
+        <p class="section-subtitle">Measurable improvements across key operational and revenue metrics</p>
         <div class="benefits-grid">
           <div class="benefit-card">
-            <div class="benefit-icon">⚡</div>
-            <h3>40% Time Savings</h3>
-            <p>Reduce time spent on manual tasks and administrative work through intelligent automation</p>
+            <div class="metric">30-50%</div>
+            <h3>Time Savings</h3>
+            <p>Reduction in time spent on manual data entry, administrative tasks, and repetitive workflows through intelligent automation</p>
           </div>
           <div class="benefit-card">
-            <div class="benefit-icon">📈</div>
-            <h3>25% Revenue Growth</h3>
-            <p>Increase revenue through better lead management, faster sales cycles, and improved conversion rates</p>
+            <div class="metric">20-35%</div>
+            <h3>Faster Sales Cycles</h3>
+            <p>Decrease in time from lead to close through optimized processes, automated follow-ups, and better lead qualification</p>
           </div>
           <div class="benefit-card">
-            <div class="benefit-icon">🎯</div>
-            <h3>Improved Accuracy</h3>
-            <p>Eliminate data errors and ensure consistent, reliable information across all systems</p>
+            <div class="metric">95%+</div>
+            <h3>Data Accuracy</h3>
+            <p>Improvement in data quality through validation rules, automated enrichment, and systematic deduplication processes</p>
           </div>
           <div class="benefit-card">
-            <div class="benefit-icon">👥</div>
-            <h3>Better Alignment</h3>
-            <p>Create seamless collaboration between sales, marketing, and customer success teams</p>
-          </div>
-          <div class="benefit-card">
-            <div class="benefit-icon">💡</div>
-            <h3>Data-Driven Decisions</h3>
-            <p>Make informed strategic decisions with real-time insights and comprehensive analytics</p>
-          </div>
-          <div class="benefit-card">
-            <div class="benefit-icon">🚀</div>
-            <h3>Scalable Systems</h3>
-            <p>Build infrastructure that grows with your business without requiring complete overhauls</p>
+            <div class="metric">100%</div>
+            <h3>Revenue Visibility</h3>
+            <p>Complete transparency into pipeline health, forecast accuracy, and performance metrics across all revenue teams</p>
           </div>
         </div>
       </div>
@@ -172,24 +150,35 @@
     <!-- Pricing Section -->
     <section class="section pricing-section">
       <div class="container">
-        <h2 class="section-title">Investment</h2>
-        <p class="section-subtitle">Flexible retainer packages designed to deliver maximum ROI</p>
-        <div class="pricing-card">
-          <h3>Monthly Retainer</h3>
-          <div class="price-tag">$3,500<span>/month</span></div>
-          <ul class="price-features">
-            <li>Dedicated RevOps Specialist</li>
-            <li>40 Hours of Strategic Support</li>
-            <li>System Setup & Configuration</li>
-            <li>Workflow Automation Development</li>
-            <li>Integration Management</li>
-            <li>Custom Reporting & Analytics</li>
-            <li>Team Training & Documentation</li>
-            <li>Ongoing Optimization</li>
-            <li>Priority Email & Slack Support</li>
-            <li>Monthly Strategy Sessions</li>
-          </ul>
-          <a href="#contact" class="cta-button" style="margin-top: 20px;">Start Your Transformation</a>
+        <h2 class="section-title">Monthly Retainer</h2>
+        <p class="section-subtitle">Dedicated RevOps support with flexible engagement</p>
+        <div class="pricing-container">
+          <div class="pricing-card">
+            <div class="price-header">
+              <h3>RevOps Retainer</h3>
+              <div class="price-tag">
+                <span class="currency">$</span>3,500<span class="period">/month</span>
+              </div>
+            </div>
+            <div class="price-body">
+              <ul class="price-features">
+                <li>Dedicated RevOps Specialist</li>
+                <li>40 hours of strategic support per month</li>
+                <li>CRM setup, configuration & optimization</li>
+                <li>Custom workflow & automation development</li>
+                <li>Tech stack integration & management</li>
+                <li>Data operations & quality assurance</li>
+                <li>Custom reporting & analytics dashboards</li>
+                <li>Process documentation & training</li>
+                <li>Monthly strategy & planning sessions</li>
+                <li>Priority email & Slack support</li>
+                <li>Quarterly business reviews</li>
+              </ul>
+            </div>
+            <div class="price-footer">
+              <a href="#contact" class="pricing-cta">Get Started</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -197,44 +186,35 @@
     <!-- CTA Section -->
     <section class="cta-section" id="contact">
       <div class="container">
-        <h2>Ready to Transform Your Revenue Operations?</h2>
-        <p>Let's discuss how we can help you build a scalable, efficient RevOps function that drives growth</p>
-        <a href="mailto:hello@yourcompany.com" class="cta-button-white">Schedule a Consultation</a>
+        <div class="cta-content">
+          <h2>Ready to Scale Your Revenue Operations?</h2>
+          <p>Let's discuss how we can build a more efficient, data-driven revenue engine for your business</p>
+          <a href="mailto:contact@yourcompany.com" class="cta-button-primary">Schedule a Call</a>
+        </div>
       </div>
     </section>
   </div>
 </template>
 
 <script setup>
-// You can add any Vue logic here if needed in the future
+// Professional RevOps service page component
 </script>
 
 <style scoped>
 .revops-page {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
   line-height: 1.6;
-  color: #333;
-  overflow-x: hidden;
+  color: #1a202c;
+  background: #ffffff;
 }
 
+/* Hero Section */
 .hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 120px 20px 80px;
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  color: #ffffff;
+  padding: 140px 20px 100px;
   text-align: center;
   position: relative;
-  overflow: hidden;
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
-  opacity: 0.3;
 }
 
 .hero-content {
@@ -246,335 +226,403 @@
 
 .hero h1 {
   font-size: 3.5rem;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   font-weight: 700;
-  animation: fadeInUp 0.8s ease-out;
+  letter-spacing: -0.02em;
 }
 
 .hero p {
-  font-size: 1.3rem;
-  margin-bottom: 30px;
+  font-size: 1.25rem;
+  margin-bottom: 40px;
   opacity: 0.95;
-  animation: fadeInUp 0.8s ease-out 0.2s both;
+  font-weight: 400;
+  line-height: 1.7;
 }
 
 .cta-button {
   display: inline-block;
-  padding: 16px 40px;
-  background: white;
-  color: #667eea;
+  padding: 16px 48px;
+  background: #ffffff;
+  color: #1e3a8a;
   text-decoration: none;
-  border-radius: 50px;
+  border-radius: 8px;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   transition: all 0.3s ease;
-  animation: fadeInUp 0.8s ease-out 0.4s both;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
 }
 
 .cta-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  background: #f8fafc;
 }
 
+/* Container */
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
 }
 
+/* Section Styles */
 .section {
-  padding: 80px 20px;
+  padding: 100px 20px;
 }
 
 .section-title {
   text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  color: #2d3748;
+  font-size: 2.75rem;
+  margin-bottom: 16px;
+  color: #1a202c;
   font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .section-subtitle {
   text-align: center;
-  font-size: 1.2rem;
-  color: #718096;
-  margin-bottom: 60px;
-  max-width: 700px;
+  font-size: 1.15rem;
+  color: #64748b;
+  margin-bottom: 64px;
+  max-width: 720px;
   margin-left: auto;
   margin-right: auto;
+  line-height: 1.7;
 }
 
+/* Problem Section */
 .problem-section {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  color: white;
-}
-
-.problem-section .section-title,
-.problem-section .section-subtitle {
-  color: white;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
 }
 
 .problem-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px;
-  margin-top: 40px;
+  gap: 32px;
+  margin-top: 48px;
 }
 
 .problem-card {
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(10px);
-  padding: 30px;
-  border-radius: 15px;
-  border: 1px solid rgba(255,255,255,0.2);
-  transition: transform 0.3s ease;
+  background: #ffffff;
+  padding: 36px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
 }
 
 .problem-card:hover {
-  transform: translateY(-5px);
-}
-
-.problem-icon {
-  font-size: 3rem;
-  margin-bottom: 15px;
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  transform: translateY(-4px);
 }
 
 .problem-card h3 {
-  font-size: 1.4rem;
-  margin-bottom: 15px;
+  font-size: 1.35rem;
+  margin-bottom: 16px;
+  color: #1e293b;
+  font-weight: 600;
 }
 
+.problem-card p {
+  color: #475569;
+  line-height: 1.7;
+  font-size: 0.98rem;
+}
+
+/* Solution Section */
 .solution-section {
-  background: #f7fafc;
+  background: #ffffff;
 }
 
 .solution-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 40px;
-  margin-top: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 32px;
+  margin-top: 48px;
 }
 
 .solution-card {
-  background: white;
+  background: #ffffff;
   padding: 40px;
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
   transition: all 0.3s ease;
-  border: 2px solid transparent;
+  position: relative;
 }
 
 .solution-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.12);
-  border-color: #667eea;
+  border-color: #3b82f6;
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.12);
+  transform: translateY(-4px);
 }
 
 .solution-number {
   display: inline-block;
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border-radius: 50%;
-  text-align: center;
-  line-height: 60px;
-  font-size: 1.5rem;
+  padding: 8px 16px;
+  background: #eff6ff;
+  color: #1e40af;
+  border-radius: 6px;
+  font-size: 0.95rem;
   font-weight: 700;
   margin-bottom: 20px;
+  letter-spacing: 0.05em;
 }
 
 .solution-card h3 {
-  font-size: 1.6rem;
-  margin-bottom: 15px;
-  color: #2d3748;
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+  color: #1e293b;
+  font-weight: 600;
 }
 
 .solution-card p {
-  color: #4a5568;
-  line-height: 1.8;
+  color: #475569;
+  line-height: 1.7;
+  font-size: 0.98rem;
 }
 
+/* Services Section */
 .services-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-}
-
-.services-section .section-title,
-.services-section .section-subtitle {
-  color: white;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  margin-top: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+  margin-top: 48px;
 }
 
 .service-card {
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
-  padding: 35px;
-  border-radius: 15px;
-  border: 1px solid rgba(255,255,255,0.2);
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
   transition: all 0.3s ease;
 }
 
 .service-card:hover {
-  background: rgba(255,255,255,0.15);
-  transform: scale(1.05);
-}
-
-.service-icon {
-  font-size: 2.5rem;
-  margin-bottom: 15px;
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
 
 .service-card h3 {
-  font-size: 1.3rem;
-  margin-bottom: 10px;
+  font-size: 1.15rem;
+  margin-bottom: 12px;
+  color: #1e293b;
+  font-weight: 600;
 }
 
+.service-card p {
+  color: #64748b;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Benefits Section */
 .benefits-section {
-  background: white;
+  background: #ffffff;
 }
 
 .benefits-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px;
-  margin-top: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 32px;
+  margin-top: 48px;
 }
 
 .benefit-card {
   text-align: center;
-  padding: 40px 30px;
-  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-  border-radius: 20px;
+  padding: 48px 32px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
   transition: all 0.3s ease;
 }
 
 .benefit-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+  border-color: #3b82f6;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transform: translateY(-4px);
 }
 
-.benefit-icon {
-  font-size: 3.5rem;
-  margin-bottom: 20px;
-  display: inline-block;
+.metric {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1e40af;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
 }
 
 .benefit-card h3 {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
-  color: #2d3748;
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+  color: #1e293b;
+  font-weight: 600;
 }
 
 .benefit-card p {
-  color: #4a5568;
-  line-height: 1.8;
+  color: #475569;
+  line-height: 1.7;
+  font-size: 0.95rem;
 }
 
+/* Pricing Section */
 .pricing-section {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  color: white;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
 }
 
-.pricing-section .section-title,
-.pricing-section .section-subtitle {
-  color: white;
+.pricing-container {
+  max-width: 640px;
+  margin: 48px auto 0;
 }
 
 .pricing-card {
-  max-width: 600px;
-  margin: 40px auto 0;
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(10px);
-  padding: 50px;
-  border-radius: 25px;
-  border: 2px solid rgba(255,255,255,0.3);
+  background: #ffffff;
+  border-radius: 16px;
+  border: 2px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.price-header {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  color: #ffffff;
+  padding: 48px 40px 40px;
   text-align: center;
+}
+
+.price-header h3 {
+  font-size: 1.5rem;
+  margin-bottom: 24px;
+  font-weight: 600;
 }
 
 .price-tag {
   font-size: 4rem;
   font-weight: 700;
-  margin: 20px 0;
+  line-height: 1;
 }
 
-.price-tag span {
+.currency {
   font-size: 2rem;
-  opacity: 0.8;
+  vertical-align: top;
+  margin-right: 4px;
+}
+
+.period {
+  font-size: 1.5rem;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+.price-body {
+  padding: 40px;
 }
 
 .price-features {
   list-style: none;
-  margin: 30px 0;
-  text-align: left;
+  margin: 0;
+  padding: 0;
 }
 
 .price-features li {
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.2);
-  font-size: 1.1rem;
+  padding: 16px 0;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+  font-size: 1rem;
+  position: relative;
+  padding-left: 32px;
+}
+
+.price-features li:last-child {
+  border-bottom: none;
 }
 
 .price-features li:before {
-  content: "✓ ";
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #3b82f6;
   font-weight: 700;
-  margin-right: 10px;
+  font-size: 1.2rem;
 }
 
-.cta-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+.price-footer {
+  padding: 0 40px 40px;
+}
+
+.pricing-cta {
+  display: block;
+  width: 100%;
+  padding: 18px;
+  background: #1e3a8a;
+  color: #ffffff;
   text-align: center;
-  padding: 100px 20px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  transition: all 0.3s ease;
+}
+
+.pricing-cta:hover {
+  background: #1e40af;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(30, 58, 138, 0.3);
+}
+
+/* CTA Section */
+.cta-section {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  color: #ffffff;
+  padding: 120px 20px;
+}
+
+.cta-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .cta-section h2 {
   font-size: 3rem;
   margin-bottom: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .cta-section p {
-  font-size: 1.3rem;
-  margin-bottom: 40px;
+  font-size: 1.25rem;
+  margin-bottom: 48px;
   opacity: 0.95;
+  line-height: 1.7;
 }
 
-.cta-button-white {
+.cta-button-primary {
   display: inline-block;
-  padding: 18px 50px;
-  background: white;
-  color: #667eea;
+  padding: 18px 56px;
+  background: #ffffff;
+  color: #1e3a8a;
   text-decoration: none;
-  border-radius: 50px;
-  font-weight: 700;
-  font-size: 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
   transition: all 0.3s ease;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
 }
 
-.cta-button-white:hover {
-  transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+.cta-button-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  background: #f8fafc;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+/* Responsive Design */
 @media (max-width: 768px) {
   .hero h1 {
     font-size: 2.5rem;
@@ -585,15 +633,27 @@
   }
 
   .section-title {
-    font-size: 2rem;
+    font-size: 2.25rem;
   }
 
   .section {
-    padding: 60px 20px;
+    padding: 80px 20px;
   }
 
   .cta-section h2 {
-    font-size: 2rem;
+    font-size: 2.25rem;
+  }
+
+  .cta-section p {
+    font-size: 1.1rem;
+  }
+
+  .price-tag {
+    font-size: 3rem;
+  }
+
+  .metric {
+    font-size: 2.5rem;
   }
 }
 </style>
