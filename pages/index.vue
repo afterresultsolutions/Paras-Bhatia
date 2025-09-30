@@ -68,13 +68,29 @@
     <div v-if="filteredChatHistory.length === 0 && searchQuery" class="no-results">
       No chats found
     </div>
-    <div v-for="chat in filteredChatHistory" :key="chat.id" @click="loadChat(chat)" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
+<div v-if="archivedChats.length > 0" class="archived-section">
+  <div class="history-label">Archived</div>
+  <div v-for="chat in archivedChats" :key="chat.id" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
+    <div class="history-item-content" @click="loadChat(chat)">
       <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
       </svg>
       <span class="history-title">{{ chat.title }}</span>
     </div>
+    <div class="history-item-actions">
+      <button @click.stop="unarchiveChat(chat.id)" class="history-action-btn" title="Unarchive">
+        <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
+        </svg>
+      </button>
+      <button @click.stop="deleteChat(chat.id)" class="history-action-btn history-delete-btn" title="Delete">
+        <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+        </svg>
+      </button>
+    </div>
   </div>
+</div>
   
   <div :class="['sidebar-footer', isDarkMode ? 'footer-dark' : 'footer-light']">
     <a href="https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0" target="_blank" class="human-chat-btn footer-human-btn">
@@ -439,18 +455,22 @@ export default {
       }
     };
   },
-  computed: {
-    filteredChatHistory() {
-      if (!this.searchQuery.trim()) {
-        return this.chatHistory;
-      }
-      const query = this.searchQuery.toLowerCase();
-      return this.chatHistory.filter(chat => 
-        chat.title.toLowerCase().includes(query) ||
-        chat.messages.some(msg => msg.text.toLowerCase().includes(query))
-      );
+computed: {
+  filteredChatHistory() {
+    const activeChats = this.chatHistory.filter(chat => !chat.archived);
+    if (!this.searchQuery.trim()) {
+      return activeChats;
     }
+    const query = this.searchQuery.toLowerCase();
+    return activeChats.filter(chat => 
+      chat.title.toLowerCase().includes(query) ||
+      chat.messages.some(msg => msg.text.toLowerCase().includes(query))
+    );
   },
+  archivedChats() {
+    return this.chatHistory.filter(chat => chat.archived);
+  }
+},
 mounted() {
   // Always start with a fresh chat on page load/refresh
   this.messages = [];
@@ -492,6 +512,50 @@ mounted() {
     }
   },
 methods: {
+  renameChat(chat) {
+  const newTitle = prompt('Enter new chat name:', chat.title);
+  if (newTitle && newTitle.trim()) {
+    const chatIndex = this.chatHistory.findIndex(c => c.id === chat.id);
+    if (chatIndex !== -1) {
+      this.chatHistory[chatIndex].title = newTitle.trim();
+      if (process.client) {
+        localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+      }
+    }
+  }
+},
+
+archiveChat(chatId) {
+  const chatIndex = this.chatHistory.findIndex(c => c.id === chatId);
+  if (chatIndex !== -1) {
+    this.chatHistory[chatIndex].archived = true;
+    if (process.client) {
+      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+    }
+  }
+},
+
+unarchiveChat(chatId) {
+  const chatIndex = this.chatHistory.findIndex(c => c.id === chatId);
+  if (chatIndex !== -1) {
+    this.chatHistory[chatIndex].archived = false;
+    if (process.client) {
+      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+    }
+  }
+},
+
+deleteChat(chatId) {
+  if (confirm('Are you sure you want to delete this chat?')) {
+    this.chatHistory = this.chatHistory.filter(c => c.id !== chatId);
+    if (this.currentChatId === chatId) {
+      this.startNewChat();
+    }
+    if (process.client) {
+      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+    }
+  }
+},
     generateResponse(q) {
       const query = q.toLowerCase().trim();
       const kb = this.kb;
@@ -1004,6 +1068,76 @@ startNewChat() {
   cursor: pointer;
   transition: background-color 0.2s;
   margin-bottom: 4px;
+}
+.history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+  margin-bottom: 4px;
+  position: relative;
+}
+
+.history-item-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.history-item-actions {
+  display: none;
+  align-items: center;
+  gap: 4px;
+}
+
+.history-item:hover .history-item-actions {
+  display: flex;
+}
+
+.history-action-btn {
+  padding: 4px;
+  border: none;
+  background: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark-mode .history-action-btn:hover {
+  background-color: #3a3a3a;
+}
+
+.light-mode .history-action-btn:hover {
+  background-color: #d9d9d9;
+}
+
+.history-delete-btn:hover {
+  color: #ef4444 !important;
+}
+
+.archived-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid;
+}
+
+.sidebar-dark .archived-section {
+  border-color: #363636;
+}
+
+.sidebar-light .archived-section {
+  border-color: #e5e5e5;
 }
 
 .history-item-dark:hover {
