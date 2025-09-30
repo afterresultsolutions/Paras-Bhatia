@@ -490,13 +490,13 @@ methods: {
       const query = q.toLowerCase().trim();
       const kb = this.kb;
       
-      const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste'];
-      if (greetings.some(g => query === g || query === g + '!' || query === g + '?')) {
-        return {
-          text: "Hi there! Welcome to AR Solutions! 👋\n\nI can help you with information about launching your online store. Feel free to ask me about:\n\n• Pricing and payment plans\n• What's included in our package\n• Timeline and delivery\n• Technical requirements\n• Marketing and sales support\n• And more!\n\nWhat would you like to know?",
-          hasButton: false
-        };
-      }
+const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste'];
+if (greetings.some(g => query === g || query === g + '!' || query === g + '?')) {
+  return {
+    text: "Oops! Looks like I'm not trained for that yet, but I'm learning every day!",
+    hasButton: false
+  };
+}
       
       if (kb.keywords.howareyou.some(kw => query.includes(kw))) {
         return { text: kb.responses.howareyou, hasButton: false };
@@ -642,10 +642,10 @@ methods: {
         };
       }
       
-      return {
-        text: "Thank you for reaching out! I'd be happy to help you with information about our ecommerce store setup service or other business solutions.\n\nFeel free to ask about:\n• Pricing and packages\n• Features and services\n• Timeline and delivery\n• Marketing support\n• Or anything else!\n\nYou can also chat with our team directly for personalized assistance.",
-        hasButton: false
-      };
+return {
+  text: "Oops! Looks like I'm not trained for that yet, but I'm learning every day!",
+  hasButton: false
+};
     },
 
     autocorrectText(text) {
