@@ -206,7 +206,7 @@
     </a>
   </div>
 
-  <div class="sidebar-content">
+<div class="sidebar-content">
     <div v-if="filteredChatHistory.length > 0" class="history-label">Recent</div>
     <div v-for="chat in filteredChatHistory" :key="chat.id" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
       <div class="history-item-content" @click="loadChat(chat); showMenu = false">
@@ -233,9 +233,61 @@
         </button>
       </div>
     </div>
+    
+    <!-- ARCHIVED SECTION FOR MOBILE -->
+    <div v-if="archivedChats.length > 0" class="archived-section">
+      <button @click="showArchived = !showArchived" :class="['archived-toggle', isDarkMode ? 'btn-dark' : 'btn-light']">
+        <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+        </svg>
+        <span>Archived ({{ archivedChats.length }})</span>
+        <svg :class="['icon-sm', 'arrow-icon', { 'arrow-rotated': showArchived }]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+      
+      <div v-if="showArchived" class="archived-chats">
+        <div v-for="chat in archivedChats" :key="chat.id" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
+          <div class="history-item-content" @click="loadChat(chat); showMenu = false">
+            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+            </svg>
+            <span class="history-title">{{ chat.title }}</span>
+          </div>
+          <div class="history-item-actions">
+            <button @click.stop="unarchiveChat(chat.id)" class="history-action-btn" title="Unarchive">
+              <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
+              </svg>
+            </button>
+            <button @click.stop="deleteChat(chat.id)" class="history-action-btn history-delete-btn" title="Delete">
+              <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   
   <!-- ... rest of footer ... -->
+    <div :class="['sidebar-footer', isDarkMode ? 'footer-dark' : 'footer-light']">
+    <a href="https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0" target="_blank" class="human-chat-btn footer-human-btn mobile-human-btn">
+      <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+      </svg>
+      <span class="human-chat-text">Chat with Human</span>
+    </a>
+    <button @click="toggleTheme" :class="['footer-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
+      <svg v-if="isDarkMode" class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+      </svg>
+      <svg v-else class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+      </svg>
+    </button>
+  </div>
 </div>
             <!-- Main content -->
       <div class="main-content">
@@ -448,18 +500,23 @@ const autocorrectDict = {
 export default {
   name: 'ChatbotPage',
   data() {
-    return {
-      query: "",
-      showMenu: false,
-      messages: [],
-      isDarkMode: false,
-      chatHistory: [],
-      currentChatId: null,
-      searchQuery: "",
-      autocorrectTimeout: null,
-      isTempMode: false, 
-      showArchived: false,
-      kb: {
+  return {
+    query: "",
+    showMenu: false,
+    messages: [],
+    isDarkMode: false,
+    chatHistory: [],
+    currentChatId: null,
+    searchQuery: "",
+    autocorrectTimeout: null,
+    isTempMode: false, 
+    showArchived: false,
+    // Add these new touch tracking variables
+    touchStartX: 0,
+    touchEndX: 0,
+    touchStartY: 0,
+    touchEndY: 0,
+    kb: {
         keywords: {
           pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget'],
           whatsappmarketing: ['whatsapp marketing', 'whatsapp setup', 'lead generation', 'linkedin scraping', 'google scraping', 'whatsapp business', 'promotional messages', 'auto reply', 'whatsapp leads'],
@@ -477,10 +534,10 @@ export default {
           quickdelivery: ['quick delivery', 'fast delivery', 'urgent', 'asap', 'faster'],
           marketing: ['marketing', 'advertisement', 'promote', 'advertising', 'campaign', 'ads', 'digital marketing'],
           sales: ['sales', 'selling', 'revenue', 'grow business', 'increase sales', 'boost sales'],
-whatsapp_messages: ['how many messages', 'message quantity', 'messages per day', 'daily messages', 'message limit', 'how many promotional', 'message delivery', 'promotional limit', 'send messages'],
+whatsapp_messages: ['how many messages', 'how many message', 'message quantity', 'messages per day', 'daily messages', 'message limit', 'how many promotional', 'message delivery', 'promotional limit', 'send messages'],
 whatsapp_timeline: ['how long whatsapp', 'whatsapp delivery time', 'whatsapp project time', 'when complete whatsapp', 'whatsapp days', 'timeline whatsapp'],
 whatsapp_leads: ['where leads from', 'lead source', 'linkedin scraping', 'google scraping', 'how get leads', 'lead generation', 'finding leads', 'scraping data', 'data scraping'],
-whatsapp_setup: ['whatsapp business setup', 'whatsapp account', 'business account setup', 'whatsapp installation', 'setup whatsapp', 'configure whatsapp'],
+whatsapp_setup: ['whatsapp business setup', 'whatsapp account', 'whatsapp', 'business account setup', 'whatsapp installation', 'setup whatsapp', 'configure whatsapp'],
 whatsapp_features: ['auto reply', 'catalog', 'away message', 'quick response', 'profile message', 'what features whatsapp', 'whatsapp automation', 'auto response'],
 whatsapp_price: ['whatsapp cost', 'whatsapp price', 'whatsapp marketing price', 'how much whatsapp', 'pricing whatsapp'],
 whatsapp_community: ['community building', 'whatsapp group', 'group marketing', 'organic growth', 'community strategy'],
@@ -588,6 +645,35 @@ mounted() {
     }
   },
 methods: {
+  handleTouchStart(e) {
+    this.touchStartX = e.changedTouches[0].screenX;
+    this.touchStartY = e.changedTouches[0].screenY;
+  },
+
+  handleTouchEnd(e) {
+    this.touchEndX = e.changedTouches[0].screenX;
+    this.touchEndY = e.changedTouches[0].screenY;
+    this.handleSwipe();
+  },
+
+  handleSwipe() {
+    const swipeDistance = this.touchEndX - this.touchStartX;
+    const verticalDistance = Math.abs(this.touchEndY - this.touchStartY);
+    
+    // Only trigger if horizontal swipe is more than 50px and vertical movement is less than 100px
+    if (Math.abs(swipeDistance) > 50 && verticalDistance < 100) {
+      // Swipe right (left to right) - open sidebar
+      if (swipeDistance > 0 && this.touchStartX < 50) {
+        this.showMenu = true;
+      }
+      // Swipe left (right to left) - close sidebar
+      else if (swipeDistance < 0 && this.showMenu) {
+        this.showMenu = false;
+      }
+    }
+  },
+
+  // ... rest of your existing methods
   renameChat(chat) {
     const newTitle = prompt('Enter new chat name:', chat.title);
     if (newTitle && newTitle.trim()) {
@@ -645,7 +731,7 @@ toggleTempMode() {
     const query = q.toLowerCase().trim();
     const kb = this.kb;
     
-    const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste'];
+    const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste', 'yes', 'hy', 'hlo', 'kon'];
     if (greetings.some(g => query === g || query === g + '!' || query === g + '?')) {
       return {
         text: "Hi there! How's it going? How may I help you today?",
@@ -1357,18 +1443,21 @@ this.messages.push({
   justify-content: center;
   gap: 6px;
   padding: 10px 12px;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 500;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: # 000000; 
   color: white;
   border: none;
-  border-radius: 20px;
+  border-radius: 18px;
   text-decoration: none;
   cursor: pointer;
   transition: opacity 0.2s;
   flex: 1;
   max-width: none;
   white-space: nowrap;
+}
+.mobile-human-btn:hover {
+  opacity: 0.85 !important;
 }
 
 .human-chat-text {
