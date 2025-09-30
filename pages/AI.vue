@@ -674,7 +674,7 @@ keywords: {
     interested: "Great! Let me share more details...",
     
     // SKEPTICISM HANDLING
-    skeptical: "I understand your concern. AR Solutions has been delivering results since 2024. We offer:\n✓ Transparent pricing\n✓ No hidden charges\n✓ Complete support\n✓ Real deliverables\n\nWant to see our work or talk to our team?"
+    skeptical: "I understand your concern. AR Solutions has been delivering results since 2024. We offer:\n✓ Transparent pricing\n✓ No hidden charges\n✓ Complete support\n✓ Real deliverables\n\nWant to see our work or talk to our team?",
         }
       }
     };
