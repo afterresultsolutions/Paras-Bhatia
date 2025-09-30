@@ -541,483 +541,446 @@ mounted() {
   },
 methods: {
   renameChat(chat) {
-  const newTitle = prompt('Enter new chat name:', chat.title);
-  if (newTitle && newTitle.trim()) {
-    const chatIndex = this.chatHistory.findIndex(c => c.id === chat.id);
+    const newTitle = prompt('Enter new chat name:', chat.title);
+    if (newTitle && newTitle.trim()) {
+      const chatIndex = this.chatHistory.findIndex(c => c.id === chat.id);
+      if (chatIndex !== -1) {
+        this.chatHistory[chatIndex].title = newTitle.trim();
+        if (process.client) {
+          localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+        }
+      }
+    }
+  },
+
+  archiveChat(chatId) {
+    const chatIndex = this.chatHistory.findIndex(c => c.id === chatId);
     if (chatIndex !== -1) {
-      this.chatHistory[chatIndex].title = newTitle.trim();
+      this.chatHistory[chatIndex].archived = true;
       if (process.client) {
         localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
       }
     }
-  }
-},
+  },
 
-archiveChat(chatId) {
-  const chatIndex = this.chatHistory.findIndex(c => c.id === chatId);
-  if (chatIndex !== -1) {
-    this.chatHistory[chatIndex].archived = true;
-    if (process.client) {
-      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+  unarchiveChat(chatId) {
+    const chatIndex = this.chatHistory.findIndex(c => c.id === chatId);
+    if (chatIndex !== -1) {
+      this.chatHistory[chatIndex].archived = false;
+      if (process.client) {
+        localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+      }
     }
-  }
-},
+  },
 
-unarchiveChat(chatId) {
-  const chatIndex = this.chatHistory.findIndex(c => c.id === chatId);
-  if (chatIndex !== -1) {
-    this.chatHistory[chatIndex].archived = false;
-    if (process.client) {
-      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+  deleteChat(chatId) {
+    if (confirm('Are you sure you want to delete this chat?')) {
+      this.chatHistory = this.chatHistory.filter(c => c.id !== chatId);
+      if (this.currentChatId === chatId) {
+        this.startNewChat();
+      }
+      if (process.client) {
+        localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+      }
     }
-  }
-},
+  },
 
-deleteChat(chatId) {
-  if (confirm('Are you sure you want to delete this chat?')) {
-    this.chatHistory = this.chatHistory.filter(c => c.id !== chatId);
-    if (this.currentChatId === chatId) {
-      this.startNewChat();
+  toggleTempMode() {
+    this.isTempMode = !this.isTempMode;
+    if (this.isTempMode) {
+      this.messages = [];
+      this.currentChatId = null;
+      alert('Temporary mode enabled. Your chat history will not be saved.');
+    } else {
+      alert('Temporary mode disabled. Chat history will be saved normally.');
     }
-    if (process.client) {
-      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
-    }
-  }
-},  // <-- This comma is important
+  },
 
-toggleTempMode() {
-  this.isTempMode = !this.isTempMode;
-  if (this.isTempMode) {
-    this.messages = [];
-    this.currentChatId = null;
-    alert('Temporary mode enabled. Your chat history will not be saved.');
-  } else {
-    alert('Temporary mode disabled. Chat history will be saved normally.');
-  }
-},
-    generateResponse(q) {
-      const query = q.toLowerCase().trim();
-      const kb = this.kb;
-      
-const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste'];
-if (greetings.some(g => query === g || query === g + '!' || query === g + '?')) {
-  return {
-    text: "Hi there! How's it going? How may I help you today?",
-    hasButton: false
-  };
-}
-      
-if (kb.keywords.howareyou.some(kw => query.includes(kw))) {
-  return { text: kb.responses.howareyou, hasButton: false };
-}
-
-if (kb.keywords.casual.some(kw => query.includes(kw))) {
-  return {
-    text: "That's wonderful to hear! How can I assist you with your online business today? Feel free to ask about our services, pricing, or anything else!",
-    hasButton: false
-  };
-}
-
-if (kb.keywords.whoareyou.some(kw => query.includes(kw))) {
-  return { text: kb.responses.whoareyou, hasButton: false };
-}
-      
-      if (kb.keywords.thankyou.some(kw => query.includes(kw))) {
-        return { text: kb.responses.thankyou, hasButton: false };
-      }
-      
-      if (kb.keywords.bye.some(kw => query.includes(kw))) {
-        return { text: kb.responses.bye, hasButton: false };
-      }
-      
-      if (kb.keywords.services.some(kw => query.includes(kw))) {
-        return {
-          text: kb.responses.services,
-          hasButton: true,
-          buttonText: 'Download Services Brochure',
-          buttonLink: 'https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf'
-        };
-      }
-      
-      if (kb.keywords.marketing.some(kw => query.includes(kw))) {
-        return { text: kb.responses.marketing, hasButton: true };
-      }
-      
-      if (kb.keywords.sales.some(kw => query.includes(kw))) {
-        return { text: kb.responses.sales, hasButton: true };
-      }
-      
-      if (kb.keywords.scaling.some(kw => query.includes(kw))) {
-        return { text: kb.responses.scaling, hasButton: true };
-      }
-      
-      if (kb.keywords.contact.some(kw => query.includes(kw))) {
-        return { text: kb.responses.contact, hasButton: false };
-      }
-      
-      if (greetings.some(g => query.startsWith(g + ' ') || query.startsWith(g + ','))) {
-        return {
-          text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}`,
-          hasButton: true
-        };
-      }
-      
-      if (kb.keywords.confirmation.some(kw => query.includes(kw))) {
-        return { text: kb.responses.confirmation, hasButton: true };
-      }
-      
-      if (kb.keywords.pricing.some(kw => query.includes(kw))) {
-        return {
-          text: `${kb.responses.pricing}\n\n${kb.responses.quickDelivery}\n\n${kb.responses.confirmation}`,
-          hasButton: true
-        };
-      }
-      
-      if (kb.keywords.installment.some(kw => query.includes(kw))) {
-        return {
-          text: `${kb.responses.installments}\n\n${kb.responses.pricing}`,
-          hasButton: true
-        };
-      }
-      
-      if (kb.keywords.quickdelivery.some(kw => query.includes(kw))) {
-        return {
-          text: `${kb.responses.quickDelivery}\n\n${kb.responses.timeline}`,
-          hasButton: true
-        };
-      }
-      
-      if (kb.keywords.features.some(kw => query.includes(kw))) {
-        return {
-          text: `${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
-          hasButton: true
-        };
-      }
-      
-      if (kb.keywords.timeline.some(kw => query.includes(kw))) {
-        return {
-          text: `${kb.responses.timeline}\n\n${kb.responses.confirmation}`,
-          hasButton: true
-        };
-      }
-      
-      if (kb.keywords.technical.some(kw => query.includes(kw))) {
-        return {
-          text: `${kb.responses.noTech}\n\n${kb.responses.fullPackage}`,
-          hasButton: true
-        };
-      }
-      
-      if (kb.keywords.products.some(kw => query.includes(kw))) {
-        return {
-          text: `${kb.responses.products}\n\n${kb.responses.pricing}`,
-          hasButton: true
-        };
-      }
-      
-      if (kb.keywords.domain.some(kw => query.includes(kw))) {
-        return {
-          text: `${kb.responses.domain}\n\n${kb.responses.confirmation}`,
-          hasButton: true
-        };
-      }
-      
-      if (kb.keywords.training.some(kw => query.includes(kw))) {
-        return {
-          text: `${kb.responses.training}\n\n${kb.responses.confirmation}`,
-          hasButton: true
-        };
-      }
-      
-      if (kb.keywords.platform.some(kw => query.includes(kw))) {
-        return {
-          text: `${kb.responses.platform}\n\n${kb.responses.fullPackage}`,
-          hasButton: true
-        };
-      }
-      
-      if (kb.keywords.payment_gateway.some(kw => query.includes(kw))) {
-        return {
-          text: `${kb.responses.paymentGateway}\n\n${kb.responses.confirmation}`,
-          hasButton: true
-        };
-      }
-      
-      if (kb.keywords.design.some(kw => query.includes(kw))) {
-        return {
-          text: `${kb.responses.design}\n\n${kb.responses.confirmation}`,
-          hasButton: true
-        };
-      }
-      
-      const ecommerceKeywords = ['ecommerce', 'e-commerce', 'online store', 'store', 'shop', 'website', 'sell online', 'business'];
-      if (ecommerceKeywords.some(kw => query.includes(kw))) {
-        return {
-          text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
-          hasButton: true
-        };
-      }
-      
-return {
-  text: "Oops! Looks like I'm not trained for that yet, but I'm learning every day!",
-  hasButton: false
-};
-    },
-
-    autocorrectText(text) {
-      const words = text.split(/(\s+|[.,!?;:])/);
-      
-      const correctedWords = words.map(word => {
-        if (/^\s+$/.test(word) || /^[.,!?;:]$/.test(word)) {
-          return word;
-        }
-        
-        const lowerWord = word.toLowerCase();
-        
-        if (lowerWord.endsWith('?') || lowerWord.endsWith('!')) {
-          const baseWord = lowerWord.slice(0, -1);
-          const punctuation = lowerWord.slice(-1);
-          if (autocorrectDict[baseWord]) {
-            return word.charAt(0) === word.charAt(0).toUpperCase() 
-              ? autocorrectDict[baseWord].charAt(0).toUpperCase() + autocorrectDict[baseWord].slice(1) + punctuation
-              : autocorrectDict[baseWord] + punctuation;
-          }
-        }
-        
-        if (autocorrectDict[lowerWord]) {
-          const corrected = autocorrectDict[lowerWord];
-          if (word.charAt(0) === word.charAt(0).toUpperCase()) {
-            return corrected.charAt(0).toUpperCase() + corrected.slice(1);
-          }
-          return corrected;
-        }
-        
-        return word;
-      });
-      
-      return correctedWords.join('');
-    },
-
-    handleInputChange() {
-      if (this.autocorrectTimeout) {
-        clearTimeout(this.autocorrectTimeout);
-      }
-      
-      this.autocorrectTimeout = setTimeout(() => {
-        const input = this.$refs.queryInput || this.$refs.queryInputBottom;
-        const cursorPosition = input?.selectionStart || 0;
-        const originalLength = this.query.length;
-        const corrected = this.autocorrectText(this.query);
-        
-        if (corrected !== this.query) {
-          this.query = corrected;
-          
-          this.$nextTick(() => {
-            if (input) {
-              const lengthDiff = this.query.length - originalLength;
-              const newPosition = cursorPosition + lengthDiff;
-              input.setSelectionRange(newPosition, newPosition);
-            }
-          });
-        }
-      }, 500);
-    },
-
-async handleSearch() {
-  if (!this.query.trim()) return;
-  
-  const userQuery = this.query.trim();
-  
-// Create new chat ID if starting fresh (only if NOT in temp mode)
-  if (!this.currentChatId && !this.isTempMode) {  // <-- CHANGE THIS LINE
-    this.currentChatId = Date.now().toString();
-  }
-  
-  this.messages.push({
-    type: 'user',
-    text: userQuery,
-    timestamp: new Date()
-  });
-  
-  this.query = "";
-  
-  // Don't save current messages to localStorage - only keep in memory
-  
-  await this.$nextTick();
-  this.scrollToBottom();
-  
-  setTimeout(() => {
-    const aiResponse = this.generateResponse(userQuery);
+  generateResponse(q) {
+    const query = q.toLowerCase().trim();
+    const kb = this.kb;
     
-    this.messages.push({
-      type: 'bot',
-      text: aiResponse.text,
-      timestamp: new Date(),
-      hasButton: aiResponse.hasButton,
-      buttonText: aiResponse.buttonText || 'Launch My Store - ₹1,599',
-      buttonLink: aiResponse.buttonLink || 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
+    const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste'];
+    if (greetings.some(g => query === g || query === g + '!' || query === g + '?')) {
+      return {
+        text: "Hi there! How's it going? How may I help you today?",
+        hasButton: false
+      };
+    }
+    
+    if (kb.keywords.howareyou.some(kw => query.includes(kw))) {
+      return { text: kb.responses.howareyou, hasButton: false };
+    }
+
+    if (kb.keywords.casual.some(kw => query.includes(kw))) {
+      return {
+        text: "That's wonderful to hear! How can I assist you with your online business today? Feel free to ask about our services, pricing, or anything else!",
+        hasButton: false
+      };
+    }
+
+    if (kb.keywords.whoareyou.some(kw => query.includes(kw))) {
+      return { text: kb.responses.whoareyou, hasButton: false };
+    }
+    
+    if (kb.keywords.thankyou.some(kw => query.includes(kw))) {
+      return { text: kb.responses.thankyou, hasButton: false };
+    }
+    
+    if (kb.keywords.bye.some(kw => query.includes(kw))) {
+      return { text: kb.responses.bye, hasButton: false };
+    }
+    
+    if (kb.keywords.services.some(kw => query.includes(kw))) {
+      return {
+        text: kb.responses.services,
+        hasButton: true,
+        buttonText: 'Download Services Brochure',
+        buttonLink: 'https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf'
+      };
+    }
+    
+    if (kb.keywords.marketing.some(kw => query.includes(kw))) {
+      return { text: kb.responses.marketing, hasButton: true };
+    }
+    
+    if (kb.keywords.sales.some(kw => query.includes(kw))) {
+      return { text: kb.responses.sales, hasButton: true };
+    }
+    
+    if (kb.keywords.scaling.some(kw => query.includes(kw))) {
+      return { text: kb.responses.scaling, hasButton: true };
+    }
+    
+    if (kb.keywords.contact.some(kw => query.includes(kw))) {
+      return { text: kb.responses.contact, hasButton: false };
+    }
+    
+    if (greetings.some(g => query.startsWith(g + ' ') || query.startsWith(g + ','))) {
+      return {
+        text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.confirmation.some(kw => query.includes(kw))) {
+      return { text: kb.responses.confirmation, hasButton: true };
+    }
+    
+    if (kb.keywords.pricing.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.pricing}\n\n${kb.responses.quickDelivery}\n\n${kb.responses.confirmation}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.installment.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.installments}\n\n${kb.responses.pricing}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.quickdelivery.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.quickDelivery}\n\n${kb.responses.timeline}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.features.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.timeline.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.timeline}\n\n${kb.responses.confirmation}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.technical.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.noTech}\n\n${kb.responses.fullPackage}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.products.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.products}\n\n${kb.responses.pricing}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.domain.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.domain}\n\n${kb.responses.confirmation}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.training.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.training}\n\n${kb.responses.confirmation}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.platform.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.platform}\n\n${kb.responses.fullPackage}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.payment_gateway.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.paymentGateway}\n\n${kb.responses.confirmation}`,
+        hasButton: true
+      };
+    }
+    
+    if (kb.keywords.design.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.design}\n\n${kb.responses.confirmation}`,
+        hasButton: true
+      };
+    }
+    
+    const ecommerceKeywords = ['ecommerce', 'e-commerce', 'online store', 'store', 'shop', 'website', 'sell online', 'business'];
+    if (ecommerceKeywords.some(kw => query.includes(kw))) {
+      return {
+        text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
+        hasButton: true
+      };
+    }
+    
+    return {
+      text: "Oops! Looks like I'm not trained for that yet, but I'm learning every day!",
+      hasButton: false
+    };
+  },
+
+  autocorrectText(text) {
+    const words = text.split(/(\s+|[.,!?;:])/);
+    
+    const correctedWords = words.map(word => {
+      if (/^\s+$/.test(word) || /^[.,!?;:]$/.test(word)) {
+        return word;
+      }
+      
+      const lowerWord = word.toLowerCase();
+      
+      if (lowerWord.endsWith('?') || lowerWord.endsWith('!')) {
+        const baseWord = lowerWord.slice(0, -1);
+        const punctuation = lowerWord.slice(-1);
+        if (autocorrectDict[baseWord]) {
+          return word.charAt(0) === word.charAt(0).toUpperCase() 
+            ? autocorrectDict[baseWord].charAt(0).toUpperCase() + autocorrectDict[baseWord].slice(1) + punctuation
+            : autocorrectDict[baseWord] + punctuation;
+        }
+      }
+      
+      if (autocorrectDict[lowerWord]) {
+        const corrected = autocorrectDict[lowerWord];
+        if (word.charAt(0) === word.charAt(0).toUpperCase()) {
+          return corrected.charAt(0).toUpperCase() + corrected.slice(1);
+        }
+        return corrected;
+      }
+      
+      return word;
     });
     
-    this.scrollToBottom();
-  }, 500);
-},
+    return correctedWords.join('');
+  },
 
-    scrollToBottom() {
-      this.$nextTick(() => {
-        if (this.$refs.messagesContainer) {
-          this.$refs.messagesContainer.scrollTop = this.$refs.messagesContainer.scrollHeight;
-        }
-      });
-    },
-
-    toggleTheme() {
-      this.isDarkMode = !this.isDarkMode;
-      if (process.client) {
-        localStorage.setItem('ar-theme', this.isDarkMode ? 'dark' : 'light');
-      }
-    },
-
-startNewChat() {
-  // Save current chat to history before starting new one (only if NOT in temp mode)
-  if (this.messages.length > 0 && !this.isTempMode) {
-    const existingIndex = this.chatHistory.findIndex(c => c.id === this.currentChatId);
-    
-    if (existingIndex === -1) {
-      this.chatHistory.unshift({
-        id: this.currentChatId || Date.now().toString(),
-        title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
-        messages: [...this.messages],
-        date: new Date()
-      });
-    } else {
-      this.chatHistory[existingIndex] = {
-        ...this.chatHistory[existingIndex],
-        messages: [...this.messages],
-        date: new Date()
-      };
+  handleInputChange() {
+    if (this.autocorrectTimeout) {
+      clearTimeout(this.autocorrectTimeout);
     }
     
-    if (process.client) {
-      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
-    }
-  }
-  
-  // Clear current chat
-  this.messages = [];
-  this.query = "";
-  this.currentChatId = null;
-  this.showMenu = false;
-  
-  if (process.client && !this.isTempMode) {
-    localStorage.removeItem('ar-current-messages');
-    localStorage.removeItem('ar-current-chat-id');
-  }
-},
-    
-if (existingIndex === -1) {
-      this.chatHistory.unshift({
-        id: this.currentChatId || Date.now().toString(),
-        title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
-        messages: [...this.messages],
-        date: new Date()
-      });
-    } else {
-      // Update existing chat
-      this.chatHistory[existingIndex] = {
-        ...this.chatHistory[existingIndex],
-        messages: [...this.messages],
-        date: new Date()
-      };
-    }
-    
-    if (process.client) {
-      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
-    }
-  }
-  
-  // Clear current chat
-  this.messages = [];
-  this.query = "";
-  this.currentChatId = null;
-  this.showMenu = false;
-  
-  if (process.client) {
-    localStorage.removeItem('ar-current-messages');
-    localStorage.removeItem('ar-current-chat-id');
-  }
-},
-
-    loadChat(chat) {
-      if (this.messages.length > 0 && this.currentChatId !== chat.id) {
-        const existingIndex = this.chatHistory.findIndex(c => c.id === this.currentChatId);
-        if (existingIndex === -1) {
-          this.chatHistory.unshift({
-            id: this.currentChatId,
-            title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
-            messages: [...this.messages],
-            date: new Date()
-          });
-        }
-      }
-      this.messages = [...chat.messages];
-      this.currentChatId = chat.id;
-      this.showMenu = false;
-      this.scrollToBottom();
-    },
-
-    copyMessage(text) {
-      if (process.client && navigator.clipboard) {
-        navigator.clipboard.writeText(text).then(() => {
-          alert('Message copied to clipboard!');
-        }).catch(() => {
-          alert('Failed to copy message');
+    this.autocorrectTimeout = setTimeout(() => {
+      const input = this.$refs.queryInput || this.$refs.queryInputBottom;
+      const cursorPosition = input?.selectionStart || 0;
+      const originalLength = this.query.length;
+      const corrected = this.autocorrectText(this.query);
+      
+      if (corrected !== this.query) {
+        this.query = corrected;
+        
+        this.$nextTick(() => {
+          if (input) {
+            const lengthDiff = this.query.length - originalLength;
+            const newPosition = cursorPosition + lengthDiff;
+            input.setSelectionRange(newPosition, newPosition);
+          }
         });
       }
-    },
+    }, 500);
+  },
 
-    likeMessage(index) {
-      alert('Thank you for your feedback! 👍');
-    },
+  async handleSearch() {
+    if (!this.query.trim()) return;
+    
+    const userQuery = this.query.trim();
+    
+    if (!this.currentChatId && !this.isTempMode) {
+      this.currentChatId = Date.now().toString();
+    }
+    
+    this.messages.push({
+      type: 'user',
+      text: userQuery,
+      timestamp: new Date()
+    });
+    
+    this.query = "";
+    
+    await this.$nextTick();
+    this.scrollToBottom();
+    
+    setTimeout(() => {
+      const aiResponse = this.generateResponse(userQuery);
+      
+      this.messages.push({
+        type: 'bot',
+        text: aiResponse.text,
+        timestamp: new Date(),
+        hasButton: aiResponse.hasButton,
+        buttonText: aiResponse.buttonText || 'Launch My Store - ₹1,599',
+        buttonLink: aiResponse.buttonLink || 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
+      });
+      
+      this.scrollToBottom();
+    }, 500);
+  },
 
-    dislikeMessage(index) {
-      alert('Thank you for your feedback. We will improve! 👎');
-    },
-
-    regenerateResponse(index) {
-      if (index > 0 && this.messages[index - 1]?.type === 'user') {
-        const userQuery = this.messages[index - 1].text;
-        this.messages.splice(index, 1);
-        
-        setTimeout(() => {
-          const aiResponse = this.generateResponse(userQuery);
-          
-          this.messages.push({
-            type: 'bot',
-            text: aiResponse.text,
-            timestamp: new Date(),
-            hasButton: aiResponse.hasButton,
-            buttonText: 'Launch My Store - ₹1,599',
-            buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
-          });
-          
-          this.scrollToBottom();
-        }, 300);
+  scrollToBottom() {
+    this.$nextTick(() => {
+      if (this.$refs.messagesContainer) {
+        this.$refs.messagesContainer.scrollTop = this.$refs.messagesContainer.scrollHeight;
       }
-    },
+    });
+  },
 
-    shareMessage(text) {
-      if (process.client && navigator.share) {
-        navigator.share({
-          title: 'AR Solutions AI Response',
-          text: text
-        }).catch(() => {
-          this.copyMessage(text);
+  toggleTheme() {
+    this.isDarkMode = !this.isDarkMode;
+    if (process.client) {
+      localStorage.setItem('ar-theme', this.isDarkMode ? 'dark' : 'light');
+    }
+  },
+
+  startNewChat() {
+    if (this.messages.length > 0 && !this.isTempMode) {
+      const existingIndex = this.chatHistory.findIndex(c => c.id === this.currentChatId);
+      
+      if (existingIndex === -1) {
+        this.chatHistory.unshift({
+          id: this.currentChatId || Date.now().toString(),
+          title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
+          messages: [...this.messages],
+          date: new Date()
         });
       } else {
-        this.copyMessage(text);
+        this.chatHistory[existingIndex] = {
+          ...this.chatHistory[existingIndex],
+          messages: [...this.messages],
+          date: new Date()
+        };
+      }
+      
+      if (process.client) {
+        localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
       }
     }
+    
+    this.messages = [];
+    this.query = "";
+    this.currentChatId = null;
+    this.showMenu = false;
+    
+    if (process.client && !this.isTempMode) {
+      localStorage.removeItem('ar-current-messages');
+      localStorage.removeItem('ar-current-chat-id');
+    }
+  },
+
+  loadChat(chat) {
+    if (this.messages.length > 0 && this.currentChatId !== chat.id) {
+      const existingIndex = this.chatHistory.findIndex(c => c.id === this.currentChatId);
+      if (existingIndex === -1) {
+        this.chatHistory.unshift({
+          id: this.currentChatId,
+          title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
+          messages: [...this.messages],
+          date: new Date()
+        });
+      }
+    }
+    this.messages = [...chat.messages];
+    this.currentChatId = chat.id;
+    this.showMenu = false;
+    this.scrollToBottom();
+  },
+
+  copyMessage(text) {
+    if (process.client && navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Message copied to clipboard!');
+      }).catch(() => {
+        alert('Failed to copy message');
+      });
+    }
+  },
+
+  likeMessage(index) {
+    alert('Thank you for your feedback! 👍');
+  },
+
+  dislikeMessage(index) {
+    alert('Thank you for your feedback. We will improve! 👎');
+  },
+
+  regenerateResponse(index) {
+    if (index > 0 && this.messages[index - 1]?.type === 'user') {
+      const userQuery = this.messages[index - 1].text;
+      this.messages.splice(index, 1);
+      
+      setTimeout(() => {
+        const aiResponse = this.generateResponse(userQuery);
+        
+        this.messages.push({
+          type: 'bot',
+          text: aiResponse.text,
+          timestamp: new Date(),
+          hasButton: aiResponse.hasButton,
+          buttonText: 'Launch My Store - ₹1,599',
+          buttonLink: 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view'
+        });
+        
+        this.scrollToBottom();
+      }, 300);
+    }
+  },
+
+  shareMessage(text) {
+    if (process.client && navigator.share) {
+      navigator.share({
+        title: 'AR Solutions AI Response',
+        text: text
+      }).catch(() => {
+        this.copyMessage(text);
+      });
+    } else {
+      this.copyMessage(text);
+    }
   }
+}
 };
 </script>
 
