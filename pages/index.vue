@@ -400,6 +400,7 @@ export default {
           scaling: ['scale', 'scaling', 'growth', 'expand', 'expansion'],
           contact: ['contact', 'reach', 'email', 'phone', 'call', 'demo', 'meeting'],
           services: ['services', 'what do you do', 'offerings', 'solutions', 'brochure', 'catalog'],
+          casual: ['i am good', 'im good', 'i am fine', 'im fine', 'i am also good', 'im also good', 'doing well', 'doing good', 'all good', 'great', 'fine', 'okay', 'ok', 'good', 'nice', 'cool', 'awesome'],
           howareyou: ['how are you', 'how are you doing', 'whats up', "what's up", 'hows it going'],
           whoareyou: ['who are you', 'what are you', 'your name', 'about you'],
           thankyou: ['thank you', 'thanks', 'thank u', 'thx', 'appreciate'],
@@ -498,13 +499,20 @@ if (greetings.some(g => query === g || query === g + '!' || query === g + '?')) 
   };
 }
       
-      if (kb.keywords.howareyou.some(kw => query.includes(kw))) {
-        return { text: kb.responses.howareyou, hasButton: false };
-      }
-      
-      if (kb.keywords.whoareyou.some(kw => query.includes(kw))) {
-        return { text: kb.responses.whoareyou, hasButton: false };
-      }
+if (kb.keywords.howareyou.some(kw => query.includes(kw))) {
+  return { text: kb.responses.howareyou, hasButton: false };
+}
+
+if (kb.keywords.casual.some(kw => query.includes(kw))) {
+  return {
+    text: "That's wonderful to hear! How can I assist you with your online business today? Feel free to ask about our services, pricing, or anything else!",
+    hasButton: false
+  };
+}
+
+if (kb.keywords.whoareyou.some(kw => query.includes(kw))) {
+  return { text: kb.responses.whoareyou, hasButton: false };
+}
       
       if (kb.keywords.thankyou.some(kw => query.includes(kw))) {
         return { text: kb.responses.thankyou, hasButton: false };
