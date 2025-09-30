@@ -1,3 +1,10 @@
+<script setup>
+import pageData from '@/data/index.json'
+const page = ref(pageData)
+definePageMeta({
+  layout: "default",
+});
+</script>
 <template>
   <div :class="['chat-wrapper', isDarkMode ? 'dark-mode' : 'light-mode']">
     <div class="chat-container">
