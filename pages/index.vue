@@ -493,7 +493,7 @@ methods: {
 const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste'];
 if (greetings.some(g => query === g || query === g + '!' || query === g + '?')) {
   return {
-    text: "Oops! Looks like I'm not trained for that yet, but I'm learning every day!",
+    text: "Hi there! How's it going? How may I help you today?",
     hasButton: false
   };
 }
