@@ -12,7 +12,7 @@
   </button>
 </div>
 
-<!-- Mobile Search box - MOVED UP -->
+<!-- Search box -->
 <div class="sidebar-search">
   <div class="search-input-wrapper">
     <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
