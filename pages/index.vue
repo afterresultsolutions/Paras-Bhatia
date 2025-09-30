@@ -213,15 +213,23 @@
       <!-- Main content -->
       <div class="main-content">
         <!-- Header -->
-        <div :class="['chat-header', isDarkMode ? 'header-dark' : 'header-light']">
-<div class="header-title">
-               <span class="brand-name">AR Solutions</span>
-               <span class="model-badge">AI</span>
-               <span class="live-indicator">
-               <span class="live-dot"></span>
-               <span class="live-text">Live</span>
-             </span>
-          </div>
+<div :class="['chat-header', isDarkMode ? 'header-dark' : 'header-light']">
+  <div class="header-title">
+    <span class="brand-name">AR Solutions</span>
+    <span class="model-badge">AI</span>
+    <span class="live-indicator">
+      <span class="live-dot"></span>
+      <span class="live-text">Live</span>
+    </span>
+  </div>
+  
+  <!-- Temporary Chat Toggle Button -->
+  <button @click="toggleTempMode" :class="['temp-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light', { 'temp-active': isTempMode }]" :title="isTempMode ? 'Temporary Mode Active' : 'Enable Temporary Mode'">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+    </svg>
+  </button>
+</div>
         </div>
 
         <!-- Chat area -->
@@ -413,6 +421,7 @@ export default {
       currentChatId: null,
       searchQuery: "",
       autocorrectTimeout: null,
+      isTempMode: false, 
       kb: {
         keywords: {
           pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget'],
@@ -566,6 +575,28 @@ deleteChat(chatId) {
     if (process.client) {
       localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
     }
+  }
+},
+deleteChat(chatId) {
+  if (confirm('Are you sure you want to delete this chat?')) {
+    this.chatHistory = this.chatHistory.filter(c => c.id !== chatId);
+    if (this.currentChatId === chatId) {
+      this.startNewChat();
+    }
+    if (process.client) {
+      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+    }
+  }
+},  // <-- This comma is important
+
+toggleTempMode() {  // <-- ADD THIS NEW METHOD HERE
+  this.isTempMode = !this.isTempMode;
+  if (this.isTempMode) {
+    this.messages = [];
+    this.currentChatId = null;
+    alert('Temporary mode enabled. Your chat history will not be saved.');
+  } else {
+    alert('Temporary mode disabled. Chat history will be saved normally.');
   }
 },
     generateResponse(q) {
@@ -801,8 +832,8 @@ async handleSearch() {
   
   const userQuery = this.query.trim();
   
-  // Create new chat ID if starting fresh
-  if (!this.currentChatId) {
+// Create new chat ID if starting fresh (only if NOT in temp mode)
+  if (!this.currentChatId && !this.isTempMode) {  // <-- CHANGE THIS LINE
     this.currentChatId = Date.now().toString();
   }
   
@@ -851,9 +882,41 @@ async handleSearch() {
     },
 
 startNewChat() {
-  // Save current chat to history before starting new one
-  if (this.messages.length > 0) {
+  // Save current chat to history before starting new one (only if NOT in temp mode)
+  if (this.messages.length > 0 && !this.isTempMode) {  // <-- CHANGED THIS LINE
     const existingIndex = this.chatHistory.findIndex(c => c.id === this.currentChatId);
+    
+    if (existingIndex === -1) {
+      this.chatHistory.unshift({
+        id: this.currentChatId || Date.now().toString(),
+        title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
+        messages: [...this.messages],
+        date: new Date()
+      });
+    } else {
+      this.chatHistory[existingIndex] = {
+        ...this.chatHistory[existingIndex],
+        messages: [...this.messages],
+        date: new Date()
+      };
+    }
+    
+    if (process.client) {
+      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+    }
+  }
+  
+  // Clear current chat
+  this.messages = [];
+  this.query = "";
+  this.currentChatId = null;
+  this.showMenu = false;
+  
+  if (process.client && !this.isTempMode) {  // <-- CHANGED THIS LINE
+    localStorage.removeItem('ar-current-messages');
+    localStorage.removeItem('ar-current-chat-id');
+  }
+},
     
     if (existingIndex === -1) {
       this.chatHistory.unshift({
