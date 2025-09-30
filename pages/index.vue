@@ -1044,8 +1044,8 @@ startNewChat() {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 10px 14px;
-  font-size: 13px;
+  padding: 10px 12px;
+  font-size: 12px;
   font-weight: 500;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
@@ -1057,6 +1057,10 @@ startNewChat() {
   flex: 1;
   max-width: none;
   white-space: nowrap;
+}
+
+.human-chat-text {
+  display: inline;
 }
 
 .footer-human-btn:hover {
@@ -1353,20 +1357,6 @@ startNewChat() {
 
 .human-chat-btn:hover {
   opacity: 0.9;
-}
-
-.human-chat-text {
-  @media (max-width: 640px) {
-  .footer-human-btn {
-    padding: 8px 10px;
-    font-size: 12px;
-  }
-  
-  .human-chat-text {
-    display: inline;
-  }
-}
-  display: none;
 }
 
 .chat-area {
