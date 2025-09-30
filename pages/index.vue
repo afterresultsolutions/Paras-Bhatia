@@ -970,9 +970,10 @@ startNewChat() {
 .footer-human-btn {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 8px 16px;
-  font-size: 14px;
+  padding: 10px 14px;
+  font-size: 13px;
   font-weight: 500;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
@@ -983,6 +984,7 @@ startNewChat() {
   transition: opacity 0.2s;
   flex: 1;
   max-width: none;
+  white-space: nowrap;
 }
 
 .footer-human-btn:hover {
@@ -1110,14 +1112,16 @@ startNewChat() {
 
 .menu-toggle-btn {
   position: fixed;
-  top: 12px;
+  top: 50%;
   left: 12px;
+  transform: translateY(-50%);
   z-index: 998;
   padding: 8px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s;
+  margin-top: 1px;
 }
 
 @media (min-width: 769px) {
@@ -1141,9 +1145,10 @@ startNewChat() {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 16px;
-  border-bottom: 1px solid;
+  padding: 16px;
+  border-bottom: 2px solid;
   position: relative;
+  min-height: 60px;
 }
 
 .header-dark {
@@ -1226,6 +1231,16 @@ startNewChat() {
 }
 
 .human-chat-text {
+  @media (max-width: 640px) {
+  .footer-human-btn {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+  
+  .human-chat-text {
+    display: inline;
+  }
+}
   display: none;
 }
 
@@ -1262,10 +1277,11 @@ startNewChat() {
   display: flex;
   align-items: center;
   border: 1px solid;
-  border-radius: 24px;
-  padding: 4px 4px 4px 16px;
+  border-radius: 20px;
+  padding: 2px 4px 2px 14px;
   transition: border-color 0.2s;
   width: 100%;
+  max-height: 44px;
 }
 
 .search-dark {
@@ -1287,7 +1303,7 @@ startNewChat() {
   background: transparent;
   border: none;
   outline: none;
-  padding: 12px 8px;
+  padding: 10px 8px;
   font-size: 15px;
   min-width: 0;
 }
@@ -1309,8 +1325,8 @@ startNewChat() {
 }
 
 .send-btn {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1739,6 +1755,21 @@ startNewChat() {
     font-size: 11px;
     margin-top: 8px;
     padding-bottom: 15px;
+  }
+  .footer-human-btn {
+    padding: 8px 8px;
+    font-size: 11px;
+    gap: 4px;
+  }
+  
+  .search-input {
+    padding: 9px 6px;
+    font-size: 14px;
+  }
+  
+  .send-btn {
+    width: 28px;
+    height: 28px;
   }
 }
 
