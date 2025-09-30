@@ -539,7 +539,7 @@ Please schedule a call for me. Thank you!`;
           animation: bounce 2s infinite;
         }
 
-        @keyframes bounce {
+        .keyframes bounce {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-10px); }
         }
@@ -648,7 +648,7 @@ Please schedule a call for me. Thank you!`;
           animation: pulse 2s infinite;
         }
 
-        @keyframes pulse {
+        .keyframes pulse {
           0%, 100% { transform: scale(1); }
           50% { transform: scale(1.1); }
         }
@@ -681,7 +681,7 @@ Please schedule a call for me. Thank you!`;
           animation: slideDown 0.3s ease;
         }
 
-        @keyframes slideDown {
+        .keyframes slideDown {
           from { opacity: 0; transform: translateY(-10px); }
           to { opacity: 1; transform: translateY(0); }
         }
