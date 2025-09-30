@@ -68,28 +68,31 @@
     <div v-if="filteredChatHistory.length === 0 && searchQuery" class="no-results">
       No chats found
     </div>
-<div v-if="archivedChats.length > 0" class="archived-section">
-  <div class="history-label">Archived</div>
-  <div v-for="chat in archivedChats" :key="chat.id" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
-    <div class="history-item-content" @click="loadChat(chat)">
-      <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<div v-for="chat in filteredChatHistory" :key="chat.id" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
+  <div class="history-item-content" @click="loadChat(chat)">
+    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+    </svg>
+    <span class="history-title">{{ chat.title }}</span>
+  </div>
+  <div class="history-item-actions">
+    <button @click.stop="renameChat(chat)" class="history-action-btn" title="Rename">
+      <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+      </svg>
+    </button>
+    <button @click.stop="archiveChat(chat.id)" class="history-action-btn" title="Archive">
+      <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
       </svg>
-      <span class="history-title">{{ chat.title }}</span>
-    </div>
-    <div class="history-item-actions">
-      <button @click.stop="unarchiveChat(chat.id)" class="history-action-btn" title="Unarchive">
-        <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
-        </svg>
-      </button>
-      <button @click.stop="deleteChat(chat.id)" class="history-action-btn history-delete-btn" title="Delete">
-        <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-        </svg>
-      </button>
-    </div>
+    </button>
+    <button @click.stop="deleteChat(chat.id)" class="history-action-btn history-delete-btn" title="Delete">
+      <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+      </svg>
+    </button>
   </div>
+</div>
 </div>
   
   <div :class="['sidebar-footer', isDarkMode ? 'footer-dark' : 'footer-light']">
@@ -124,12 +127,17 @@
 
 <!-- Mobile Search box -->
 <div class="sidebar-search">
-  <input
-    v-model="searchQuery"
-    type="text"
-    placeholder="Search chats..."
-    :class="['search-chat-input', isDarkMode ? 'input-dark' : 'input-light']"
-  />
+  <div class="search-input-wrapper">
+    <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+    </svg>
+    <input
+      v-model="searchQuery"
+      type="text"
+      placeholder="Search chats..."
+      :class="['search-chat-input', isDarkMode ? 'input-dark' : 'input-light']"
+    />
+  </div>
 </div>
 
 <!-- Mobile Quick Action Pills -->
@@ -1304,16 +1312,6 @@ startNewChat() {
   height: 18px;
   color: #6b7280;
   pointer-events: none;
-}
-
-.search-chat-input {
-  width: 100%;
-  padding: 8px 12px 8px 42px;
-  border: 1px solid;
-  border-radius: 12px;
-  font-size: 14px;
-  outline: none;
-  transition: border-color 0.2s;
 }
 
 .sidebar-dark .sidebar-search {
