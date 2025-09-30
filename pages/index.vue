@@ -125,7 +125,7 @@
     </button>
   </div>
 
-  <!-- Mobile Search box -->
+  <!-- Mobile Search box - MOVED TO TOP -->
   <div class="sidebar-search">
     <div class="search-input-wrapper">
       <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1335,9 +1335,9 @@ startNewChat() {
 
 .search-chat-input {
   width: 100%;
-  padding: 8px 12px;
+  padding: 8px 12px 8px 46px;  /* Changed from 42px to 46px */
   border: 1px solid;
-  border-radius: 6px;
+  border-radius: 12px;
   font-size: 14px;
   outline: none;
   transition: border-color 0.2s;
