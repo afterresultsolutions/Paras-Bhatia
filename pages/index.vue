@@ -63,11 +63,11 @@
   </a>
 </div>
   
-  <div class="sidebar-content">
-    <div v-if="filteredChatHistory.length > 0" class="history-label">Recent</div>
-    <div v-if="filteredChatHistory.length === 0 && searchQuery" class="no-results">
-      No chats found
-    </div>
+<div class="sidebar-content">
+  <div v-if="filteredChatHistory.length > 0" class="history-label">Recent</div>
+  <div v-if="filteredChatHistory.length === 0 && searchQuery" class="no-results">
+    No chats found
+  </div>
 <div v-for="chat in filteredChatHistory" :key="chat.id" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
   <div class="history-item-content" @click="loadChat(chat)">
     <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -93,6 +93,41 @@
     </button>
   </div>
 </div>
+    <!-- ADD ARCHIVED SECTION HERE -->
+  <div v-if="archivedChats.length > 0" class="archived-section">
+    <button @click="showArchived = !showArchived" :class="['archived-toggle', isDarkMode ? 'btn-dark' : 'btn-light']">
+      <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+      </svg>
+      <span>Archived ({{ archivedChats.length }})</span>
+      <svg :class="['icon-sm', 'arrow-icon', { 'arrow-rotated': showArchived }]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </button>
+    
+    <div v-if="showArchived" class="archived-chats">
+      <div v-for="chat in archivedChats" :key="chat.id" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
+        <div class="history-item-content" @click="loadChat(chat)">
+          <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+          </svg>
+          <span class="history-title">{{ chat.title }}</span>
+        </div>
+        <div class="history-item-actions">
+          <button @click.stop="unarchiveChat(chat.id)" class="history-action-btn" title="Unarchive">
+            <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
+            </svg>
+          </button>
+          <button @click.stop="deleteChat(chat.id)" class="history-action-btn history-delete-btn" title="Delete">
+            <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
   
   <div :class="['sidebar-footer', isDarkMode ? 'footer-dark' : 'footer-light']">
@@ -223,7 +258,7 @@
     </span>
   </div>
   
-<button @click="toggleTempMode" :class="['temp-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light', { 'temp-active': isTempMode }]" :title="isTempMode ? 'Temporary Mode Active' : 'Enable Temporary Mode'">
+  <button @click="toggleTempMode" :class="['temp-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light', { 'temp-active': isTempMode }]" :title="isTempMode ? 'Temporary Mode Active' : 'Enable Temporary Mode'">
     <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
     </svg>
@@ -420,6 +455,7 @@ export default {
       searchQuery: "",
       autocorrectTimeout: null,
       isTempMode: false, 
+      showArchived: false,
       kb: {
         keywords: {
           pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget'],
@@ -2218,6 +2254,81 @@ methods: {
 
 .text-white {
   color: white;
+}
+.archived-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid;
+}
+
+.sidebar-dark .archived-section {
+  border-color: #363636;
+}
+
+.sidebar-light .archived-section {
+  border-color: #e5e5e5;
+}
+
+.archived-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  background: none;
+  text-align: left;
+}
+
+.archived-toggle span {
+  flex: 1;
+}
+
+.arrow-icon {
+  transition: transform 0.2s;
+}
+
+.arrow-rotated {
+  transform: rotate(180deg);
+}
+
+.archived-chats {
+  margin-top: 8px;
+}
+
+.temp-chat-btn {
+  position: absolute;
+  right: 16px;
+  padding: 8px;
+  border: 1px solid;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: none;
+}
+
+.temp-chat-btn.temp-active {
+  background-color: #fee2e2 !important;
+  border-color: #ef4444 !important;
+  color: #ef4444 !important;
+}
+
+.dark-mode .temp-chat-btn.temp-active {
+  background-color: #7f1d1d !important;
+  border-color: #ef4444 !important;
+  color: #ef4444 !important;
+}
+
+@media (max-width: 768px) {
+  .temp-chat-btn {
+    right: 8px;
+    padding: 6px;
+  }
 }
 
 .text-gray-800 {
