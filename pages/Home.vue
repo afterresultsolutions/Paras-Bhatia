@@ -6,12 +6,14 @@
     <nav class="nav-slider" :class="{ open: navOpen }">
       <div class="nav-header">Quick Navigation</div>
       <ul class="nav-links">
+        <li><a href="#top" @click="closeNav">Home</a></li>
         <li><a href="#problem" @click="closeNav">The Problem</a></li>
         <li><a href="#approach" @click="closeNav">Our Approach</a></li>
         <li><a href="#services" @click="closeNav">What's Included</a></li>
         <li><a href="#outcomes" @click="closeNav">Expected Outcomes</a></li>
         <li><a href="#pricing" @click="closeNav">Pricing</a></li>
         <li><a href="#contact" @click="closeNav">Contact Us</a></li>
+        <li><a href="https://afterresult.solutions/" @click="closeNav">Talk to our AI</a></li>
       </ul>
     </nav>
 
