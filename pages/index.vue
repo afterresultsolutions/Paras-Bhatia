@@ -537,6 +537,7 @@ kb: {
     features: ['features', 'include', 'get', 'what', 'benefit', 'offer', 'provide', 'service', 'package', 'comes with', 'included', 'benefits', 'advantages', 'offerings', 'inclusions', 'what included', 'package details'],
     timeline: ['when', 'how long', 'time', 'duration', 'days', 'delivery', 'fast', 'quick', 'ready', 'complete', 'timeline', 'completion', 'deadline', 'turnaround', 'how soon', 'when ready', 'time frame', 'project duration'],
     products: ['product', 'sell', 'item', 'clothing', 'shoes', 'jewellery', 'jewelry', 'fashion', 'niche', 'categories', 'goods', 'merchandise', 'inventory', 'catalog', 'what sell', 'product type'],
+    fullPackage: ['tell me more', 'more details', 'detailed', 'elaborate', 'full package', 'complete info', 'everything', 'all details', 'comprehensive'],
     
     // TECHNICAL & SUPPORT
     technical: ['technical', 'tech', 'difficult', 'easy', 'knowledge', 'skill', 'learn', 'manage', 'complicated', 'complex', 'simple', 'user friendly', 'technical knowledge', 'coding', 'expertise required', 'hard', 'challenging'],
@@ -564,7 +565,7 @@ kb: {
     branding: ['branding', 'brand', 'brand identity', 'logo', 'brand guidelines', 'visual identity', 'brand recognition', 'brand building'],
     
     // AGENCY INFO
-    aboutar: ['about', 'who are you', 'ar solutions', 'afterresult', 'your company', 'about company', 'company info', 'agency', 'your services'],
+    aboutar: ['about', 'who are you', 'ar solutions', 'afterresult', 'your company', 'about company', 'company info', 'agency', 'services', 'your services'],
     experience: ['experience', 'portfolio', 'past work', 'projects', 'clients', 'track record', 'case study', 'success stories', 'expertise'],
     
     // COMPARISON & DIFFERENTIATION
@@ -576,7 +577,7 @@ kb: {
     
     // CONTACT
     contact: ['contact', 'reach', 'email', 'phone', 'call', 'demo', 'meeting', 'consultation', 'connect', 'get in touch', 'talk to someone'],
-    services: ['services', 'what do you do', 'offerings', 'solutions', 'brochure', 'catalog', 'service list', 'what you offer', 'all services'],
+    services: [ 'what do you do', 'offerings', 'solutions', 'brochure', 'catalog', 'service list', 'what you offer', 'all services'],
     
     // CONVERSATIONAL
     casual: ['i am good', 'im good', 'i am fine', 'im fine', 'i am also good', 'im also good', 'doing well', 'doing good', 'all good', 'great', 'fine', 'okay', 'ok', 'good', 'nice', 'cool', 'awesome'],
@@ -592,7 +593,7 @@ kb: {
     skeptical: ['really', 'sure', 'guarantee', 'proof', 'evidence', 'trust', 'believe', 'legit', 'genuine', 'scam'],
     
     // DETAILED REQUEST
-    detailed: ['tell me more', 'more details', 'detailed', 'elaborate', 'full package', 'complete info', 'everything', 'all details', 'comprehensive']
+    detailed: ['Ar Solutions', 'more detailed services', 'facebook', 'instagram', 'other package', 'Amazon', 'everything', 'wordpress', 'shopify']
   },
 
   responses: {
