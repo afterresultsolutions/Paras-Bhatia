@@ -1,8 +1,8 @@
 <script setup>
 const menuitems = [
   {
-    title: "AI Chatbot",
-    url: "https://afterresult.solutions/ai/",
+    title: "More",
+    url: "https://afterresult.solutions/live/",
   },
 ];
 </script>
