@@ -486,7 +486,7 @@ mounted() {
     }
   },
   methods: { 
-  generateResponse(q) {
+methods: {
     generateResponse(q) {
       const query = q.toLowerCase().trim();
       const kb = this.kb;
