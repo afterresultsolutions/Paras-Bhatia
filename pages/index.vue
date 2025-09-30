@@ -27,11 +27,6 @@
   </div>
 </div>
 
-<!-- Mobile Quick Action Pills - NOW BELOW SEARCH -->
-<div class="quick-pills">
-  <!-- ... all your pill buttons ... -->
-</div>
-
 <!-- Quick Action Pills -->
 <div class="quick-pills">
   <a href="https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf" target="_blank" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
