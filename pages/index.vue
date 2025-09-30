@@ -1445,7 +1445,7 @@ this.messages.push({
   padding: 10px 12px;
   font-size: 10px;
   font-weight: 500;
-  background: #000000; 
+  background: # 000000; 
   color: white;
   border: none;
   border-radius: 18px;
