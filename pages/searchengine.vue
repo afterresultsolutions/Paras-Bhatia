@@ -69,11 +69,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-
-const router = useRouter()
 const route = useRoute()
+const router = useRouter()
 
 const searchQuery = ref('')
 const currentQuery = ref('')
@@ -303,12 +300,13 @@ const handleSearch = () => {
 const askQuestion = (question) => {
   searchQuery.value = question
   handleSearch()
-  window.scrollTo({ top: 0, behavior: 'smooth' })
+  if (process.client) {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 }
 
 const goBack = () => {
-  // If using Vue Router: router.push('/')
-  window.location.href = '/'
+  router.push('/')
 }
 
 // Check for query from homepage on mount
@@ -321,13 +319,19 @@ onMounted(() => {
     return
   }
   
-  // Check localStorage
-  const storedQuery = localStorage.getItem('aiQuery')
-  if (storedQuery) {
-    const queryData = JSON.parse(storedQuery)
-    searchQuery.value = queryData.query
-    handleSearch()
-    localStorage.removeItem('aiQuery')
+  // Check localStorage (only on client side)
+  if (process.client) {
+    const storedQuery = localStorage.getItem('aiQuery')
+    if (storedQuery) {
+      try {
+        const queryData = JSON.parse(storedQuery)
+        searchQuery.value = queryData.query
+        handleSearch()
+        localStorage.removeItem('aiQuery')
+      } catch (e) {
+        console.error('Error parsing stored query:', e)
+      }
+    }
   }
 })
 </script>
@@ -484,4 +488,92 @@ onMounted(() => {
   font-weight: 700;
 }
 
-.result-conten
+.result-content {
+  color: #333;
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+.result-content p {
+  margin-bottom: 15px;
+}
+
+.result-content strong {
+  color: #1e3a8a;
+  font-weight: 700;
+}
+
+.related-section {
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 2px solid #e5e7eb;
+}
+
+.related-section h3 {
+  color: #1e3a8a;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.related-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.related-btn {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border: 2px solid #667eea;
+  color: #667eea;
+  padding: 15px 20px;
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.related-btn:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  transform: translateX(5px);
+}
+
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  color: white;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .search-box {
+    flex-direction: column;
+    border-radius: 15px;
+  }
+  
+  .search-input {
+    padding: 12px 20px;
+  }
+  
+  .search-btn {
+    border-radius: 10px;
+  }
+  
+  .result-card {
+    padding: 25px;
+  }
+  
+  .result-title {
+    font-size: 1.4rem;
+  }
+}
+</style>
