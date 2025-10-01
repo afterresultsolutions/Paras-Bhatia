@@ -13,6 +13,7 @@ useHead({
     class: 'font-display'
   }
 });
+</script>
 
 <template>
   <NuxtLayout>
