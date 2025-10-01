@@ -87,9 +87,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-
 const router = useRouter()
 const showTooltip = ref(null)
 
@@ -139,16 +136,11 @@ const outcomes = [
 ]
 
 const handleAskAI = (query) => {
-  // Store query for the search page
-  localStorage.setItem('aiQuery', JSON.stringify({
-    query: query,
-    timestamp: new Date().toISOString()
-  }))
-  
-  // Navigate to search page
-  // If using Vue Router: router.push({ name: 'Search', query: { q: query } })
-  // For simple navigation:
-  window.location.href = '/search.html?q=' + encodeURIComponent(query)
+  // Navigate to searchengine page with query parameter
+  router.push({
+    path: '/searchengine',
+    query: { q: query }
+  })
 }
 </script>
 
@@ -351,6 +343,11 @@ const handleAskAI = (query) => {
   .services-grid,
   .outcomes-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .ai-tooltip {
+    position: static;
+    margin-top: 15px;
   }
 }
 </style>
