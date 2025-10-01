@@ -13,7 +13,7 @@
         <li><a href="#outcomes" @click="closeNav">Expected Outcomes</a></li>
         <li><a href="#pricing" @click="closeNav">Pricing</a></li>
         <li><a href="#contact" @click="closeNav">Contact Us</a></li>
-        <li><a href="https://afterresult.solutions/" @click="closeNav">Talk to our AI</a></li>
+        <li><a href="https://afterresult.solutions/Home" @click="closeNav">Talk to our AI</a></li>
       </ul>
     </nav>
 
