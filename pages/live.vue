@@ -1252,8 +1252,8 @@ this.messages.push({
 }
 
 .dark-mode {
-  background-color: #212121;
-  color: #ececec;
+  background-color: #2d4a9e;
+  color: #ffffff;
 }
 
 .light-mode {
@@ -1276,8 +1276,8 @@ this.messages.push({
 }
 
 .sidebar-dark {
-  background-color: #171717;
-  border-color: #363636;
+  background-color: #1e3a7a;
+  border-color: #3d5aa8;
 }
 
 .sidebar-light {
@@ -1318,7 +1318,7 @@ this.messages.push({
 }
 
 .btn-dark:hover {
-  background-color: #2f2f2f;
+  background-color: #3d5aa8;
 }
 
 .btn-light {
@@ -1435,9 +1435,9 @@ this.messages.push({
 }
 
 .history-item-dark:hover {
-  background-color: #2f2f2f;
+  background-color: #3d5aa8;
 }
-
+  
 .history-item-light:hover {
   background-color: #ececec;
 }
@@ -1622,9 +1622,9 @@ this.messages.push({
 }
 
 .input-dark.search-chat-input {
-  background-color: #2f2f2f;
-  border-color: #4d4d4d;
-  color: #ececec;
+  background-color: #3d5aa8;
+  border-color: #5670c4;
+  color: #ffffff;
 }
 
 .input-light.search-chat-input {
@@ -1735,8 +1735,8 @@ this.messages.push({
 }
 
 .header-dark {
-  background-color: #212121;
-  border-color: #363636;
+  background-color: #2d4a9e;
+  border-color: #3d5aa8;
 }
 
 .header-light {
@@ -1854,8 +1854,8 @@ this.messages.push({
 }
 
 .search-dark {
-  background-color: #2f2f2f;
-  border-color: #4d4d4d;
+  background-color: #3d5aa8;
+  border-color: #5670c4;
 }
 
 .search-light {
@@ -2117,7 +2117,7 @@ this.messages.push({
   }
 }
 .dark-mode .input-area {
-  background: linear-gradient(to top, #212121 0%, #212121 85%, transparent 100%);
+  background: linear-gradient(to top, #2d4a9e 0%, #2d4a9e 85%, transparent 100%);
 }
 
 .light-mode .input-area {
