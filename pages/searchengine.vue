@@ -309,6 +309,14 @@ const goBack = () => {
   router.push('/')
 }
 
+// Watch for route query changes
+watch(() => route.query.q, (newQuery) => {
+  if (newQuery) {
+    searchQuery.value = decodeURIComponent(newQuery)
+    handleSearch()
+  }
+}, { immediate: true })
+
 // Check for query from homepage on mount
 onMounted(() => {
   // Check URL parameter
