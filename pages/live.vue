@@ -678,19 +678,16 @@ computed: {
   }
 },
 mounted() {
-  // Always start with a fresh chat on page load/refresh
   this.messages = [];
   this.query = "";
   this.currentChatId = null;
   
-  if (process.client) {
-    // Load theme preference
+  if (typeof window !== 'undefined') {  // CHANGED THIS LINE
     const savedTheme = localStorage.getItem('ar-theme');
     if (savedTheme) {
       this.isDarkMode = savedTheme === 'dark';
     }
     
-    // Load chat history (but not current messages)
     const savedHistory = localStorage.getItem('ar-chat-history');
     if (savedHistory) {
       try {
@@ -700,18 +697,18 @@ mounted() {
       }
     }
       
-      const savedMessages = localStorage.getItem('ar-current-messages');
-      const savedChatId = localStorage.getItem('ar-current-chat-id');
-      if (savedMessages && savedChatId) {
-        try {
-          this.messages = JSON.parse(savedMessages);
-          this.currentChatId = savedChatId;
-        } catch (e) {
-          console.error('Failed to load current chat:', e);
-        }
+    const savedMessages = localStorage.getItem('ar-current-messages');
+    const savedChatId = localStorage.getItem('ar-current-chat-id');
+    if (savedMessages && savedChatId) {
+      try {
+        this.messages = JSON.parse(savedMessages);
+        this.currentChatId = savedChatId;
+      } catch (e) {
+        console.error('Failed to load current chat:', e);
       }
     }
-  },
+  }
+},
   beforeUnmount() {
     if (this.autocorrectTimeout) {
       clearTimeout(this.autocorrectTimeout);
@@ -746,51 +743,50 @@ methods: {
     }
   },
 
-  // ... rest of your existing methods
-  renameChat(chat) {
-    const newTitle = prompt('Enter new chat name:', chat.title);
-    if (newTitle && newTitle.trim()) {
-      const chatIndex = this.chatHistory.findIndex(c => c.id === chat.id);
-      if (chatIndex !== -1) {
-        this.chatHistory[chatIndex].title = newTitle.trim();
-        if (process.client) {
-          localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
-        }
-      }
-    }
-  },
-
-  archiveChat(chatId) {
-    const chatIndex = this.chatHistory.findIndex(c => c.id === chatId);
+renameChat(chat) {
+  const newTitle = prompt('Enter new chat name:', chat.title);
+  if (newTitle && newTitle.trim()) {
+    const chatIndex = this.chatHistory.findIndex(c => c.id === chat.id);
     if (chatIndex !== -1) {
-      this.chatHistory[chatIndex].archived = true;
-      if (process.client) {
+      this.chatHistory[chatIndex].title = newTitle.trim();
+      if (typeof window !== 'undefined') {  // CHANGED THIS LINE
         localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
       }
     }
-  },
+  }
+},
 
-  unarchiveChat(chatId) {
-    const chatIndex = this.chatHistory.findIndex(c => c.id === chatId);
-    if (chatIndex !== -1) {
-      this.chatHistory[chatIndex].archived = false;
-      if (process.client) {
-        localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
-      }
+archiveChat(chatId) {
+  const chatIndex = this.chatHistory.findIndex(c => c.id === chatId);
+  if (chatIndex !== -1) {
+    this.chatHistory[chatIndex].archived = true;
+    if (typeof window !== 'undefined') {  // CHANGED THIS LINE
+      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
     }
-  },
+  }
+},
 
-  deleteChat(chatId) {
-    if (confirm('Are you sure you want to delete this chat?')) {
-      this.chatHistory = this.chatHistory.filter(c => c.id !== chatId);
-      if (this.currentChatId === chatId) {
-        this.startNewChat();
-      }
-      if (process.client) {
-        localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
-      }
+unarchiveChat(chatId) {
+  const chatIndex = this.chatHistory.findIndex(c => c.id === chatId);
+  if (chatIndex !== -1) {
+    this.chatHistory[chatIndex].archived = false;
+    if (typeof window !== 'undefined') {  // CHANGED THIS LINE
+      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
     }
-  },
+  }
+},
+
+deleteChat(chatId) {
+  if (confirm('Are you sure you want to delete this chat?')) {
+    this.chatHistory = this.chatHistory.filter(c => c.id !== chatId);
+    if (this.currentChatId === chatId) {
+      this.startNewChat();
+    }
+    if (typeof window !== 'undefined') {  // CHANGED THIS LINE
+      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
+    }
+  }
+},
 
 toggleTempMode() {
   this.isTempMode = !this.isTempMode;
@@ -984,47 +980,47 @@ this.messages.push({
     });
   },
 
-  toggleTheme() {
-    this.isDarkMode = !this.isDarkMode;
-    if (process.client) {
-      localStorage.setItem('ar-theme', this.isDarkMode ? 'dark' : 'light');
-    }
-  },
+toggleTheme() {
+  this.isDarkMode = !this.isDarkMode;
+  if (typeof window !== 'undefined') {  // CHANGED THIS LINE
+    localStorage.setItem('ar-theme', this.isDarkMode ? 'dark' : 'light');
+  }
+},
 
-  startNewChat() {
-    if (this.messages.length > 0 && !this.isTempMode) {
-      const existingIndex = this.chatHistory.findIndex(c => c.id === this.currentChatId);
-      
-      if (existingIndex === -1) {
-        this.chatHistory.unshift({
-          id: this.currentChatId || Date.now().toString(),
-          title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
-          messages: [...this.messages],
-          date: new Date()
-        });
-      } else {
-        this.chatHistory[existingIndex] = {
-          ...this.chatHistory[existingIndex],
-          messages: [...this.messages],
-          date: new Date()
-        };
-      }
-      
-      if (process.client) {
-        localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
-      }
+startNewChat() {
+  if (this.messages.length > 0 && !this.isTempMode) {
+    const existingIndex = this.chatHistory.findIndex(c => c.id === this.currentChatId);
+    
+    if (existingIndex === -1) {
+      this.chatHistory.unshift({
+        id: this.currentChatId || Date.now().toString(),
+        title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
+        messages: [...this.messages],
+        date: new Date()
+      });
+    } else {
+      this.chatHistory[existingIndex] = {
+        ...this.chatHistory[existingIndex],
+        messages: [...this.messages],
+        date: new Date()
+      };
     }
     
-    this.messages = [];
-    this.query = "";
-    this.currentChatId = null;
-    this.showMenu = false;
-    
-    if (process.client && !this.isTempMode) {
-      localStorage.removeItem('ar-current-messages');
-      localStorage.removeItem('ar-current-chat-id');
+    if (typeof window !== 'undefined') {  // CHANGED THIS LINE
+      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
     }
-  },
+  }
+  
+  this.messages = [];
+  this.query = "";
+  this.currentChatId = null;
+  this.showMenu = false;
+  
+  if (typeof window !== 'undefined' && !this.isTempMode) {  // CHANGED THIS LINE
+    localStorage.removeItem('ar-current-messages');
+    localStorage.removeItem('ar-current-chat-id');
+  }
+},
 
   loadChat(chat) {
     if (this.messages.length > 0 && this.currentChatId !== chat.id) {
@@ -1044,15 +1040,15 @@ this.messages.push({
     this.scrollToBottom();
   },
 
-  copyMessage(text) {
-    if (process.client && navigator.clipboard) {
-      navigator.clipboard.writeText(text).then(() => {
-        alert('Message copied to clipboard!');
-      }).catch(() => {
-        alert('Failed to copy message');
-      });
-    }
-  },
+copyMessage(text) {
+  if (typeof window !== 'undefined' && navigator.clipboard) {  // CHANGED THIS LINE
+    navigator.clipboard.writeText(text).then(() => {
+      alert('Message copied to clipboard!');
+    }).catch(() => {
+      alert('Failed to copy message');
+    });
+  }
+},
 
   likeMessage(index) {
     alert('Thank you for your feedback! 👍');
@@ -1085,18 +1081,18 @@ this.messages.push({
     }
   },
 
-  shareMessage(text) {
-    if (process.client && navigator.share) {
-      navigator.share({
-        title: 'AR Solutions AI Response',
-        text: text
-      }).catch(() => {
-        this.copyMessage(text);
-      });
-    } else {
+shareMessage(text) {
+  if (typeof window !== 'undefined' && navigator.share) {  // CHANGED THIS LINE
+    navigator.share({
+      title: 'AR Solutions AI Response',
+      text: text
+    }).catch(() => {
       this.copyMessage(text);
-    }
+    });
+  } else {
+    this.copyMessage(text);
   }
+}
 }
 };
 </script>
