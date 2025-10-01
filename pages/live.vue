@@ -800,251 +800,85 @@ toggleTempMode() {
   }
 },
 
-  generateResponse(q) {
-    const query = q.toLowerCase().trim();
-    const kb = this.kb;
+generateResponse(q) {
+  const query = q.toLowerCase().trim();
+  const kb = this.kb;
+  
+  // Score-based matching system
+  const categoryScores = {};
+  
+  // Calculate match score for each category
+  Object.keys(kb.keywords).forEach(category => {
+    let score = 0;
+    const keywords = kb.keywords[category];
     
-    const greetings = ['hi', 'hello', 'hey', 'good morning', 'good evening', 'good afternoon', 'namaste', 'yes', 'hy', 'hlo', 'kon'];
-    if (greetings.some(g => query === g || query === g + '!' || query === g + '?')) {
-      return {
-        text: "Hi there! How's it going? How may I help you today?",
-        hasButton: false
-      };
+    keywords.forEach(keyword => {
+      const kw = keyword.toLowerCase();
+      
+      // Exact match (highest priority)
+      if (query === kw) {
+        score += 100;
+      }
+      // Starts with keyword
+      else if (query.startsWith(kw + ' ') || query.startsWith(kw + ',')) {
+        score += 50;
+      }
+      // Ends with keyword
+      else if (query.endsWith(' ' + kw) || query.endsWith(',' + kw)) {
+        score += 45;
+      }
+      // Contains keyword as whole word
+      else if (new RegExp('\\b' + kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b').test(query)) {
+        score += 30;
+      }
+      // Contains keyword as substring
+      else if (query.includes(kw)) {
+        score += 15;
+      }
+    });
+    
+    if (score > 0) {
+      categoryScores[category] = score;
+    }
+  });
+  
+  // Find best match
+  let bestCategory = null;
+  let bestScore = 0;
+  
+  Object.entries(categoryScores).forEach(([category, score]) => {
+    if (score > bestScore) {
+      bestScore = score;
+      bestCategory = category;
+    }
+  });
+  
+  // Return response based on best match
+  if (bestCategory && bestScore >= 15) {
+    const responseKey = bestCategory;
+    let responseText = kb.responses[responseKey] || kb.responses.default;
+    
+    // Use detailed version for key categories if score is high
+    if (bestScore >= 30 && kb.responses[responseKey + '_detailed']) {
+      responseText = kb.responses[responseKey + '_detailed'];
     }
     
-    if (kb.keywords.howareyou.some(kw => query.includes(kw))) {
-      return { text: kb.responses.howareyou, hasButton: false };
-    }
-
-if (kb.keywords.casual.some(kw => query.includes(kw))) {
+    // Determine if button should be shown
+    const buttonCategories = ['pricing', 'services', 'confirmation', 'contact', 'interested', 'urgent'];
+    const hasButton = buttonCategories.includes(bestCategory);
+    
+    return {
+      text: responseText,
+      hasButton: hasButton
+    };
+  }
+  
+  // No match found - return helpful default
   return {
-    text: "That's wonderful to hear! How can I assist you with your online business today? Feel free to ask about our services, pricing, or anything else!",
+    text: kb.responses.default,
     hasButton: false
   };
 }
-if (kb.keywords.whatsapp_messages.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.whatsapp_messages}\n\n${kb.responses.whatsapp_restrictions}\n\nInterested in getting started? The complete package is just ₹2,000/-`,
-    hasButton: true,
-    buttonText: 'Get WhatsApp Marketing - ₹2,000',
-    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
-    buttonType: 'whatsapp'
-  };
-}
-    if (kb.keywords.whoareyou.some(kw => query.includes(kw))) {
-      return { text: kb.responses.whoareyou, hasButton: false };
-    }
-    if (kb.keywords.whatsapp_leads.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.whatsapp_leads}\n\n${kb.responses.whatsapp_price}`,
-    hasButton: true,
-    buttonText: 'Get WhatsApp Marketing - ₹2,000',
-    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
-    buttonType: 'whatsapp'
-  };
-}
-
-if (kb.keywords.whatsapp_timeline.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.whatsapp_timeline}\n\nReady to start generating leads? Just ₹2,000/- for the complete package!`,
-    hasButton: true,
-    buttonText: 'Get WhatsApp Marketing - ₹2,000',
-    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
-    buttonType: 'whatsapp'
-  };
-}
-
-if (kb.keywords.whatsapp_setup.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.whatsapp_setup}\n\n${kb.responses.whatsapp_features}`,
-    hasButton: true,
-    buttonText: 'Get WhatsApp Marketing - ₹2,000',
-    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
-    buttonType: 'whatsapp'
-  };
-}
-
-if (kb.keywords.whatsapp_features.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.whatsapp_features}\n\n${kb.responses.whatsapp_price}`,
-    hasButton: true,
-    buttonText: 'Get WhatsApp Marketing - ₹2,000',
-    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
-    buttonType: 'whatsapp'
-  };
-}
-
-if (kb.keywords.whatsapp_price.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.whatsapp_price}\n\n${kb.responses.whatsapp_messages}`,
-    hasButton: true,
-    buttonText: 'Get WhatsApp Marketing - ₹2,000',
-    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
-    buttonType: 'whatsapp'
-  };
-}
-
-if (kb.keywords.whatsapp_community.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.whatsapp_community}\n\nWant to start building your community? Get the complete WhatsApp Marketing package for ₹2,000/-`,
-    hasButton: true,
-    buttonText: 'Get WhatsApp Marketing - ₹2,000',
-    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
-    buttonType: 'whatsapp'
-  };
-}
-
-if (kb.keywords.whatsapp_restrictions.some(kw => query.includes(kw))) {
-  return {
-    text: `${kb.responses.whatsapp_restrictions}\n\n${kb.responses.whatsapp_messages}`,
-    hasButton: true,
-    buttonText: 'Get WhatsApp Marketing - ₹2,000',
-    buttonLink: 'https://pages.razorpay.com/pl_R7y5WH1fOYdLQn/view',
-    buttonType: 'whatsapp'
-  };
-}
-    
-    if (kb.keywords.thankyou.some(kw => query.includes(kw))) {
-      return { text: kb.responses.thankyou, hasButton: false };
-    }
-    
-    if (kb.keywords.bye.some(kw => query.includes(kw))) {
-      return { text: kb.responses.bye, hasButton: false };
-    }
-    
-    if (kb.keywords.services.some(kw => query.includes(kw))) {
-      return {
-        text: kb.responses.services,
-        hasButton: true,
-        buttonText: 'Download Services Brochure',
-        buttonLink: 'https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf'
-      };
-    }
-    
-    if (kb.keywords.marketing.some(kw => query.includes(kw))) {
-      return { text: kb.responses.marketing, hasButton: true };
-    }
-    
-    if (kb.keywords.sales.some(kw => query.includes(kw))) {
-      return { text: kb.responses.sales, hasButton: true };
-    }
-    
-    if (kb.keywords.scaling.some(kw => query.includes(kw))) {
-      return { text: kb.responses.scaling, hasButton: true };
-    }
-    
-    if (kb.keywords.contact.some(kw => query.includes(kw))) {
-      return { text: kb.responses.contact, hasButton: false };
-    }
-    
-    if (greetings.some(g => query.startsWith(g + ' ') || query.startsWith(g + ','))) {
-      return {
-        text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.confirmation.some(kw => query.includes(kw))) {
-      return { text: kb.responses.confirmation, hasButton: true };
-    }
-    
-    if (kb.keywords.pricing.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.pricing}\n\n${kb.responses.quickDelivery}\n\n${kb.responses.confirmation}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.installment.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.installments}\n\n${kb.responses.pricing}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.quickdelivery.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.quickDelivery}\n\n${kb.responses.timeline}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.features.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.timeline.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.timeline}\n\n${kb.responses.confirmation}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.technical.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.noTech}\n\n${kb.responses.fullPackage}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.products.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.products}\n\n${kb.responses.pricing}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.domain.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.domain}\n\n${kb.responses.confirmation}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.training.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.training}\n\n${kb.responses.confirmation}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.platform.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.platform}\n\n${kb.responses.fullPackage}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.payment_gateway.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.paymentGateway}\n\n${kb.responses.confirmation}`,
-        hasButton: true
-      };
-    }
-    
-    if (kb.keywords.design.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.design}\n\n${kb.responses.confirmation}`,
-        hasButton: true
-      };
-    }
-    
-    const ecommerceKeywords = ['ecommerce', 'e-commerce', 'online store', 'store', 'shop', 'website', 'sell online', 'business'];
-    if (ecommerceKeywords.some(kw => query.includes(kw))) {
-      return {
-        text: `${kb.responses.greeting}\n\n${kb.responses.fullPackage}\n\n${kb.responses.pricing}`,
-        hasButton: true
-      };
-    }
-    
-    return {
-      text: "Oops! Looks like I'm not trained for that yet, but I'm learning every day!",
-      hasButton: false
-    };
-  },
 
   autocorrectText(text) {
     const words = text.split(/(\s+|[.,!?;:])/);
