@@ -518,117 +518,141 @@ export default {
     touchEndY: 0,
 kb: {
   keywords: {
-    pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget', 'rate', 'quote', 'estimate', 'investment', 'spend', 'value', 'worth', 'affordable', 'costly', 'economical', 'pricing structure', 'payment plan', 'how much', 'what price', 'total cost'],
+    pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget', 'rate', 'quote', 'estimate', 'investment', 'spend', 'value', 'worth', 'affordable', 'costly', 'economical', 'pricing structure', 'payment plan', 'how much', 'what price', 'total cost', 'retainer', 'monthly'],
     
-    whatsappmarketing: ['whatsapp marketing', 'whatsapp setup', 'lead generation', 'linkedin scraping', 'google scraping', 'whatsapp business', 'promotional messages', 'auto reply', 'whatsapp leads', 'wa marketing', 'bulk messaging', 'whatsapp campaign', 'message blast'],
-    whatsapp_messages: ['how many messages', 'how many message', 'message quantity', 'messages per day', 'daily messages', 'message limit', 'how many promotional', 'message delivery', 'promotional limit', 'send messages', 'message count', 'bulk send', 'message volume'],
-    whatsapp_timeline: ['how long whatsapp', 'whatsapp delivery time', 'whatsapp project time', 'when complete whatsapp', 'whatsapp days', 'timeline whatsapp', 'whatsapp duration', 'completion time', 'delivery date'],
-    whatsapp_leads: ['where leads from', 'lead source', 'linkedin scraping', 'google scraping', 'how get leads', 'lead generation', 'finding leads', 'scraping data', 'data scraping', 'prospect sourcing', 'lead database', 'contact list'],
-    whatsapp_setup: ['whatsapp business setup', 'whatsapp account', 'whatsapp', 'business account setup', 'whatsapp installation', 'setup whatsapp', 'configure whatsapp', 'wa setup', 'business profile'],
-    whatsapp_features: ['auto reply', 'catalog', 'away message', 'quick response', 'profile message', 'what features whatsapp', 'whatsapp automation', 'auto response', 'automated messages', 'quick replies'],
-    whatsapp_price: ['whatsapp cost', 'whatsapp price', 'whatsapp marketing price', 'how much whatsapp', 'pricing whatsapp', 'whatsapp rate', 'wa cost'],
-    whatsapp_community: ['community building', 'whatsapp group', 'group marketing', 'organic growth', 'community strategy', 'group management', 'community engagement'],
-    whatsapp_restrictions: ['account ban', 'restricted', 'account safety', 'prevent ban', 'safe messaging', 'avoid suspension', 'account security'],
-
-    ecommerce: ['ecommerce', 'e-commerce', 'online store', 'store', 'shop', 'website', 'sell online', 'business', 'shopify', 'woocommerce', 'online shop', 'web store', 'digital store', 'internet store', 'online selling', 'ecom', 'e commerce'],
-    features: ['features', 'include', 'get', 'what', 'benefit', 'offer', 'provide', 'service', 'package', 'comes with', 'included', 'benefits', 'advantages', 'offerings', 'inclusions', 'what included', 'package details'],
-    timeline: ['when', 'how long', 'time', 'duration', 'days', 'delivery', 'fast', 'quick', 'ready', 'complete', 'timeline', 'completion', 'deadline', 'turnaround', 'how soon', 'when ready', 'time frame', 'project duration'],
-    products: ['product', 'sell', 'item', 'clothing', 'shoes', 'jewellery', 'jewelry', 'fashion', 'niche', 'categories', 'goods', 'merchandise', 'inventory', 'catalog', 'what sell', 'product type'],
+    revops: ['revenue operations', 'revops', 'rev ops', 'operations', 'revenue', 'crm', 'automation', 'workflow', 'integration', 'sales operations', 'marketing operations', 'revenue engine', 'operational efficiency'],
     
-    technical: ['technical', 'tech', 'difficult', 'easy', 'knowledge', 'skill', 'learn', 'manage', 'complicated', 'complex', 'simple', 'user friendly', 'technical knowledge', 'coding', 'expertise required', 'hard', 'challenging'],
-    domain: ['domain', 'website name', 'url', 'web address', 'brand name', 'site name', 'domain name', 'website url', 'web domain', 'site address', 'domain registration'],
-    training: ['training', 'teach', 'learn', 'help', 'support', 'tutorial', 'guide', 'how to', 'training session', 'onboarding', 'learning', 'education', 'instruction', 'guidance', 'walkthrough'],
-    platform: ['shopify', 'platform', 'ecommerce', 'e-commerce', 'which platform', 'what platform', 'platform choice', 'system', 'cms', 'technology'],
-    payment_gateway: ['payment gateway', 'accept payment', 'online payment', 'transaction', 'pay online', 'payment processing', 'payment method', 'payment integration', 'checkout', 'payment system'],
-    design: ['design', 'logo', 'banner', 'look', 'appearance', 'branding', 'graphics', 'visual', 'theme', 'layout', 'ui', 'ux', 'user interface', 'aesthetic', 'creative', 'design work'],
-
-    confirmation: ['start', 'begin', 'sign up', 'register', 'book', 'confirm', 'interested', 'want', 'ready', 'proceed', 'go ahead', 'lets start', 'im ready', 'book now', 'register now', 'get started', 'take it', 'buy', 'purchase'],
-    installment: ['installment', 'instalment', 'emi', 'partial payment', 'split payment', 'monthly payment', 'payment plan', 'pay in parts', 'flexible payment', 'milestone payment'],
-    quickdelivery: ['quick delivery', 'fast delivery', 'urgent', 'asap', 'faster', 'rush', 'express', 'immediate', 'quick turnaround', 'fast completion', 'speed delivery'],
+    services: ['services', 'what do you do', 'offerings', 'solutions', 'what you offer', 'included', 'package', 'what included', 'service list', 'help with', 'provide', 'support'],
     
-    marketing: ['marketing', 'advertisement', 'promote', 'advertising', 'campaign', 'ads', 'digital marketing', 'social media marketing', 'online marketing', 'promotion', 'advertise', 'brand promotion', 'marketing strategy'],
-    sales: ['sales', 'selling', 'revenue', 'grow business', 'increase sales', 'boost sales', 'more sales', 'improve sales', 'sales growth', 'revenue growth', 'business growth'],
-    scaling: ['scale', 'scaling', 'growth', 'expand', 'expansion', 'grow', 'growing', 'scale up', 'business expansion', 'market expansion'],
+    crm: ['crm', 'salesforce', 'hubspot', 'pipedrive', 'customer relationship', 'crm setup', 'crm admin', 'crm management', 'platform', 'system'],
     
-    dpm: ['digital presence', 'dpm', 'online presence', 'digital footprint', 'web presence', 'digital visibility', 'online visibility', 'digital identity'],
-    website: ['website', 'web', 'site', 'webpage', 'landing page', 'corporate website', 'business website', 'professional website', 'responsive website'],
-    socialmedia: ['social media', 'instagram', 'facebook', 'linkedin', 'twitter', 'social', 'sm', 'social media management', 'social presence', 'social profiles'],
-    seo: ['seo', 'search engine', 'google ranking', 'search optimization', 'visibility', 'ranking', 'google search', 'search result', 'organic traffic'],
-    branding: ['branding', 'brand', 'brand identity', 'logo', 'brand guidelines', 'visual identity', 'brand recognition', 'brand building'],
+    automation: ['automation', 'workflow', 'automate', 'automatic', 'process automation', 'workflow automation', 'automated processes', 'efficiency', 'streamline'],
     
-    aboutar: ['about', 'who are you', 'ar solutions', 'afterresult', 'your company', 'about company', 'company info', 'agency', 'your services'],
-    experience: ['experience', 'portfolio', 'past work', 'projects', 'clients', 'track record', 'case study', 'success stories', 'expertise'],
+    integration: ['integration', 'integrate', 'connect', 'sync', 'api', 'connection', 'tech stack', 'tools', 'platforms', 'systems', 'data flow'],
     
-    comparison: ['compare', 'difference', 'better than', 'vs', 'versus', 'competitor', 'alternative', 'why choose', 'what makes different', 'unique', 'advantage over'],
-    guarantee: ['guarantee', 'assured', 'promise', 'warranty', 'refund', 'money back', 'risk free', 'guaranteed results'],
+    data: ['data', 'database', 'data quality', 'data management', 'data operations', 'clean data', 'data hygiene', 'enrichment', 'migration'],
     
-    discount: ['discount', 'offer', 'deal', 'coupon', 'promo', 'promotion', 'special offer', 'limited offer', 'sale', 'reduced price', 'save money', 'cheaper', 'best price'],
+    reporting: ['reporting', 'reports', 'analytics', 'dashboard', 'metrics', 'kpi', 'insights', 'visibility', 'forecasting', 'data visualization'],
     
-    contact: ['contact', 'reach', 'email', 'phone', 'call', 'demo', 'meeting', 'consultation', 'connect', 'get in touch', 'talk to someone'],
-    services: ['services', 'what do you do', 'offerings', 'solutions', 'brochure', 'catalog', 'service list', 'what you offer', 'all services'],
+    timeline: ['when', 'how long', 'time', 'duration', 'delivery', 'timeline', 'completion', 'turnaround', 'how soon', 'start'],
     
-    casual: ['i am good', 'im good', 'i am fine', 'im fine', 'i am also good', 'im also good', 'doing well', 'doing good', 'all good', 'great', 'fine', 'okay', 'ok', 'good', 'nice', 'cool', 'awesome'],
-    howareyou: ['how are you', 'how are you doing', 'whats up', "what's up", 'hows it going', 'how you doing'],
+    hours: ['hours', 'how many hours', '40 hours', 'monthly hours', 'time commitment', 'support hours', 'dedicated time'],
+    
+    problem: ['problem', 'challenge', 'issue', 'struggle', 'pain point', 'difficulty', 'bottleneck', 'inefficiency', 'manual', 'disconnected'],
+    
+    benefits: ['benefits', 'outcomes', 'results', 'improvements', 'roi', 'value', 'impact', 'advantages', 'what will i get', 'expect'],
+    
+    approach: ['approach', 'methodology', 'process', 'how you work', 'strategy', 'method', 'framework', 'steps'],
+    
+    technical: ['technical', 'tech', 'difficult', 'easy', 'knowledge', 'skill', 'complex', 'complicated', 'expertise required'],
+    
+    training: ['training', 'teach', 'learn', 'help', 'support', 'onboarding', 'documentation', 'guide', 'walkthrough'],
+    
+    lead_management: ['lead', 'leads', 'lead routing', 'lead scoring', 'qualification', 'lead management', 'conversion'],
+    
+    sales_enablement: ['sales enablement', 'territory', 'quota', 'sales process', 'performance tracking', 'sales support'],
+    
+    confirmation: ['start', 'begin', 'sign up', 'interested', 'want', 'ready', 'proceed', 'get started', 'schedule', 'book', 'consultation'],
+    
+    contact: ['contact', 'reach', 'email', 'phone', 'call', 'demo', 'meeting', 'consultation', 'connect', 'get in touch', 'talk'],
+    
+    aboutar: ['about', 'who are you', 'ar solutions', 'afterresult', 'your company', 'company info', 'agency'],
+    
+    comparison: ['compare', 'difference', 'better than', 'vs', 'versus', 'why choose', 'what makes different', 'unique', 'advantage'],
+    
+    guarantee: ['guarantee', 'assured', 'promise', 'results', 'refund', 'risk'],
+    
+    casual: ['i am good', 'im good', 'i am fine', 'im fine', 'doing well', 'doing good', 'all good', 'great', 'fine', 'okay', 'ok', 'good'],
+    
+    howareyou: ['how are you', 'how are you doing', 'whats up', 'hows it going', 'how you doing'],
+    
     whoareyou: ['who are you', 'what are you', 'your name', 'about you', 'bot', 'ai', 'chatbot'],
-    thankyou: ['thank you', 'thanks', 'thank u', 'thx', 'appreciate', 'grateful', 'thanks a lot'],
-    bye: ['bye', 'goodbye', 'see you', 'later', 'farewell', 'gotta go', 'take care'],
     
-    urgent: ['urgent', 'asap', 'immediately', 'right now', 'quick', 'fast', 'hurry', 'rush'],
-    confused: ['confused', 'dont understand', 'explain', 'clarify', 'not clear', 'unclear', 'elaborate'],
-    interested: ['interested', 'sounds good', 'tell me more', 'more info', 'details', 'detailed', 'elaborate', 'explain more'],
-    skeptical: ['really', 'sure', 'guarantee', 'proof', 'evidence', 'trust', 'believe', 'legit', 'genuine', 'scam'],
+    thankyou: ['thank you', 'thanks', 'thank u', 'thx', 'appreciate', 'grateful'],
     
-    detailed: ['tell me more', 'more details', 'detailed', 'elaborate', 'full package', 'complete info', 'everything', 'all details', 'comprehensive']
+    bye: ['bye', 'goodbye', 'see you', 'later', 'farewell', 'gotta go'],
+    
+    urgent: ['urgent', 'asap', 'immediately', 'right now', 'quick', 'fast'],
+    
+    interested: ['interested', 'sounds good', 'tell me more', 'more info', 'details'],
+    
+    pipeline: ['pipeline', 'sales pipeline', 'deal flow', 'funnel', 'opportunities'],
+    
+    specialist: ['specialist', 'expert', 'dedicated', 'consultant', 'who will work', 'team']
   },
 
   responses: {
-    greeting: "Welcome to AR Solutions! We help businesses grow with affordable digital solutions - from online stores to WhatsApp marketing. What interests you?",
-    greeting_detailed: "Thank you for your interest in AR Solutions! Founded in 2024, we're a full-service growth agency helping startups and SMEs scale digitally and offline.\n\nWe specialize in:\n✓ E-Commerce Store Setup (Shopify)\n✓ WhatsApp Marketing & Lead Generation\n✓ Digital Presence Management\n✓ Branding & Marketplace Enablement\n\nWhat would you like to explore?",
-    aboutar: "AR Solutions (AfterResult) - Your trusted digital growth partner since 2024. We deliver results-driven marketing, e-commerce, and branding solutions.",
-    aboutar_detailed: "**About AR Solutions**\n\nAR Solutions (AfterResult Solutions) is a full-service marketing and business growth agency dedicated to helping brands scale digitally and offline.\n\n**Our Expertise:**\n• Digital Presence Management (DPM)\n• Lead Generation (Leadin)\n• E-Commerce Development\n• Marketplace Enablement\n• Offline Presence Management (OPM)\n\n**Founded:** 2024\n**Mission:** Grow businesses faster with affordable, results-focused solutions\n\nWe're not just a service provider—we're your growth partner!",
-    fullPackage: "**Shopify Store - ₹7,999**\n✓ Complete setup\n✓ Free domain (1 year)\n✓ Payment gateway\n✓ 20 products listed\n✓ Logo & banners\n✓ FREE training\n✓ Delivered in 25 days\n\nStart with just ₹1,599!",
-    fullPackage_detailed: "**Complete Shopify E-Commerce Package - ₹7,999**\n\n**What You Get:**\n✓ Complete Shopify store setup\n✓ 1-year free domain (your brand name - our gift!)\n✓ Payment gateway integration\n✓ Up to 20 products listed & ready\n✓ Simple logo design + banners\n✓ Content creation\n✓ FREE training on store management\n✓ Delivered in 25 days\n✓ Transparent pricing - no hidden charges\n✓ Monthly subscription paid separately (cancel anytime)\n\n**Payment Plan:**\n• Confirmation: ₹1,599\n• Remaining: 4 easy installments\n\n**Quick Delivery Option:** Pay 70% upfront for faster delivery!\n\nReady-to-use, business-grade store designed for immediate sales.",
-    pricing: "₹7,999 total. Start with ₹1,599 confirmation, rest in 4 installments over 25 days. Want quick delivery? Pay 70% upfront!",
-    quickDelivery: "Get your store faster! Pay 70% upfront for Quick Delivery Option - hassle-free priority setup.",
-    whatsappmarketing: "**WhatsApp Marketing - ₹2,000**\n✓ 1,400 messages delivered\n✓ LinkedIn & Google leads\n✓ Business account setup\n✓ Auto-replies & catalog\n✓ 7-day delivery",
-    whatsappmarketing_detailed: "**Complete WhatsApp Marketing & Lead Generation - ₹2,000**\n\n**What's Included:**\n✓ Lead generation (LinkedIn + Google scraping)\n✓ Up to 1,400 promotional messages (200/day avg)\n✓ WhatsApp Business Account setup\n✓ Lead management & forwarding\n✓ Community building strategies\n✓ Auto-replies (never miss a lead)\n✓ Catalog setup (showcase products/services)\n✓ Profile message & quick responses\n✓ Away message configuration\n✓ 7-day completion\n\n**Why 200/day limit?** Keeps your account safe from WhatsApp restrictions while maximizing reach.\n\n**Price:** ₹2,000 all-inclusive - no hidden charges!",
-    whatsapp_setup: "We'll set up your professional WhatsApp Business Account with profile, catalog, and all features - making you look credible and trustworthy.",
-    whatsapp_messages: "1,400 promotional messages total - about 200 per day. This daily limit keeps your account safe while reaching maximum audience.",
-    whatsapp_leads: "Quality leads from LinkedIn & Google scraping - targeted, relevant contacts shared for easy tracking and follow-up!",
-    whatsapp_features: "Auto-replies, catalog, profile message, quick responses, away messages - everything for a professional business account!",
-    whatsapp_timeline: "Complete setup & execution in 7 days. Quick turnaround, fast results!",
-    whatsapp_price: "₹2,000 all-inclusive. Complete setup + 1,400 messages + quality leads. No hidden charges.",
-    whatsapp_community: "We help build WhatsApp groups and communities for organic engagement - creating loyal customers who keep coming back!",
-    whatsapp_restrictions: "200 messages/day keeps your account safe. Too many messages = risk of ban. We maximize reach while keeping you secure long-term.",
-    dpm: "**Digital Presence Management** - Complete online identity: website, social media, SEO, branding. Want details?",
-    dpm_detailed: "**Digital Presence Management (DPM)**\n\nEstablish, enhance, and scale your presence across all digital channels:\n\n**Services Include:**\n• Website & Platform Development\n• Branding & Creative Identity\n• Social Media Management\n• SEO & Visibility Optimization\n• Digital Advertising & Campaigns\n• Analytics & CRM Integration\n• Reputation Management\n• Specialized SME Solutions\n\nWe ensure every digital touchpoint reflects your brand and drives growth. Interested in a specific service?",
-    noTech: "No technical knowledge needed! We handle everything - you get a complete business-ready store.",
-    timeline: "25 days for complete store. Want faster? Quick Delivery Option available with 70% upfront.",
-    domain: "Yes! Free 1-year domain with your brand name - our gift to you. Included in package.",
-    training: "FREE training on store management and adding products. You'll learn everything to run successfully.",
-    platform: "Shopify - world's most reliable e-commerce platform. Trusted by millions globally.",
-    products: "Any products - clothing, shoes, jewelry, any niche. Customized for your business. Sell on Google, social media, worldwide.",
-    paymentGateway: "Yes! Payment gateway integrated for easy online payments from customers. Included.",
-    design: "Simple logo, banners, and content creation included in the package.",
-    installments: "After ₹1,599 confirmation, remaining balance in 4 simple installments over 25 days. Flexible and easy.",
-    confirmation: "Start with just ₹1,599 confirmation fee to secure your slot!",
-    comparison: "**Why AR Solutions?**\n✓ Affordable pricing\n✓ Complete solutions (no hidden costs)\n✓ FREE training & support\n✓ Quick delivery options\n✓ Proven track record since 2024\n✓ End-to-end service",
-    guarantee: "We deliver quality work on time. Your satisfaction is our priority. Transparent pricing, no hidden charges, complete support throughout.",
-    discount: "**Current Offers:**\n• E-Commerce: Start at ₹1,599 only\n• WhatsApp Marketing: ₹2,000 complete package\n• Quick Delivery: 70% upfront bonus\n\nLimited time! Secure your slot now.",
-    urgent: "I understand it's urgent! Our Quick Delivery Option gets your store live faster - pay 70% upfront for priority service. Want to proceed?",
-    marketing: "End-to-end marketing: digital strategy, paid ads, social media, SEO, performance tracking. Want to know more?",
-    sales: "We scale sales through structured campaigns, lead nurturing, and data-driven strategies. Maximize your revenue from day one!",
-    scaling: "Grow smarter with customized scaling plans - boosting revenue and maximizing ROI. Let's build something amazing!",
-    contact: "📧 Email: info.afterresult@gmail.com\n📱 WhatsApp: +91 9050983530\n\nOr click below to connect directly!",
-    services: "We offer comprehensive business solutions! Check our Services Brochure for complete details.",
-    howareyou: "Doing great! How about you? How can I help you today?",
-    whoareyou: "I'm your service assistant from AR Solutions - here to help you discover the best solutions for your business!",
+    greeting: "Welcome to AR Solutions Revenue Operations Services! We help growing companies scale their revenue engine through automation, integrations, and data-driven operations. What interests you?",
+    
+    greeting_detailed: "Thank you for your interest in our RevOps Services!\n\nWe provide comprehensive revenue operations support on a monthly retainer:\n✓ CRM Administration & Optimization\n✓ Workflow Automation Development\n✓ Tech Stack Integration Management\n✓ Data Operations & Quality Assurance\n✓ Custom Reporting & Analytics\n✓ 40 hours of dedicated support monthly\n\nWhat would you like to know more about?",
+    
+    revops: "Revenue Operations (RevOps) aligns your sales, marketing, and customer success teams through unified systems, automated workflows, and clean data - helping you scale efficiently.",
+    
+    revops_detailed: "**Revenue Operations Services**\n\nWe build and optimize your revenue infrastructure:\n• CRM setup, configuration & ongoing management\n• Custom workflow & automation development\n• Tech stack integration (API connections, data sync)\n• Data operations & quality assurance\n• Custom dashboards & analytics\n• Lead management & routing systems\n• Process documentation & team training\n\nAll delivered through a flexible monthly retainer with 40 hours of dedicated support.",
+    
+    pricing: "₹3,500/month retainer. Includes 40 hours of dedicated RevOps specialist support, covering CRM admin, automation, integrations, reporting, and ongoing optimization.",
+    
+    pricing_detailed: "**Monthly Retainer: ₹3,500**\n\n**What's Included:**\n✓ 40 hours of strategic support per month\n✓ Dedicated RevOps Specialist\n✓ CRM setup, configuration & optimization\n✓ Custom workflow & automation development\n✓ Tech stack integration & management\n✓ Data operations & quality assurance\n✓ Custom reporting & analytics dashboards\n✓ Process documentation & training\n✓ Monthly strategy & planning sessions\n✓ Priority email & Slack support\n✓ Quarterly business reviews\n\nFlexible engagement - cancel anytime with 30 days notice.",
+    
+    services: "We offer comprehensive RevOps support: CRM admin, workflow automation, integrations, data management, reporting, lead management, sales enablement, and team training - all on a monthly retainer basis.",
+    
+    services_detailed: "**RevOps Services (Monthly Retainer)**\n\n**CRM Administration:** Platform config, custom objects, field management, permissions\n**Workflow Development:** Automation build-out, trigger logic, multi-step sequences\n**Integration Management:** API connections, data mapping, sync monitoring\n**Data Operations:** Database hygiene, enrichment, migration support\n**Reporting & Analytics:** Dashboard creation, metric tracking, forecasting\n**Lead Management:** Scoring models, routing rules, qualification frameworks\n**Sales Enablement:** Territory planning, quota management, process documentation\n**Training & Support:** Onboarding, documentation, ongoing technical support\n\n40 hours per month to tackle your highest priorities.",
+    
+    crm: "We handle complete CRM administration - setup, configuration, custom objects, field management, user permissions, and ongoing optimization. Works with Salesforce, HubSpot, Pipedrive, and more.",
+    
+    automation: "We design and build intelligent workflows that automate lead routing, data enrichment, follow-ups, and reporting - saving your team 30-50% time on manual tasks.",
+    
+    integration: "We connect your CRM, marketing automation, and analytics tools into a unified ecosystem with seamless data flow - no more disconnected systems or manual data entry.",
+    
+    data: "We ensure 95%+ data accuracy through validation rules, enrichment workflows, duplicate management, and proper governance - giving you reliable insights for decision-making.",
+    
+    reporting: "Custom dashboards with real-time visibility into pipeline health, key metrics, and team performance. Track what matters, forecast accurately, make informed decisions.",
+    
+    timeline: "We start immediately after kickoff. Initial audit and quick wins within the first week, major improvements rolling out within 30 days. Ongoing optimization throughout the engagement.",
+    
+    hours: "40 hours of dedicated support per month. We tackle your highest-priority items each month - from automation builds to reporting to ongoing optimization.",
+    
+    problem: "Most growing companies struggle with disconnected systems, manual workflows, poor data quality, and lack of visibility. We solve these operational inefficiencies so you can scale smoothly.",
+    
+    benefits: "Expected outcomes: 30-50% time savings through automation, 20-35% faster sales cycles, 95%+ data accuracy, 100% revenue visibility with real-time dashboards.",
+    
+    approach: "Our approach: 1) Revenue audit & strategy 2) Tech stack integration 3) Process automation 4) Data infrastructure 5) Analytics & reporting 6) Continuous optimization. Results-driven, hands-on support.",
+    
+    technical: "No technical knowledge needed from your team. Our RevOps specialists handle all the technical work - you just tell us what you need, we make it happen.",
+    
+    training: "Complete training and documentation included. We onboard your team, document all processes, and provide ongoing support so you're never stuck.",
+    
+    lead_management: "We build complete lead management systems: scoring models, automated routing rules, qualification frameworks, and conversion optimization - ensuring no lead falls through the cracks.",
+    
+    sales_enablement: "Sales enablement support includes territory planning, quota management, sales process documentation, and performance tracking - everything to help your team sell more efficiently.",
+    
+    confirmation: "Ready to get started? Schedule a consultation to discuss your revenue operations needs and how we can help scale your business.",
+    
+    contact: "📧 Email: info.afterresult@gmail.com\n📱 WhatsApp: +91 9050983530\n🌐 Website: https://afterresult.solutions\n\nClick below to schedule a call or reach out directly!",
+    
+    aboutar: "AR Solutions (AfterResult) is a digital growth agency specializing in revenue operations, e-commerce, and marketing automation. We help growing businesses scale efficiently with strategic operations support.",
+    
+    comparison: "**Why AR Solutions RevOps?**\n✓ Affordable monthly retainer (₹3,500)\n✓ Flexible engagement - no long-term lock-in\n✓ Dedicated specialist (40 hrs/month)\n✓ Comprehensive support across all RevOps areas\n✓ Fast turnaround on implementations\n✓ Complete training & documentation",
+    
+    guarantee: "We deliver measurable improvements in operational efficiency, data quality, and revenue visibility. Your success is our priority - with transparent pricing and complete support throughout.",
+    
+    howareyou: "Doing great! Ready to help you optimize your revenue operations. What can I assist you with today?",
+    
+    whoareyou: "I'm your RevOps assistant from AR Solutions - here to answer questions about our revenue operations services and help you scale your business efficiently!",
+    
     thankyou: "You're welcome! Happy to help anytime 😊",
-    bye: "Goodbye! Wishing you success. Feel free to return anytime!",
-    interested: "Great! Let me share more details...",
-    skeptical: "I understand your concern. AR Solutions has been delivering results since 2024. We offer:\n✓ Transparent pricing\n✓ No hidden charges\n✓ Complete support\n✓ Real deliverables\n\nWant to see our work or talk to our team?"
+    
+    bye: "Goodbye! Feel free to reach out anytime you need revenue operations support!",
+    
+    interested: "Great! Let me share more details about our RevOps services...",
+    
+    urgent: "I understand the urgency! We can start immediately after kickoff with quick wins in the first week. Schedule a consultation to discuss your specific needs.",
+    
+    pipeline: "We provide complete pipeline visibility through custom dashboards - track deal flow, conversion rates, velocity, and forecast accuracy in real-time.",
+    
+    specialist: "You get a dedicated RevOps specialist with expertise in CRM administration, automation, integrations, and analytics. They work 40 hours per month on your highest-priority initiatives."
   }
-  }
+}
     };
   },
 computed: {
