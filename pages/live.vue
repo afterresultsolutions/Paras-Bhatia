@@ -1,336 +1,31 @@
 <template>
   <div :class="['chat-wrapper', isDarkMode ? 'dark-mode' : 'light-mode']">
     <div class="chat-container">
-<!-- Sidebar for Desktop -->
-<div :class="['sidebar', showMenu ? 'sidebar-open' : '', isDarkMode ? 'sidebar-dark' : 'sidebar-light']">
-<div class="sidebar-header">
-  <button @click="showMenu = false; startNewChat()" :class="['new-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
-    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-    </svg>
-    <span>New chat</span>
-  </button>
-</div>
-
-<!-- Mobile Search box - MOVED UP -->
-<div class="sidebar-search">
-  <div class="search-input-wrapper">
-    <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-    </svg>
-    <input
-      v-model="searchQuery"
-      type="text"
-      placeholder="Search chats..."
-      :class="['search-chat-input', isDarkMode ? 'input-dark' : 'input-light']"
-    />
-  </div>
-</div>
-
-<!-- Mobile Quick Action Pills - NOW BELOW SEARCH -->
-<div class="quick-pills">
-  <!-- ... all your pill buttons ... -->
-</div>
-
-<!-- Quick Action Pills -->
-<div class="quick-pills">
-  <a href="https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf" target="_blank" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
-    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-    </svg>
-    <span>Download Brochure</span>
-  </a>
-  
-  <a href="https://api.whatsapp.com/send/?phone=919050983530&text=Hi,%20I%20want%20to%20hire%20your%20services" target="_blank" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
-    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-    </svg>
-    <span>Hire Us</span>
-  </a>
-  
-  <a href="https://api.whatsapp.com/send/?phone=919050983530&text=Hi,%20I%20want%20to%20discuss%20partnership%20opportunities" target="_blank" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
-    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-    </svg>
-    <span>Partnership</span>
-  </a>
-  
-  <a href="mailto:info.afterresult@gmail.com" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
-    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
-    </svg>
-    <span>Contact/Support</span>
-  </a>
-</div>
-  
-<div class="sidebar-content">
-  <div v-if="filteredChatHistory.length > 0" class="history-label">Recent</div>
-  <div v-if="filteredChatHistory.length === 0 && searchQuery" class="no-results">
-    No chats found
-  </div>
-<div v-for="chat in filteredChatHistory" :key="chat.id" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
-  <div class="history-item-content" @click="loadChat(chat)">
-    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-    </svg>
-    <span class="history-title">{{ chat.title }}</span>
-  </div>
-  <div class="history-item-actions">
-    <button @click.stop="renameChat(chat)" class="history-action-btn" title="Rename">
-      <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-      </svg>
-    </button>
-    <button @click.stop="archiveChat(chat.id)" class="history-action-btn" title="Archive">
-      <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
-      </svg>
-    </button>
-    <button @click.stop="deleteChat(chat.id)" class="history-action-btn history-delete-btn" title="Delete">
-      <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-      </svg>
-    </button>
-  </div>
-</div>
-    <!-- ADD ARCHIVED SECTION HERE -->
-  <div v-if="archivedChats.length > 0" class="archived-section">
-    <button @click="showArchived = !showArchived" :class="['archived-toggle', isDarkMode ? 'btn-dark' : 'btn-light']">
-      <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
-      </svg>
-      <span>Archived ({{ archivedChats.length }})</span>
-      <svg :class="['icon-sm', 'arrow-icon', { 'arrow-rotated': showArchived }]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-      </svg>
-    </button>
-    
-    <div v-if="showArchived" class="archived-chats">
-      <div v-for="chat in archivedChats" :key="chat.id" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
-        <div class="history-item-content" @click="loadChat(chat)">
-          <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-          </svg>
-          <span class="history-title">{{ chat.title }}</span>
-        </div>
-        <div class="history-item-actions">
-          <button @click.stop="unarchiveChat(chat.id)" class="history-action-btn" title="Unarchive">
-            <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
-            </svg>
-          </button>
-          <button @click.stop="deleteChat(chat.id)" class="history-action-btn history-delete-btn" title="Delete">
-            <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-  
-  <div :class="['sidebar-footer', isDarkMode ? 'footer-dark' : 'footer-light']">
-    <a href="https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0" target="_blank" class="human-chat-btn footer-human-btn">
-      <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-      </svg>
-      <span class="human-chat-text">Chat with Human</span>
-    </a>
-    <button @click="toggleTheme" :class="['footer-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
-      <svg v-if="isDarkMode" class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-      </svg>
-      <svg v-else class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-      </svg>
-    </button>
-  </div>
-</div>
-
-<!-- Mobile Sidebar -->
-<div v-if="showMenu" @click="showMenu = false" class="mobile-overlay"></div>
-<div :class="['mobile-sidebar', showMenu ? 'mobile-sidebar-open' : '', isDarkMode ? 'sidebar-dark' : 'sidebar-light']">
-  <div class="sidebar-header">
-    <button @click="showMenu = false; startNewChat()" :class="['new-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
-      <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-      </svg>
-      <span>New chat</span>
-    </button>
-  </div>
-
-  <!-- Mobile Search box - MOVED TO TOP -->
-  <div class="sidebar-search">
-    <div class="search-input-wrapper">
-      <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-      </svg>
-      <input
-        v-model="searchQuery"
-        type="text"
-        placeholder="Search chats..."
-        :class="['search-chat-input', isDarkMode ? 'input-dark' : 'input-light']"
-      />
-    </div>
-  </div>
-
-  <!-- Mobile Quick Action Pills -->
-  <div class="quick-pills">
-    <a href="https://cdn2.f-cdn.com/files/download/257089198/afterresult.pdf" target="_blank" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
-      <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-      </svg>
-      <span>Download Brochure</span>
-    </a>
-    
-    <a href="https://api.whatsapp.com/send/?phone=919050983530&text=Hi,%20I%20want%20to%20hire%20your%20services" target="_blank" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
-      <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-      </svg>
-      <span>Hire Us</span>
-    </a>
-    
-    <a href="https://api.whatsapp.com/send/?phone=919050983530&text=Hi,%20I%20want%20to%20discuss%20partnership%20opportunities" target="_blank" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
-      <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-      </svg>
-      <span>Partnership</span>
-    </a>
-    
-    <a href="mailto:info.afterresult@gmail.com" :class="['pill-btn', isDarkMode ? 'pill-dark' : 'pill-light']">
-      <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
-      </svg>
-      <span>Contact/Support</span>
-    </a>
-  </div>
-
-<div class="sidebar-content">
-    <div v-if="filteredChatHistory.length > 0" class="history-label">Recent</div>
-    <div v-for="chat in filteredChatHistory" :key="chat.id" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
-      <div class="history-item-content" @click="loadChat(chat); showMenu = false">
-        <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-        </svg>
-        <span class="history-title">{{ chat.title }}</span>
-      </div>
-      <div class="history-item-actions">
-        <button @click.stop="renameChat(chat)" class="history-action-btn" title="Rename">
-          <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-          </svg>
-        </button>
-        <button @click.stop="archiveChat(chat.id)" class="history-action-btn" title="Archive">
-          <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
-          </svg>
-        </button>
-        <button @click.stop="deleteChat(chat.id)" class="history-action-btn history-delete-btn" title="Delete">
-          <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-    
-    <!-- ARCHIVED SECTION FOR MOBILE -->
-    <div v-if="archivedChats.length > 0" class="archived-section">
-      <button @click="showArchived = !showArchived" :class="['archived-toggle', isDarkMode ? 'btn-dark' : 'btn-light']">
-        <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
-        </svg>
-        <span>Archived ({{ archivedChats.length }})</span>
-        <svg :class="['icon-sm', 'arrow-icon', { 'arrow-rotated': showArchived }]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-        </svg>
-      </button>
-      
-      <div v-if="showArchived" class="archived-chats">
-        <div v-for="chat in archivedChats" :key="chat.id" :class="['history-item', isDarkMode ? 'history-item-dark' : 'history-item-light']">
-          <div class="history-item-content" @click="loadChat(chat); showMenu = false">
-            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-            </svg>
-            <span class="history-title">{{ chat.title }}</span>
-          </div>
-          <div class="history-item-actions">
-            <button @click.stop="unarchiveChat(chat.id)" class="history-action-btn" title="Unarchive">
-              <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
-              </svg>
-            </button>
-            <button @click.stop="deleteChat(chat.id)" class="history-action-btn history-delete-btn" title="Delete">
-              <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- ... rest of footer ... -->
-    <div :class="['sidebar-footer', isDarkMode ? 'footer-dark' : 'footer-light']">
-    <a href="https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0" target="_blank" class="human-chat-btn footer-human-btn mobile-human-btn">
-      <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-      </svg>
-      <span class="human-chat-text">Chat with Human</span>
-    </a>
-    <button @click="toggleTheme" :class="['footer-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
-      <svg v-if="isDarkMode" class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-      </svg>
-      <svg v-else class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-      </svg>
-    </button>
-  </div>
-</div>
-            <!-- Main content -->
       <div class="main-content">
-        <!-- Header -->
-<div :class="['chat-header', isDarkMode ? 'header-dark' : 'header-light']">
-  <div class="header-title">
-    <span class="brand-name">AR Solutions</span>
-    <span class="model-badge">AI</span>
-    <span class="live-indicator">
-      <span class="live-dot"></span>
-      <span class="live-text">Live</span>
-    </span>
-  </div>
+        <div :class="['chat-header', isDarkMode ? 'header-dark' : 'header-light']">
+          <div class="header-title">
+            <span class="brand-name">AR Solutions</span>
+            <span class="model-badge">AI</span>
+          </div>
+          <button @click="toggleTheme" :class="['theme-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
+            <svg v-if="isDarkMode" class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            </svg>
+            <svg v-else class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+            </svg>
+          </button>
+        </div>
 
-<!-- Mobile menu toggle -->
-<button @click="showMenu = !showMenu" :class="['menu-toggle-btn', isDarkMode ? 'btn-dark' : 'btn-light']">
-  <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-  </svg>
-  
-</button> 
-  <button @click="toggleTempMode" :class="['temp-chat-btn', isDarkMode ? 'btn-dark' : 'btn-light', { 'temp-active': isTempMode }]" :title="isTempMode ? 'Temporary Mode Active' : 'Enable Temporary Mode'">
-    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
-    </svg>
-  </button>
-</div>
-
-        <!-- Chat area -->
         <div class="chat-area">
-          <!-- Empty state -->
           <div v-if="messages.length === 0" class="empty-state">
             <h1 :class="['empty-title', isDarkMode ? 'text-white' : 'text-gray-800']">Hey there! How can I help you today?</h1>
             
             <div class="search-container-center">
-              <div v-if="isTempMode" class="temp-mode-indicator">
-                <span> Temporary Mode - Chat not saved</span>
-              </div>
               <div :class="['search-box', isDarkMode ? 'search-dark' : 'search-light']">
                 <input
                   ref="queryInput"
                   v-model="query"
-                  @input="handleInputChange"
                   @keyup.enter="handleSearch"
                   type="text"
                   placeholder="Ask anything"
@@ -348,54 +43,24 @@
             </div>
           </div>
 
-          <!-- Chat messages -->
           <div v-else class="messages-wrapper">
             <div ref="messagesContainer" class="messages-container">
               <div class="messages-inner">
                 <div v-for="(message, index) in messages" :key="index" class="message-group">
                   <div :class="['message-row', message.type === 'user' ? 'message-user' : 'message-bot']">
                     <div class="message-content-wrapper">
-<div class="message-content">
-  <p class="message-text">{{ message.text }}</p>
-  <a v-if="message.hasButton" :href="message.buttonLink" target="_blank" 
-     :class="message.buttonType === 'whatsapp' ? 'whatsapp-marketing-btn' : 'launch-btn'">
-    {{ message.buttonText }}
-  </a>
-</div>
+                      <div class="message-content">
+                        <p class="message-text">{{ message.text }}</p>
+                      </div>
                       <div v-if="message.type === 'bot'" class="message-actions">
                         <button @click="copyMessage(message.text)" class="action-btn" title="Copy">
                           <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                           </svg>
                         </button>
-                        <button @click="likeMessage(index)" class="action-btn" title="Good response">
-                          <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
-                          </svg>
-                        </button>
-                        <button @click="dislikeMessage(index)" class="action-btn" title="Bad response">
-                          <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"></path>
-                          </svg>
-                        </button>
-                        <button @click="regenerateResponse(index)" class="action-btn" title="Regenerate">
-                          <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-                          </svg>
-                        </button>
-                        <button @click="shareMessage(message.text)" class="action-btn" title="Share">
-                          <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
-                          </svg>
-                        </button>
-                        <a href="https://api.whatsapp.com/send/?phone=919050983530&text&type=phone_number&app_absent=0" target="_blank" class="action-btn" title="WhatsApp">
+                        <a href="https://api.whatsapp.com/send/?phone=919050983530" target="_blank" class="action-btn" title="WhatsApp">
                           <svg class="icon-xs" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path>
-                          </svg>
-                        </a>
-                        <a href="tel:+919050983530" class="action-btn" title="Call">
-                          <svg class="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                           </svg>
                         </a>
                       </div>
@@ -405,19 +70,17 @@
               </div>
             </div>
 
-            <!-- Bottom input -->
             <div class="input-area">
               <div class="input-container">
                 <div :class="['search-box', isDarkMode ? 'search-dark' : 'search-light']">
-<input
-  ref="queryInputBottom"
-  v-model="query"
-  @input="handleInputChange"
-  @keyup.enter="handleSearch"
-  type="text"
-  placeholder="Message AR Solutions AI"
-  :class="['search-input', isDarkMode ? 'input-dark' : 'input-light']"
-/>
+                  <input
+                    ref="queryInputBottom"
+                    v-model="query"
+                    @keyup.enter="handleSearch"
+                    type="text"
+                    placeholder="Message AR Solutions AI"
+                    :class="['search-input', isDarkMode ? 'input-dark' : 'input-light']"
+                  />
                   <button @click="handleSearch" :class="['send-btn', query.trim() ? 'send-btn-active' : '']">
                     <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
@@ -437,663 +100,197 @@
 </template>
 
 <script>
-const autocorrectDict = {
-  'hu': 'hi',
-  'helo': 'hello',
-  'helllo': 'hello',
-  'heljhs': 'help',
-  'halp': 'help',
-  'plz': 'please',
-  'pls': 'please',
-  'thnks': 'thanks',
-  'thanx': 'thanks',
-  'thx': 'thanks',
-  'servcie': 'service',
-  'serivce': 'service',
-  'servise': 'service',
-  'delevery': 'delivery',
-  'delivry': 'delivery',
-  'pcakage': 'package',
-  'pakage': 'package',
-  'prise': 'price',
-  'priice': 'price',
-  'fetures': 'features',
-  'featurs': 'features',
-  'websit': 'website',
-  'webiste': 'website',
-  'ecomerce': 'ecommerce',
-  'ecomerse': 'ecommerce',
-  'shopfi': 'shopify',
-  'shopfy': 'shopify',
-  'paymnet': 'payment',
-  'payemnt': 'payment',
-  'doamin': 'domain',
-  'domian': 'domain',
-  'traning': 'training',
-  'trainig': 'training',
-  'stroe': 'store',
-  'stor': 'store',
-  'prodcut': 'product',
-  'porduct': 'product',
-  'wnat': 'want',
-  'waht': 'what',
-  'whta': 'what',
-  'hwo': 'how',
-  'cna': 'can',
-  'teh': 'the',
-  'adn': 'and',
-  'wiht': 'with',
-  'yuor': 'your',
-  'yoru': 'your',
-  'thsi': 'this',
-  'taht': 'that',
-  'jsut': 'just',
-  'dont': "don't",
-  'doesnt': "doesn't",
-  'wont': "won't",
-  'cant': "can't",
-  'isnt': "isn't",
-  'arent': "aren't",
-  'deck': 'deck'
-};
-
 export default {
-  name: 'ChatbotPage',
+  name: 'RevOpsChatbot',
   data() {
-  return {
-    query: "",
-    showMenu: false,
-    messages: [],
-    isDarkMode: false,
-    chatHistory: [],
-    currentChatId: null,
-    searchQuery: "",
-    autocorrectTimeout: null,
-    isTempMode: false, 
-    showArchived: false,
-    // Add these new touch tracking variables
-    touchStartX: 0,
-    touchEndX: 0,
-    touchStartY: 0,
-    touchEndY: 0,
-kb: {
-  keywords: {
-    greeting: ['hi', 'hello', 'hey', 'hola', 'greetings', 'good morning', 'good afternoon', 'good evening', 'whats up', 'sup', 'yo'],
-    
-    pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget', 'rate', 'quote', 'estimate', 'investment', 'spend', 'value', 'worth', 'affordable', 'costly', 'economical', 'pricing structure', 'payment plan', 'how much', 'what price', 'total cost', 'retainer', 'monthly', 'monthly cost'],
-    
-    revops: ['revenue operations', 'revops', 'rev ops', 'operations', 'revenue', 'revenue engine', 'operational efficiency', 'revenue optimization'],
-    
-    services: ['services', 'service', 'what do you do', 'what you do', 'offerings', 'solutions', 'what you offer', 'what is included', 'included', 'package', 'what included', 'service list', 'help with', 'provide', 'support', 'offer', 'do you offer', 'tell me about services'],
-    
-    crm: ['crm', 'salesforce', 'hubspot', 'pipedrive', 'customer relationship', 'crm setup', 'crm admin', 'crm management', 'platform', 'system', 'crm administration'],
-    
-    automation: ['automation', 'workflow', 'automate', 'automatic', 'process automation', 'workflow automation', 'automated processes', 'efficiency', 'streamline', 'automated workflow'],
-    
-    integration: ['integration', 'integrate', 'connect', 'sync', 'api', 'connection', 'tech stack', 'tools', 'platforms', 'systems', 'data flow', 'connect systems', 'system integration'],
-    
-    data: ['data', 'database', 'data quality', 'data management', 'data operations', 'clean data', 'data hygiene', 'enrichment', 'migration', 'data cleaning'],
-    
-    reporting: ['reporting', 'reports', 'analytics', 'dashboard', 'metrics', 'kpi', 'insights', 'visibility', 'forecasting', 'data visualization', 'custom reports', 'dashboards'],
-    
-    timeline: ['when', 'how long', 'time', 'duration', 'delivery', 'timeline', 'completion', 'turnaround', 'how soon', 'start', 'when start', 'when can you start', 'how quickly'],
-    
-    hours: ['hours', 'how many hours', '40 hours', 'monthly hours', 'time commitment', 'support hours', 'dedicated time', 'hours per month', 'hours included'],
-    
-    problem: ['problem', 'challenge', 'issue', 'struggle', 'pain point', 'difficulty', 'bottleneck', 'inefficiency', 'manual', 'disconnected', 'what problems', 'solve'],
-    
-    benefits: ['benefits', 'outcomes', 'results', 'improvements', 'roi', 'value', 'impact', 'advantages', 'what will i get', 'expect', 'expected outcomes', 'what benefit'],
-    
-    approach: ['approach', 'methodology', 'process', 'how you work', 'strategy', 'method', 'framework', 'steps', 'how do you work', 'your approach'],
-    
-    technical: ['technical', 'tech', 'difficult', 'easy', 'knowledge', 'skill', 'complex', 'complicated', 'expertise required', 'need technical knowledge', 'technical skills'],
-    
-    training: ['training', 'teach', 'learn', 'help', 'support', 'onboarding', 'documentation', 'guide', 'walkthrough', 'training included', 'will you train'],
-    
-    lead_management: ['lead', 'leads', 'lead routing', 'lead scoring', 'qualification', 'lead management', 'conversion', 'manage leads'],
-    
-    sales_enablement: ['sales enablement', 'territory', 'quota', 'sales process', 'performance tracking', 'sales support', 'help sales team'],
-    
-    confirmation: ['start', 'begin', 'sign up', 'interested', 'want', 'ready', 'proceed', 'get started', 'schedule', 'book', 'consultation', 'lets start', 'im interested', 'want to start'],
-    
-    contact: ['contact', 'reach', 'email', 'phone', 'call', 'demo', 'meeting', 'consultation', 'connect', 'get in touch', 'talk', 'speak', 'contact you', 'reach out', 'contact details', 'phone number'],
-    
-    aboutar: ['about', 'who are you', 'ar solutions', 'afterresult', 'your company', 'company info', 'agency', 'about company', 'tell me about', 'what is ar solutions'],
-    
-    comparison: ['compare', 'difference', 'better than', 'vs', 'versus', 'why choose', 'what makes different', 'unique', 'advantage', 'why you', 'why ar solutions'],
-    
-    guarantee: ['guarantee', 'assured', 'promise', 'results', 'refund', 'risk', 'guaranteed', 'assurance'],
-    
-    casual: ['i am good', 'im good', 'i am fine', 'im fine', 'doing well', 'doing good', 'all good', 'great', 'fine', 'okay', 'ok', 'good', 'not bad'],
-    
-    howareyou: ['how are you', 'how are you doing', 'whats up', 'hows it going', 'how you doing', 'how is it going'],
-    
-    whoareyou: ['who are you', 'what are you', 'your name', 'about you', 'bot', 'ai', 'chatbot', 'are you ai', 'are you bot'],
-    
-    thankyou: ['thank you', 'thanks', 'thank u', 'thx', 'appreciate', 'grateful', 'thanks a lot', 'thank you so much'],
-    
-    bye: ['bye', 'goodbye', 'see you', 'later', 'farewell', 'gotta go', 'take care', 'see ya'],
-    
-    urgent: ['urgent', 'asap', 'immediately', 'right now', 'quick', 'fast', 'urgently', 'emergency'],
-    
-    interested: ['interested', 'sounds good', 'tell me more', 'more info', 'details', 'more details', 'elaborate', 'explain more'],
-    
-    pipeline: ['pipeline', 'sales pipeline', 'deal flow', 'funnel', 'opportunities', 'sales funnel'],
-    
-    specialist: ['specialist', 'expert', 'dedicated', 'consultant', 'who will work', 'team', 'your team', 'who works']
-  },
-
-  responses: {
-    greeting: "Hi there! Welcome to AR Solutions RevOps Services 👋\n\nWe help growing companies scale their revenue through:\n✓ CRM automation & optimization\n✓ Workflow automation\n✓ Tech stack integration\n✓ Data operations\n✓ Custom reporting\n\nWhat would you like to know?",
-    
-    greeting_detailed: "Thank you for your interest in our RevOps Services!\n\nWe provide comprehensive revenue operations support on a monthly retainer:\n✓ CRM Administration & Optimization\n✓ Workflow Automation Development\n✓ Tech Stack Integration Management\n✓ Data Operations & Quality Assurance\n✓ Custom Reporting & Analytics\n✓ 40 hours of dedicated support monthly\n\nWhat would you like to know more about?",
-    
-    revops: "Revenue Operations (RevOps) aligns your sales, marketing, and customer success teams through unified systems, automated workflows, and clean data - helping you scale efficiently.\n\nWant to know how we can help?",
-    
-    revops_detailed: "**Revenue Operations Services**\n\nWe build and optimize your revenue infrastructure:\n• CRM setup, configuration & ongoing management\n• Custom workflow & automation development\n• Tech stack integration (API connections, data sync)\n• Data operations & quality assurance\n• Custom dashboards & analytics\n• Lead management & routing systems\n• Process documentation & team training\n\nAll delivered through a flexible monthly retainer with 40 hours of dedicated support.",
-    
-    pricing: "**₹3,500/month retainer**\n\nIncludes:\n✓ 40 hours of dedicated RevOps specialist support\n✓ CRM admin & optimization\n✓ Workflow automation\n✓ Tech integrations\n✓ Custom reporting\n✓ Data operations\n✓ Training & documentation\n\nFlexible engagement - cancel anytime!",
-    
-    pricing_detailed: "**Monthly Retainer: ₹3,500**\n\n**What's Included:**\n✓ 40 hours of strategic support per month\n✓ Dedicated RevOps Specialist\n✓ CRM setup, configuration & optimization\n✓ Custom workflow & automation development\n✓ Tech stack integration & management\n✓ Data operations & quality assurance\n✓ Custom reporting & analytics dashboards\n✓ Process documentation & training\n✓ Monthly strategy & planning sessions\n✓ Priority email & Slack support\n✓ Quarterly business reviews\n\nFlexible engagement - cancel anytime with 30 days notice.",
-    
-    services: "**Our RevOps Services:**\n\n✓ CRM Administration\n✓ Workflow Automation\n✓ Integration Management\n✓ Data Operations\n✓ Reporting & Analytics\n✓ Lead Management\n✓ Sales Enablement\n✓ Training & Support\n\nAll included in your monthly retainer. What interests you most?",
-    
-    services_detailed: "**RevOps Services (Monthly Retainer)**\n\n**CRM Administration:** Platform config, custom objects, field management, permissions\n**Workflow Development:** Automation build-out, trigger logic, multi-step sequences\n**Integration Management:** API connections, data mapping, sync monitoring\n**Data Operations:** Database hygiene, enrichment, migration support\n**Reporting & Analytics:** Dashboard creation, metric tracking, forecasting\n**Lead Management:** Scoring models, routing rules, qualification frameworks\n**Sales Enablement:** Territory planning, quota management, process documentation\n**Training & Support:** Onboarding, documentation, ongoing technical support\n\n40 hours per month to tackle your highest priorities.",
-    
-    crm: "We handle complete CRM administration:\n✓ Setup & configuration\n✓ Custom objects & fields\n✓ User permissions & roles\n✓ Ongoing optimization\n\nWorks with Salesforce, HubSpot, Pipedrive & more!",
-    
-    automation: "We design intelligent workflows that automate:\n✓ Lead routing\n✓ Data enrichment\n✓ Follow-ups\n✓ Reporting\n\nResult: 30-50% time savings on manual tasks!",
-    
-    integration: "We connect your entire tech stack:\n✓ CRM ↔ Marketing automation\n✓ Analytics tools\n✓ Sales platforms\n✓ Custom APIs\n\nSeamless data flow across all systems!",
-    
-    data: "We ensure clean, reliable data:\n✓ Validation rules\n✓ Enrichment workflows\n✓ Duplicate management\n✓ Data governance\n\nAchieve 95%+ data accuracy!",
-    
-    reporting: "Custom dashboards for:\n✓ Pipeline health\n✓ Key metrics & KPIs\n✓ Team performance\n✓ Forecasting\n\nReal-time visibility into what matters!",
-    
-    timeline: "**Quick Start:**\n• Kickoff: Immediate after signup\n• Initial audit: First week\n• Quick wins: Within 7-10 days\n• Major improvements: 30 days\n• Ongoing optimization: Monthly\n\nReady to get started?",
-    
-    hours: "**40 hours/month of dedicated support**\n\nWe prioritize your highest-impact items each month:\n• Automation builds\n• Integration projects\n• Report creation\n• Ongoing optimization\n• Training & support\n\nFlexible allocation based on your needs!",
-    
-    problem: "**Common Revenue Operations Problems:**\n\n❌ Disconnected systems & siloed data\n❌ Manual, time-consuming workflows\n❌ Poor data quality\n❌ Lack of visibility\n\n✅ We solve all of these!\n\nWhich one affects you most?",
-    
-    benefits: "**Expected Outcomes:**\n\n📊 30-50% time savings (automation)\n⚡ 20-35% faster sales cycles\n✅ 95%+ data accuracy\n📈 100% revenue visibility\n\nMeasurable improvements within 30 days!",
-    
-    approach: "**Our 6-Step Approach:**\n\n1️⃣ Revenue audit & strategy\n2️⃣ Tech stack integration\n3️⃣ Process automation\n4️⃣ Data infrastructure\n5️⃣ Analytics & reporting\n6️⃣ Continuous optimization\n\nResults-driven, hands-on support!",
-    
-    technical: "**No technical knowledge needed!**\n\nOur RevOps specialists handle:\n✓ All technical implementation\n✓ Complex integrations\n✓ System configurations\n✓ Troubleshooting\n\nYou just tell us what you need - we make it happen!",
-    
-    training: "**Complete Training Included:**\n\n✓ Team onboarding sessions\n✓ Process documentation\n✓ Video tutorials\n✓ Ongoing support\n\nWe ensure your team is confident and self-sufficient!",
-    
-    lead_management: "**Lead Management Systems:**\n\n✓ Automated scoring models\n✓ Intelligent routing rules\n✓ Qualification frameworks\n✓ Conversion optimization\n\nNo lead falls through the cracks!",
-    
-    sales_enablement: "**Sales Enablement Support:**\n\n✓ Territory planning\n✓ Quota management\n✓ Sales process documentation\n✓ Performance tracking\n\nHelp your team sell more efficiently!",
-    
-    confirmation: "**Ready to scale your revenue operations?**\n\nLet's schedule a consultation to discuss:\n• Your specific challenges\n• How we can help\n• Next steps\n\n📞 Schedule a call now!",
-    
-    contact: "**Contact AR Solutions:**\n\n📧 Email: info.afterresult@gmail.com\n📱 WhatsApp: +91 9050983530\n🌐 Website: https://afterresult.solutions\n\nReach out directly or schedule a consultation!",
-    
-    aboutar: "**About AR Solutions**\n\nWe're a digital growth agency specializing in:\n✓ Revenue Operations\n✓ E-Commerce Solutions\n✓ Marketing Automation\n\nHelping growing businesses scale efficiently since 2024!",
-    
-    comparison: "**Why Choose AR Solutions?**\n\n✅ Affordable (₹3,500/month)\n✅ Flexible - no long-term lock-in\n✅ Dedicated specialist (40 hrs)\n✅ Comprehensive RevOps support\n✅ Fast implementation\n✅ Complete training included\n\nQuality service at SME-friendly pricing!",
-    
-    guarantee: "**Our Commitment:**\n\n✓ Measurable operational improvements\n✓ Better data quality\n✓ Increased revenue visibility\n✓ Transparent pricing\n✓ Complete support\n\nYour success is our priority!",
-    
-    howareyou: "Doing great, thanks for asking! 😊\n\nReady to help you optimize your revenue operations. What can I assist you with?",
-    
-    whoareyou: "I'm your RevOps assistant from AR Solutions! 🤖\n\nI'm here to answer questions about our revenue operations services and help you scale your business efficiently.\n\nWhat would you like to know?",
-    
-    thankyou: "You're very welcome! 😊\n\nHappy to help anytime. Any other questions about our RevOps services?",
-    
-    bye: "Goodbye! 👋\n\nFeel free to reach out anytime you need revenue operations support. Have a great day!",
-    
-    casual: "Glad to hear that! 😊\n\nHow can I help you with your revenue operations today?",
-    
-    interested: "Great to hear you're interested! 🎉\n\nLet me share more details about our RevOps services...\n\nWhat specifically would you like to know about?",
-    
-    urgent: "I understand the urgency! ⚡\n\nWe can start immediately after kickoff:\n• Quick wins within the first week\n• Priority support available\n\nSchedule a consultation now to get started ASAP!",
-    
-    pipeline: "**Pipeline Visibility:**\n\nWe provide complete real-time dashboards showing:\n✓ Deal flow & stages\n✓ Conversion rates\n✓ Velocity metrics\n✓ Forecast accuracy\n\nNever lose sight of your revenue again!",
-    
-    specialist: "**Your Dedicated RevOps Specialist:**\n\n✓ Expert in CRM, automation & integrations\n✓ 40 hours/month focused on your business\n✓ Works on your highest-priority items\n✓ Direct communication via email/Slack\n\nYou get experienced, dedicated support!",
-    
-    default: "Thanks for your message! 😊\n\nI can help you with:\n• RevOps services & pricing\n• CRM automation & integrations\n• Data operations & reporting\n• Getting started\n\nWhat would you like to know about?"
-  }
-}
-    };
-  },
-computed: {
-  filteredChatHistory() {
-    const activeChats = this.chatHistory.filter(chat => !chat.archived);
-    if (!this.searchQuery.trim()) {
-      return activeChats;
-    }
-    const query = this.searchQuery.toLowerCase();
-    return activeChats.filter(chat => 
-      chat.title.toLowerCase().includes(query) ||
-      chat.messages.some(msg => msg.text.toLowerCase().includes(query))
-    );
-  },
-  archivedChats() {
-    return this.chatHistory.filter(chat => chat.archived);
-  }
-},
-mounted() {
-  this.messages = [];
-  this.query = "";
-  this.currentChatId = null;
-  
-  if (typeof window !== 'undefined') {  // CHANGED THIS LINE
-    const savedTheme = localStorage.getItem('ar-theme');
-    if (savedTheme) {
-      this.isDarkMode = savedTheme === 'dark';
-    }
-    
-    const savedHistory = localStorage.getItem('ar-chat-history');
-    if (savedHistory) {
-      try {
-        this.chatHistory = JSON.parse(savedHistory);
-      } catch (e) {
-        console.error('Failed to load chat history:', e);
-      }
-    }
-      
-    const savedMessages = localStorage.getItem('ar-current-messages');
-    const savedChatId = localStorage.getItem('ar-current-chat-id');
-    if (savedMessages && savedChatId) {
-      try {
-        this.messages = JSON.parse(savedMessages);
-        this.currentChatId = savedChatId;
-      } catch (e) {
-        console.error('Failed to load current chat:', e);
-      }
-    }
-  }
-},
-  beforeUnmount() {
-    if (this.autocorrectTimeout) {
-      clearTimeout(this.autocorrectTimeout);
-    }
-  },
-methods: {
-  handleTouchStart(e) {
-    this.touchStartX = e.changedTouches[0].screenX;
-    this.touchStartY = e.changedTouches[0].screenY;
-  },
-
-  handleTouchEnd(e) {
-    this.touchEndX = e.changedTouches[0].screenX;
-    this.touchEndY = e.changedTouches[0].screenY;
-    this.handleSwipe();
-  },
-
-  handleSwipe() {
-    const swipeDistance = this.touchEndX - this.touchStartX;
-    const verticalDistance = Math.abs(this.touchEndY - this.touchStartY);
-    
-    // Only trigger if horizontal swipe is more than 50px and vertical movement is less than 100px
-    if (Math.abs(swipeDistance) > 50 && verticalDistance < 100) {
-      // Swipe right (left to right) - open sidebar
-      if (swipeDistance > 0 && this.touchStartX < 50) {
-        this.showMenu = true;
-      }
-      // Swipe left (right to left) - close sidebar
-      else if (swipeDistance < 0 && this.showMenu) {
-        this.showMenu = false;
-      }
-    }
-  },
-
-renameChat(chat) {
-  const newTitle = prompt('Enter new chat name:', chat.title);
-  if (newTitle && newTitle.trim()) {
-    const chatIndex = this.chatHistory.findIndex(c => c.id === chat.id);
-    if (chatIndex !== -1) {
-      this.chatHistory[chatIndex].title = newTitle.trim();
-      if (typeof window !== 'undefined') {  // CHANGED THIS LINE
-        localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
-      }
-    }
-  }
-},
-
-archiveChat(chatId) {
-  const chatIndex = this.chatHistory.findIndex(c => c.id === chatId);
-  if (chatIndex !== -1) {
-    this.chatHistory[chatIndex].archived = true;
-    if (typeof window !== 'undefined') {  // CHANGED THIS LINE
-      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
-    }
-  }
-},
-
-unarchiveChat(chatId) {
-  const chatIndex = this.chatHistory.findIndex(c => c.id === chatId);
-  if (chatIndex !== -1) {
-    this.chatHistory[chatIndex].archived = false;
-    if (typeof window !== 'undefined') {  // CHANGED THIS LINE
-      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
-    }
-  }
-},
-
-deleteChat(chatId) {
-  if (confirm('Are you sure you want to delete this chat?')) {
-    this.chatHistory = this.chatHistory.filter(c => c.id !== chatId);
-    if (this.currentChatId === chatId) {
-      this.startNewChat();
-    }
-    if (typeof window !== 'undefined') {  // CHANGED THIS LINE
-      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
-    }
-  }
-},
-
-toggleTempMode() {
-  this.isTempMode = !this.isTempMode;
-  if (this.isTempMode) {
-    this.messages = [];
-    this.currentChatId = null;
-  }
-},
-
-generateResponse(q) {
-  const query = q.toLowerCase().trim();
-  const kb = this.kb;
-  
-  // Score-based matching system
-  const categoryScores = {};
-  
-  // Calculate match score for each category
-  Object.keys(kb.keywords).forEach(category => {
-    let score = 0;
-    const keywords = kb.keywords[category];
-    
-    keywords.forEach(keyword => {
-      const kw = keyword.toLowerCase();
-      
-      // Exact match (highest priority)
-      if (query === kw) {
-        score += 100;
-      }
-      // Starts with keyword
-      else if (query.startsWith(kw + ' ') || query.startsWith(kw + ',')) {
-        score += 50;
-      }
-      // Ends with keyword
-      else if (query.endsWith(' ' + kw) || query.endsWith(',' + kw)) {
-        score += 45;
-      }
-      // Contains keyword as whole word
-      else if (new RegExp('\\b' + kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b').test(query)) {
-        score += 30;
-      }
-      // Contains keyword as substring
-      else if (query.includes(kw)) {
-        score += 15;
-      }
-    });
-    
-    if (score > 0) {
-      categoryScores[category] = score;
-    }
-  });
-  
-  // Find best match
-  let bestCategory = null;
-  let bestScore = 0;
-  
-  Object.entries(categoryScores).forEach(([category, score]) => {
-    if (score > bestScore) {
-      bestScore = score;
-      bestCategory = category;
-    }
-  });
-  
-  // Return response based on best match
-  if (bestCategory && bestScore >= 15) {
-    const responseKey = bestCategory;
-    let responseText = kb.responses[responseKey] || kb.responses.default;
-    
-    // Use detailed version for key categories if score is high
-    if (bestScore >= 30 && kb.responses[responseKey + '_detailed']) {
-      responseText = kb.responses[responseKey + '_detailed'];
-    }
-    
-    // Determine if button should be shown
-    const buttonCategories = ['pricing', 'services', 'confirmation', 'contact', 'interested', 'urgent'];
-    const hasButton = buttonCategories.includes(bestCategory);
-    
     return {
-      text: responseText,
-      hasButton: hasButton
+      query: "",
+      messages: [],
+      isDarkMode: false,
+      kb: {
+        keywords: {
+          greeting: ['hi', 'hello', 'hey', 'hola', 'greetings', 'good morning', 'good afternoon', 'good evening', 'whats up', 'sup', 'yo'],
+          pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget', 'rate', 'quote', 'estimate', 'investment', 'spend', 'value', 'worth', 'affordable', 'costly', 'economical', 'pricing structure', 'payment plan', 'how much', 'what price', 'total cost', 'retainer', 'monthly', 'monthly cost'],
+          revops: ['revenue operations', 'revops', 'rev ops', 'operations', 'revenue', 'revenue engine', 'operational efficiency', 'revenue optimization'],
+          services: ['services', 'service', 'what do you do', 'what you do', 'offerings', 'solutions', 'what you offer', 'what is included', 'included', 'package', 'what included', 'service list', 'help with', 'provide', 'support', 'offer', 'do you offer', 'tell me about services'],
+          crm: ['crm', 'salesforce', 'hubspot', 'pipedrive', 'customer relationship', 'crm setup', 'crm admin', 'crm management', 'platform', 'system', 'crm administration'],
+          automation: ['automation', 'workflow', 'automate', 'automatic', 'process automation', 'workflow automation', 'automated processes', 'efficiency', 'streamline', 'automated workflow'],
+          integration: ['integration', 'integrate', 'connect', 'sync', 'api', 'connection', 'tech stack', 'tools', 'platforms', 'systems', 'data flow', 'connect systems', 'system integration'],
+          data: ['data', 'database', 'data quality', 'data management', 'data operations', 'clean data', 'data hygiene', 'enrichment', 'migration', 'data cleaning'],
+          reporting: ['reporting', 'reports', 'analytics', 'dashboard', 'metrics', 'kpi', 'insights', 'visibility', 'forecasting', 'data visualization', 'custom reports', 'dashboards'],
+          timeline: ['when', 'how long', 'time', 'duration', 'delivery', 'timeline', 'completion', 'turnaround', 'how soon', 'start', 'when start', 'when can you start', 'how quickly'],
+          hours: ['hours', 'how many hours', '40 hours', 'monthly hours', 'time commitment', 'support hours', 'dedicated time', 'hours per month', 'hours included'],
+          problem: ['problem', 'challenge', 'issue', 'struggle', 'pain point', 'difficulty', 'bottleneck', 'inefficiency', 'manual', 'disconnected', 'what problems', 'solve'],
+          benefits: ['benefits', 'outcomes', 'results', 'improvements', 'roi', 'value', 'impact', 'advantages', 'what will i get', 'expect', 'expected outcomes', 'what benefit'],
+          approach: ['approach', 'methodology', 'process', 'how you work', 'strategy', 'method', 'framework', 'steps', 'how do you work', 'your approach'],
+          technical: ['technical', 'tech', 'difficult', 'easy', 'knowledge', 'skill', 'complex', 'complicated', 'expertise required', 'need technical knowledge', 'technical skills'],
+          training: ['training', 'teach', 'learn', 'help', 'support', 'onboarding', 'documentation', 'guide', 'walkthrough', 'training included', 'will you train'],
+          lead_management: ['lead', 'leads', 'lead routing', 'lead scoring', 'qualification', 'lead management', 'conversion', 'manage leads'],
+          sales_enablement: ['sales enablement', 'territory', 'quota', 'sales process', 'performance tracking', 'sales support', 'help sales team'],
+          confirmation: ['start', 'begin', 'sign up', 'interested', 'want', 'ready', 'proceed', 'get started', 'schedule', 'book', 'consultation', 'lets start', 'im interested', 'want to start'],
+          contact: ['contact', 'reach', 'email', 'phone', 'call', 'demo', 'meeting', 'consultation', 'connect', 'get in touch', 'talk', 'speak', 'contact you', 'reach out', 'contact details', 'phone number'],
+          aboutar: ['about', 'who are you', 'ar solutions', 'afterresult', 'your company', 'company info', 'agency', 'about company', 'tell me about', 'what is ar solutions'],
+          comparison: ['compare', 'difference', 'better than', 'vs', 'versus', 'why choose', 'what makes different', 'unique', 'advantage', 'why you', 'why ar solutions'],
+          guarantee: ['guarantee', 'assured', 'promise', 'results', 'refund', 'risk', 'guaranteed', 'assurance'],
+          casual: ['i am good', 'im good', 'i am fine', 'im fine', 'doing well', 'doing good', 'all good', 'great', 'fine', 'okay', 'ok', 'good', 'not bad'],
+          howareyou: ['how are you', 'how are you doing', 'whats up', 'hows it going', 'how you doing', 'how is it going'],
+          whoareyou: ['who are you', 'what are you', 'your name', 'about you', 'bot', 'ai', 'chatbot', 'are you ai', 'are you bot'],
+          thankyou: ['thank you', 'thanks', 'thank u', 'thx', 'appreciate', 'grateful', 'thanks a lot', 'thank you so much'],
+          bye: ['bye', 'goodbye', 'see you', 'later', 'farewell', 'gotta go', 'take care', 'see ya'],
+          urgent: ['urgent', 'asap', 'immediately', 'right now', 'quick', 'fast', 'urgently', 'emergency'],
+          interested: ['interested', 'sounds good', 'tell me more', 'more info', 'details', 'more details', 'elaborate', 'explain more'],
+          pipeline: ['pipeline', 'sales pipeline', 'deal flow', 'funnel', 'opportunities', 'sales funnel'],
+          specialist: ['specialist', 'expert', 'dedicated', 'consultant', 'who will work', 'team', 'your team', 'who works']
+        },
+        responses: {
+          greeting: "Hi there! Welcome to AR Solutions RevOps Services\n\nWe help growing companies scale their revenue through:\n✓ CRM automation & optimization\n✓ Workflow automation\n✓ Tech stack integration\n✓ Data operations\n✓ Custom reporting\n\nWhat would you like to know?",
+          greeting_detailed: "Thank you for your interest in our RevOps Services!\n\nWe provide comprehensive revenue operations support on a monthly retainer:\n✓ CRM Administration & Optimization\n✓ Workflow Automation Development\n✓ Tech Stack Integration Management\n✓ Data Operations & Quality Assurance\n✓ Custom Reporting & Analytics\n✓ 40 hours of dedicated support monthly\n\nWhat would you like to know more about?",
+          revops: "Revenue Operations (RevOps) aligns your sales, marketing, and customer success teams through unified systems, automated workflows, and clean data - helping you scale efficiently.\n\nWant to know how we can help?",
+          revops_detailed: "Revenue Operations Services\n\nWe build and optimize your revenue infrastructure:\n• CRM setup, configuration & ongoing management\n• Custom workflow & automation development\n• Tech stack integration (API connections, data sync)\n• Data operations & quality assurance\n• Custom dashboards & analytics\n• Lead management & routing systems\n• Process documentation & team training\n\nAll delivered through a flexible monthly retainer with 40 hours of dedicated support.",
+          pricing: "₹3,500/month retainer\n\nIncludes:\n✓ 40 hours of dedicated RevOps specialist support\n✓ CRM admin & optimization\n✓ Workflow automation\n✓ Tech integrations\n✓ Custom reporting\n✓ Data operations\n✓ Training & documentation\n\nFlexible engagement - cancel anytime!",
+          pricing_detailed: "Monthly Retainer: ₹3,500\n\nWhat's Included:\n✓ 40 hours of strategic support per month\n✓ Dedicated RevOps Specialist\n✓ CRM setup, configuration & optimization\n✓ Custom workflow & automation development\n✓ Tech stack integration & management\n✓ Data operations & quality assurance\n✓ Custom reporting & analytics dashboards\n✓ Process documentation & training\n✓ Monthly strategy & planning sessions\n✓ Priority email & Slack support\n✓ Quarterly business reviews\n\nFlexible engagement - cancel anytime with 30 days notice.",
+          services: "Our RevOps Services:\n\n✓ CRM Administration\n✓ Workflow Automation\n✓ Integration Management\n✓ Data Operations\n✓ Reporting & Analytics\n✓ Lead Management\n✓ Sales Enablement\n✓ Training & Support\n\nAll included in your monthly retainer. What interests you most?",
+          services_detailed: "RevOps Services (Monthly Retainer)\n\nCRM Administration: Platform config, custom objects, field management, permissions\nWorkflow Development: Automation build-out, trigger logic, multi-step sequences\nIntegration Management: API connections, data mapping, sync monitoring\nData Operations: Database hygiene, enrichment, migration support\nReporting & Analytics: Dashboard creation, metric tracking, forecasting\nLead Management: Scoring models, routing rules, qualification frameworks\nSales Enablement: Territory planning, quota management, process documentation\nTraining & Support: Onboarding, documentation, ongoing technical support\n\n40 hours per month to tackle your highest priorities.",
+          crm: "We handle complete CRM administration:\n✓ Setup & configuration\n✓ Custom objects & fields\n✓ User permissions & roles\n✓ Ongoing optimization\n\nWorks with Salesforce, HubSpot, Pipedrive & more!",
+          automation: "We design intelligent workflows that automate:\n✓ Lead routing\n✓ Data enrichment\n✓ Follow-ups\n✓ Reporting\n\nResult: 30-50% time savings on manual tasks!",
+          integration: "We connect your entire tech stack:\n✓ CRM ↔ Marketing automation\n✓ Analytics tools\n✓ Sales platforms\n✓ Custom APIs\n\nSeamless data flow across all systems!",
+          data: "We ensure clean, reliable data:\n✓ Validation rules\n✓ Enrichment workflows\n✓ Duplicate management\n✓ Data governance\n\nAchieve 95%+ data accuracy!",
+          reporting: "Custom dashboards for:\n✓ Pipeline health\n✓ Key metrics & KPIs\n✓ Team performance\n✓ Forecasting\n\nReal-time visibility into what matters!",
+          timeline: "Quick Start:\n• Kickoff: Immediate after signup\n• Initial audit: First week\n• Quick wins: Within 7-10 days\n• Major improvements: 30 days\n• Ongoing optimization: Monthly\n\nReady to get started?",
+          hours: "40 hours/month of dedicated support\n\nWe prioritize your highest-impact items each month:\n• Automation builds\n• Integration projects\n• Report creation\n• Ongoing optimization\n• Training & support\n\nFlexible allocation based on your needs!",
+          problem: "Common Revenue Operations Problems:\n\n❌ Disconnected systems & siloed data\n❌ Manual, time-consuming workflows\n❌ Poor data quality\n❌ Lack of visibility\n\n✅ We solve all of these!\n\nWhich one affects you most?",
+          benefits: "Expected Outcomes:\n\n30-50% time savings (automation)\n20-35% faster sales cycles\n95%+ data accuracy\n100% revenue visibility\n\nMeasurable improvements within 30 days!",
+          approach: "Our 6-Step Approach:\n\n1. Revenue audit & strategy\n2. Tech stack integration\n3. Process automation\n4. Data infrastructure\n5. Analytics & reporting\n6. Continuous optimization\n\nResults-driven, hands-on support!",
+          technical: "No technical knowledge needed!\n\nOur RevOps specialists handle:\n✓ All technical implementation\n✓ Complex integrations\n✓ System configurations\n✓ Troubleshooting\n\nYou just tell us what you need - we make it happen!",
+          training: "Complete Training Included:\n\n✓ Team onboarding sessions\n✓ Process documentation\n✓ Video tutorials\n✓ Ongoing support\n\nWe ensure your team is confident and self-sufficient!",
+          lead_management: "Lead Management Systems:\n\n✓ Automated scoring models\n✓ Intelligent routing rules\n✓ Qualification frameworks\n✓ Conversion optimization\n\nNo lead falls through the cracks!",
+          sales_enablement: "Sales Enablement Support:\n\n✓ Territory planning\n✓ Quota management\n✓ Sales process documentation\n✓ Performance tracking\n\nHelp your team sell more efficiently!",
+          confirmation: "Ready to scale your revenue operations?\n\nLet's schedule a consultation to discuss:\n• Your specific challenges\n• How we can help\n• Next steps\n\nSchedule a call now!",
+          contact: "Contact AR Solutions:\n\nEmail: info.afterresult@gmail.com\nWhatsApp: +91 9050983530\nWebsite: https://afterresult.solutions\n\nReach out directly or schedule a consultation!",
+          aboutar: "About AR Solutions\n\nWe're a digital growth agency specializing in:\n✓ Revenue Operations\n✓ E-Commerce Solutions\n✓ Marketing Automation\n\nHelping growing businesses scale efficiently since 2024!",
+          comparison: "Why Choose AR Solutions?\n\n✅ Affordable (₹3,500/month)\n✅ Flexible - no long-term lock-in\n✅ Dedicated specialist (40 hrs)\n✅ Comprehensive RevOps support\n✅ Fast implementation\n✅ Complete training included\n\nQuality service at SME-friendly pricing!",
+          guarantee: "Our Commitment:\n\n✓ Measurable operational improvements\n✓ Better data quality\n✓ Increased revenue visibility\n✓ Transparent pricing\n✓ Complete support\n\nYour success is our priority!",
+          howareyou: "Doing great, thanks for asking!\n\nReady to help you optimize your revenue operations. What can I assist you with?",
+          whoareyou: "I'm your RevOps assistant from AR Solutions!\n\nI'm here to answer questions about our revenue operations services and help you scale your business efficiently.\n\nWhat would you like to know?",
+          thankyou: "You're very welcome!\n\nHappy to help anytime. Any other questions about our RevOps services?",
+          bye: "Goodbye!\n\nFeel free to reach out anytime you need revenue operations support. Have a great day!",
+          casual: "Glad to hear that!\n\nHow can I help you with your revenue operations today?",
+          interested: "Great to hear you're interested!\n\nLet me share more details about our RevOps services...\n\nWhat specifically would you like to know about?",
+          urgent: "I understand the urgency!\n\nWe can start immediately after kickoff:\n• Quick wins within the first week\n• Priority support available\n\nSchedule a consultation now to get started ASAP!",
+          pipeline: "Pipeline Visibility:\n\nWe provide complete real-time dashboards showing:\n✓ Deal flow & stages\n✓ Conversion rates\n✓ Velocity metrics\n✓ Forecast accuracy\n\nNever lose sight of your revenue again!",
+          specialist: "Your Dedicated RevOps Specialist:\n\n✓ Expert in CRM, automation & integrations\n✓ 40 hours/month focused on your business\n✓ Works on your highest-priority items\n✓ Direct communication via email/Slack\n\nYou get experienced, dedicated support!",
+          default: "Thanks for your message!\n\nI can help you with:\n• RevOps services & pricing\n• CRM automation & integrations\n• Data operations & reporting\n• Getting started\n\nWhat would you like to know about?"
+        }
+      }
     };
-  }
-  
-  // No match found - return helpful default
-  return {
-    text: kb.responses.default,
-    hasButton: false
-  };
-}
-
-  autocorrectText(text) {
-    const words = text.split(/(\s+|[.,!?;:])/);
-    
-    const correctedWords = words.map(word => {
-      if (/^\s+$/.test(word) || /^[.,!?;:]$/.test(word)) {
-        return word;
-      }
-      
-      const lowerWord = word.toLowerCase();
-      
-      if (lowerWord.endsWith('?') || lowerWord.endsWith('!')) {
-        const baseWord = lowerWord.slice(0, -1);
-        const punctuation = lowerWord.slice(-1);
-        if (autocorrectDict[baseWord]) {
-          return word.charAt(0) === word.charAt(0).toUpperCase() 
-            ? autocorrectDict[baseWord].charAt(0).toUpperCase() + autocorrectDict[baseWord].slice(1) + punctuation
-            : autocorrectDict[baseWord] + punctuation;
-        }
-      }
-      
-      if (autocorrectDict[lowerWord]) {
-        const corrected = autocorrectDict[lowerWord];
-        if (word.charAt(0) === word.charAt(0).toUpperCase()) {
-          return corrected.charAt(0).toUpperCase() + corrected.slice(1);
-        }
-        return corrected;
-      }
-      
-      return word;
-    });
-    
-    return correctedWords.join('');
   },
-
-  handleInputChange() {
-    if (this.autocorrectTimeout) {
-      clearTimeout(this.autocorrectTimeout);
-    }
-    
-    this.autocorrectTimeout = setTimeout(() => {
-      const input = this.$refs.queryInput || this.$refs.queryInputBottom;
-      const cursorPosition = input?.selectionStart || 0;
-      const originalLength = this.query.length;
-      const corrected = this.autocorrectText(this.query);
+  methods: {
+    generateResponse(q) {
+      const query = q.toLowerCase().trim();
+      const kb = this.kb;
       
-      if (corrected !== this.query) {
-        this.query = corrected;
+      const categoryScores = {};
+      
+      Object.keys(kb.keywords).forEach(category => {
+        let score = 0;
+        const keywords = kb.keywords[category];
         
-        this.$nextTick(() => {
-          if (input) {
-            const lengthDiff = this.query.length - originalLength;
-            const newPosition = cursorPosition + lengthDiff;
-            input.setSelectionRange(newPosition, newPosition);
+        keywords.forEach(keyword => {
+          const kw = keyword.toLowerCase();
+          
+          if (query === kw) {
+            score += 100;
+          } else if (query.startsWith(kw + ' ') || query.startsWith(kw + ',')) {
+            score += 50;
+          } else if (query.endsWith(' ' + kw) || query.endsWith(',' + kw)) {
+            score += 45;
+          } else if (new RegExp('\\b' + kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b').test(query)) {
+            score += 30;
+          } else if (query.includes(kw)) {
+            score += 15;
           }
         });
-      }
-    }, 500);
-  },
-
-  async handleSearch() {
-    if (!this.query.trim()) return;
-    
-    const userQuery = this.query.trim();
-    
-    if (!this.currentChatId && !this.isTempMode) {
-      this.currentChatId = Date.now().toString();
-    }
-    
-    this.messages.push({
-      type: 'user',
-      text: userQuery,
-      timestamp: new Date()
-    });
-    
-    this.query = "";
-    
-    await this.$nextTick();
-    this.scrollToBottom();
-    
-    setTimeout(() => {
-      const aiResponse = this.generateResponse(userQuery);
-      
-this.messages.push({
-  type: 'bot',
-  text: aiResponse.text,
-  timestamp: new Date(),
-  hasButton: aiResponse.hasButton,
-  buttonText: aiResponse.buttonText || 'Launch My Store - ₹1,599',
-  buttonLink: aiResponse.buttonLink || 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view',
-  buttonType: aiResponse.buttonType || 'default'
-});
-      
-      this.scrollToBottom();
-    }, 500);
-  },
-
-  scrollToBottom() {
-    this.$nextTick(() => {
-      if (this.$refs.messagesContainer) {
-        this.$refs.messagesContainer.scrollTop = this.$refs.messagesContainer.scrollHeight;
-      }
-    });
-  },
-
-toggleTheme() {
-  this.isDarkMode = !this.isDarkMode;
-  if (typeof window !== 'undefined') {  // CHANGED THIS LINE
-    localStorage.setItem('ar-theme', this.isDarkMode ? 'dark' : 'light');
-  }
-},
-
-startNewChat() {
-  if (this.messages.length > 0 && !this.isTempMode) {
-    const existingIndex = this.chatHistory.findIndex(c => c.id === this.currentChatId);
-    
-    if (existingIndex === -1) {
-      this.chatHistory.unshift({
-        id: this.currentChatId || Date.now().toString(),
-        title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
-        messages: [...this.messages],
-        date: new Date()
+        
+        if (score > 0) {
+          categoryScores[category] = score;
+        }
       });
-    } else {
-      this.chatHistory[existingIndex] = {
-        ...this.chatHistory[existingIndex],
-        messages: [...this.messages],
-        date: new Date()
-      };
-    }
-    
-    if (typeof window !== 'undefined') {  // CHANGED THIS LINE
-      localStorage.setItem('ar-chat-history', JSON.stringify(this.chatHistory));
-    }
-  }
-  
-  this.messages = [];
-  this.query = "";
-  this.currentChatId = null;
-  this.showMenu = false;
-  
-  if (typeof window !== 'undefined' && !this.isTempMode) {  // CHANGED THIS LINE
-    localStorage.removeItem('ar-current-messages');
-    localStorage.removeItem('ar-current-chat-id');
-  }
-},
-
-  loadChat(chat) {
-    if (this.messages.length > 0 && this.currentChatId !== chat.id) {
-      const existingIndex = this.chatHistory.findIndex(c => c.id === this.currentChatId);
-      if (existingIndex === -1) {
-        this.chatHistory.unshift({
-          id: this.currentChatId,
-          title: this.messages[0].text.substring(0, 30) + (this.messages[0].text.length > 30 ? '...' : ''),
-          messages: [...this.messages],
-          date: new Date()
-        });
+      
+      let bestCategory = null;
+      let bestScore = 0;
+      
+      Object.entries(categoryScores).forEach(([category, score]) => {
+        if (score > bestScore) {
+          bestScore = score;
+          bestCategory = category;
+        }
+      });
+      
+      if (bestCategory && bestScore >= 15) {
+        const responseKey = bestCategory;
+        let responseText = kb.responses[responseKey] || kb.responses.default;
+        
+        if (bestScore >= 30 && kb.responses[responseKey + '_detailed']) {
+          responseText = kb.responses[responseKey + '_detailed'];
+        }
+        
+        return { text: responseText };
       }
-    }
-    this.messages = [...chat.messages];
-    this.currentChatId = chat.id;
-    this.showMenu = false;
-    this.scrollToBottom();
-  },
+      
+      return { text: kb.responses.default };
+    },
 
-copyMessage(text) {
-  if (typeof window !== 'undefined' && navigator.clipboard) {  // CHANGED THIS LINE
-    navigator.clipboard.writeText(text).then(() => {
-      alert('Message copied to clipboard!');
-    }).catch(() => {
-      alert('Failed to copy message');
-    });
-  }
-},
-
-  likeMessage(index) {
-    alert('Thank you for your feedback! 👍');
-  },
-
-  dislikeMessage(index) {
-    alert('Thank you for your feedback. We will improve! 👎');
-  },
-
-  regenerateResponse(index) {
-    if (index > 0 && this.messages[index - 1]?.type === 'user') {
-      const userQuery = this.messages[index - 1].text;
-      this.messages.splice(index, 1);
+    async handleSearch() {
+      if (!this.query.trim()) return;
+      
+      const userQuery = this.query.trim();
+      
+      this.messages.push({
+        type: 'user',
+        text: userQuery,
+        timestamp: new Date()
+      });
+      
+      this.query = "";
+      
+      await this.$nextTick();
+      this.scrollToBottom();
       
       setTimeout(() => {
         const aiResponse = this.generateResponse(userQuery);
         
-this.messages.push({
-  type: 'bot',
-  text: aiResponse.text,
-  timestamp: new Date(),
-  hasButton: aiResponse.hasButton,
-  buttonText: aiResponse.buttonText || 'Launch My Store - ₹1,599',
-  buttonLink: aiResponse.buttonLink || 'https://pages.razorpay.com/pl_R6OXxjqi9EpIhJ/view',
-  buttonType: aiResponse.buttonType || 'default'
-});
+        this.messages.push({
+          type: 'bot',
+          text: aiResponse.text,
+          timestamp: new Date()
+        });
         
         this.scrollToBottom();
-      }, 300);
-    }
-  },
+      }, 500);
+    },
 
-shareMessage(text) {
-  if (typeof window !== 'undefined' && navigator.share) {  // CHANGED THIS LINE
-    navigator.share({
-      title: 'AR Solutions AI Response',
-      text: text
-    }).catch(() => {
-      this.copyMessage(text);
-    });
-  } else {
-    this.copyMessage(text);
+    scrollToBottom() {
+      this.$nextTick(() => {
+        if (this.$refs.messagesContainer) {
+          this.$refs.messagesContainer.scrollTop = this.$refs.messagesContainer.scrollHeight;
+        }
+      });
+    },
+
+    toggleTheme() {
+      this.isDarkMode = !this.isDarkMode;
+    },
+
+    copyMessage(text) {
+      if (typeof navigator !== 'undefined' && navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+          alert('Message copied to clipboard!');
+        }).catch(() => {
+          alert('Failed to copy message');
+        });
+      }
+    }
   }
-}
-}
 };
 </script>
 
