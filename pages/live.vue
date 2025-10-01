@@ -518,139 +518,145 @@ export default {
     touchEndY: 0,
 kb: {
   keywords: {
-    pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget', 'rate', 'quote', 'estimate', 'investment', 'spend', 'value', 'worth', 'affordable', 'costly', 'economical', 'pricing structure', 'payment plan', 'how much', 'what price', 'total cost', 'retainer', 'monthly'],
+    greeting: ['hi', 'hello', 'hey', 'hola', 'greetings', 'good morning', 'good afternoon', 'good evening', 'whats up', 'sup', 'yo'],
     
-    revops: ['revenue operations', 'revops', 'rev ops', 'operations', 'revenue', 'crm', 'automation', 'workflow', 'integration', 'sales operations', 'marketing operations', 'revenue engine', 'operational efficiency'],
+    pricing: ['cost', 'price', 'fee', 'payment', 'pay', 'charge', 'expensive', 'cheap', 'afford', 'money', 'rupees', 'rs', '₹', 'budget', 'rate', 'quote', 'estimate', 'investment', 'spend', 'value', 'worth', 'affordable', 'costly', 'economical', 'pricing structure', 'payment plan', 'how much', 'what price', 'total cost', 'retainer', 'monthly', 'monthly cost'],
     
-    services: ['services', 'what do you do', 'offerings', 'solutions', 'what you offer', 'included', 'package', 'what included', 'service list', 'help with', 'provide', 'support'],
+    revops: ['revenue operations', 'revops', 'rev ops', 'operations', 'revenue', 'revenue engine', 'operational efficiency', 'revenue optimization'],
     
-    crm: ['crm', 'salesforce', 'hubspot', 'pipedrive', 'customer relationship', 'crm setup', 'crm admin', 'crm management', 'platform', 'system'],
+    services: ['services', 'service', 'what do you do', 'what you do', 'offerings', 'solutions', 'what you offer', 'what is included', 'included', 'package', 'what included', 'service list', 'help with', 'provide', 'support', 'offer', 'do you offer', 'tell me about services'],
     
-    automation: ['automation', 'workflow', 'automate', 'automatic', 'process automation', 'workflow automation', 'automated processes', 'efficiency', 'streamline'],
+    crm: ['crm', 'salesforce', 'hubspot', 'pipedrive', 'customer relationship', 'crm setup', 'crm admin', 'crm management', 'platform', 'system', 'crm administration'],
     
-    integration: ['integration', 'integrate', 'connect', 'sync', 'api', 'connection', 'tech stack', 'tools', 'platforms', 'systems', 'data flow'],
+    automation: ['automation', 'workflow', 'automate', 'automatic', 'process automation', 'workflow automation', 'automated processes', 'efficiency', 'streamline', 'automated workflow'],
     
-    data: ['data', 'database', 'data quality', 'data management', 'data operations', 'clean data', 'data hygiene', 'enrichment', 'migration'],
+    integration: ['integration', 'integrate', 'connect', 'sync', 'api', 'connection', 'tech stack', 'tools', 'platforms', 'systems', 'data flow', 'connect systems', 'system integration'],
     
-    reporting: ['reporting', 'reports', 'analytics', 'dashboard', 'metrics', 'kpi', 'insights', 'visibility', 'forecasting', 'data visualization'],
+    data: ['data', 'database', 'data quality', 'data management', 'data operations', 'clean data', 'data hygiene', 'enrichment', 'migration', 'data cleaning'],
     
-    timeline: ['when', 'how long', 'time', 'duration', 'delivery', 'timeline', 'completion', 'turnaround', 'how soon', 'start'],
+    reporting: ['reporting', 'reports', 'analytics', 'dashboard', 'metrics', 'kpi', 'insights', 'visibility', 'forecasting', 'data visualization', 'custom reports', 'dashboards'],
     
-    hours: ['hours', 'how many hours', '40 hours', 'monthly hours', 'time commitment', 'support hours', 'dedicated time'],
+    timeline: ['when', 'how long', 'time', 'duration', 'delivery', 'timeline', 'completion', 'turnaround', 'how soon', 'start', 'when start', 'when can you start', 'how quickly'],
     
-    problem: ['problem', 'challenge', 'issue', 'struggle', 'pain point', 'difficulty', 'bottleneck', 'inefficiency', 'manual', 'disconnected'],
+    hours: ['hours', 'how many hours', '40 hours', 'monthly hours', 'time commitment', 'support hours', 'dedicated time', 'hours per month', 'hours included'],
     
-    benefits: ['benefits', 'outcomes', 'results', 'improvements', 'roi', 'value', 'impact', 'advantages', 'what will i get', 'expect'],
+    problem: ['problem', 'challenge', 'issue', 'struggle', 'pain point', 'difficulty', 'bottleneck', 'inefficiency', 'manual', 'disconnected', 'what problems', 'solve'],
     
-    approach: ['approach', 'methodology', 'process', 'how you work', 'strategy', 'method', 'framework', 'steps'],
+    benefits: ['benefits', 'outcomes', 'results', 'improvements', 'roi', 'value', 'impact', 'advantages', 'what will i get', 'expect', 'expected outcomes', 'what benefit'],
     
-    technical: ['technical', 'tech', 'difficult', 'easy', 'knowledge', 'skill', 'complex', 'complicated', 'expertise required'],
+    approach: ['approach', 'methodology', 'process', 'how you work', 'strategy', 'method', 'framework', 'steps', 'how do you work', 'your approach'],
     
-    training: ['training', 'teach', 'learn', 'help', 'support', 'onboarding', 'documentation', 'guide', 'walkthrough'],
+    technical: ['technical', 'tech', 'difficult', 'easy', 'knowledge', 'skill', 'complex', 'complicated', 'expertise required', 'need technical knowledge', 'technical skills'],
     
-    lead_management: ['lead', 'leads', 'lead routing', 'lead scoring', 'qualification', 'lead management', 'conversion'],
+    training: ['training', 'teach', 'learn', 'help', 'support', 'onboarding', 'documentation', 'guide', 'walkthrough', 'training included', 'will you train'],
     
-    sales_enablement: ['sales enablement', 'territory', 'quota', 'sales process', 'performance tracking', 'sales support'],
+    lead_management: ['lead', 'leads', 'lead routing', 'lead scoring', 'qualification', 'lead management', 'conversion', 'manage leads'],
     
-    confirmation: ['start', 'begin', 'sign up', 'interested', 'want', 'ready', 'proceed', 'get started', 'schedule', 'book', 'consultation'],
+    sales_enablement: ['sales enablement', 'territory', 'quota', 'sales process', 'performance tracking', 'sales support', 'help sales team'],
     
-    contact: ['contact', 'reach', 'email', 'phone', 'call', 'demo', 'meeting', 'consultation', 'connect', 'get in touch', 'talk'],
+    confirmation: ['start', 'begin', 'sign up', 'interested', 'want', 'ready', 'proceed', 'get started', 'schedule', 'book', 'consultation', 'lets start', 'im interested', 'want to start'],
     
-    aboutar: ['about', 'who are you', 'ar solutions', 'afterresult', 'your company', 'company info', 'agency'],
+    contact: ['contact', 'reach', 'email', 'phone', 'call', 'demo', 'meeting', 'consultation', 'connect', 'get in touch', 'talk', 'speak', 'contact you', 'reach out', 'contact details', 'phone number'],
     
-    comparison: ['compare', 'difference', 'better than', 'vs', 'versus', 'why choose', 'what makes different', 'unique', 'advantage'],
+    aboutar: ['about', 'who are you', 'ar solutions', 'afterresult', 'your company', 'company info', 'agency', 'about company', 'tell me about', 'what is ar solutions'],
     
-    guarantee: ['guarantee', 'assured', 'promise', 'results', 'refund', 'risk'],
+    comparison: ['compare', 'difference', 'better than', 'vs', 'versus', 'why choose', 'what makes different', 'unique', 'advantage', 'why you', 'why ar solutions'],
     
-    casual: ['i am good', 'im good', 'i am fine', 'im fine', 'doing well', 'doing good', 'all good', 'great', 'fine', 'okay', 'ok', 'good'],
+    guarantee: ['guarantee', 'assured', 'promise', 'results', 'refund', 'risk', 'guaranteed', 'assurance'],
     
-    howareyou: ['how are you', 'how are you doing', 'whats up', 'hows it going', 'how you doing'],
+    casual: ['i am good', 'im good', 'i am fine', 'im fine', 'doing well', 'doing good', 'all good', 'great', 'fine', 'okay', 'ok', 'good', 'not bad'],
     
-    whoareyou: ['who are you', 'what are you', 'your name', 'about you', 'bot', 'ai', 'chatbot'],
+    howareyou: ['how are you', 'how are you doing', 'whats up', 'hows it going', 'how you doing', 'how is it going'],
     
-    thankyou: ['thank you', 'thanks', 'thank u', 'thx', 'appreciate', 'grateful'],
+    whoareyou: ['who are you', 'what are you', 'your name', 'about you', 'bot', 'ai', 'chatbot', 'are you ai', 'are you bot'],
     
-    bye: ['bye', 'goodbye', 'see you', 'later', 'farewell', 'gotta go'],
+    thankyou: ['thank you', 'thanks', 'thank u', 'thx', 'appreciate', 'grateful', 'thanks a lot', 'thank you so much'],
     
-    urgent: ['urgent', 'asap', 'immediately', 'right now', 'quick', 'fast'],
+    bye: ['bye', 'goodbye', 'see you', 'later', 'farewell', 'gotta go', 'take care', 'see ya'],
     
-    interested: ['interested', 'sounds good', 'tell me more', 'more info', 'details'],
+    urgent: ['urgent', 'asap', 'immediately', 'right now', 'quick', 'fast', 'urgently', 'emergency'],
     
-    pipeline: ['pipeline', 'sales pipeline', 'deal flow', 'funnel', 'opportunities'],
+    interested: ['interested', 'sounds good', 'tell me more', 'more info', 'details', 'more details', 'elaborate', 'explain more'],
     
-    specialist: ['specialist', 'expert', 'dedicated', 'consultant', 'who will work', 'team']
+    pipeline: ['pipeline', 'sales pipeline', 'deal flow', 'funnel', 'opportunities', 'sales funnel'],
+    
+    specialist: ['specialist', 'expert', 'dedicated', 'consultant', 'who will work', 'team', 'your team', 'who works']
   },
 
   responses: {
-    greeting: "Welcome to AR Solutions Revenue Operations Services! We help growing companies scale their revenue engine through automation, integrations, and data-driven operations. What interests you?",
+    greeting: "Hi there! Welcome to AR Solutions RevOps Services 👋\n\nWe help growing companies scale their revenue through:\n✓ CRM automation & optimization\n✓ Workflow automation\n✓ Tech stack integration\n✓ Data operations\n✓ Custom reporting\n\nWhat would you like to know?",
     
     greeting_detailed: "Thank you for your interest in our RevOps Services!\n\nWe provide comprehensive revenue operations support on a monthly retainer:\n✓ CRM Administration & Optimization\n✓ Workflow Automation Development\n✓ Tech Stack Integration Management\n✓ Data Operations & Quality Assurance\n✓ Custom Reporting & Analytics\n✓ 40 hours of dedicated support monthly\n\nWhat would you like to know more about?",
     
-    revops: "Revenue Operations (RevOps) aligns your sales, marketing, and customer success teams through unified systems, automated workflows, and clean data - helping you scale efficiently.",
+    revops: "Revenue Operations (RevOps) aligns your sales, marketing, and customer success teams through unified systems, automated workflows, and clean data - helping you scale efficiently.\n\nWant to know how we can help?",
     
     revops_detailed: "**Revenue Operations Services**\n\nWe build and optimize your revenue infrastructure:\n• CRM setup, configuration & ongoing management\n• Custom workflow & automation development\n• Tech stack integration (API connections, data sync)\n• Data operations & quality assurance\n• Custom dashboards & analytics\n• Lead management & routing systems\n• Process documentation & team training\n\nAll delivered through a flexible monthly retainer with 40 hours of dedicated support.",
     
-    pricing: "₹3,500/month retainer. Includes 40 hours of dedicated RevOps specialist support, covering CRM admin, automation, integrations, reporting, and ongoing optimization.",
+    pricing: "**₹3,500/month retainer**\n\nIncludes:\n✓ 40 hours of dedicated RevOps specialist support\n✓ CRM admin & optimization\n✓ Workflow automation\n✓ Tech integrations\n✓ Custom reporting\n✓ Data operations\n✓ Training & documentation\n\nFlexible engagement - cancel anytime!",
     
     pricing_detailed: "**Monthly Retainer: ₹3,500**\n\n**What's Included:**\n✓ 40 hours of strategic support per month\n✓ Dedicated RevOps Specialist\n✓ CRM setup, configuration & optimization\n✓ Custom workflow & automation development\n✓ Tech stack integration & management\n✓ Data operations & quality assurance\n✓ Custom reporting & analytics dashboards\n✓ Process documentation & training\n✓ Monthly strategy & planning sessions\n✓ Priority email & Slack support\n✓ Quarterly business reviews\n\nFlexible engagement - cancel anytime with 30 days notice.",
     
-    services: "We offer comprehensive RevOps support: CRM admin, workflow automation, integrations, data management, reporting, lead management, sales enablement, and team training - all on a monthly retainer basis.",
+    services: "**Our RevOps Services:**\n\n✓ CRM Administration\n✓ Workflow Automation\n✓ Integration Management\n✓ Data Operations\n✓ Reporting & Analytics\n✓ Lead Management\n✓ Sales Enablement\n✓ Training & Support\n\nAll included in your monthly retainer. What interests you most?",
     
     services_detailed: "**RevOps Services (Monthly Retainer)**\n\n**CRM Administration:** Platform config, custom objects, field management, permissions\n**Workflow Development:** Automation build-out, trigger logic, multi-step sequences\n**Integration Management:** API connections, data mapping, sync monitoring\n**Data Operations:** Database hygiene, enrichment, migration support\n**Reporting & Analytics:** Dashboard creation, metric tracking, forecasting\n**Lead Management:** Scoring models, routing rules, qualification frameworks\n**Sales Enablement:** Territory planning, quota management, process documentation\n**Training & Support:** Onboarding, documentation, ongoing technical support\n\n40 hours per month to tackle your highest priorities.",
     
-    crm: "We handle complete CRM administration - setup, configuration, custom objects, field management, user permissions, and ongoing optimization. Works with Salesforce, HubSpot, Pipedrive, and more.",
+    crm: "We handle complete CRM administration:\n✓ Setup & configuration\n✓ Custom objects & fields\n✓ User permissions & roles\n✓ Ongoing optimization\n\nWorks with Salesforce, HubSpot, Pipedrive & more!",
     
-    automation: "We design and build intelligent workflows that automate lead routing, data enrichment, follow-ups, and reporting - saving your team 30-50% time on manual tasks.",
+    automation: "We design intelligent workflows that automate:\n✓ Lead routing\n✓ Data enrichment\n✓ Follow-ups\n✓ Reporting\n\nResult: 30-50% time savings on manual tasks!",
     
-    integration: "We connect your CRM, marketing automation, and analytics tools into a unified ecosystem with seamless data flow - no more disconnected systems or manual data entry.",
+    integration: "We connect your entire tech stack:\n✓ CRM ↔ Marketing automation\n✓ Analytics tools\n✓ Sales platforms\n✓ Custom APIs\n\nSeamless data flow across all systems!",
     
-    data: "We ensure 95%+ data accuracy through validation rules, enrichment workflows, duplicate management, and proper governance - giving you reliable insights for decision-making.",
+    data: "We ensure clean, reliable data:\n✓ Validation rules\n✓ Enrichment workflows\n✓ Duplicate management\n✓ Data governance\n\nAchieve 95%+ data accuracy!",
     
-    reporting: "Custom dashboards with real-time visibility into pipeline health, key metrics, and team performance. Track what matters, forecast accurately, make informed decisions.",
+    reporting: "Custom dashboards for:\n✓ Pipeline health\n✓ Key metrics & KPIs\n✓ Team performance\n✓ Forecasting\n\nReal-time visibility into what matters!",
     
-    timeline: "We start immediately after kickoff. Initial audit and quick wins within the first week, major improvements rolling out within 30 days. Ongoing optimization throughout the engagement.",
+    timeline: "**Quick Start:**\n• Kickoff: Immediate after signup\n• Initial audit: First week\n• Quick wins: Within 7-10 days\n• Major improvements: 30 days\n• Ongoing optimization: Monthly\n\nReady to get started?",
     
-    hours: "40 hours of dedicated support per month. We tackle your highest-priority items each month - from automation builds to reporting to ongoing optimization.",
+    hours: "**40 hours/month of dedicated support**\n\nWe prioritize your highest-impact items each month:\n• Automation builds\n• Integration projects\n• Report creation\n• Ongoing optimization\n• Training & support\n\nFlexible allocation based on your needs!",
     
-    problem: "Most growing companies struggle with disconnected systems, manual workflows, poor data quality, and lack of visibility. We solve these operational inefficiencies so you can scale smoothly.",
+    problem: "**Common Revenue Operations Problems:**\n\n❌ Disconnected systems & siloed data\n❌ Manual, time-consuming workflows\n❌ Poor data quality\n❌ Lack of visibility\n\n✅ We solve all of these!\n\nWhich one affects you most?",
     
-    benefits: "Expected outcomes: 30-50% time savings through automation, 20-35% faster sales cycles, 95%+ data accuracy, 100% revenue visibility with real-time dashboards.",
+    benefits: "**Expected Outcomes:**\n\n📊 30-50% time savings (automation)\n⚡ 20-35% faster sales cycles\n✅ 95%+ data accuracy\n📈 100% revenue visibility\n\nMeasurable improvements within 30 days!",
     
-    approach: "Our approach: 1) Revenue audit & strategy 2) Tech stack integration 3) Process automation 4) Data infrastructure 5) Analytics & reporting 6) Continuous optimization. Results-driven, hands-on support.",
+    approach: "**Our 6-Step Approach:**\n\n1️⃣ Revenue audit & strategy\n2️⃣ Tech stack integration\n3️⃣ Process automation\n4️⃣ Data infrastructure\n5️⃣ Analytics & reporting\n6️⃣ Continuous optimization\n\nResults-driven, hands-on support!",
     
-    technical: "No technical knowledge needed from your team. Our RevOps specialists handle all the technical work - you just tell us what you need, we make it happen.",
+    technical: "**No technical knowledge needed!**\n\nOur RevOps specialists handle:\n✓ All technical implementation\n✓ Complex integrations\n✓ System configurations\n✓ Troubleshooting\n\nYou just tell us what you need - we make it happen!",
     
-    training: "Complete training and documentation included. We onboard your team, document all processes, and provide ongoing support so you're never stuck.",
+    training: "**Complete Training Included:**\n\n✓ Team onboarding sessions\n✓ Process documentation\n✓ Video tutorials\n✓ Ongoing support\n\nWe ensure your team is confident and self-sufficient!",
     
-    lead_management: "We build complete lead management systems: scoring models, automated routing rules, qualification frameworks, and conversion optimization - ensuring no lead falls through the cracks.",
+    lead_management: "**Lead Management Systems:**\n\n✓ Automated scoring models\n✓ Intelligent routing rules\n✓ Qualification frameworks\n✓ Conversion optimization\n\nNo lead falls through the cracks!",
     
-    sales_enablement: "Sales enablement support includes territory planning, quota management, sales process documentation, and performance tracking - everything to help your team sell more efficiently.",
+    sales_enablement: "**Sales Enablement Support:**\n\n✓ Territory planning\n✓ Quota management\n✓ Sales process documentation\n✓ Performance tracking\n\nHelp your team sell more efficiently!",
     
-    confirmation: "Ready to get started? Schedule a consultation to discuss your revenue operations needs and how we can help scale your business.",
+    confirmation: "**Ready to scale your revenue operations?**\n\nLet's schedule a consultation to discuss:\n• Your specific challenges\n• How we can help\n• Next steps\n\n📞 Schedule a call now!",
     
-    contact: "📧 Email: info.afterresult@gmail.com\n📱 WhatsApp: +91 9050983530\n🌐 Website: https://afterresult.solutions\n\nClick below to schedule a call or reach out directly!",
+    contact: "**Contact AR Solutions:**\n\n📧 Email: info.afterresult@gmail.com\n📱 WhatsApp: +91 9050983530\n🌐 Website: https://afterresult.solutions\n\nReach out directly or schedule a consultation!",
     
-    aboutar: "AR Solutions (AfterResult) is a digital growth agency specializing in revenue operations, e-commerce, and marketing automation. We help growing businesses scale efficiently with strategic operations support.",
+    aboutar: "**About AR Solutions**\n\nWe're a digital growth agency specializing in:\n✓ Revenue Operations\n✓ E-Commerce Solutions\n✓ Marketing Automation\n\nHelping growing businesses scale efficiently since 2024!",
     
-    comparison: "**Why AR Solutions RevOps?**\n✓ Affordable monthly retainer (₹3,500)\n✓ Flexible engagement - no long-term lock-in\n✓ Dedicated specialist (40 hrs/month)\n✓ Comprehensive support across all RevOps areas\n✓ Fast turnaround on implementations\n✓ Complete training & documentation",
+    comparison: "**Why Choose AR Solutions?**\n\n✅ Affordable (₹3,500/month)\n✅ Flexible - no long-term lock-in\n✅ Dedicated specialist (40 hrs)\n✅ Comprehensive RevOps support\n✅ Fast implementation\n✅ Complete training included\n\nQuality service at SME-friendly pricing!",
     
-    guarantee: "We deliver measurable improvements in operational efficiency, data quality, and revenue visibility. Your success is our priority - with transparent pricing and complete support throughout.",
+    guarantee: "**Our Commitment:**\n\n✓ Measurable operational improvements\n✓ Better data quality\n✓ Increased revenue visibility\n✓ Transparent pricing\n✓ Complete support\n\nYour success is our priority!",
     
-    howareyou: "Doing great! Ready to help you optimize your revenue operations. What can I assist you with today?",
+    howareyou: "Doing great, thanks for asking! 😊\n\nReady to help you optimize your revenue operations. What can I assist you with?",
     
-    whoareyou: "I'm your RevOps assistant from AR Solutions - here to answer questions about our revenue operations services and help you scale your business efficiently!",
+    whoareyou: "I'm your RevOps assistant from AR Solutions! 🤖\n\nI'm here to answer questions about our revenue operations services and help you scale your business efficiently.\n\nWhat would you like to know?",
     
-    thankyou: "You're welcome! Happy to help anytime 😊",
+    thankyou: "You're very welcome! 😊\n\nHappy to help anytime. Any other questions about our RevOps services?",
     
-    bye: "Goodbye! Feel free to reach out anytime you need revenue operations support!",
+    bye: "Goodbye! 👋\n\nFeel free to reach out anytime you need revenue operations support. Have a great day!",
     
-    interested: "Great! Let me share more details about our RevOps services...",
+    casual: "Glad to hear that! 😊\n\nHow can I help you with your revenue operations today?",
     
-    urgent: "I understand the urgency! We can start immediately after kickoff with quick wins in the first week. Schedule a consultation to discuss your specific needs.",
+    interested: "Great to hear you're interested! 🎉\n\nLet me share more details about our RevOps services...\n\nWhat specifically would you like to know about?",
     
-    pipeline: "We provide complete pipeline visibility through custom dashboards - track deal flow, conversion rates, velocity, and forecast accuracy in real-time.",
+    urgent: "I understand the urgency! ⚡\n\nWe can start immediately after kickoff:\n• Quick wins within the first week\n• Priority support available\n\nSchedule a consultation now to get started ASAP!",
     
-    specialist: "You get a dedicated RevOps specialist with expertise in CRM administration, automation, integrations, and analytics. They work 40 hours per month on your highest-priority initiatives."
+    pipeline: "**Pipeline Visibility:**\n\nWe provide complete real-time dashboards showing:\n✓ Deal flow & stages\n✓ Conversion rates\n✓ Velocity metrics\n✓ Forecast accuracy\n\nNever lose sight of your revenue again!",
+    
+    specialist: "**Your Dedicated RevOps Specialist:**\n\n✓ Expert in CRM, automation & integrations\n✓ 40 hours/month focused on your business\n✓ Works on your highest-priority items\n✓ Direct communication via email/Slack\n\nYou get experienced, dedicated support!",
+    
+    default: "Thanks for your message! 😊\n\nI can help you with:\n• RevOps services & pricing\n• CRM automation & integrations\n• Data operations & reporting\n• Getting started\n\nWhat would you like to know about?"
   }
 }
     };
