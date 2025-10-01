@@ -179,42 +179,42 @@ const showTooltip = ref(null)
 const services = [
   {
     id: 'crm',
-    icon: '⚙️',
+    icon: '',
     title: 'CRM Administration',
     description: 'Complete platform configuration, custom object creation, and ongoing system maintenance to keep your CRM operating at peak efficiency.',
     query: 'Tell me about CRM Administration services and how it can help my business with platform configuration and management'
   },
   {
     id: 'workflow',
-    icon: '🔄',
+    icon: '',
     title: 'Workflow Automation',
     description: 'Intelligent automation that eliminates manual tasks, with custom triggers, multi-step sequences, and conditional logic.',
     query: 'Explain Workflow Development and automation capabilities for business processes'
   },
   {
     id: 'integration',
-    icon: '🔗',
+    icon: '',
     title: 'Integration Management',
     description: 'Seamless API connections, data mapping, and sync monitoring across your entire tech stack for unified operations.',
     query: 'What is Integration Management and how does it connect different business systems'
   },
   {
     id: 'data',
-    icon: '📊',
+    icon: '',
     title: 'Data Operations',
     description: 'Database hygiene, duplicate management, enrichment workflows, and migration support for pristine data quality.',
     query: 'How do you ensure data quality and what data operations services do you provide'
   },
   {
     id: 'analytics',
-    icon: '📈',
+    icon: '',
     title: 'Analytics & Reporting',
     description: 'Custom dashboards, metric tracking, forecasting models, and data visualization for actionable insights.',
     query: 'What analytics and reporting capabilities do you offer for business intelligence'
   },
   {
     id: 'enablement',
-    icon: '🎯',
+    icon: '',
     title: 'Sales Enablement',
     description: 'Territory planning, quota management, process documentation, and performance tracking to empower your sales team.',
     query: 'Tell me about sales enablement services and how they improve team performance'
