@@ -25,8 +25,8 @@
           <input v-model="formData.name" type="text" placeholder="Your Name" required>
           <input v-model="formData.position" type="text" placeholder="Your Position" required>
           <input v-model="formData.company" type="text" placeholder="Company Name" required>
-          <input v-model="formData.date" type="date" required>
-          <input v-model="formData.time" type="time" required>
+          <input v-model="formData.date" type="date" placeholder="Choose Date" required>
+          <input v-model="formData.time" type="time" placeholder="Choose Time" required>
           <button type="submit" class="submit-btn">Schedule My Call!</button>
         </form>
       </div>
